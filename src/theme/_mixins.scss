@@ -1,0 +1,8 @@
+@mixin ring($size, $color) {
+  position: absolute;
+  width: $size; height: $size;
+  left: 0; right: 0; top: 0; bottom: 0;
+  margin: auto;
+  border-radius: 50%;
+  background-color: $color;
+}

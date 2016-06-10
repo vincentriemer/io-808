@@ -1,0 +1,24 @@
+@import "../../theme/text";
+@import "../../theme/colors";
+@import "../../theme/mixins";
+
+$size: 100px;
+$labelHeight: 30px;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+
+  width: $size; height: $size;
+}
+
+.control-wrapper {
+  position: relative;
+  width: $size; height: $size;
+}
+
+.knob-wrapper {
+  @include ring(100%, rgba(0,0,0,0));
+}

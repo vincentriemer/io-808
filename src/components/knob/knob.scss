@@ -1,0 +1,44 @@
+@import "../../theme/text";
+
+.wrapper {
+  position: relative;
+  border-radius: 50%;
+  height: 100%;
+  width: 100%;
+}
+
+.knob {
+  composes: wrapper;
+  &:hover {
+    cursor: -webkit-grab;
+    cursor: grab;
+  }
+}
+
+.knob--active {
+  composes: wrapper;
+  z-index: 75;
+  &:hover {
+    cursor: -webkit-grabbing;
+    cursor: grabbing;
+  }
+}
+
+.value {
+  position: absolute;
+  top: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: opacity 0.1s;
+  font-family: "Aktiv Grotesk", sans-serif;
+}
+
+.value--inactive {
+  composes: value;
+  opacity: 0;
+}
+
+.value--active {
+  composes: value;
+  opacity: 1;
+}

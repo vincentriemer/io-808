@@ -1,0 +1,79 @@
+@import "../../theme/text";
+@import "../../theme/colors";
+
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 74px;
+  height: 91px;
+}
+
+.label-wrapper {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  flex-grow: 1;
+  position: relative;
+}
+
+.label {
+  @include label-grey-normal();
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.control-wrapper {
+  position: relative;
+  width: 74px;
+  height: 74px;
+}
+
+.knob-wrapper {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  top: 0; left: 0; right: 0; bottom: 0;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inner {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: solid $drum-handle 8px;
+}
+
+.handle {
+  position: absolute;
+  width: 4px;
+  height: 12px;
+  background-color: $drum-handle;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.guide-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.level-ind {
+  position: absolute;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background-color: $stencil-orange;
+  right: 8%; top: 37%;
+}

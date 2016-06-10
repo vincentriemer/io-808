@@ -1,0 +1,54 @@
+@import "../../theme/text";
+@import "../../theme/colors";
+@import "../../theme/mixins";
+
+$size: 72px;
+$labelHeight: 30px;
+
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+
+  width: $size;
+  height: #{$size + $labelHeight};
+}
+
+.label-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.label {
+  @include label-grey-normal();
+  line-height: $labelHeight;
+}
+
+.knob-label-wrapper {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 20px; width: 150%;
+  bottom: -17%; left: 50%;
+  transform: translateX(-50%);
+}
+
+.knob-label {
+  @include label-grey-small();
+  width: 35px;
+}
+
+.control-wrapper {
+  position: relative;
+  width: $size;
+  height: $size;
+}
+
+.knob-wrapper {
+  @include ring(75%, rgba(0,0,0,0));
+}

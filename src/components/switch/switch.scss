@@ -1,0 +1,15 @@
+.outer {
+  position: relative;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.inner {
+  position: absolute;
+}
+
+.inner--hover {
+  position: absolute;
+  opacity: .5;
+}
