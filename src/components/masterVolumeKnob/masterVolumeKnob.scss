@@ -1,0 +1,27 @@
+@import "../../theme/text";
+@import "../../theme/colors";
+@import "../../theme/mixins";
+
+$size: 130px;
+$labelHeight: 20px;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+
+  width: $size;
+  height: #{$size + $labelHeight};
+}
+
+.control-wrapper {
+  position: relative;
+  width: $size; height: $size;
+}
+
+.label {
+  width: $size;
+  overflow: visible;
+  @include label-grey-normal();
+}

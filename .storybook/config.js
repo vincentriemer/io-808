@@ -14,6 +14,7 @@ function loadStories() {
   require('../src/components/autoFillInKnob/autoFillInKnobStory');
   require('../src/components/modeKnob/modeKnobStory');
   require('../src/components/instrumentSelectorKnob/instrumentSelectorKnobStory');
+  require('../src/components/masterVolumeKnob/masterVolumeKnobStory');
 }
 
 configure(loadStories, module);
