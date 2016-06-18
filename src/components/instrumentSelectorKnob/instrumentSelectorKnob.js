@@ -1,58 +1,76 @@
 import React from 'react';
-import CSSModules from 'react-css-modules';
-import styles from './instrumentSelectorKnob.scss';
+import Radium from 'radium';
 
 import Knob from '../knob/knob';
 import Guides from '../guides/guides';
 import SelectorKnobInner from '../selectorKnobInner/selectorKnobInner';
 
-import themeVariables from '../../theme/variables';
+import {
+  fontFamily, normalSize, letterSpacing, smallSize, fontWeight,
+  darkGrey, drumLabel, stencilOrange
+} from '../../theme/variables';
+import { ring } from '../../theme/mixins';
 
 const guideNumbers = [1,2,3,4,5,6,7,8,9,10,11,12];
 const guideLabels = ['AC','BD','SD','LT','MT','HT','RS','CP','CB','CY','OH','CH'];
-const guideLabelElements = guideLabels.map(label => {
-  return (
-      <div style={{
-      fontFamily: themeVariables.fontFamily,
-      fontSize: themeVariables.normalSize,
-      fontWeight: 'normal',
-      letterSpacing: themeVariables.normalLetterspacing,
-      color: themeVariables.darkGrey,
-      backgroundColor: themeVariables.drumLabel,
-      borderRadius: 3,
-      textAlign: 'center',
-      width: 35,
-      paddingTop: 2, paddingBottom: 2
-    }}>
-      {label}
-    </div>
-  );
-});
 
+@Radium
 class InstrumentSelectorKnob extends React.Component {
   render() {
-    const {value, onChange} = this.props;
+    const {value, onChange, size=200} = this.props;
+
+    const styles = {
+      wrapper: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'stretch',
+        justifyContent: 'space-between',
+        width: size, height: size
+      },
+
+      controlWrapper: {
+        position: 'relative',
+        width: size, height: size
+      },
+
+      knobWrapper: ring(size / 2),
+
+      numberGuides: {
+        fontFamily,
+        fontSize: smallSize,
+        fontWeight,
+        letterSpacing,
+        color: stencilOrange
+      },
+
+      labelGuides: {
+        fontFamily,
+        fontSize: normalSize,
+        fontWeight: 'normal',
+        letterSpacing,
+        color: darkGrey,
+        backgroundColor: drumLabel,
+        borderRadius: 3,
+        textAlign: 'center',
+        width: 35,
+        paddingTop: 2, paddingBottom: 2
+      }
+    };
+
     return (
-      <div styleName='wrapper'>
-        <div styleName='control-wrapper'>
-          <Guides distance={58} offset={15} rotate={false} values={guideNumbers} guideStyle={{
-            fontFamily: themeVariables.fontFamily,
-            fontSize: themeVariables.smallSize,
-            fontWeight: themeVariables.normalWeight,
-            letterSpacing: themeVariables.normalLetterspacing,
-            color: themeVariables.stencilOrange
-          }} />
-          <Guides distance={85} offset={15} rotate={false} values={guideLabelElements} />
-          <div styleName='knob-wrapper'>
+      <div style={styles.wrapper}>
+        <div style={styles.controlWrapper}>
+          <Guides distance={58} offset={15} rotate={false} values={guideNumbers} guideStyle={styles.numberGuides} />
+          <Guides distance={85} offset={15} rotate={false} values={guideLabels} guideStyle={styles.labelGuides} />
+          <div style={styles.knobWrapper}>
             <Knob
               value={value}
               onChange={onChange}
-              size={100}
+              size={size / 2}
               bufferSize={330}
               min={0} max={11}
-              step={1}
-            >
-              <SelectorKnobInner size={100} />
+              step={1}>
+              <SelectorKnobInner size={size / 2} />
             </Knob>
           </div>
         </div>
@@ -66,4 +84,4 @@ InstrumentSelectorKnob.propTypes = {
   value: React.PropTypes.number.isRequired
 };
 
-export default CSSModules(InstrumentSelectorKnob, styles);
+export default InstrumentSelectorKnob;

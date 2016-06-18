@@ -1,55 +1,89 @@
 import React from 'react';
-import CSSModules from 'react-css-modules';
-import styles from './autoFillInKnob.scss';
+import Radium from 'radium';
 
 import Knob from '../knob/knob';
 import Guides from '../guides/guides';
 import SelectorKnobInner from '../selectorKnobInner/selectorKnobInner';
 
-import themeVariables from '../../theme/variables';
+import { grey } from '../../theme/variables';
+import { labelGreySmall, labelGreyNormal, labelGreyLarge, ring } from '../../theme/mixins';
 
-const guideLabelBaseStyle = {
-  fontFamily: themeVariables.fontFamily,
-  fontSize: themeVariables.smallSize,
-  fontWeight: themeVariables.normalWeight,
-  letterSpacing: themeVariables.normalLetterspacing,
-  color: themeVariables.grey
-};
+const guideLabelBaseStyle = labelGreyNormal;
+const labelHeight = 30;
 
 const guideValues = [
-  <div style={{transform: 'translateX(-20px)'}}>MANUAL</div>,
+  <div style={{transform: 'translateX(-25px)'}}>MANUAL</div>,
   16,12,8,4,2
 ];
 guideValues.push();
 
+@Radium
 class AutoFillInKnob extends React.Component {
   render() {
-    const {value, onChange} = this.props;
+    const {value, onChange, size=200} = this.props;
+
+    const styles = {
+      wrapper: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'stretch',
+        justifyContent: 'space-between',
+        width: size, height: size
+      },
+
+      controlWrapper: {
+        position: 'relative',
+        width: size, height: size
+      },
+
+      labelGuide: labelGreyNormal,
+
+      dotGuide: {
+        width: 5, height: 5,
+        backgroundColor: grey,
+        borderRadius: '50%'
+      },
+
+      knobWrapper: ring(size / 2),
+
+      labelWrapper: {
+        position: 'relative',
+        transform: 'translateY(-100%)',
+        width: size, height: labelHeight,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+      },
+
+      measuresLabel: labelGreySmall,
+
+      autoLabel: {
+        position: 'relative', top: -4,
+        ...labelGreyLarge
+      }
+    };
+
     return (
-      <div styleName='wrapper'>
-        <div styleName='control-wrapper'>
-          <Guides num={6} distance={58} hideCount={6} guideStyle={{
-            width: 5, height: 5,
-            backgroundColor: themeVariables.grey,
-            borderRadius: '50%'
-          }} />
-          <Guides distance={70} hideCount={5.5} values={guideValues} rotate={false} guideStyle={guideLabelBaseStyle} />
-          <div styleName='knob-wrapper'>
+      <div style={styles.wrapper}>
+        <div style={styles.controlWrapper}>
+          <Guides num={6} distance={58} hideCount={6} guideStyle={styles.dotGuide} />
+          <Guides distance={73} hideCount={5.5} values={guideValues} rotate={false} guideStyle={styles.labelGuide} />
+          <div style={styles.knobWrapper}>
             <Knob
               value={value}
               onChange={onChange}
-              size={100}
+              size={size / 2}
               bufferSize={150}
               min={0} max={5}
-              step={1}
-            >
-              <SelectorKnobInner size={100} />
+              step={1}>
+              <SelectorKnobInner size={size / 2} />
             </Knob>
           </div>
         </div>
-        <div styleName='label-wrapper'>
-          <div styleName='measures-label'>MEASURES</div>
-          <div styleName='auto-label'>AUTO FILL IN</div>
+        <div style={styles.labelWrapper}>
+          <div style={styles.measuresLabel}>MEASURES</div>
+          <div style={styles.autoLabel}>AUTO FILL IN</div>
         </div>
       </div>
     );
@@ -61,4 +95,4 @@ AutoFillInKnob.propTypes = {
   value: React.PropTypes.number.isRequired
 };
 
-export default CSSModules(AutoFillInKnob, styles);
+export default AutoFillInKnob;

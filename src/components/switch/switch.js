@@ -1,17 +1,15 @@
-/**
- * Created by vincentriemer on 4/23/16.
- */
 import React from 'react';
-import CSSModules from 'react-css-modules';
-import styles from './switch.scss';
+import Radium from 'radium';
 
 const VERTICAL = 'vertical';
 const HORIZONTAL = 'horizontal';
 
+@Radium
 class SoundSwitch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      hover: false,
       hoverPosition: props.position,
       xPosition: null,
       yPosition: null
@@ -64,13 +62,13 @@ class SoundSwitch extends React.Component {
 
     currentTarget.addEventListener('mousemove', this.handleMouseHover, false);
     currentTarget.addEventListener('click', this.handleClick, false);
-    this.setState({ xPosition, yPosition });
+    this.setState({ hover: true, xPosition, yPosition });
   }
 
   handleMouseLeave({ currentTarget }) {
     currentTarget.removeEventListener('mousemove', this.handleMouseHover, false);
     currentTarget.removeEventListener('click', this.handleClick, false);
-    this.setState({ xPosition: null, yPosition: null, hoverPosition: this.props.position });
+    this.setState({ hover: false, xPosition: null, yPosition: null, hoverPosition: this.props.position });
   }
 
   render() {
@@ -84,8 +82,7 @@ class SoundSwitch extends React.Component {
       innerStyle={}, outerStyle={}
     }= this.props;
 
-    const positionIncrement = ((length - (padding * 2)) / (numPositions - 1))
-                                - (innerThickness / (numPositions - 1));
+    const positionIncrement = ((length - (padding * 2)) - innerThickness) / (numPositions - 1);
     const positionChange = positionIncrement * position;
     const hoverPositionChange = positionIncrement * this.state.hoverPosition;
 
@@ -120,23 +117,38 @@ class SoundSwitch extends React.Component {
       width: innerWidth, height: innerHeight
     };
 
+    const styles = {
+      outer: {
+        position: 'relative',
+        ...outerStyle,
+        width, height, padding
+      },
+      inner: {
+        position: 'absolute',
+        ...innerStyle,
+        width: innerWidth, height: innerHeight,
+        transform
+      },
+      innerHover: {
+        position: 'absolute',
+        opacity: 0.5,
+        ...innerStyle,
+        width: innerWidth, height: innerHeight,
+        transform: hoverTransform
+      }
+    };
+
+    if (this.state.hover) {
+      styles.outer.cursor = 'pointer';
+    }
+
     return (
-      <div styleName='outer'
-           onMouseEnter={this.handleMouseEnter}
+      <div onMouseEnter={this.handleMouseEnter}
            onMouseLeave={this.handleMouseLeave}
            ref='outer'
-           style={{
-              ...outerStyle,
-              width, height, padding
-      }}>
-        <div styleName='inner' style={{
-          ...innerInlineStyle,
-          transform
-        }}></div>
-        <div styleName='inner--hover' style={{
-          ...innerInlineStyle,
-          transform: hoverTransform
-        }}></div>
+           style={styles.outer}>
+        <div style={styles.inner}></div>
+        <div style={styles.innerHover}></div>
       </div>
     );
   }
@@ -153,4 +165,4 @@ SoundSwitch.propTypes = {
   innerStyle: React.PropTypes.object
 };
 
-export default CSSModules(SoundSwitch, styles);
+export default SoundSwitch;

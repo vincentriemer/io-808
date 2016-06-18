@@ -1,16 +1,14 @@
-/**
- * Created by vincentriemer on 4/23/16.
- */
 import React from 'react';
-import CSSModules from 'react-css-modules';
+import Radium from 'radium';
+
 import ReactART from 'react-art';
 import Path from 'paths-js/path';
-import styles from './knobOverlay.scss';
 
 import {BASE_HEIGHT} from './constants';
 
 const {Shape, Surface} = ReactART;
 
+@Radium
 class KnobOverlay extends React.Component {
   constructor(props) {
     super(props);
@@ -33,6 +31,16 @@ class KnobOverlay extends React.Component {
       cursorPos,
       overlayColor
     } = this.props;
+
+    const styles = {
+      overlay: {
+        position: 'fixed',
+        zIndex: 100,
+        top: 0, left: 0,
+        cursor: '-webkit-grabbing'
+        // TODO: Fix fallback with: cursor: ['-webkit-grabbing', 'grabbing']
+      }
+    };
 
     const knobPath = Path()
       .moveto(...knobCenter)
@@ -65,7 +73,7 @@ class KnobOverlay extends React.Component {
 
     return (
       <Surface
-        styleName='knob-overlay'
+        style={styles.overlay}
         width={this.state.windowWidth}
         height={this.state.windowHeight}
       >
@@ -79,4 +87,4 @@ class KnobOverlay extends React.Component {
   }
 }
 
-export default CSSModules(KnobOverlay, styles);
+export default KnobOverlay;

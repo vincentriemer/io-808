@@ -1,6 +1,5 @@
 import React from 'react';
-import CSSModules from 'react-css-modules';
-import styles from './knob.scss';
+import Radium from 'radium';
 
 import {BASE_HEIGHT} from './constants';
 import KnobOverlay from './knobOverlay';
@@ -20,10 +19,10 @@ function getNormalizedValue(value, min, max) {
 }
 
 function round(number, increment, offset) {
-  console.log(offset);
   return Math.round(number / increment ) * increment + offset;
 }
 
+@Radium
 class Knob extends React.Component {
   constructor(props) {
     super(props);
@@ -93,49 +92,55 @@ class Knob extends React.Component {
   }
 
   render() {
-    const {value, min, max, overlayColor="#fff", displayValue=false, bufferSize} = this.props;
+    const {value, min, max, overlayColor='#fff', size, displayValue=false, bufferSize=360} = this.props;
+
     const rotationAmount = (getNormalizedValue(value, min, max) * bufferSize) - (bufferSize / 2);
 
-    const knobInlineStyles = {
-      transform: 'rotate(' + rotationAmount + 'deg) translateZ(0px)'
-    };
-
-    let helper = null;
-    let valueStyleName = 'value--inactive';
-    let knobStyleName = 'knob';
-    if (this.state.xPosition != null ) {
-      helper = <KnobOverlay {...this.state} overlayColor={overlayColor}/>;
-      valueStyleName = 'value--active';
-      knobStyleName = 'knob--active';
+    const styles = {
+      wrapper: {
+        position: 'relative',
+        borderRadius: '50%',
+        height: size, width: size,
+        ':hover': {
+          cursor: '-webkit-grab'
+          // TODO: Fix fallback with: cursor: ['-webkit-grab', 'grab']
+        }
+      },
+      knob: {
+        position: 'relative',
+        borderRadius: '50%',
+        height: '100%', width: '100%',
+        transform: 'rotate(' + rotationAmount + 'deg) translateZ(0px)'
+      }
     }
 
-    const valueLabel = displayValue ?
-      <div styleName={valueStyleName} style={{color: overlayColor}}>{value}</div> : null;
+    let helper = null;
+    if (this.state.xPosition != null ) {
+      helper = <KnobOverlay {...this.state} overlayColor={overlayColor}/>;
+    }
 
     return (
-      <div styleName='wrapper'>
-        <div styleName='wrapper'>
-          <div styleName={knobStyleName} onMouseDown={this.startDrag} style={knobInlineStyles}>
-            {this.props.children}
-          </div>
-          {valueLabel}
+      <div style={ styles.wrapper }>
+        <div style={ styles.knob } onMouseDown={this.startDrag}>
+          {this.props.children}
         </div>
         {helper}
       </div>
-  );
+    );
   }
 }
 
 Knob.propTypes = {
+  size: React.PropTypes.number.isRequired,
   value: React.PropTypes.number.isRequired,
   min: React.PropTypes.number.isRequired,
   max: React.PropTypes.number.isRequired,
   step: React.PropTypes.number.isRequired,
   onChange: React.PropTypes.func.isRequired,
-  bufferSize: React.PropTypes.number.isRequired,
+  bufferSize: React.PropTypes.number,
   overlayColor: React.PropTypes.string,
   innerColor: React.PropTypes.string,
   displayValue: React.PropTypes.bool
 };
 
-export default CSSModules(Knob, styles);
+export default Knob;

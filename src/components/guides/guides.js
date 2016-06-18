@@ -1,4 +1,5 @@
 import React from 'react';
+import Radium from 'radium';
 
 const baseGuideStyle = {
   position: 'absolute',
@@ -10,6 +11,7 @@ const baseWrapperStyle = {
   width: '100%', height: '100%'
 };
 
+@Radium
 class Guides extends React.Component {
   shouldComponentUpdate() {
     return false;

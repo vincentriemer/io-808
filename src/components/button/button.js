@@ -1,15 +1,12 @@
-/**
- * Created by vincentriemer on 5/22/16.
- */
 import React from 'react';
-import CSSModules from 'react-css-modules';
+import Radium from 'radium';
 
-import styles from './button.scss';
+import {grey} from '../../theme/variables';
 
+@Radium
 class Button extends React.Component {
   constructor(props) {
     super(props);
-
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -18,8 +15,23 @@ class Button extends React.Component {
   }
 
   render() {
+    const styles = {
+      button: {
+        backgroundColor: grey,
+        width: 80, height: 40,
+        transition: 'transform 0.1s',
+        ':hover': {
+          cursor: 'pointer',
+          transform: 'scale(1.05)'
+        },
+        ':active': {
+          transform: 'scale(1.0)'
+        }
+      }
+    };
+
     return (
-      <div styleName='button' onClick={this.handleClick}>
+      <div style={[styles.button, this.props.style]} onClick={this.handleClick}>
         {this.props.children}
       </div>
     );
@@ -31,4 +43,4 @@ Button.propTypes = {
   styles: React.PropTypes.object
 };
 
-export default CSSModules(Button, styles);
+export default Button;

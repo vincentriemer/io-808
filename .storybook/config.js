@@ -1,6 +1,3 @@
-/**
- * Created by vincentriemer on 4/22/16.
- */
 import { configure } from '@kadira/storybook';
 import './index.css';
 

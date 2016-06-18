@@ -1,11 +1,14 @@
-/**
- * Created by vincentriemer on 5/22/16.
- */
 import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
 import Button from './button';
 
-import storyStyles from './buttonStory.scss';
+const customStyle = {
+  button: {
+    width: 100, height: 50,
+    borderRadius: 4,
+    backgroundColor: '#F55D02'
+  }
+};
 
 const handleClick = () => {
   action('clicked')('boosh');
@@ -21,5 +24,5 @@ storiesOf('Button', module)
     </Button>
   ))
   .add('with a custom style', () => (
-    <Button onClick={handleClick} styles={storyStyles} />
+    <Button onClick={handleClick} style={customStyle.button} />
   ));

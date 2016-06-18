@@ -1,12 +1,12 @@
 import React from 'react';
-import CSSModules from 'react-css-modules';
-import styles from './tempoKnob.scss';
+import Radium from 'radium';
 
 import Knob from '../knob/knob';
 import Guides from '../guides/guides';
 import SelectorKnobInner from '../selectorKnobInner/selectorKnobInner';
 
-import themeVariables from '../../theme/variables';
+import { labelGreyNormal, labelGreyLarge, ring } from '../../theme/mixins';
+import { grey, darkGrey, fontFamily, normalSize, fontWeight, letterSpacing} from '../../theme/variables';
 
 const guideNumbers = [0,1,2,3,4,5,6,7,8,9,10];
 
@@ -14,42 +14,74 @@ let guideValues = [];
 for (let i = 0; i < 41; i++) {
   let size = i % 4 === 0 ? 5 : 4;
   guideValues.push(<div style={{
-    width: size,
-    height: size,
-    backgroundColor: themeVariables.grey,
+    width: size, height: size,
+    backgroundColor: grey,
     borderRadius: '50%'
   }}></div>);
 }
 
+const labelHeight= 30;
+
+@Radium
 class TempoKnob extends React.Component {
   render() {
-    const {value, onChange} = this.props;
+    const {value, onChange, size=216} = this.props;
+    const knobSize = 216 * 0.75;
+
+    const styles = {
+      wrapper: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'stretch',
+        justifyContent: 'space-between',
+        width: size, height: size + labelHeight
+      },
+
+      labelWrapper: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center'
+      },
+
+      label: labelGreyLarge,
+
+      controlWrapper: {
+        position: 'relative',
+        width: size, height: size
+      },
+
+      ringOuter: ring('100%', grey),
+      ringInner: ring('83%', darkGrey),
+      knobWrapper: ring('75%'),
+
+      labelGuides: {
+        fontFamily, fontWeight, letterSpacing,
+        fontSize: normalSize,
+        color: darkGrey
+      }
+    };
+
     return (
-      <div styleName='wrapper'>
-        <div styleName='label-wrapper'>
-          <div styleName='label'>TEMPO</div>
+      <div style={styles.wrapper}>
+        <div style={styles.labelWrapper}>
+          <div style={styles.label}>TEMPO</div>
         </div>
-        <div styleName='control-wrapper'>
-          <div styleName='ring-outer'></div>
-          <Guides distance={99} hideCount={1} values={guideNumbers} rotate={false} guideStyle={{
-            fontFamily: themeVariables.fontFamily,
-            fontSize: themeVariables.normalSize,
-            fontWeight: themeVariables.normalWeight,
-            letterSpacing: themeVariables.normalLetterspacing,
-            color: themeVariables.darkGrey
-          }} />
-          <div styleName='ring-inner'></div>
+        <div style={styles.controlWrapper}>
+          <div style={styles.ringOuter}></div>
+          <Guides distance={99} hideCount={1} values={guideNumbers} rotate={false} guideStyle={styles.labelGuides} />
+          <div style={styles.ringInner}></div>
           <Guides num={41} distance={85.25} hideCount={7} values={guideValues} />
-          <div styleName='knob-wrapper'>
+          <div style={styles.knobWrapper}>
             <Knob
               value={value}
               onChange={onChange}
-              size={162}
+              size={knobSize}
               bufferSize={300}
               min={30} max={300}
               step={6.75}
             >
-              <SelectorKnobInner size={162} />
+              <SelectorKnobInner size={knobSize} />
             </Knob>
           </div>
         </div>
@@ -63,4 +95,4 @@ TempoKnob.propTypes = {
   value: React.PropTypes.number.isRequired
 };
 
-export default CSSModules(TempoKnob, styles);
+export default TempoKnob;

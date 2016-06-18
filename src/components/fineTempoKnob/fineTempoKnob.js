@@ -1,44 +1,92 @@
 import React from 'react';
-import CSSModules from 'react-css-modules';
-import styles from './fineTempoKnob.scss';
+import Radium from 'radium';
 
 import Knob from '../knob/knob';
 import Guides from '../guides/guides';
 import SelectorKnobInner from '../selectorKnobInner/selectorKnobInner';
 
-import themeVariables from '../../theme/variables';
+import { grey } from '../../theme/variables';
+import { ring, labelGreyNormal, labelGreySmall } from '../../theme/mixins';
 
+const labelHeight = 30;
 
+@Radium
 class FineTempoKnob extends React.Component {
   render() {
-    const {value, onChange} = this.props;
+    const {value, onChange, size=72} = this.props;
+
+    const styles = {
+      wrapper: {
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'stretch',
+        justifyContent: 'space-between',
+        width: size, height: size + labelHeight
+      },
+
+      labelWrapper: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center'
+      },
+
+      label: labelGreyNormal,
+
+      controlWrapper: {
+        position: 'relative',
+        width: size, height: size
+      },
+
+      guides: {
+        width: 4, height: 4,
+        backgroundColor: grey,
+        borderRadius: '50%'
+      },
+
+      knobWrapper: ring('75%'),
+
+      knobLabelWrapper: {
+        position: 'absolute',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        height: 20, width: '150%',
+        bottom: '-18%', left: '50%',
+        transform: 'translateX(-50%)'
+      },
+
+      knobLabel: {
+        ...labelGreySmall,
+        width: 35
+      }
+    };
+
+    const knobSize = size * 0.75;
+
     return (
-      <div styleName='wrapper'>
-        <div styleName='label-wrapper'>
-          <div styleName='label'>FINE</div>
+      <div style={styles.wrapper}>
+        <div style={styles.labelWrapper}>
+          <div style={styles.label}>FINE</div>
         </div>
-        <div styleName='control-wrapper'>
-          <Guides num={11} distance={34} hideCount={1} guideStyle={{
-            width: 4,
-            height: 4,
-            backgroundColor: themeVariables.grey,
-            borderRadius: '50%'
-          }}/>
-          
-          <div styleName='knob-wrapper'>
+        <div style={styles.controlWrapper}>
+          <Guides num={11} distance={34} hideCount={1} guideStyle={styles.guides}/>
+          <div style={styles.knobWrapper}>
             <Knob
               value={value}
               onChange={onChange}
               bufferSize={300}
               min={-6.75} max={6.75}
-              step={0.1}>
-              <SelectorKnobInner size={53}/>
+              step={0.1}
+              size={knobSize}>
+              <SelectorKnobInner size={knobSize}/>
             </Knob>
           </div>
         </div>
-        <div styleName='knob-label-wrapper'>
-          <div styleName='knob-label' style={{ textAlign: 'right' }}>SLOW</div>
-          <div styleName='knob-label' style={{ textAlign: 'left' }}>FAST</div>
+        <div style={styles.knobLabelWrapper}>
+          <div style={[ styles.knobLabel, { textAlign: 'right' } ]}>SLOW</div>
+          <div style={[ styles.knobLabel, { textAlign: 'left' } ]}>FAST</div>
         </div>
       </div>
     );
@@ -50,4 +98,4 @@ FineTempoKnob.propTypes = {
   value: React.PropTypes.number.isRequired
 };
 
-export default CSSModules(FineTempoKnob, styles);
+export default FineTempoKnob;
