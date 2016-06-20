@@ -12,6 +12,9 @@ function loadStories() {
   require('../src/components/modeKnob/modeKnobStory');
   require('../src/components/instrumentSelectorKnob/instrumentSelectorKnobStory');
   require('../src/components/masterVolumeKnob/masterVolumeKnobStory');
+  require('../src/components/IFVariationSwtich/IFVariationSwitchStory');
+  require('../src/components/basicVariationSwitch/basicVariationSwitchStory');
+  require('../src/components/drumSwitch/drumSwitchStory');
 }
 
 configure(loadStories, module);

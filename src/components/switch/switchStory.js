@@ -1,6 +1,3 @@
-/**
- * Created by vincentriemer on 4/23/16.
- */
 import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
 
@@ -20,7 +17,7 @@ class SwitchWrapper extends React.Component {
 
   render() {
     return <SoundSwitch
-      position={this.state.position} 
+      position={this.state.position}
       onChange={this.handleChange}
       outerStyle={{ backgroundColor: '#777', borderRadius: 35/2 }}
       innerStyle={{ backgroundColor: '#333', borderRadius: 35/2 }}
@@ -29,7 +26,7 @@ class SwitchWrapper extends React.Component {
   }
 }
 
-storiesOf('DrumSwitch', module)
+storiesOf('Switch', module)
   .add('Horizontal switch with 2 positions', () => (
   <SwitchWrapper
     direction='horizontal'

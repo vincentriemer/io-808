@@ -19,6 +19,7 @@ export const darkBlack = '#24251F';
 export const slightlyDarkerBlack = '#161711';
 
 export const white = '#FFFFFF';
+export const silver = '#D6D6D6';
 
 // TEXT ========================================
 export const fontFamily = '"aktiv-grotesk", sans-serif';

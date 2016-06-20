@@ -1,5 +1,5 @@
 import {
-  fontFamily, fontWeight, textAlign, letterSpacing, normalSize, largeSize, smallSize, xSmallSize, grey
+  fontFamily, fontWeight, textAlign, letterSpacing, normalSize, largeSize, smallSize, xSmallSize, grey, darkGrey
 } from './variables';
 
 // TYPOGRAPHY PRESETS ==========================
@@ -29,6 +29,13 @@ export const labelGreyXSmall = {
   ...basePreset,
   fontSize: xSmallSize,
   color: grey
+};
+
+export const labelDarkGrey = {
+  ...basePreset,
+  fontSize: normalSize,
+  color: darkGrey,
+  fontWeight: 'normal'
 };
 
 // LAYOUT MACROS ==========================
