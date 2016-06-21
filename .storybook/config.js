@@ -15,6 +15,7 @@ function loadStories() {
   require('../src/components/IFVariationSwtich/IFVariationSwitchStory');
   require('../src/components/basicVariationSwitch/basicVariationSwitchStory');
   require('../src/components/drumSwitch/drumSwitchStory');
+  require('../src/components/preScaleSwitch/preScaleSwitchStory');
 }
 
 configure(loadStories, module);
