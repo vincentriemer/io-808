@@ -110,9 +110,9 @@ class DrumKnob extends React.Component {
 }
 
 DrumKnob.propTypes = {
+  label: React.PropTypes.string.isRequired,
   size: React.PropTypes.number,
-  level: React.PropTypes.bool,
-  label: React.PropTypes.string
+  level: React.PropTypes.bool
 };
 
 export default DrumKnob;

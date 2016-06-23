@@ -19,10 +19,10 @@ class Button extends React.Component {
       button: {
         backgroundColor: grey,
         width: 80, height: 40,
-        transition: 'transform 0.1s',
+        transition: 'transform 0.05s',
         ':hover': {
           cursor: 'pointer',
-          transform: 'scale(1.05)'
+          transform: 'scale(1.025)'
         },
         ':active': {
           transform: 'scale(1.0)'

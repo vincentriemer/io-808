@@ -16,6 +16,13 @@ class DrumSwitch extends React.Component {
 
   render() {
     const styles = {
+      wrapper: {
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+      },
+
       inner: {
         backgroundColor: darkBlack,
         borderRadius: borderRadius
@@ -28,16 +35,18 @@ class DrumSwitch extends React.Component {
     };
 
     return (
-      <Switch
-        {...this.props}
-        direction='vertical'
-        numPositions={2}
-        thickness={30}
-        length={50}
-        padding={4}
-        innerThickness={22}
-        outerStyle={styles.outer}
-        innerStyle={styles.inner} />
+      <div style={styles.wrapper}>
+        <Switch
+          {...this.props}
+          direction='vertical'
+          numPositions={2}
+          thickness={30}
+          length={50}
+          padding={4}
+          innerThickness={22}
+          outerStyle={styles.outer}
+          innerStyle={styles.inner} />
+      </div>
     );
   }
 }

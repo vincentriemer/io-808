@@ -16,6 +16,7 @@ function loadStories() {
   require('../src/components/basicVariationSwitch/basicVariationSwitchStory');
   require('../src/components/drumSwitch/drumSwitchStory');
   require('../src/components/preScaleSwitch/preScaleSwitchStory');
+  require('../src/layouts/instrumentColumn/story');
 }
 
 configure(loadStories, module);
