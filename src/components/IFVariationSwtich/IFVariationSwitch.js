@@ -1,7 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
 
-import Light from '../light/light';
 import Switch from '../switch/switch';
 
 import { grey, darkBlack, silver } from '../../theme/variables';
@@ -12,7 +11,7 @@ class IFVariationSwitch extends React.Component {
   static propTypes = {
     onChange: React.PropTypes.func.isRequired,
     position: React.PropTypes.number.isRequired
-  }
+  };
 
   render() {
     const { onChange, position } = this.props;

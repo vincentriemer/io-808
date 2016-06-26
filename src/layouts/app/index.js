@@ -11,9 +11,6 @@ import { instrumentChange } from '../../actionCreators';
 import {darkGrey, grey} from '../../theme/variables';
 
 // Components
-import InstrumentLabel from '../../components/instrumentLabel';
-import DrumSwitch from '../../components/drumSwitch/drumSwitch';
-import DrumKnob, { LABEL_HEIGHT } from '../../components/drumKnob/drumKnob';
 import InstrumentColumn, {EMPTY_CONTROL} from '../../components/instrumentColumn';
 
 // Constants
@@ -40,9 +37,6 @@ const TOP_HORIZONTAL_SEPERATOR_HEIGHT = TOP_HEIGHT - 10;
 const INSTRUMENT_SEPERATOR_HEIGHT = INSTRUMENTS_HEIGHT - 10;
 const INSTRUMENT_COLUMN_WIDTH = (TOP_RIGHT_WIDTH / NUM_INSTRUMENTS) -
   (INSTRUMENT_SEPERATOR_WIDTH / NUM_INSTRUMENTS);
-const DRUM_KNOB_SIZE = INSTRUMENT_COLUMN_WIDTH * 0.72;
-
-const TITLE_HEIGHT = TOP_HEIGHT * 0.25;
 
 @Radium
 class App extends React.Component {
@@ -107,7 +101,7 @@ class App extends React.Component {
       labels: [['*C','LS\'D ','*H','IHAT']],
       controls: []
     }
-  ]
+  ];
 
   static generateColumns() {
     const seperatorStyle = {
@@ -209,7 +203,7 @@ class App extends React.Component {
         width: INSTRUMENT_SEPERATOR_WIDTH, height: INSTRUMENT_SEPERATOR_HEIGHT,
         backgroundColor: grey
       }
-    }
+    };
 
     return (
       <GatewayProvider>

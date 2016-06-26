@@ -5,7 +5,7 @@ import Knob from '../knob/knob';
 import Guides from '../guides/guides';
 import SelectorKnobInner from '../selectorKnobInner/selectorKnobInner';
 
-import { labelGreyNormal, labelGreyLarge, ring } from '../../theme/mixins';
+import { labelGreyLarge, ring } from '../../theme/mixins';
 import { grey, darkGrey, fontFamily, normalSize, fontWeight, letterSpacing} from '../../theme/variables';
 
 const guideNumbers = [0,1,2,3,4,5,6,7,8,9,10];

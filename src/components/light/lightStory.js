@@ -1,8 +1,5 @@
-/**
- * Created by vincentriemer on 5/22/16.
- */
 import React from 'react';
-import { storiesOf, action } from '@kadira/storybook';
+import { storiesOf } from '@kadira/storybook';
 
 import Light from './light';
 

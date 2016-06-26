@@ -27,7 +27,8 @@ class Light extends React.Component {
 
         backgroundColor: active ? lightActive : lightInactive
       }
-    }
+    };
+
     return (
       <div style={styles.outer}>
         <div style={styles.inner}></div>

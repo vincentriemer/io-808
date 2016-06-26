@@ -7,7 +7,7 @@ import { fontFamily, darkGrey, drumLabel } from '../../theme/variables'
 class InstrumentLabel extends React.Component {
   static propTypes = {
     label: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
-  }
+  };
 
   render() {
     const { label } = this.props;

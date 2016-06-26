@@ -112,11 +112,6 @@ class SoundSwitch extends React.Component {
         throw new Error(`Invalid Direction: ${direction}`);
     }
 
-    const innerInlineStyle = {
-      ...innerStyle,
-      width: innerWidth, height: innerHeight
-    };
-
     const styles = {
       outer: {
         position: 'relative',

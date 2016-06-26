@@ -1,7 +1,5 @@
 import React from 'react';
-
-// Theme
-import {darkGrey, grey} from '../../theme/variables';
+import Radium from 'radium';
 
 // Layouts
 import InstrumentColumnLayout from '../../layouts/instrumentColumn';
@@ -13,6 +11,7 @@ import DrumKnob, { LABEL_HEIGHT } from '../../components/drumKnob/drumKnob';
 
 export const EMPTY_CONTROL = 'EMPTY';
 
+@Radium
 class InstrumentColumn extends React.Component {
   static propTypes = {
     config: React.PropTypes.object.isRequired,

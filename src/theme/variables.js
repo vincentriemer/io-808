@@ -11,7 +11,7 @@ export const stencilOrange = '#F55D02';
 export const yellow = '#DFD909';
 export const offWhite = '#DEE7B7';
 
-export const miscKnobInner = '#C8D4C8'
+export const miscKnobInner = '#C8D4C8';
 export const levelKnobInner = stencilOrange;
 export const drumHandle = '#111111';
 

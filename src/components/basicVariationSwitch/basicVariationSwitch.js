@@ -14,7 +14,7 @@ class BasicVariationSwitch extends React.Component {
     position: React.PropTypes.number.isRequired,
     aActive: React.PropTypes.bool.isRequired,
     bActive: React.PropTypes.bool.isRequired,
-  }
+  };
 
   render() {
     const { onChange, position, aActive, bActive } = this.props;

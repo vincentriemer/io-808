@@ -1,8 +1,8 @@
 import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
-import AutoFillInKnob from './modeKnob';
+import ModeKnob from './modeKnob';
 
-class ModeKnob extends React.Component {
+class KnobWrapper extends React.Component {
   constructor(props) {
     super(props);
     this.state = { value: 0 };
@@ -11,15 +11,15 @@ class ModeKnob extends React.Component {
 
   handleChange(newValue) {
     this.setState({value: newValue});
-    // action('changed')(newValue);
+    action('changed')(newValue);
   }
 
   render() {
-    return <AutoFillInKnob value={this.state.value} onChange={this.handleChange} />;
+    return <ModeKnob value={this.state.value} onChange={this.handleChange} />;
   }
 }
 
 storiesOf('ModeKnob', module)
   .add('default', () => (
-    <ModeKnob />
+    <KnobWrapper />
   ));

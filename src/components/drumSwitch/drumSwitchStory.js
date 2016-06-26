@@ -1,8 +1,6 @@
 import React from 'react';
-import { storiesOf, action } from '@kadira/storybook';
+import { storiesOf } from '@kadira/storybook';
 import DrumSwitch from './drumSwitch';
-
-import { grey } from '../../theme/variables';
 
 class SwitchWrapper extends React.Component {
   constructor(props) {

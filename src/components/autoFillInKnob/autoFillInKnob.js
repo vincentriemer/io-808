@@ -8,7 +8,6 @@ import SelectorKnobInner from '../selectorKnobInner/selectorKnobInner';
 import { grey } from '../../theme/variables';
 import { labelGreySmall, labelGreyNormal, labelGreyLarge, ring } from '../../theme/mixins';
 
-const guideLabelBaseStyle = labelGreyNormal;
 const labelHeight = 30;
 
 const guideValues = [

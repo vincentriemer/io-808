@@ -8,7 +8,7 @@ class InstrumentColumn extends React.Component {
     children: React.PropTypes.arrayOf(React.PropTypes.element).isRequired,
     width: React.PropTypes.number,
     height: React.PropTypes.number
-  }
+  };
 
   render() {
     const { labels, children, width=110, height=450 } = this.props;
@@ -45,7 +45,7 @@ class InstrumentColumn extends React.Component {
       labelSpacing: {
         marginTop: 8
       }
-    }
+    };
 
     return (
       <div style={styles.wrapper}>

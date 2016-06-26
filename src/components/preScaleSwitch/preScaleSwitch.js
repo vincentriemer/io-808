@@ -6,7 +6,6 @@ import Switch from '../switch/switch';
 import { darkBlack, slightlyDarkerBlack } from '../../theme/variables';
 import { labelGreyNormal, labelGreySmall } from '../../theme/mixins';
 
-
 const borderRadius = 2;
 
 @Radium
@@ -14,7 +13,7 @@ class PreScaleSwitch extends React.Component {
   static propTypes = {
     onChange: React.PropTypes.func.isRequired,
     position: React.PropTypes.number.isRequired
-  }
+  };
 
   render() {
     const styles = {

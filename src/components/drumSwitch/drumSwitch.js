@@ -12,7 +12,7 @@ class DrumSwitch extends React.Component {
   static propTypes = {
     onChange: React.PropTypes.func.isRequired,
     position: React.PropTypes.number.isRequired
-  }
+  };
 
   render() {
     const styles = {

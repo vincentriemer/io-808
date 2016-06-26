@@ -1,5 +1,5 @@
 import React from 'react';
-import { storiesOf, action } from '@kadira/storybook';
+import { storiesOf } from '@kadira/storybook';
 import BasicVariationSwitch from './BasicVariationSwitch';
 
 import { grey } from '../../theme/variables';
@@ -48,7 +48,7 @@ class SwitchWrapper extends React.Component {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center'
-    }
+    };
 
     return (
       <div style={style}>

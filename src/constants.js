@@ -1,4 +1,4 @@
-export const ACCENT = 0
+export const ACCENT = 0;
 export const BASS_DRUM = 1;
 export const SNARE_DRUM = 2;
 export const LOW_CONGA_LOW_TOM = 3;

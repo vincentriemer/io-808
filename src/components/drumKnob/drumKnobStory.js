@@ -12,7 +12,7 @@ class KnobWrapper extends React.Component {
 
   handleChange(newValue) {
     this.setState({value: newValue});
-    // action('changed')(newValue);
+    action('changed')(newValue);
   }
 
   render() {

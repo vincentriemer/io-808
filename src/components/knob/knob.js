@@ -61,7 +61,7 @@ class Knob extends React.Component {
     }
   }
 
-  endDrag(e) {
+  endDrag() {
     document.removeEventListener('mousemove', this.handleDrag, false);
     document.removeEventListener('mouseup', this.endDrag, false);
     this.setState(emptyKnobState());
@@ -92,7 +92,7 @@ class Knob extends React.Component {
   }
 
   render() {
-    const {value, min, max, overlayColor='#fff', size, displayValue=false, bufferSize=360} = this.props;
+    const {value, min, max, overlayColor='#fff', size, bufferSize=360} = this.props;
 
     const rotationAmount = (getNormalizedValue(value, min, max) * bufferSize) - (bufferSize / 2);
 
@@ -111,7 +111,7 @@ class Knob extends React.Component {
         height: '100%', width: '100%',
         transform: 'rotate(' + rotationAmount + 'deg) translateZ(0px)'
       }
-    }
+    };
 
     let helper = null;
     if (this.state.xPosition != null ) {
@@ -138,8 +138,7 @@ Knob.propTypes = {
   onChange: React.PropTypes.func.isRequired,
   bufferSize: React.PropTypes.number,
   overlayColor: React.PropTypes.string,
-  innerColor: React.PropTypes.string,
-  displayValue: React.PropTypes.bool
+  innerColor: React.PropTypes.string
 };
 
 export default Knob;

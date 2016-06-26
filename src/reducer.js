@@ -19,7 +19,7 @@ export default function(state, action) {
       return {
         ...state,
         currentTick: state.currentTick + 1
-      }
+      };
     case INSTRUMENT_CHANGE:
       const { type, controlName, value } = action.payload;
       return {
