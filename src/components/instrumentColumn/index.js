@@ -29,31 +29,37 @@ class InstrumentColumn extends React.Component {
 
     // create label section
     let labelComponents = [];
-    labelComponents.push(<InstrumentLabel label={labels[0]} />)
+    labelComponents.push(<InstrumentLabel key={`${type}-label-0`} label={labels[0]} />)
     if (labels.length == 2) {
       labelComponents.push(
-        <DrumSwitch position={controlState.switch} onChange={(value) => onChange(type, 'switch', value)} />
+        <DrumSwitch key={`${type}-switch`} position={controlState.switch} onChange={(value) => onChange(type, 'switch', value)} />
       );
-      labelComponents.push(<InstrumentLabel label={labels[1]} />);
+      labelComponents.push(<InstrumentLabel key={`${type}-label-1`} label={labels[1]} />);
     }
 
     // create control section
     let controlComponents = [];
     controlComponents.push(
       <DrumKnob
+        key={`${type}-knob-level`}
         value={controlState.level}
         onChange={(value) => onChange(type, 'level', value)}
         size={DRUM_KNOB_SIZE}
         label='LEVEL' level />
     );
-    controls.forEach((controlName) => {
+    controls.forEach((controlName, index) => {
       if (controlName !== EMPTY_CONTROL) {
         controlComponents.push(
           <DrumKnob
+            key={`${type}-knob-${index}`}
             value={controlState[controlName]}
             onChange={(value) => onChange(type, controlName, value)}
             size={DRUM_KNOB_SIZE}
             label={controlName.toUpperCase()} />
+        );
+      } else {
+        controlComponents.push(
+          <div key={`${type}-knob-${index}`} style={{width: DRUM_KNOB_SIZE, height: DRUM_KNOB_SIZE + LABEL_HEIGHT}}></div>
         );
       }
     });

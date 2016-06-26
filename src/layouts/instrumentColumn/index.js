@@ -56,7 +56,7 @@ class InstrumentColumn extends React.Component {
         </div>
         <div style={styles.labelWrapper}>
           {labels.map((label, index) => (
-            <div style={styles.labelSpacing}>{label}</div>
+            <div key={index} style={styles.labelSpacing}>{label}</div>
           ))}
         </div>
       </div>

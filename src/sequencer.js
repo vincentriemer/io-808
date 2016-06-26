@@ -68,8 +68,8 @@ let initialState = {
   }
 };
 
-const store = createStore(reducer, initialState,
-  window.devToolsExtension ? window.devToolsExtension() : undefined
+const store = createStore(reducer, initialState
+  , window.devToolsExtension ? window.devToolsExtension() : undefined
 );
 
 export default store;
