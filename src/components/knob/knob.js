@@ -102,8 +102,7 @@ class Knob extends React.Component {
         borderRadius: '50%',
         height: size, width: size,
         ':hover': {
-          cursor: '-webkit-grab'
-          // TODO: Fix fallback with: cursor: ['-webkit-grab', 'grab']
+          cursor: 'pointer'
         }
       },
       knob: {

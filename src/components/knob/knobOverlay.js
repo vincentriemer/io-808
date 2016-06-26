@@ -38,8 +38,7 @@ class KnobOverlay extends React.Component {
         position: 'fixed',
         zIndex: 100,
         top: 0, left: 0,
-        cursor: '-webkit-grabbing'
-        // TODO: Fix fallback with: cursor: ['-webkit-grabbing', 'grabbing']
+        cursor: 'move'
       }
     };
 
