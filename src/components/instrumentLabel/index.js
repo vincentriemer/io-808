@@ -16,7 +16,7 @@ class InstrumentLabel extends React.Component {
       fontFamily,
       whiteSpace: 'pre',
       color: darkGrey,
-      letterSpacing: -0.3
+      letterSpacing: -0.4
     };
 
     const styles = {
@@ -39,12 +39,12 @@ class InstrumentLabel extends React.Component {
 
       smallLabel: {
         ...baseLabelStyle,
-        fontSize: 12
+        fontSize: 11
       },
 
       largeLabel: {
         ...baseLabelStyle,
-        fontSize: 22
+        fontSize: 19
       }
     };
 

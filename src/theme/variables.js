@@ -24,9 +24,9 @@ export const silver = '#D6D6D6';
 // TEXT ========================================
 export const fontFamily = '"aktiv-grotesk", sans-serif';
 export const fontWeight = 'bold';
-export const xSmallSize = '10px';
-export const smallSize = '12px';
-export const normalSize = '15px';
-export const largeSize = '18px';
-export const letterSpacing = '-0.3px';
+export const xSmallSize = '9px';
+export const smallSize = '11px';
+export const normalSize = '13px';
+export const largeSize = '17px';
+export const letterSpacing = '-0.2px';
 export const textAlign = 'center';

@@ -5,11 +5,13 @@ import Radium from 'radium';
 class InstrumentColumn extends React.Component {
   static propTypes = {
     labels: React.PropTypes.arrayOf(React.PropTypes.element).isRequired,
-    children: React.PropTypes.arrayOf(React.PropTypes.element).isRequired
+    children: React.PropTypes.arrayOf(React.PropTypes.element).isRequired,
+    width: React.PropTypes.number,
+    height: React.PropTypes.number
   }
 
   render() {
-    const { labels, children } = this.props;
+    const { labels, children, width=110, height=450 } = this.props;
 
     const styles = {
       wrapper: {
@@ -18,7 +20,7 @@ class InstrumentColumn extends React.Component {
         alignItems: 'stretch',
         justifyContent: 'space-between',
 
-        width: 110, height: 450,
+        width, height,
         padding: 4
       },
 
@@ -30,7 +32,7 @@ class InstrumentColumn extends React.Component {
       },
 
       controlSpacing: {
-        marginBottom: 25
+        marginBottom: 5
       },
 
       labelWrapper: {

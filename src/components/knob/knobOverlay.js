@@ -1,5 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
+import { Gateway } from 'react-gateway';
 
 import ReactART from 'react-art';
 import Path from 'paths-js/path';
@@ -72,17 +73,19 @@ class KnobOverlay extends React.Component {
     });
 
     return (
-      <Surface
-        style={styles.overlay}
-        width={this.state.windowWidth}
-        height={this.state.windowHeight}
-      >
-        <Shape {...strokeProps(knobPath)} />
-        <Shape {...strokeProps(topPath)} />
-        <Shape {...strokeProps(centerPath)} />
-        <Shape {...strokeProps(bottomPath)} />
-        <Shape {...strokeProps(bodyPath)} />
-      </Surface>
+      <Gateway into="knobOverlay">
+        <Surface
+          style={styles.overlay}
+          width={this.state.windowWidth}
+          height={this.state.windowHeight}
+        >
+          <Shape {...strokeProps(knobPath)} />
+          <Shape {...strokeProps(topPath)} />
+          <Shape {...strokeProps(centerPath)} />
+          <Shape {...strokeProps(bottomPath)} />
+          <Shape {...strokeProps(bodyPath)} />
+        </Surface>
+      </Gateway>
     )
   }
 }

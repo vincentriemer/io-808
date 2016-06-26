@@ -7,7 +7,7 @@ import Guides from '../guides/guides';
 import { drumHandle, levelKnobInner, miscKnobInner, grey } from '../../theme/variables';
 import { labelGreyNormal, ring } from '../../theme/mixins';
 
-const LABEL_HEIGHT = 30;
+export const LABEL_HEIGHT = 30;
 
 @Radium
 class DrumKnob extends React.Component {
@@ -81,9 +81,10 @@ class DrumKnob extends React.Component {
       }
     };
 
-    let levelInd = null;
+    let levelInd = null, maxValue = 100;
     if (level) {
       levelInd = <div style={styles.levelInd}></div>
+      maxValue = 133;
     }
 
     return (
@@ -97,7 +98,7 @@ class DrumKnob extends React.Component {
             <Guides num={11} distance={size / 3} hideCount={1} guideStyle={styles.guide} />
           </div>
           <div style={styles.knobWrapper}>
-            <Knob value={value} onChange={onChange} size={knobSize} min={0} max={100} step={1} bufferSize={300}>
+            <Knob value={value} onChange={onChange} size={knobSize} min={0} max={maxValue} step={1} bufferSize={300}>
               <div style={styles.inner}>
                 <div style={styles.handle}></div>
               </div>
@@ -110,6 +111,8 @@ class DrumKnob extends React.Component {
 }
 
 DrumKnob.propTypes = {
+  value: React.PropTypes.number.isRequired,
+  onChange: React.PropTypes.func.isRequired,
   label: React.PropTypes.string.isRequired,
   size: React.PropTypes.number,
   level: React.PropTypes.bool

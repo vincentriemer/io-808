@@ -1,14 +1,15 @@
-export const BASS_DRUM = 'BD';
-export const SNARE_DRUM = 'SD';
-export const LOW_CONGA_LOW_TOM = 'LCLT';
-export const MID_CONGA_MID_TOM = 'MCMT';
-export const HI_CONGA_HI_TOM = 'HCHT';
-export const CLAVES_RIMSHOT = 'CLRS';
-export const MARACAS_HANDCLAP = 'MACP';
-export const COWBELL = 'CB';
-export const CYMBAL = 'CY';
-export const OPEN_HIHAT = 'OH';
-export const CLSD_HIHAT = 'CH';
+export const ACCENT = 0
+export const BASS_DRUM = 1;
+export const SNARE_DRUM = 2;
+export const LOW_CONGA_LOW_TOM = 3;
+export const MID_CONGA_MID_TOM = 4;
+export const HI_CONGA_HI_TOM = 5;
+export const CLAVES_RIMSHOT = 6;
+export const MARACAS_HANDCLAP = 7;
+export const COWBELL = 8;
+export const CYMBAL = 9;
+export const OPEN_HIHAT = 10;
+export const CLSD_HIHAT = 11;
 
 export const MODE_PATTERN_CLEAR = 0;
 export const MODE_FIRST_PART = 1;

@@ -1,2 +1,3 @@
 export const TOGGLE_PLAYBACK = 'TOGGLE_PLAYBACK';
 export const TICK = 'TICK';
+export const INSTRUMENT_CHANGE = 'INSTRUMENT_CHANGE';
