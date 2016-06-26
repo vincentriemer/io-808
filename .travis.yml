@@ -8,7 +8,6 @@ notifications:
 node_js:
   - stable
 before_install:
-  - npm i -g npm@^2.0.0
   - openssl aes-256-cbc -K $encrypted_ed0548e35004_key -iv $encrypted_ed0548e35004_iv -in deploy_key.enc -out deploy_key -d
 before_script:
   - npm prune
