@@ -9,7 +9,8 @@
     "test": "true",
     "start": "node devServer.js",
     "lint": "eslint src",
-    "storybook": "start-storybook -p 9001"
+    "storybook": "start-storybook -p 9001",
+    "deploy": "./deploy-ghpages.sh"
   },
   "repository": {
     "type": "git",
