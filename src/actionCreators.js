@@ -1,20 +1,15 @@
 import {
-  TOGGLE_PLAYBACK,
-  TICK,
-  INSTRUMENT_CHANGE
+  INSTRUMENT_CHANGE,
+  MASTER_VOLUME_CHANGE
 } from './actionTypes';
 
-export const togglePlayback = () => ({
-  type: TOGGLE_PLAYBACK
-});
-
-export const tick = () => ({
-  type: TICK
-});
-
-export const instrumentChange = (type, controlName, value) => ({
+export const onInstrumentChange = (type, controlName, value) => ({
   type: INSTRUMENT_CHANGE,
   payload: {
     type, controlName, value
   }
+});
+
+export const onMasterVolumeChange = (value) => ({
+  type: MASTER_VOLUME_CHANGE, value
 });

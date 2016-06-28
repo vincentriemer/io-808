@@ -19,12 +19,14 @@ for (let i = 0; i < 11; i++) {
   }
 }
 
-const labelHeight = 20;
+const labelHeight = 9;
 
 @Radium
 class MasterVolumeKnob extends React.Component {
   render() {
     const {value, onChange, size=130} = this.props;
+
+    const knobSize = size * 0.54;
 
     const styles = {
       wrapper: {
@@ -48,29 +50,31 @@ class MasterVolumeKnob extends React.Component {
 
       labelGuides: labelGreySmall,
 
-      knobWrapper: ring(100),
+      knobWrapper: ring(knobSize),
 
       label: {
+        position: 'relative',
         ...labelGreyNormal,
         width: size,
-        overflow: 'visible'
+        overflow: 'visible',
+        top: -4
       }
     };
 
     return (
       <div style={styles.wrapper}>
         <div style={styles.controlWrapper}>
-          <Guides num={11} distance={58} hideCount={1} guideStyle={styles.dotGuides} />
-          <Guides distance={73} hideCount={1} rotate={false} values={labelValues} guideStyle={styles.labelGuides} />
+          <Guides num={11} distance={size * 0.33} hideCount={1} guideStyle={styles.dotGuides} />
+          <Guides distance={size * 0.45} hideCount={1} rotate={false} values={labelValues} guideStyle={styles.labelGuides} />
           <div style={styles.knobWrapper}>
             <Knob
               value={value}
               onChange={onChange}
-              size={100}
+              size={knobSize}
               bufferSize={300}
               min={0} max={100}
               step={0.1}>
-              <SelectorKnobInner size={100} />
+              <SelectorKnobInner size={knobSize} />
             </Knob>
           </div>
         </div>
