@@ -11,6 +11,7 @@ import TopRightSection from '../../layouts/topRightSection';
 
 const APP_WIDTH = 1400;
 const APP_HEIGHT = 800;
+const APP_PADDING = 40;
 
 const TOP_BOTTOM_DIVIDER_HEIGHT = 3;
 const TOP_HEIGHT = (APP_HEIGHT * 0.64) - (TOP_BOTTOM_DIVIDER_HEIGHT * 2);
@@ -33,14 +34,15 @@ class App extends React.Component {
       },
 
       wrapper: {
+        position: 'relative',
         width: '100%', height: '100%',
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center'
+        minWidth: APP_WIDTH + APP_PADDING, minHeight: APP_HEIGHT + APP_PADDING
       },
 
       appWrapper: {
+        position: 'absolute',
+        top: 0, left: 0, right: 0, bottom: 0,
+        margin: 'auto',
         width: APP_WIDTH, height: APP_HEIGHT,
         display: 'flex',
         flexDirection: 'column'
