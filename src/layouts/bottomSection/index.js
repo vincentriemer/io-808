@@ -1,44 +1,24 @@
 import React from 'react';
 import Radium from 'radium';
-import { connect } from 'react-redux';
-
-import { onBasicVariationChange, onStartStopButtonClick } from '../../actionCreators';
 
 import {grey, darkGrey, buttonColor} from '../../theme/variables';
 import { labelDarkGrey } from '../../theme/mixins';
 
 import TimeSignatureSection from '../timeSignatureSection';
-import BasicVariationSwitch from '../../components/basicVariationSwitch/basicVariationSwitch';
-import Button from '../../components/button/button';
 
-const ConnectedBasicVariationSwitch = (() => {
-  const mapStateToProps = (state) => ({
-    position: state.basicVariation.position,
-    aActive: state.basicVariation.aActive,
-    bActive: state.basicVariation.bActive
-  });
-
-  const mapDispatchToProps = (dispatch) => ({
-    onChange: (position) => dispatch(onBasicVariationChange(position))
-  });
-
-  return connect(mapStateToProps, mapDispatchToProps)(BasicVariationSwitch);
-})();
-
-const ConnectedStartStopButton = (() => {
-  const mapDispatchToProps = (dispatch) => ({
-    onClick: () => dispatch(onStartStopButtonClick())
-  });
-
-  return connect(null, mapDispatchToProps)(Button);
-})();
+import {
+  ConnectedBasicVariationSwitch,
+  ConnectedStartStopButton,
+  ConnectedIFVariationSwitch,
+  ConnectedTapButton
+} from './connectedComponents';
 
 @Radium
 class BottomSection extends React.Component {
   static propTypes = {
     width: React.PropTypes.number.isRequired,
     height: React.PropTypes.number.isRequired,
-    topLeftWidth: React.PropTypes.number
+    topLeftWidth: React.PropTypes.number.isRequired
   };
 
   render() {
@@ -49,7 +29,7 @@ class BottomSection extends React.Component {
       LEFT_WIDTH = width * 0.1375,
       RIGHT_WIDTH = width * 0.12,
       BACKGROUND_BOTTOM_HEIGHT = (height - BACKGROUND_PADDING) * 0.17,
-      BACKGROUND_CENTER_HEIGHT = (height - BACKGROUND_PADDING) * 0.83;
+      BACKGROUND_CENTER_HEIGHT = (height - BACKGROUND_PADDING) - BACKGROUND_BOTTOM_HEIGHT;
 
     const SEQUENCER_SECTION_WIDTH = width - (LEFT_WIDTH + RIGHT_WIDTH),
       SEQUENCER_SECTION_HEIGHT = height - BACKGROUND_BOTTOM_HEIGHT - BACKGROUND_PADDING,
@@ -63,7 +43,7 @@ class BottomSection extends React.Component {
       (QUARTER_STEP_WIDTH * 3) + (STEP_PADDING * 2);
     const BACKGROUND_BOTTOM_RIGHT_WIDTH = RIGHT_WIDTH + QUARTER_STEP_WIDTH + STEP_PADDING;
 
-    const TIME_SIG_WRAPPER_HEIGHT = SEQUENCER_SECTION_HEIGHT * 0.55,
+    const TIME_SIG_WRAPPER_HEIGHT = SEQUENCER_SECTION_HEIGHT * 0.5,
       STEP_CONTROL_WRAPPER_HEIGHT = SEQUENCER_SECTION_HEIGHT - TIME_SIG_WRAPPER_HEIGHT;
 
     const LEFT_SECTION_HEIGHT =  height - BACKGROUND_PADDING - BACKGROUND_BOTTOM_HEIGHT;
@@ -105,6 +85,30 @@ class BottomSection extends React.Component {
       },
       startStopButton: {
         width: LEFT_WIDTH * 0.7, height: LEFT_SECTION_HEIGHT * 0.25,
+        backgroundColor: buttonColor,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'stretch',
+        padding: 11,
+        borderRadius: 4
+      },
+      rightSection: {
+        position: 'absolute',
+        width: RIGHT_WIDTH, height: LEFT_SECTION_HEIGHT,
+        top: 0, right: 0,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'stretch',
+        justifyContent: 'space-between',
+        padding: BACKGROUND_PADDING
+      },
+      fillInButtonLabelWrapper: {
+        paddingTop: 5, paddingBottom: 5,
+        paddingLeft: 10, paddingRight: 10
+      },
+      tapButton: {
+        width: LEFT_SECTION_HEIGHT * 0.25, height: LEFT_SECTION_HEIGHT * 0.25,
         backgroundColor: buttonColor,
         display: 'flex',
         flexDirection: 'column',
@@ -215,6 +219,20 @@ class BottomSection extends React.Component {
                 <div style={{...horizontalSeparatorStyle(1), margin: 3}}></div>
                 <div style={labelDarkGrey}>STOP</div>
               </ConnectedStartStopButton>
+            </div>
+          </div>
+          <div style={styles.rightSection}>
+            <ConnectedIFVariationSwitch />
+            <div style={horizontalSeparatorStyle(2)}></div>
+            <div style={styles.fillInButtonLabelWrapper}>
+              <div style={labelDarkGrey}>INTRO SET</div>
+              <div style={{...horizontalSeparatorStyle(1), margin: 3}}></div>
+              <div style={labelDarkGrey}>FILL IN TRIGGER</div>
+            </div>
+            <div style={styles.buttonWrapper}>
+              <ConnectedTapButton style={styles.tapButton}>
+                <div style={labelDarkGrey}>TAP</div>
+              </ConnectedTapButton>
             </div>
           </div>
         </div>

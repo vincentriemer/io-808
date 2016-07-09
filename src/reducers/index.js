@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import instrumentState from './instrumentState';
 import masterVolume from './masterVolume';
 import basicVariation from './basicVariation';
+import IFVariation from './IFVariation';
 
 export default function(state, action) {
   switch (action.type) {
@@ -10,7 +11,8 @@ export default function(state, action) {
       return combineReducers({
         instrumentState,
         masterVolume,
-        basicVariation
+        basicVariation,
+        IFVariation
       })(state, action);
   }
 }

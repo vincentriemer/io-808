@@ -16,12 +16,12 @@ class IFVariationSwitch extends React.Component {
   render() {
     const { onChange, position } = this.props;
 
-    const thickness = 35;
+    const thickness = 30;
     const length = 65;
 
     const styles = {
       wrapper: {
-        width: length * 1.8, height: 87.5,
+        minWidth: length * 1.8, height: 69,
 
         display: 'flex',
         flexDirection: 'column',
@@ -72,8 +72,8 @@ class IFVariationSwitch extends React.Component {
             numPositions={2}
             thickness={thickness}
             length={length}
-            padding={5}
-            innerThickness={thickness - 10}
+            padding={4}
+            innerThickness={thickness - 8}
             outerStyle={styles.switchOuter}
             innerStyle={styles.switchInner} />
           <div style={styles.labelWrapper}>

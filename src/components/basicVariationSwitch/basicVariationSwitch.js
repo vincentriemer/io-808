@@ -88,8 +88,8 @@ class BasicVariationSwitch extends React.Component {
             numPositions={3}
             thickness={thickness}
             length={length}
-            padding={5}
-            innerThickness={thickness - 10}
+            padding={4}
+            innerThickness={thickness - 8}
             outerStyle={styles.switchOuter}
             innerStyle={styles.switchInner} />
           <div style={styles.labelWrapper}>
