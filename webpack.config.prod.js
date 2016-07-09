@@ -30,5 +30,11 @@ module.exports = {
       loaders: ['babel'],
       include: path.join(__dirname, 'src')
     }]
+  },
+  resolve: {
+    alias: {
+      'react': 'react-lite',
+      'react-dom': 'react-lite'
+    }
   }
 };

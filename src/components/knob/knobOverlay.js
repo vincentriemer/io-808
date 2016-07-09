@@ -2,12 +2,9 @@ import React from 'react';
 import Radium from 'radium';
 import { Gateway } from 'react-gateway';
 
-import ReactART from 'react-art';
 import Path from 'paths-js/path';
 
 import {BASE_HEIGHT} from './constants';
-
-const {Shape, Surface} = ReactART;
 
 @Radium
 class KnobOverlay extends React.Component {
@@ -32,6 +29,8 @@ class KnobOverlay extends React.Component {
       cursorPos,
       overlayColor
     } = this.props;
+
+    const {windowWidth, windowHeight} = this.state;
 
     const styles = {
       overlay: {
@@ -73,20 +72,32 @@ class KnobOverlay extends React.Component {
 
     return (
       <Gateway into="knobOverlay">
-        <Surface
-          style={styles.overlay}
-          width={this.state.windowWidth}
-          height={this.state.windowHeight}
-        >
-          <Shape {...strokeProps(knobPath)} />
-          <Shape {...strokeProps(topPath)} />
-          <Shape {...strokeProps(centerPath)} />
-          <Shape {...strokeProps(bottomPath)} />
-          <Shape {...strokeProps(bodyPath)} />
-        </Surface>
+        <div style={styles.overlay}>
+          <svg width={windowWidth} height={windowHeight}>
+            <path {...strokeProps(knobPath)} />
+            <path {...strokeProps(topPath)} />
+            <path {...strokeProps(centerPath)} />
+            <path {...strokeProps(bottomPath)} />
+            <path {...strokeProps(bodyPath)} />
+          </svg>
+        </div>
       </Gateway>
     )
   }
 }
+
+/*
+ <Surface
+ style={styles.overlay}
+ width={this.state.windowWidth}
+ height={this.state.windowHeight}
+ >
+ <Shape {...strokeProps(knobPath)} />
+ <Shape {...strokeProps(topPath)} />
+ <Shape {...strokeProps(centerPath)} />
+ <Shape {...strokeProps(bottomPath)} />
+ <Shape {...strokeProps(bodyPath)} />
+ </Surface>
+ */
 
 export default KnobOverlay;

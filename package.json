@@ -49,12 +49,12 @@
   },
   "dependencies": {
     "paths-js": "^0.4.4",
-    "react": "^0.14.7",
-    "react-art": "^0.14.0",
-    "react-dom": "^0.14.7",
-    "react-gateway": "^2.1.0",
-    "react-redux": "^4.4.4",
     "radium": "^0.17.1",
+    "react": "^15.0.0",
+    "react-dom": "^15.0.0",
+    "react-gateway": "^2.1.0",
+    "react-lite": "^0.15.14",
+    "react-redux": "^4.4.4",
     "redux": "^3.4.0",
     "waaclock": "^0.5.3"
   }
