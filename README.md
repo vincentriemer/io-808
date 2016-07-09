@@ -2,4 +2,4 @@
 
 A fully recreated web-based tr-808 drum machine.
 
-## Current Status: Building UI components in Storybook
+## Current Status: Adding Components to final app layout
