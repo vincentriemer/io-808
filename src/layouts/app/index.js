@@ -7,7 +7,8 @@ import { GatewayProvider, GatewayDest } from 'react-gateway';
 import {darkGrey, grey} from '../../theme/variables';
 
 // Components
-import TopRightSection from '../../layouts/topRightSection';
+import TopRightSection from '../topRightSection';
+import BottomSection from '../bottomSection';
 
 const APP_WIDTH = 1400;
 const APP_HEIGHT = 800;
@@ -90,6 +91,7 @@ class App extends React.Component {
               </div>
               <div style={styles.topBottomDivider}></div>
               <div style={styles.bottomWrapper}>
+                <BottomSection width={APP_WIDTH} height={BOTTOM_HEIGHT} topLeftWidth={TOP_LEFT_WIDTH} />
               </div>
             </div>
           </div>
