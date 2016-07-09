@@ -29,11 +29,6 @@ const TOP_HORIZONTAL_SEPERATOR_HEIGHT = TOP_HEIGHT - 10;
 class App extends React.Component {
   render() {
     const styles = {
-      background: {
-        width: '100%', height: '100%',
-        backgroundColor: darkGrey
-      },
-
       wrapper: {
         position: 'relative',
         width: '100%', height: '100%',
@@ -77,7 +72,7 @@ class App extends React.Component {
 
     return (
       <GatewayProvider>
-        <div style={styles.background}>
+        <div style={styles.wrapper}>
           <GatewayDest name="knobOverlay" />
           <div style={styles.wrapper}>
             <div style={styles.appWrapper}>
