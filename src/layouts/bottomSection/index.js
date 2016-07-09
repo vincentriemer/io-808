@@ -1,9 +1,37 @@
 import React from 'react';
 import Radium from 'radium';
+import { connect } from 'react-redux';
 
-import {grey, darkGrey} from '../../theme/variables';
+import { onBasicVariationChange, onStartStopButtonClick } from '../../actionCreators';
+
+import {grey, darkGrey, buttonColor} from '../../theme/variables';
+import { labelDarkGrey } from '../../theme/mixins';
 
 import TimeSignatureSection from '../timeSignatureSection';
+import BasicVariationSwitch from '../../components/basicVariationSwitch/basicVariationSwitch';
+import Button from '../../components/button/button';
+
+const ConnectedBasicVariationSwitch = (() => {
+  const mapStateToProps = (state) => ({
+    position: state.basicVariation.position,
+    aActive: state.basicVariation.aActive,
+    bActive: state.basicVariation.bActive
+  });
+
+  const mapDispatchToProps = (dispatch) => ({
+    onChange: (position) => dispatch(onBasicVariationChange(position))
+  });
+
+  return connect(mapStateToProps, mapDispatchToProps)(BasicVariationSwitch);
+})();
+
+const ConnectedStartStopButton = (() => {
+  const mapDispatchToProps = (dispatch) => ({
+    onClick: () => dispatch(onStartStopButtonClick())
+  });
+
+  return connect(null, mapDispatchToProps)(Button);
+})();
 
 @Radium
 class BottomSection extends React.Component {
@@ -38,6 +66,13 @@ class BottomSection extends React.Component {
     const TIME_SIG_WRAPPER_HEIGHT = SEQUENCER_SECTION_HEIGHT * 0.55,
       STEP_CONTROL_WRAPPER_HEIGHT = SEQUENCER_SECTION_HEIGHT - TIME_SIG_WRAPPER_HEIGHT;
 
+    const LEFT_SECTION_HEIGHT =  height - BACKGROUND_PADDING - BACKGROUND_BOTTOM_HEIGHT;
+
+    const horizontalSeparatorStyle = (thickness) => ({
+      height: thickness,
+      backgroundColor: darkGrey
+    });
+
     const styles = {
       wrapper: {
         width, height,
@@ -52,6 +87,31 @@ class BottomSection extends React.Component {
         position: 'absolute',
         width: SEQUENCER_SECTION_WIDTH, height: SEQUENCER_SECTION_HEIGHT,
         top: 0, left: LEFT_WIDTH
+      },
+      leftSection: {
+        position: 'absolute',
+        width: LEFT_WIDTH, height: LEFT_SECTION_HEIGHT,
+        top: 0, left: 0,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'stretch',
+        justifyContent: 'space-between',
+        padding: BACKGROUND_PADDING
+      },
+      buttonWrapper: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+      },
+      startStopButton: {
+        width: LEFT_WIDTH * 0.7, height: LEFT_SECTION_HEIGHT * 0.25,
+        backgroundColor: buttonColor,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'stretch',
+        padding: 11,
+        borderRadius: 4
       }
     };
 
@@ -144,6 +204,17 @@ class BottomSection extends React.Component {
           <div style={styles.sequencerSection}>
             <div style={styles.preScaleSection}></div>
             <div style={styles.stepSection}>
+            </div>
+          </div>
+          <div style={styles.leftSection}>
+            <ConnectedBasicVariationSwitch />
+            <div style={horizontalSeparatorStyle(2)}></div>
+            <div style={styles.buttonWrapper}>
+              <ConnectedStartStopButton style={styles.startStopButton}>
+                <div style={labelDarkGrey}>START</div>
+                <div style={{...horizontalSeparatorStyle(1), margin: 3}}></div>
+                <div style={labelDarkGrey}>STOP</div>
+              </ConnectedStartStopButton>
             </div>
           </div>
         </div>

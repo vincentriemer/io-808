@@ -1,6 +1,8 @@
 import {
   INSTRUMENT_CHANGE,
-  MASTER_VOLUME_CHANGE
+  MASTER_VOLUME_CHANGE,
+  BASIC_VARIATION_CHANGE,
+  START_STOP_BUTTON_CLICK
 } from './actionTypes';
 
 export const onInstrumentChange = (type, controlName, value) => ({
@@ -11,5 +13,15 @@ export const onInstrumentChange = (type, controlName, value) => ({
 });
 
 export const onMasterVolumeChange = (value) => ({
-  type: MASTER_VOLUME_CHANGE, value
+  type: MASTER_VOLUME_CHANGE,
+  value
+});
+
+export const onBasicVariationChange = (position) => ({
+  type: BASIC_VARIATION_CHANGE,
+  position
+});
+
+export const onStartStopButtonClick = () => ({
+  type: START_STOP_BUTTON_CLICK
 });

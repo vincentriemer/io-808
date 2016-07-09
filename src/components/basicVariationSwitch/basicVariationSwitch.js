@@ -19,12 +19,12 @@ class BasicVariationSwitch extends React.Component {
   render() {
     const { onChange, position, aActive, bActive } = this.props;
 
-    const thickness = 35;
-    const length = 100;
+    const thickness = 30;
+    const length = 80;
 
     const styles = {
       wrapper: {
-        width: length * 1.8, height: 130,
+        minWidth: length * 1.8, height: 110,
 
         display: 'flex',
         flexDirection: 'column',
@@ -55,13 +55,14 @@ class BasicVariationSwitch extends React.Component {
 
       lightsWrapper: {
         width: length,
-        height: thickness - 5,
+        height: thickness - 3,
         backgroundColor: darkBlack,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: 4
+        padding: 4,
+        borderRadius: 2
       },
 
       switchOuter: {

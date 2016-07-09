@@ -20,13 +20,15 @@ class Button extends React.Component {
         backgroundColor: grey,
         width: 80, height: 40,
         transition: 'transform 0.05s',
+        transform: 'scale(1.0) translateZ(0)',
         ':hover': {
           cursor: 'pointer',
-          transform: 'scale(1.025)'
+          transform: 'scale(1.025) translateZ(0)'
         },
         ':active': {
-          transform: 'scale(1.0)'
-        }
+          transform: 'scale(1.0) translateZ(0)'
+        },
+        userSelect: 'none'
       }
     };
 
