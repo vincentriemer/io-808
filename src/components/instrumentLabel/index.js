@@ -21,7 +21,7 @@ class InstrumentLabel extends React.Component {
 
     const styles = {
       wrapper: {
-        width: '100%', height: '36',
+        width: '100%', height: 36,
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
