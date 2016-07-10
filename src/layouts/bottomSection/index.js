@@ -10,7 +10,8 @@ import {
   ConnectedBasicVariationSwitch,
   ConnectedStartStopButton,
   ConnectedIFVariationSwitch,
-  ConnectedTapButton
+  ConnectedTapButton,
+  ConnectedPreScaleSwitch
 } from './connectedComponents';
 
 @Radium
@@ -116,6 +117,15 @@ class BottomSection extends React.Component {
         alignItems: 'stretch',
         padding: 11,
         borderRadius: 4
+      },
+      preScaleSection: {
+        position: 'absolute',
+        width: PRE_SCALE_SECTION_WIDTH, height: TIME_SIG_WRAPPER_HEIGHT,
+        top: 0, left: LEFT_WIDTH,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center'
       }
     };
 
@@ -205,11 +215,6 @@ class BottomSection extends React.Component {
           </div>
         </div>
         <div style={styles.controlWrapper}>
-          <div style={styles.sequencerSection}>
-            <div style={styles.preScaleSection}></div>
-            <div style={styles.stepSection}>
-            </div>
-          </div>
           <div style={styles.leftSection}>
             <ConnectedBasicVariationSwitch />
             <div style={horizontalSeparatorStyle(2)}></div>
@@ -234,6 +239,9 @@ class BottomSection extends React.Component {
                 <div style={labelDarkGrey}>TAP</div>
               </ConnectedTapButton>
             </div>
+          </div>
+          <div style={styles.preScaleSection}>
+            <ConnectedPreScaleSwitch />
           </div>
         </div>
       </div>

@@ -16,8 +16,12 @@ class PreScaleSwitch extends React.Component {
   };
 
   render() {
+    const titlePadding = 5;
+
     const styles = {
       wrapper: {
+        position: 'relative',
+        top: -1*titlePadding,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -26,7 +30,7 @@ class PreScaleSwitch extends React.Component {
 
       title: {
         ...labelGreyNormal,
-        marginBottom: 15
+        marginBottom: titlePadding
       },
 
       switchWrapper: {
@@ -75,7 +79,7 @@ class PreScaleSwitch extends React.Component {
             thickness={25}
             length={80}
             padding={4}
-            innerThickness={22}
+            innerThickness={21}
             outerStyle={styles.outer}
             innerStyle={styles.inner} />
         </div>

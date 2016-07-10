@@ -3,12 +3,14 @@ import {
   onBasicVariationChange,
   onStartStopButtonClick,
   onIFVariationChange,
-  onTapButtonClick
+  onTapButtonClick,
+  onPreScaleChange
 } from '../../actionCreators';
 
 import BasicVariationSwitch from '../../components/basicVariationSwitch/basicVariationSwitch';
 import Button from '../../components/button/button';
 import IFVariationSwitch from '../../components/IFVariationSwtich/IFVariationSwitch';
+import PreScaleSwitch from '../../components/preScaleSwitch/preScaleSwitch';
 
 export const ConnectedBasicVariationSwitch = (() => {
   const mapStateToProps = (state) => ({
@@ -50,4 +52,16 @@ export const ConnectedTapButton = (() => {
   });
 
   return connect(null, mapDispatchToProps)(Button);
+})();
+
+export const ConnectedPreScaleSwitch = (() => {
+  const mapStateToProps = (state) => ({
+    position: state.preScaleSwitch
+  });
+
+  const mapDispatchToProps = (dispatch) => (() => ({
+    onChange: (position) => dispatch(onPreScaleChange(position))
+  }));
+
+  return connect(mapStateToProps, mapDispatchToProps)(PreScaleSwitch);
 })();

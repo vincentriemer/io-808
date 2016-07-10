@@ -4,6 +4,7 @@ import instrumentState from './instrumentState';
 import masterVolume from './masterVolume';
 import basicVariation from './basicVariation';
 import IFVariation from './IFVariation';
+import preScaleSwitch from './preScaleSwitch';
 
 export default function(state, action) {
   switch (action.type) {
@@ -12,7 +13,8 @@ export default function(state, action) {
         instrumentState,
         masterVolume,
         basicVariation,
-        IFVariation
+        IFVariation,
+        preScaleSwitch
       })(state, action);
   }
 }

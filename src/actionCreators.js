@@ -4,7 +4,8 @@ import {
   BASIC_VARIATION_CHANGE,
   START_STOP_BUTTON_CLICK,
   IF_VARIATION_CHANGE,
-  TAP_BUTTON_CLICK
+  TAP_BUTTON_CLICK,
+  PRE_SCALE_CHANGE
 } from './actionTypes';
 
 export const onInstrumentChange = (type, controlName, value) => ({
@@ -35,4 +36,9 @@ export const onIFVariationChange = (position) => ({
 
 export const onTapButtonClick = () => ({
   type: TAP_BUTTON_CLICK
+});
+
+export const onPreScaleChange = (position) => ({
+  type: PRE_SCALE_CHANGE,
+  position
 });
