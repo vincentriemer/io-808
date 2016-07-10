@@ -12,20 +12,23 @@ const borderRadius = 2;
 class PreScaleSwitch extends React.Component {
   static propTypes = {
     onChange: React.PropTypes.func.isRequired,
-    position: React.PropTypes.number.isRequired
+    position: React.PropTypes.number.isRequired,
+    offset: React.PropTypes.number
   };
 
   render() {
+    const {offset=0, ...passProps} = this.props;
+
     const titlePadding = 5;
 
     const styles = {
       wrapper: {
         position: 'relative',
-        top: -1*titlePadding,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        right: offset
       },
 
       title: {
@@ -73,7 +76,7 @@ class PreScaleSwitch extends React.Component {
             <div style={styles.label}>4</div>
           </div>
           <Switch
-            {...this.props}
+            {...passProps}
             direction='vertical'
             numPositions={4}
             thickness={25}

@@ -5,6 +5,7 @@ import {grey, darkGrey, buttonColor} from '../../theme/variables';
 import { labelDarkGrey } from '../../theme/mixins';
 
 import TimeSignatureSection from '../timeSignatureSection';
+import ArrowLabel from '../../components/arrowLabel';
 
 import {
   ConnectedBasicVariationSwitch,
@@ -48,6 +49,9 @@ class BottomSection extends React.Component {
       STEP_CONTROL_WRAPPER_HEIGHT = SEQUENCER_SECTION_HEIGHT - TIME_SIG_WRAPPER_HEIGHT;
 
     const LEFT_SECTION_HEIGHT =  height - BACKGROUND_PADDING - BACKGROUND_BOTTOM_HEIGHT;
+
+    const STEP_BUTTON_LABEL_HEIGHT = 22;
+    const STEP_BUTTON_HEIGHT = STEP_CONTROL_WRAPPER_HEIGHT - STEP_BUTTON_LABEL_HEIGHT;
 
     const horizontalSeparatorStyle = (thickness) => ({
       height: thickness,
@@ -120,12 +124,18 @@ class BottomSection extends React.Component {
       },
       preScaleSection: {
         position: 'absolute',
-        width: PRE_SCALE_SECTION_WIDTH, height: TIME_SIG_WRAPPER_HEIGHT,
+        width: PRE_SCALE_SECTION_WIDTH, height: SEQUENCER_SECTION_HEIGHT,
         top: 0, left: LEFT_WIDTH,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'space-between'
+      },
+      preScaleBottomSection: {
+        width: '100%', height: STEP_CONTROL_WRAPPER_HEIGHT,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
       }
     };
 
@@ -241,7 +251,11 @@ class BottomSection extends React.Component {
             </div>
           </div>
           <div style={styles.preScaleSection}>
-            <ConnectedPreScaleSwitch />
+            <ConnectedPreScaleSwitch offset={STEP_BUTTON_LABEL_HEIGHT / 3} />
+            <div style={styles.preScaleBottomSection}>
+              <ArrowLabel label='STEP NO' width={PRE_SCALE_SECTION_WIDTH - 20} height={STEP_BUTTON_LABEL_HEIGHT}
+                          textColor={darkGrey} backgroundColor={grey} direction='right'/>
+            </div>
           </div>
         </div>
       </div>
