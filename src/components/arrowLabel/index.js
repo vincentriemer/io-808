@@ -1,8 +1,9 @@
 import React from 'react';
 import Radium from 'radium';
 
-import {labelGreyLarge} from '../../theme/mixins';
+import {labelGreyNormal} from '../../theme/mixins';
 
+@Radium
 class ArrowLabel extends React.Component {
   static propTypes = {
     label: React.PropTypes.string.isRequired,
@@ -56,7 +57,7 @@ class ArrowLabel extends React.Component {
       },
 
       label: {
-        ...labelGreyLarge,
+        ...labelGreyNormal,
         color: textColor
       }
     };
