@@ -31,7 +31,7 @@ class SoundSwitch extends React.Component {
     this.props.onChange(this.state.hoverPosition);
   }
 
-  handleMouseHover({ pageX, pageY }) {
+  handleMouseHover({ clientX, clientY }) {
     const { length, padding, direction, numPositions } = this.props;
     const { xPosition, yPosition } = this.state;
 
@@ -40,10 +40,10 @@ class SoundSwitch extends React.Component {
     let currentRelativeCoord = null;
     switch(direction) {
       case HORIZONTAL:
-        currentRelativeCoord = pageX - (xPosition + padding);
+        currentRelativeCoord = clientX - (xPosition + padding);
         break;
       case VERTICAL:
-        currentRelativeCoord = pageY - (yPosition + padding);
+        currentRelativeCoord = clientY - (yPosition + padding);
         break;
     }
 

@@ -35,8 +35,8 @@ class Knob extends React.Component {
 
   handleDrag(e) {
     e.preventDefault();
-    const xPosition = e.pageX;
-    const tempY = e.pageY;
+    const xPosition = e.clientX;
+    const tempY = e.clientY;
     const distance = Math.abs(xPosition - this.state.knobCenter[0]);
     const scale = ((distance / 200) + 1);
 
@@ -49,7 +49,7 @@ class Knob extends React.Component {
       topPosition = (tempY - (BASE_HEIGHT * scale));
     }
 
-    const cursorPos = [e.pageX, e.pageY];
+    const cursorPos = [e.clientX, e.clientY];
     const normalizedValue = (100 - ((tempY - topPosition) * (100 / (BASE_HEIGHT * scale)))) / 100;
 
     const {min, max, step} = this.props;
@@ -78,12 +78,12 @@ class Knob extends React.Component {
       knobRect.top + (knobRect.height / 2)
     ];
 
-    const xPosition = e.pageX;
+    const xPosition = e.clientX;
     const distance = Math.abs(xPosition - knobCenter[0]);
     const scale = ((distance / 200) + 1);
-    const topPosition = e.pageY - ((BASE_HEIGHT * scale) - getNormalizedValue(value, min, max) * (BASE_HEIGHT * scale));
+    const topPosition = e.clientY - ((BASE_HEIGHT * scale) - getNormalizedValue(value, min, max) * (BASE_HEIGHT * scale));
 
-    const cursorPos = [e.pageX, e.pageY];
+    const cursorPos = [e.clientX, e.clientY];
 
     document.addEventListener('mousemove', this.handleDrag, false);
     document.addEventListener('mouseup', this.endDrag, false);
