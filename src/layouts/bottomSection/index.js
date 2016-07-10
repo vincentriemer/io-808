@@ -36,14 +36,13 @@ class BottomSection extends React.Component {
     const SEQUENCER_SECTION_WIDTH = width - (LEFT_WIDTH + RIGHT_WIDTH),
       SEQUENCER_SECTION_HEIGHT = height - BACKGROUND_BOTTOM_HEIGHT - BACKGROUND_PADDING,
       PRE_SCALE_SECTION_WIDTH = topLeftWidth - LEFT_WIDTH,
-      STEP_PADDING = 10,
-      STEPS_SECTION_WIDTH = SEQUENCER_SECTION_WIDTH - PRE_SCALE_SECTION_WIDTH - STEP_PADDING;
+      STEPS_SECTION_WIDTH = SEQUENCER_SECTION_WIDTH - PRE_SCALE_SECTION_WIDTH - BACKGROUND_PADDING;
 
-    const QUARTER_STEP_WIDTH = (STEPS_SECTION_WIDTH / 4) - (STEP_PADDING * 3 / 4);
+    const QUARTER_STEP_WIDTH = (STEPS_SECTION_WIDTH / 4) - (BACKGROUND_PADDING * 3 / 4);
 
     const BACKGROUND_BOTTOM_LEFT_WIDTH = LEFT_WIDTH + PRE_SCALE_SECTION_WIDTH +
-      (QUARTER_STEP_WIDTH * 3) + (STEP_PADDING * 2);
-    const BACKGROUND_BOTTOM_RIGHT_WIDTH = RIGHT_WIDTH + QUARTER_STEP_WIDTH + STEP_PADDING;
+      (QUARTER_STEP_WIDTH * 3) + (BACKGROUND_PADDING * 2);
+    const BACKGROUND_BOTTOM_RIGHT_WIDTH = RIGHT_WIDTH + QUARTER_STEP_WIDTH + BACKGROUND_PADDING;
 
     const TIME_SIG_WRAPPER_HEIGHT = SEQUENCER_SECTION_HEIGHT * 0.5,
       STEP_CONTROL_WRAPPER_HEIGHT = SEQUENCER_SECTION_HEIGHT - TIME_SIG_WRAPPER_HEIGHT;
@@ -221,7 +220,7 @@ class BottomSection extends React.Component {
           <div style={backgroundStyles.center}></div>
           <div style={backgroundStyles.timeSignatureSectionWrapper}>
             <TimeSignatureSection width={STEPS_SECTION_WIDTH} height={TIME_SIG_WRAPPER_HEIGHT}
-                                  stepPadding={STEP_PADDING} quarterStepWidth={QUARTER_STEP_WIDTH} />
+                                  stepPadding={BACKGROUND_PADDING} quarterStepWidth={QUARTER_STEP_WIDTH} />
           </div>
         </div>
         <div style={styles.controlWrapper}>
