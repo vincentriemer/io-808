@@ -2,6 +2,7 @@
 rm -rf out || exit 0;
 mkdir out;
 npm run build;
+cp CNAME out/CNAME
 ( cd out
  git init
  git config user.name "Travis-CI"
