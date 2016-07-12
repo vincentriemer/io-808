@@ -1,5 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
@@ -7,10 +9,20 @@ module.exports = {
     './src/index'
   ],
   output: {
-    path: path.join(__dirname, 'out', 'dist'),
+    path: path.join(__dirname, 'out'),
     filename: 'bundle.js',
     publicPath: '/dist/'
   },
+  module: {
+    loaders: [
+      { test: /\.jade$/, loader: 'jade' },
+      { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader') },
+      { test: /\.js$/, loaders: ['babel'], include: path.join(__dirname, 'src') }
+    ]
+  },
+  postcss: [
+    require('autoprefixer')
+  ],
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.DefinePlugin({
@@ -22,15 +34,24 @@ module.exports = {
       compressor: {
         warnings: false
       }
-    })
+    }),
+    new HtmlWebpackPlugin({
+      inject: false,
+      cache: false,
+      minify: {
+        collapseWhitespace: true,
+        html5: true,
+        minifyCSS: true,
+        minifyJS: true,
+        removeComments: true,
+        useShortDoctype: true
+      },
+      template: 'src/index.jade',
+      filename: 'index.html',
+      title: 'io-808'
+    }),
+    new ExtractTextPlugin('styles.css')
   ],
-  module: {
-    loaders: [{
-      test: /\.js$/,
-      loaders: ['babel'],
-      include: path.join(__dirname, 'src')
-    }]
-  },
   resolve: {
     alias: {
       'react': 'react-lite',
