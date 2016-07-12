@@ -14,10 +14,7 @@ render(
   document.getElementById('root'),
   () => {
     var loaderElement = document.getElementById('loader');
-    loaderElement.className = "loader done";
+    loaderElement.className = "loader-wrapper done";
     document.getElementById('root').className = "";
-    window.setTimeout(() => {
-      loaderElement.className = "";
-    }, 1000);
   }
 );

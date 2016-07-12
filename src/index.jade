@@ -31,8 +31,8 @@ html
         each cssFile in htmlWebpackPlugin.files.css
             style !{compilation.assets[cssFile.substr(htmlWebpackPlugin.files.publicPath.length)].source()}
     body
-        div.loader-wrapper
-            #loader.loader
+        #loader.loader-wrapper
+            div.loader
         #root.rendering
         each jsFile in htmlWebpackPlugin.files.js
             script(type="text/javascript" src="#{jsFile}" async)
