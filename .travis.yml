@@ -11,8 +11,6 @@ before_script:
 - npm prune
 after_success:
 - npm run deploy
-- sleep 1m
-- bash speedcurve.sh
 env:
   global:
   - GH_REF: github.com/vincentriemer/io-808.git
