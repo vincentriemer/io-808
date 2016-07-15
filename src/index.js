@@ -13,7 +13,8 @@ render(
   <Provider store={store}><App /></Provider>,
   document.getElementById('root'),
   () => {
-    if ('performance' in Window) Window.performance.mark('first_layout_render');
+    if ('performance' in window && 'mark' in window.performance)
+      performance.mark('first_layout_render');
     var loaderElement = document.getElementById('loader');
     loaderElement.className = "loader-wrapper done";
     document.getElementById('root').className = "";
