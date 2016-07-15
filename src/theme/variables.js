@@ -30,5 +30,6 @@ export const xSmallSize = '9px';
 export const smallSize = '11px';
 export const normalSize = '13px';
 export const largeSize = '17px';
+export const xLargeSize = '27px';
 export const letterSpacing = '-0.2px';
 export const textAlign = 'center';

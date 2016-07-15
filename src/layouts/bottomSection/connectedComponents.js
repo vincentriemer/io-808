@@ -4,7 +4,8 @@ import {
   onStartStopButtonClick,
   onIFVariationChange,
   onTapButtonClick,
-  onPreScaleChange
+  onPreScaleChange,
+  onStepButtonClick
 } from '../../actionCreators';
 
 import BasicVariationSwitch from '../../components/basicVariationSwitch/basicVariationSwitch';
@@ -12,6 +13,7 @@ import Button from '../../components/button/button';
 import IFVariationSwitch from '../../components/IFVariationSwtich/IFVariationSwitch';
 import PreScaleSwitch from '../../components/preScaleSwitch/preScaleSwitch';
 import PartLights from '../../components/partLights';
+import StepButton from '../../components/stepButton';
 
 export const ConnectedBasicVariationSwitch = (() => {
   // TODO: properly infer state of aActive and bActive
@@ -61,9 +63,9 @@ export const ConnectedPreScaleSwitch = (() => {
     position: state.preScaleSwitch
   });
 
-  const mapDispatchToProps = (dispatch) => (() => ({
+  const mapDispatchToProps = (dispatch) => ({
     onChange: (position) => dispatch(onPreScaleChange(position))
-  }));
+  });
 
   return connect(mapStateToProps, mapDispatchToProps)(PreScaleSwitch);
 })();
@@ -76,4 +78,23 @@ export const ConnectedPartLights = (() => {
   });
 
   return connect(null, mapStateToProps)(PartLights);
+})();
+
+export const ConnectedStepButtons = (() => {
+  const buttons = [];
+
+  for(let i = 0; i < 16; i++) {
+    // TODO: properly infer state
+    const mapStateToProps = (state) => ({
+      active: false
+    });
+
+    const mapDispatchToProps = (dispatch) => ({
+      onClick: () => dispatch(onStepButtonClick(i))
+    });
+
+    buttons.push(connect(mapStateToProps, mapDispatchToProps)(StepButton));
+  }
+
+  return buttons;
 })();

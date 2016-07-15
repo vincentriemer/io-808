@@ -1,8 +1,8 @@
 import React from 'react';
 import Radium from 'radium';
 
-import {grey, darkGrey, buttonColor} from '../../theme/variables';
-import { labelDarkGrey } from '../../theme/mixins';
+import {grey, darkGrey, buttonColor, red, buttonOrange, yellow, offWhite, drumLabel} from '../../theme/variables';
+import { labelDarkGrey, labelGreyNormal, labelGreyXLarge } from '../../theme/mixins';
 
 import TimeSignatureSection from '../timeSignatureSection';
 import ArrowLabel from '../../components/arrowLabel';
@@ -13,7 +13,8 @@ import {
   ConnectedIFVariationSwitch,
   ConnectedTapButton,
   ConnectedPreScaleSwitch,
-  ConnectedPartLights
+  ConnectedPartLights,
+  ConnectedStepButtons
 } from './connectedComponents';
 
 @Radium
@@ -22,6 +23,68 @@ class BottomSection extends React.Component {
     width: React.PropTypes.number.isRequired,
     height: React.PropTypes.number.isRequired,
     topLeftWidth: React.PropTypes.number.isRequired
+  };
+
+  static RHYTHM_LABELS = [1,2,3,4,5,6,7,8,9,10,11,12,1,2,3,4];
+  static STEP_BUTTON_COLORS = [
+    red,red,red,red,
+    buttonOrange,buttonOrange,buttonOrange,buttonOrange,
+    yellow,yellow,yellow,yellow,
+    offWhite,offWhite,offWhite,offWhite
+  ];
+
+  static generateStepButtons(width, buttonHeight, labelHeight, bottomHeight, padding) {
+    const labeledButtons = [];
+    const buttonWidth = (width / 16) - (padding * 15 / 16);
+    const stepButtonHeight = buttonHeight - padding;
+
+    const styles = {
+      wrapper: {
+        width: buttonWidth,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+      },
+
+      stepLabelWrapper: {
+        height: labelHeight,
+        display: 'flex',
+        alignItems: 'center'
+      },
+
+      stepLabel: {
+        ...labelGreyNormal,
+        color: drumLabel
+      },
+
+      rhythmLabelWrapper: {
+        marginTop: padding,
+        height: bottomHeight,
+        display: 'flex',
+        alignItems: 'center'
+      },
+
+      rhythmLabel: {
+        ...labelGreyXLarge,
+        color: darkGrey
+      }
+    };
+
+    ConnectedStepButtons.forEach((StepButton, index) => {
+      labeledButtons.push(
+        <div key={`stepbutton-${index}`} style={styles.wrapper}>
+          <div style={styles.stepLabelWrapper}>
+            <div style={styles.stepLabel}>{index}</div>
+          </div>
+          <StepButton width={buttonWidth} height={stepButtonHeight} color={this.STEP_BUTTON_COLORS[index]} />
+          <div style={styles.rhythmLabelWrapper}>
+            <div style={styles.rhythmLabel}>{this.RHYTHM_LABELS[index]}</div>
+          </div>
+        </div>
+      );
+    });
+
+    return labeledButtons;
   };
 
   render() {
@@ -52,6 +115,7 @@ class BottomSection extends React.Component {
 
     const STEP_BUTTON_LABEL_HEIGHT = 18;
     const STEP_BUTTON_HEIGHT = STEP_CONTROL_WRAPPER_HEIGHT - STEP_BUTTON_LABEL_HEIGHT;
+    const STEP_BUTTON_SECTION_HEIGHT = STEP_BUTTON_LABEL_HEIGHT + STEP_BUTTON_HEIGHT + BACKGROUND_BOTTOM_HEIGHT;
 
     const horizontalSeparatorStyle = (thickness) => ({
       height: thickness,
@@ -136,6 +200,15 @@ class BottomSection extends React.Component {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center'
+      },
+      stepButtonSection: {
+        position: 'absolute',
+        width: STEPS_SECTION_WIDTH,
+        height: STEP_BUTTON_SECTION_HEIGHT,
+        top: STEP_CONTROL_WRAPPER_HEIGHT, left: LEFT_WIDTH + PRE_SCALE_SECTION_WIDTH,
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'stretch'
       }
     };
 
@@ -259,6 +332,10 @@ class BottomSection extends React.Component {
                                    width={PRE_SCALE_SECTION_WIDTH}
                                    height={STEP_BUTTON_HEIGHT}/>
             </div>
+          </div>
+          <div style={styles.stepButtonSection}>
+            {BottomSection.generateStepButtons(STEPS_SECTION_WIDTH, STEP_BUTTON_HEIGHT, STEP_BUTTON_LABEL_HEIGHT,
+              BACKGROUND_BOTTOM_HEIGHT, BACKGROUND_PADDING)}
           </div>
         </div>
       </div>

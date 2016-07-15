@@ -20,6 +20,7 @@ function loadStories() {
   require('../src/components/appTitle/story');
   require('../src/components/arrowLabel/story');
   require('../src/components/partLights/story');
+  require('../src/components/stepButton/story');
 }
 
 configure(loadStories, module);

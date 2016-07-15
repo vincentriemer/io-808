@@ -1,5 +1,6 @@
 import {
-  fontFamily, fontWeight, textAlign, letterSpacing, normalSize, largeSize, smallSize, xSmallSize, grey, darkGrey
+  fontFamily, fontWeight, textAlign, letterSpacing, normalSize, largeSize, smallSize, xSmallSize,
+  grey, darkGrey, xLargeSize
 } from './variables';
 
 // TYPOGRAPHY PRESETS ==========================
@@ -17,6 +18,14 @@ export const labelGreyLarge = {
   ...basePreset,
   fontSize: largeSize,
   color: grey
+};
+
+export const labelGreyXLarge = {
+  ...basePreset,
+  fontSize: xLargeSize,
+  color: grey,
+  letterSpacing: '-1px',
+  padding: 2
 };
 
 export const labelGreySmall = {
