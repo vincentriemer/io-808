@@ -117,6 +117,8 @@ class BottomSection extends React.Component {
     const STEP_BUTTON_HEIGHT = STEP_CONTROL_WRAPPER_HEIGHT - STEP_BUTTON_LABEL_HEIGHT;
     const STEP_BUTTON_SECTION_HEIGHT = STEP_BUTTON_LABEL_HEIGHT + STEP_BUTTON_HEIGHT + BACKGROUND_BOTTOM_HEIGHT;
 
+    const ARROW_LABEL_HEIGHT = STEP_BUTTON_LABEL_HEIGHT;
+
     const horizontalSeparatorStyle = (thickness) => ({
       height: thickness,
       backgroundColor: darkGrey
@@ -209,6 +211,24 @@ class BottomSection extends React.Component {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'stretch'
+      },
+      basicRhythmArrowWrapper: {
+        position: 'absolute',
+        width: LEFT_WIDTH + PRE_SCALE_SECTION_WIDTH,
+        height: BACKGROUND_BOTTOM_HEIGHT,
+        left: 25, top: BACKGROUND_CENTER_HEIGHT,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      },
+      iFArrowWrapper: {
+        position: 'absolute',
+        width: RIGHT_WIDTH,
+        height: BACKGROUND_BOTTOM_HEIGHT,
+        right: 12.5, top: BACKGROUND_CENTER_HEIGHT,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
       }
     };
 
@@ -326,7 +346,7 @@ class BottomSection extends React.Component {
           <div style={styles.preScaleSection}>
             <ConnectedPreScaleSwitch offset={STEP_BUTTON_LABEL_HEIGHT / 3} />
             <div style={styles.preScaleBottomSection}>
-              <ArrowLabel label='STEP NO' width={PRE_SCALE_SECTION_WIDTH - 20} height={STEP_BUTTON_LABEL_HEIGHT}
+              <ArrowLabel label='STEP NO' width={PRE_SCALE_SECTION_WIDTH - 20} height={ARROW_LABEL_HEIGHT}
                           textColor={darkGrey} backgroundColor={grey} direction='right'/>
               <ConnectedPartLights offset={STEP_BUTTON_LABEL_HEIGHT / 3}
                                    width={PRE_SCALE_SECTION_WIDTH}
@@ -336,6 +356,14 @@ class BottomSection extends React.Component {
           <div style={styles.stepButtonSection}>
             {BottomSection.generateStepButtons(STEPS_SECTION_WIDTH, STEP_BUTTON_HEIGHT, STEP_BUTTON_LABEL_HEIGHT,
               BACKGROUND_BOTTOM_HEIGHT, BACKGROUND_PADDING)}
+          </div>
+          <div style={styles.basicRhythmArrowWrapper}>
+            <ArrowLabel label="BASIC RHYTHM" width={140} height={25} direction='right'
+                        textColor={grey} backgroundColor={darkGrey}/>
+          </div>
+          <div style={styles.iFArrowWrapper}>
+            <ArrowLabel label="INTRO/FILL IN" width={140} height={25} direction='left'
+                        textColor={grey} backgroundColor={darkGrey}/>
           </div>
         </div>
       </div>
