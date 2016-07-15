@@ -19,6 +19,7 @@ function loadStories() {
   require('../src/layouts/instrumentColumn/story');
   require('../src/components/appTitle/story');
   require('../src/components/arrowLabel/story');
+  require('../src/components/partLights/story');
 }
 
 configure(loadStories, module);

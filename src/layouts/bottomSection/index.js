@@ -12,7 +12,8 @@ import {
   ConnectedStartStopButton,
   ConnectedIFVariationSwitch,
   ConnectedTapButton,
-  ConnectedPreScaleSwitch
+  ConnectedPreScaleSwitch,
+  ConnectedPartLights
 } from './connectedComponents';
 
 @Radium
@@ -254,6 +255,9 @@ class BottomSection extends React.Component {
             <div style={styles.preScaleBottomSection}>
               <ArrowLabel label='STEP NO' width={PRE_SCALE_SECTION_WIDTH - 20} height={STEP_BUTTON_LABEL_HEIGHT}
                           textColor={darkGrey} backgroundColor={grey} direction='right'/>
+              <ConnectedPartLights offset={STEP_BUTTON_LABEL_HEIGHT / 3}
+                                   width={PRE_SCALE_SECTION_WIDTH}
+                                   height={STEP_BUTTON_HEIGHT}/>
             </div>
           </div>
         </div>

@@ -11,12 +11,14 @@ import BasicVariationSwitch from '../../components/basicVariationSwitch/basicVar
 import Button from '../../components/button/button';
 import IFVariationSwitch from '../../components/IFVariationSwtich/IFVariationSwitch';
 import PreScaleSwitch from '../../components/preScaleSwitch/preScaleSwitch';
+import PartLights from '../../components/partLights';
 
 export const ConnectedBasicVariationSwitch = (() => {
+  // TODO: properly infer state of aActive and bActive
   const mapStateToProps = (state) => ({
-    position: state.basicVariation.position,
-    aActive: state.basicVariation.aActive,
-    bActive: state.basicVariation.bActive
+    position: state.basicVariation,
+    aActive: false,
+    bActive: false
   });
 
   const mapDispatchToProps = (dispatch) => ({
@@ -64,4 +66,14 @@ export const ConnectedPreScaleSwitch = (() => {
   }));
 
   return connect(mapStateToProps, mapDispatchToProps)(PreScaleSwitch);
+})();
+
+export const ConnectedPartLights = (() => {
+  // TODO: properly infer state of firstActive and secondActive
+  const mapStateToProps = (state) => ({
+    firstActive: false,
+    secondActive: false
+  });
+
+  return connect(null, mapStateToProps)(PartLights);
 })();
