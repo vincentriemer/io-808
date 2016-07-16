@@ -74,7 +74,7 @@ class KnobOverlay extends React.Component {
       <Gateway into="knobOverlay">
         <div style={styles.overlay}>
           <svg width={windowWidth} height={windowHeight}>
-            <path {...strokeProps(knobPath)} />
+            <path {...strokeProps(knobPath)} strokeOpacity={0.5} />
             <path {...strokeProps(topPath)} />
             <path {...strokeProps(centerPath)} />
             <path {...strokeProps(bottomPath)} />
