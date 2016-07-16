@@ -8,10 +8,10 @@ import SelectorKnobInner from '../selectorKnobInner/selectorKnobInner';
 import { grey } from '../../theme/variables';
 import { labelGreySmall, labelGreyNormal, labelGreyLarge, ring } from '../../theme/mixins';
 
-const labelHeight = 30;
+const labelHeight = 33;
 
 const guideValues = [
-  <div style={{transform: 'translateX(-25px)'}}>MANUAL</div>,
+  <div style={{transform: 'translateX(-15px)'}}>MANUAL</div>,
   16,12,8,4,2
 ];
 guideValues.push();
@@ -35,7 +35,7 @@ class AutoFillInKnob extends React.Component {
         width: size, height: size
       },
 
-      labelGuide: labelGreyNormal,
+      labelGuide: labelGreySmall,
 
       dotGuide: {
         width: 5, height: 5,
@@ -47,7 +47,7 @@ class AutoFillInKnob extends React.Component {
 
       labelWrapper: {
         position: 'relative',
-        transform: 'translateY(-100%)',
+        transform: 'translateY(-70%)',
         width: size, height: labelHeight,
         display: 'flex',
         flexDirection: 'column',
@@ -66,8 +66,8 @@ class AutoFillInKnob extends React.Component {
     return (
       <div style={styles.wrapper}>
         <div style={styles.controlWrapper}>
-          <Guides num={6} distance={58} hideCount={6} guideStyle={styles.dotGuide} />
-          <Guides distance={73} hideCount={5.5} values={guideValues} rotate={false} guideStyle={styles.labelGuide} />
+          <Guides num={6} distance={size*0.29} hideCount={6} guideStyle={styles.dotGuide} />
+          <Guides distance={size*0.37} hideCount={5.5} values={guideValues} rotate={false} guideStyle={styles.labelGuide} />
           <div style={styles.knobWrapper}>
             <Knob
               value={value}

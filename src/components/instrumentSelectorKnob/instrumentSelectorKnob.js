@@ -52,7 +52,7 @@ class InstrumentSelectorKnob extends React.Component {
         backgroundColor: drumLabel,
         borderRadius: 3,
         textAlign: 'center',
-        width: 35,
+        width: 27,
         paddingTop: 2, paddingBottom: 2
       }
     };
@@ -60,8 +60,8 @@ class InstrumentSelectorKnob extends React.Component {
     return (
       <div style={styles.wrapper}>
         <div style={styles.controlWrapper}>
-          <Guides distance={58} offset={15} rotate={false} values={guideNumbers} guideStyle={styles.numberGuides} />
-          <Guides distance={85} offset={15} rotate={false} values={guideLabels} guideStyle={styles.labelGuides} />
+          <Guides distance={size*0.30} offset={15} rotate={false} values={guideNumbers} guideStyle={styles.numberGuides} />
+          <Guides distance={size*0.45} offset={15} rotate={false} values={guideLabels} guideStyle={styles.labelGuides} />
           <div style={styles.knobWrapper}>
             <Knob
               value={value}

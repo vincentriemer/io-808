@@ -7,6 +7,7 @@ import { GatewayProvider, GatewayDest } from 'react-gateway';
 import {darkGrey, grey} from '../../theme/variables';
 
 // Components
+import TopLeftSection from '../topLeftSection';
 import TopRightSection from '../topRightSection';
 import BottomSection from '../bottomSection';
 
@@ -20,8 +21,8 @@ const BOTTOM_HEIGHT = (APP_HEIGHT * 0.35) - (TOP_BOTTOM_DIVIDER_HEIGHT * 2);
 
 const INSTRUMENT_SEPERATOR_WIDTH = 1;
 
-const TOP_LEFT_WIDTH = (APP_WIDTH * 0.22) - INSTRUMENT_SEPERATOR_WIDTH;
-const TOP_RIGHT_WIDTH = (APP_WIDTH * 0.78) - INSTRUMENT_SEPERATOR_WIDTH;
+const TOP_LEFT_WIDTH = (APP_WIDTH * 0.23) - INSTRUMENT_SEPERATOR_WIDTH;
+const TOP_RIGHT_WIDTH = (APP_WIDTH * 0.77) - INSTRUMENT_SEPERATOR_WIDTH;
 
 const TOP_HORIZONTAL_SEPERATOR_HEIGHT = TOP_HEIGHT - 10;
 
@@ -63,10 +64,6 @@ class App extends React.Component {
 
       bottomWrapper: {
         width: APP_WIDTH, height: BOTTOM_HEIGHT
-      },
-
-      topLeftWrapper: {
-        width: TOP_LEFT_WIDTH, height: TOP_HEIGHT
       }
     };
 
@@ -78,7 +75,7 @@ class App extends React.Component {
             <div style={styles.appWrapper}>
             <div style={styles.topBottomDivider}></div>
               <div style={styles.topWrapper}>
-                <div style={styles.topLeftWrapper}></div>
+                <TopLeftSection width={TOP_LEFT_WIDTH} height={TOP_HEIGHT} />
                 <div style={styles.topHorizontalDivider}></div>
                 <TopRightSection width={TOP_RIGHT_WIDTH} height={TOP_HEIGHT}
                                  seperatorWidth={INSTRUMENT_SEPERATOR_WIDTH} />

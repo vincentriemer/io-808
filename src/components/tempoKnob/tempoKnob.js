@@ -20,13 +20,13 @@ for (let i = 0; i < 41; i++) {
   }}></div>);
 }
 
-const labelHeight= 30;
+const labelHeight= 25;
 
 @Radium
 class TempoKnob extends React.Component {
   render() {
     const {value, onChange, size=216} = this.props;
-    const knobSize = 216 * 0.75;
+    const knobSize = size * 0.75;
 
     const styles = {
       wrapper: {
@@ -69,9 +69,9 @@ class TempoKnob extends React.Component {
         </div>
         <div style={styles.controlWrapper}>
           <div style={styles.ringOuter}></div>
-          <Guides distance={99} hideCount={1} values={guideNumbers} rotate={false} guideStyle={styles.labelGuides} />
+          <Guides distance={size*0.46} hideCount={1} values={guideNumbers} rotate={false} guideStyle={styles.labelGuides} />
           <div style={styles.ringInner}></div>
-          <Guides num={41} distance={85.25} hideCount={7} values={guideValues} />
+          <Guides num={41} distance={size*0.39} hideCount={7} values={guideValues} />
           <div style={styles.knobWrapper}>
             <Knob
               value={value}

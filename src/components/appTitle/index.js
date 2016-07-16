@@ -6,7 +6,7 @@ import { labelGreyLarge } from '../../theme/mixins';
 
 const lineHeight = 3;
 const titleRight = 60;
-const lineTop = 55;
+const lineTop = 55.2;
 
 @Radium
 class AppTitle extends React.Component {
@@ -47,7 +47,7 @@ class AppTitle extends React.Component {
         marginRight: 40,
         color: stencilOrange,
         fontSize: 50,
-        textShadow: `0.3rem 0 ${darkGrey},0.3rem 0 ${darkGrey},-0.3rem 0 ${darkGrey},-0.3rem 0 ${darkGrey}`
+        textShadow: `0.3rem 0 ${darkGrey},0.3rem 0rem ${darkGrey},-0.3rem -0 ${darkGrey},-0.3rem 0 ${darkGrey}`
       },
 
       titleSmall: {

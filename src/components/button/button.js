@@ -15,6 +15,8 @@ class Button extends React.Component {
   }
 
   render() {
+    const {style, children} = this.props;
+
     const styles = {
       button: {
         backgroundColor: grey,
@@ -23,18 +25,18 @@ class Button extends React.Component {
         transform: 'scale(1.0) translateZ(0)',
         ':hover': {
           cursor: 'pointer',
-          transform: 'scale(1.025) translateZ(0)'
+          transform: style.transform ? style.transform : '' + 'scale(1.04) translateZ(0)'
         },
         ':active': {
-          transform: 'scale(1.0) translateZ(0)'
+          transform: style.transform ? style.transform : '' + 'scale(1.0) translateZ(0)'
         },
         userSelect: 'none'
       }
     };
 
     return (
-      <div style={[styles.button, this.props.style]} onClick={this.handleClick}>
-        {this.props.children}
+      <div style={[styles.button, style]} onClick={this.handleClick}>
+        {children}
       </div>
     );
   }

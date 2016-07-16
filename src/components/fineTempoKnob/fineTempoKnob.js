@@ -8,7 +8,7 @@ import SelectorKnobInner from '../selectorKnobInner/selectorKnobInner';
 import { grey } from '../../theme/variables';
 import { ring, labelGreyNormal, labelGreySmall } from '../../theme/mixins';
 
-const labelHeight = 30;
+const labelHeight = 20;
 
 @Radium
 class FineTempoKnob extends React.Component {
@@ -53,7 +53,7 @@ class FineTempoKnob extends React.Component {
         flexDirection: 'row',
         justifyContent: 'space-between',
         height: 20, width: '150%',
-        bottom: '-18%', left: '50%',
+        bottom: '-23%', left: '50%',
         transform: 'translateX(-50%)'
       },
 
@@ -71,7 +71,7 @@ class FineTempoKnob extends React.Component {
           <div style={styles.label}>FINE</div>
         </div>
         <div style={styles.controlWrapper}>
-          <Guides num={11} distance={34} hideCount={1} guideStyle={styles.guides}/>
+          <Guides num={11} distance={size*0.48} hideCount={1} guideStyle={styles.guides}/>
           <div style={styles.knobWrapper}>
             <Knob
               value={value}

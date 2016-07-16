@@ -6,8 +6,39 @@ import {
   IF_VARIATION_CHANGE,
   TAP_BUTTON_CLICK,
   PRE_SCALE_CHANGE,
-  STEP_BUTTON_CLICK
+  STEP_BUTTON_CLICK,
+  CLEAR_CLICK,
+  AUTO_FILL_IN_CHANGE,
+  FINE_TEMPO_CHANGE,
+  INSTRUMENT_TRACK_CHANGE,
+  MODE_CHANGE,
+  TEMPO_CHANGE
 } from './actionTypes';
+
+export const onAutoFillInChange = (value) => ({
+  type: AUTO_FILL_IN_CHANGE,
+  value
+});
+
+export const onFineTempoChange = (value) => ({
+  type: FINE_TEMPO_CHANGE,
+  value
+});
+
+export const onInstrumentTrackChange = (value) => ({
+  type: INSTRUMENT_TRACK_CHANGE,
+  value
+});
+
+export const onModeChange = (value) => ({
+  type: MODE_CHANGE,
+  value
+});
+
+export const onTempoChange = (value) => ({
+  type: TEMPO_CHANGE,
+  value
+});
 
 export const onInstrumentChange = (type, controlName, value) => ({
   type: INSTRUMENT_CHANGE,
@@ -47,4 +78,8 @@ export const onPreScaleChange = (position) => ({
 export const onStepButtonClick = (index) => ({
   type: STEP_BUTTON_CLICK,
   index
+});
+
+export const onClearClick = () => ({
+  type: CLEAR_CLICK
 });

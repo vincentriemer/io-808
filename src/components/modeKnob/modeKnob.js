@@ -15,6 +15,7 @@ class ModeKnob extends React.Component {
 
     const styles = {
       wrapper: {
+        position: 'relative',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'stretch',
@@ -39,7 +40,7 @@ class ModeKnob extends React.Component {
     return (
       <div style={styles.wrapper}>
         <div style={styles.controlWrapper}>
-          <Guides num={6} distance={58} hideCount={6} guideStyle={styles.guides} />
+          <Guides num={6} distance={size*0.58} hideCount={6} guideStyle={styles.guides} />
           <div style={styles.knobWrapper}>
             <Knob
               value={value}
