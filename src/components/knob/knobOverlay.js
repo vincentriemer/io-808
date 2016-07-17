@@ -86,18 +86,4 @@ class KnobOverlay extends React.Component {
   }
 }
 
-/*
- <Surface
- style={styles.overlay}
- width={this.state.windowWidth}
- height={this.state.windowHeight}
- >
- <Shape {...strokeProps(knobPath)} />
- <Shape {...strokeProps(topPath)} />
- <Shape {...strokeProps(centerPath)} />
- <Shape {...strokeProps(bottomPath)} />
- <Shape {...strokeProps(bodyPath)} />
- </Surface>
- */
-
 export default KnobOverlay;
