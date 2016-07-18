@@ -11,6 +11,10 @@ export const LABEL_HEIGHT = 30;
 
 @Radium
 class DrumKnob extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    return nextProps.value !== this.props.value;
+  }
+
   render() {
     const {value, onChange, size=75, label='', level=false} = this.props;
 

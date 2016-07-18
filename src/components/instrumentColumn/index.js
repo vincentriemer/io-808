@@ -19,7 +19,7 @@ class InstrumentColumn extends React.Component {
     onChange: React.PropTypes.func.isRequired,
     width: React.PropTypes.number.isRequired,
     height: React.PropTypes.number.isRequired
-  }
+  };
 
   render() {
     const { config: { type, labels, controls }, controlState, onChange, width, height } = this.props;
