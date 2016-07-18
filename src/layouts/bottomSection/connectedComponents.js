@@ -8,6 +8,7 @@ import {
   onStepButtonClick
 } from '../../actionCreators';
 
+// Components
 import BasicVariationSwitch from '../../components/basicVariationSwitch/basicVariationSwitch';
 import Button from '../../components/button/button';
 import IFVariationSwitch from '../../components/IFVariationSwtich/IFVariationSwitch';
@@ -15,10 +16,16 @@ import PreScaleSwitch from '../../components/preScaleSwitch/preScaleSwitch';
 import PartLights from '../../components/partLights';
 import StepButton from '../../components/stepButton';
 
+// Selectors
+import StepButtonSelectorFactory from '../../selectors/stepButton';
+
+// Constants
+import {FIRST_PART, SECOND_PART} from '../../constants';
+
 export const ConnectedBasicVariationSwitch = (() => {
   // TODO: properly infer state of aActive and bActive
   const mapStateToProps = (state) => ({
-    position: state.basicVariation,
+    position: state.basicVariationPosition,
     aActive: false,
     bActive: false
   });
@@ -40,7 +47,7 @@ export const ConnectedStartStopButton = (() => {
 
 export const ConnectedIFVariationSwitch = (() => {
   const mapStateToProps = (state) => ({
-    position: state.IFVariation
+    position: state.introFillVariationPosition
   });
 
   const mapDispatchToProps = (dispatch) => ({
@@ -60,7 +67,7 @@ export const ConnectedTapButton = (() => {
 
 export const ConnectedPreScaleSwitch = (() => {
   const mapStateToProps = (state) => ({
-    position: state.preScaleSwitch
+    position: 2
   });
 
   const mapDispatchToProps = (dispatch) => ({
@@ -73,20 +80,21 @@ export const ConnectedPreScaleSwitch = (() => {
 export const ConnectedPartLights = (() => {
   // TODO: properly infer state of firstActive and secondActive
   const mapStateToProps = (state) => ({
-    firstActive: false,
-    secondActive: false
+    firstActive: state.currentPart === FIRST_PART,
+    secondActive: state.currentPart === SECOND_PART
   });
 
-  return connect(null, mapStateToProps)(PartLights);
+  return connect(mapStateToProps, null)(PartLights);
 })();
 
 export const ConnectedStepButtons = (() => {
   const buttons = [];
 
   for(let i = 0; i < 16; i++) {
-    // TODO: properly infer state
+    const selector = StepButtonSelectorFactory(i);
+
     const mapStateToProps = (state) => ({
-      active: false
+      active: selector(state)
     });
 
     const mapDispatchToProps = (dispatch) => ({

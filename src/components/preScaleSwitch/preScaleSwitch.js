@@ -17,7 +17,7 @@ class PreScaleSwitch extends React.Component {
   };
 
   render() {
-    const {offset=0, ...passProps} = this.props;
+    const {offset=0, position} = this.props;
 
     const titlePadding = 5;
 
@@ -76,7 +76,8 @@ class PreScaleSwitch extends React.Component {
             <div style={styles.label}>4</div>
           </div>
           <Switch
-            {...passProps}
+            onChange={() => {}}
+            position={position}
             direction='vertical'
             numPositions={4}
             thickness={25}

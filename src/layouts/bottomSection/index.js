@@ -197,6 +197,11 @@ class BottomSection extends React.Component {
         alignItems: 'center',
         justifyContent: 'space-between'
       },
+      preScaleSwitchWrapper: {
+        // disable switch until prescale functionality is implemented (stretch-goal)
+        pointerEvents: 'none',
+        opacity: 0.6
+      },
       preScaleBottomSection: {
         width: '100%', height: STEP_CONTROL_WRAPPER_HEIGHT,
         display: 'flex',
@@ -344,7 +349,9 @@ class BottomSection extends React.Component {
             </div>
           </div>
           <div style={styles.preScaleSection}>
-            <ConnectedPreScaleSwitch offset={STEP_BUTTON_LABEL_HEIGHT / 3} />
+            <div style={styles.preScaleSwitchWrapper}>
+              <ConnectedPreScaleSwitch position={2} offset={STEP_BUTTON_LABEL_HEIGHT / 3} />
+            </div>
             <div style={styles.preScaleBottomSection}>
               <ArrowLabel label='STEP NO' width={PRE_SCALE_SECTION_WIDTH - 20} height={ARROW_LABEL_HEIGHT}
                           textColor={darkGrey} backgroundColor={grey} direction='right'/>

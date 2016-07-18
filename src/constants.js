@@ -17,3 +17,13 @@ export const MODE_SECOND_PART = 2;
 export const MODE_MANUAL_PLAY = 3;
 export const MODE_RHYTHM_TRACK_PLAY = 4;
 export const MODE_RHYTHM_TRACK_COMPOSE = 5;
+
+export const FIRST_PART = 'FIRST_PART';
+export const SECOND_PART = 'SECOND_PART';
+export const A_VARIATION = 'A_VARIATION';
+export const B_VARIATION = 'B_VARIATION';
+
+export const MODE_TO_PART_MAPPING = {
+  [MODE_FIRST_PART]: FIRST_PART,
+  [MODE_SECOND_PART]: SECOND_PART
+};

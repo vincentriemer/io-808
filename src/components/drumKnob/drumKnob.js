@@ -98,7 +98,7 @@ class DrumKnob extends React.Component {
             <Guides num={11} distance={size / 3} hideCount={1} guideStyle={styles.guide} />
           </div>
           <div style={styles.knobWrapper}>
-            <Knob value={value} onChange={onChange} size={knobSize} min={0} max={maxValue} step={1} bufferSize={300}>
+            <Knob value={value} onChange={onChange} size={knobSize} min={0} max={maxValue} step={2} bufferSize={300}>
               <div style={styles.inner}>
                 <div style={styles.handle}></div>
               </div>

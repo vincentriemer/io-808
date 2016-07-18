@@ -17,27 +17,27 @@ import {
 
 export const onAutoFillInChange = (value) => ({
   type: AUTO_FILL_IN_CHANGE,
-  value
+  payload: value
 });
 
 export const onFineTempoChange = (value) => ({
   type: FINE_TEMPO_CHANGE,
-  value
+  payload: value
 });
 
 export const onInstrumentTrackChange = (value) => ({
   type: INSTRUMENT_TRACK_CHANGE,
-  value
+  payload: value
 });
 
 export const onModeChange = (value) => ({
   type: MODE_CHANGE,
-  value
+  payload: value
 });
 
 export const onTempoChange = (value) => ({
   type: TEMPO_CHANGE,
-  value
+  payload: value
 });
 
 export const onInstrumentChange = (type, controlName, value) => ({
@@ -49,12 +49,12 @@ export const onInstrumentChange = (type, controlName, value) => ({
 
 export const onMasterVolumeChange = (value) => ({
   type: MASTER_VOLUME_CHANGE,
-  value
+  payload: value
 });
 
 export const onBasicVariationChange = (position) => ({
   type: BASIC_VARIATION_CHANGE,
-  position
+  payload: position
 });
 
 export const onStartStopButtonClick = () => ({
@@ -63,7 +63,7 @@ export const onStartStopButtonClick = () => ({
 
 export const onIFVariationChange = (position) => ({
   type: IF_VARIATION_CHANGE,
-  position
+  payload: position
 });
 
 export const onTapButtonClick = () => ({
@@ -72,14 +72,14 @@ export const onTapButtonClick = () => ({
 
 export const onPreScaleChange = (position) => ({
   type: PRE_SCALE_CHANGE,
-  position
+  payload: position
 });
 
 export const onStepButtonClick = (index) => ({
   type: STEP_BUTTON_CLICK,
-  index
+  payload: index
 });
 
 export const onClearClick = () => ({
-  type: CLEAR_CLICK
+    type: CLEAR_CLICK
 });

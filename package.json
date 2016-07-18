@@ -63,6 +63,8 @@
     "react-lite": "^0.15.14",
     "react-redux": "^4.4.4",
     "redux": "^3.4.0",
+    "reselect": "^2.5.3",
+    "seamless-immutable": "^6.1.1",
     "waaclock": "^0.5.3"
   }
 }

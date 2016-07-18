@@ -1,6 +1,7 @@
 // External Deps
 import React from 'react';
 import Radium from 'radium';
+import Clock from 'waaclock';
 import { GatewayProvider, GatewayDest } from 'react-gateway';
 
 // Theme
@@ -28,6 +29,30 @@ const TOP_HORIZONTAL_SEPERATOR_HEIGHT = TOP_HEIGHT - 10;
 
 @Radium
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+
+    this.handleTick = this.handleTick.bind(this);
+  }
+
+  handleTick({ deadline }) {
+
+  }
+
+  componentDidMount() {
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const clock = Clock(audioCtx);
+
+    this.setState({
+      clock
+    });
+  }
+
+  shouldComponentUpdate() {
+    return false;
+  }
+
   render() {
     const styles = {
       wrapper: {

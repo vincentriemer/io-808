@@ -24,7 +24,7 @@ export const ConnectedClearButton = (() => {
 
 export const ConnectedModeKnob = (() => {
   const mapStateToProps = (state) => ({
-    value: state.mode
+    value: state.selectedMode
   });
   const mapDispatchToProps = (dispatch) => ({
     onChange: (value) => dispatch(onModeChange(value))
@@ -34,7 +34,7 @@ export const ConnectedModeKnob = (() => {
 
 export const ConnectedInstrumentSelectorKnob = (() => {
   const mapStateToProps = (state) => ({
-    value: state.instrument_track
+    value: state.selectedInstrumentTrack
   });
   const mapDispatchToProps = (dispatch) => ({
     onChange: (value) => dispatch(onInstrumentTrackChange(value))
@@ -44,7 +44,7 @@ export const ConnectedInstrumentSelectorKnob = (() => {
 
 export const ConnectedAutoFillInKnob = (() => {
   const mapStateToProps = (state) => ({
-    value: state.autoFillIn
+    value: state.autoFillInPosition
   });
   const mapDispatchToProps = (dispatch) => ({
     onChange: (value) => dispatch(onAutoFillInChange(value))
