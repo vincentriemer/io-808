@@ -12,3 +12,5 @@ export const FINE_TEMPO_CHANGE = 'FINE_TEMPO_CHANGE';
 export const INSTRUMENT_TRACK_CHANGE = 'INSTRUMENT_TRACK_CHANGE';
 export const MODE_CHANGE = 'MODE_CHANGE';
 export const TEMPO_CHANGE = 'TEMPO_CHANGE';
+
+export const TICK = 'TICK';

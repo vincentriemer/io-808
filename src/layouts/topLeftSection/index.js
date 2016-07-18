@@ -22,7 +22,7 @@ import {
 } from './connectedComponents';
 
 @Radium
-class TopRightSection extends React.Component {
+class TopLeftSection extends React.Component {
   static propTypes = {
     width: React.PropTypes.number.isRequired,
     height: React.PropTypes.number.isRequired
@@ -227,4 +227,4 @@ class TopRightSection extends React.Component {
   }
 }
 
-export default TopRightSection;
+export default TopLeftSection;

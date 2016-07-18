@@ -104,5 +104,7 @@ export default Immutable({
   introFillVariationPosition: 0,
 
   tempo: 135,
-  fineTempo: 0
+  fineTempo: 0,
+
+  currentStep: 0
 })

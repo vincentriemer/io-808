@@ -8,12 +8,11 @@ import {
   INSTRUMENT_TRACK_CHANGE,
   MODE_CHANGE,
   TEMPO_CHANGE,
-
   TAP_BUTTON_CLICK,
-  PRE_SCALE_CHANGE,
   STEP_BUTTON_CLICK,
   CLEAR_CLICK,
-  START_STOP_BUTTON_CLICK
+  START_STOP_BUTTON_CLICK,
+  TICK
 } from '../actionTypes';
 
 import {
@@ -33,7 +32,10 @@ export default function(state, { type, payload }) {
       return stepClickReducer(state, payload);
 
     case START_STOP_BUTTON_CLICK:
-      return state.set('playing', !state.playing);
+      let newState = state;
+      if (!state.playing)
+        newState = newState.set('currentStep', -1);
+      return newState.set('playing', !state.playing);
 
     case MASTER_VOLUME_CHANGE:
       return state.set('masterVolume', payload);
@@ -63,6 +65,9 @@ export default function(state, { type, payload }) {
         currentPart: [MODE_FIRST_PART,MODE_SECOND_PART].includes(payload) ?
           MODE_TO_PART_MAPPING[payload]: FIRST_PART
       });
+
+    case TICK:
+      return state.set('currentStep', state.currentStep + 1);
 
     default:
       return state;

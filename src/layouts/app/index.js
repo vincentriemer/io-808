@@ -1,7 +1,7 @@
 // External Deps
 import React from 'react';
 import Radium from 'radium';
-import Clock from 'waaclock';
+import WAAClock from 'waaclock';
 import { GatewayProvider, GatewayDest } from 'react-gateway';
 
 // Theme
@@ -27,27 +27,67 @@ const TOP_RIGHT_WIDTH = (APP_WIDTH * 0.77) - INSTRUMENT_SEPERATOR_WIDTH;
 
 const TOP_HORIZONTAL_SEPERATOR_HEIGHT = TOP_HEIGHT - 10;
 
+const BASE_TEMPO = 135;
+const CLOCK_INTERVAL = 0.111;
+
+const audioCtx = new AudioContext();
+const clock = new WAAClock(audioCtx);
+
 @Radium
 class App extends React.Component {
+  static propTypes = {
+    storeState: React.PropTypes.object,
+    handleTick: React.PropTypes.func
+  };
+
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { tickEvent: null, currentTempo: null };
 
     this.handleTick = this.handleTick.bind(this);
   }
 
   handleTick({ deadline }) {
-
+    clock.setTimeout(() => {
+      this.props.handleTick();
+    }, deadline - audioCtx.currentTime);
   }
 
-  componentDidMount() {
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const clock = Clock(audioCtx);
+  componentWillReceiveProps({ storeState: nextStoreState }) {
+    // start sequencer
+    if (nextStoreState.playing && this.state.tickEvent === null) {
+      clock.start();
 
-    this.setState({
-      clock
-    });
+      const currentTempo = nextStoreState.tempo + nextStoreState.fineTempo;
+      const beatDuration = (60 / currentTempo) / 4;
+
+      const tickEvent = clock.callbackAtTime(this.handleTick, audioCtx.currentTime)
+        .repeat(beatDuration);
+
+      return this.setState({ tickEvent, currentTempo });
+    }
+
+    // stop sequencer
+    if (!nextStoreState.playing && this.state.tickEvent !== null) {
+      this.state.tickEvent.clear();
+      clock.stop();
+
+      return this.setState({ tickEvent: null, currentTempo: null });
+    }
+
+    // change tempo
+    if (nextStoreState.playing &&
+      (nextStoreState.tempo !== this.props.storeState.tempo ||
+      nextStoreState.fineTempo !== this.props.storeState.fineTempo)) {
+
+      const newTempo = nextStoreState.tempo + nextStoreState.fineTempo;
+
+      clock.timeStretch(audioCtx.currentTime, [this.state.tickEvent], this.state.currentTempo / newTempo);
+
+      this.setState({ currentTempo: newTempo });
+    }
   }
+
 
   shouldComponentUpdate() {
     return false;

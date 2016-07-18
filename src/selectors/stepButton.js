@@ -1,7 +1,10 @@
 import { createSelector } from 'reselect';
 
 import {
-  MODE_FIRST_PART, MODE_SECOND_PART,
+  MODE_PATTERN_CLEAR,
+  MODE_FIRST_PART,
+  MODE_SECOND_PART,
+
   A_VARIATION, B_VARIATION
 } from '../constants';
 
@@ -11,6 +14,7 @@ const getPlaying = (state) => state.playing;
 const getSelectedRhythm = (state) => state.selectedRhythm;
 const getSelectedMode = (state) => state.selectedMode;
 const getCurrentVariation = (state) => state.currentVariation;
+const getCurrentStep = (state) => state.currentStep;
 
 const getSequencerValueFactory = (stepNumber) => (state) => {
   const { selectedRhythm, currentPart, currentVariation, selectedInstrumentTrack } = state;
@@ -26,6 +30,7 @@ export default (stepNumber) => {
       getSelectedRhythm,
       getSelectedMode,
       getCurrentVariation,
+      getCurrentStep,
       getSequencerValueFactory(stepNumber)
     ],
     (
@@ -33,6 +38,7 @@ export default (stepNumber) => {
       selectedRhythm,
       selectedMode,
       currentVariation,
+      currentStep,
       sequencerValue
     ) => {
       // SEQUENCER IS PLAYING
@@ -40,7 +46,11 @@ export default (stepNumber) => {
         switch (selectedMode) {
           case MODE_FIRST_PART:
           case MODE_SECOND_PART:
-            return sequencerValue;
+            if (currentStep % 16 === stepNumber) {
+              return !sequencerValue;
+            } else {
+              return sequencerValue;
+            }
           default:
             return false;
         }
@@ -48,6 +58,7 @@ export default (stepNumber) => {
       // SEQUENCER IS NOT PLAYING
       else {
         switch (selectedMode) {
+          case MODE_PATTERN_CLEAR:
           case MODE_FIRST_PART:
           case MODE_SECOND_PART:
             return selectedRhythm === stepNumber;

@@ -12,7 +12,8 @@ import {
   FINE_TEMPO_CHANGE,
   INSTRUMENT_TRACK_CHANGE,
   MODE_CHANGE,
-  TEMPO_CHANGE
+  TEMPO_CHANGE,
+  TICK
 } from './actionTypes';
 
 export const onAutoFillInChange = (value) => ({
@@ -82,4 +83,8 @@ export const onStepButtonClick = (index) => ({
 
 export const onClearClick = () => ({
     type: CLEAR_CLICK
+});
+
+export const onTick = () => ({
+  type: TICK
 });

@@ -6,6 +6,8 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider, connect } from 'react-redux';
 
+import {onTick} from './actionCreators';
+
 import store from './store';
 import App from './layouts/app';
 
@@ -13,7 +15,11 @@ const mapStateToProps = (state) => ({
   storeState: state
 });
 
-const ConnectedApp = connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch) => ({
+  handleTick: () => dispatch(onTick())
+});
+
+const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(App);
 
 render(
   <Provider store={store}><ConnectedApp /></Provider>,

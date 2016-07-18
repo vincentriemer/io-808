@@ -3,6 +3,9 @@ html
     head
         meta(http-equiv="Content-type" content="text/html; charset=utf-8")
         title #{htmlWebpackPlugin.options.title}
+        each cssFile in htmlWebpackPlugin.files.css
+            style !{compilation.assets[cssFile.substr(htmlWebpackPlugin.files.publicPath.length)].source()}
+        script(type="text/javascript" src="//cwilso.github.com/AudioContext-MonkeyPatch/AudioContextMonkeyPatch.js")
         script(type="text/javascript").
             (function (d) {
                 var config = {
@@ -28,8 +31,6 @@ html
                 };
                 s.parentNode.insertBefore(tk, s)
             })(document);
-        each cssFile in htmlWebpackPlugin.files.css
-            style !{compilation.assets[cssFile.substr(htmlWebpackPlugin.files.publicPath.length)].source()}
     body
         #loader.loader-wrapper
             div.loader

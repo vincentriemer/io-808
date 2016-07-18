@@ -48,11 +48,13 @@
     "postcss-loader": "^0.9.1",
     "resolve-url-loader": "^1.4.3",
     "rimraf": "^2.4.3",
+    "script-loader": "^0.7.0",
     "style-loader": "^0.13.1",
     "svg-inline-loader": "^0.4.1",
     "webpack": "^1.12.9",
     "webpack-dev-middleware": "^1.4.0",
-    "webpack-hot-middleware": "^2.9.1"
+    "webpack-hot-middleware": "^2.9.1",
+    "worker-loader": "^0.7.1"
   },
   "dependencies": {
     "paths-js": "^0.4.4",

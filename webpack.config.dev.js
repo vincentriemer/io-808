@@ -5,8 +5,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-  // or devtool: 'eval' to debug issues with compiled output:
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'cheap-module-source-map',
   entry: [
     // necessary for hot reloading with IE:
     'eventsource-polyfill',
@@ -27,7 +26,11 @@ module.exports = {
       { test: /\.jade$/, loader: 'jade' },
       { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader') },
       { test: /\.js$/, loaders: ['babel'], include: path.join(__dirname, 'src') }
-    ]
+    ],
+    postLoaders: [{
+      test: /\.worker\.js$/,
+      loader: "worker-loader?inline=true"
+    }]
   },
   postcss: [
     require('autoprefixer')
