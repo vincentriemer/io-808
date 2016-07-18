@@ -74,7 +74,7 @@ class BottomSection extends React.Component {
       labeledButtons.push(
         <div key={`stepbutton-${index}`} style={styles.wrapper}>
           <div style={styles.stepLabelWrapper}>
-            <div style={styles.stepLabel}>{index}</div>
+            <div style={styles.stepLabel}>{index + 1}</div>
           </div>
           <StepButton width={buttonWidth} height={stepButtonHeight} color={this.STEP_BUTTON_COLORS[index]} />
           <div style={styles.rhythmLabelWrapper}>
