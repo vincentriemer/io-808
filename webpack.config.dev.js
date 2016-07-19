@@ -26,11 +26,7 @@ module.exports = {
       { test: /\.jade$/, loader: 'jade' },
       { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader') },
       { test: /\.js$/, loaders: ['babel'], include: path.join(__dirname, 'src') }
-    ],
-    postLoaders: [{
-      test: /\.worker\.js$/,
-      loader: "worker-loader?inline=true"
-    }]
+    ]
   },
   postcss: [
     require('autoprefixer')

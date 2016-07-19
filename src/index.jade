@@ -5,7 +5,6 @@ html
         title #{htmlWebpackPlugin.options.title}
         each cssFile in htmlWebpackPlugin.files.css
             style !{compilation.assets[cssFile.substr(htmlWebpackPlugin.files.publicPath.length)].source()}
-        script(type="text/javascript" src="//cwilso.github.com/AudioContext-MonkeyPatch/AudioContextMonkeyPatch.js")
         script(type="text/javascript").
             (function (d) {
                 var config = {

@@ -12,6 +12,20 @@ import TopLeftSection from '../topLeftSection';
 import TopRightSection from '../topRightSection';
 import BottomSection from '../bottomSection';
 
+// initialize web audio api context and clock
+let audioCtx, clock;
+try {
+  // Fix up for prefixing
+  window.AudioContext = window.AudioContext||window.webkitAudioContext;
+
+  audioCtx = new AudioContext();
+  clock = new WAAClock(audioCtx);
+}
+catch(e) {
+  alert('Web Audio API is not supported in this browser');
+}
+
+// layout constants
 const APP_WIDTH = 1400;
 const APP_HEIGHT = 800;
 const APP_PADDING = 40;
@@ -26,12 +40,6 @@ const TOP_LEFT_WIDTH = (APP_WIDTH * 0.23) - INSTRUMENT_SEPERATOR_WIDTH;
 const TOP_RIGHT_WIDTH = (APP_WIDTH * 0.77) - INSTRUMENT_SEPERATOR_WIDTH;
 
 const TOP_HORIZONTAL_SEPERATOR_HEIGHT = TOP_HEIGHT - 10;
-
-const BASE_TEMPO = 135;
-const CLOCK_INTERVAL = 0.111;
-
-const audioCtx = new AudioContext();
-const clock = new WAAClock(audioCtx);
 
 @Radium
 class App extends React.Component {
