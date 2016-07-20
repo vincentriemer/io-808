@@ -51,11 +51,5 @@ module.exports = {
       title: 'io-808'
     }),
     new ExtractTextPlugin('styles.css')
-  ],
-  resolve: {
-    alias: {
-      'react': 'react-lite',
-      'react-dom': 'react-lite'
-    }
-  }
+  ]
 };
