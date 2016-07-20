@@ -37,14 +37,15 @@ class Knob extends React.Component {
     e.preventDefault();
     const xPosition = e.clientX;
     const tempY = e.clientY;
-    const distance = Math.abs(xPosition - this.state.knobCenter[0]);
-    const scale = ((distance / 200) + 1);
+    const xDistance = Math.abs(xPosition - this.state.knobCenter[0]);
+    const scale = ((xDistance / 200) + 1);
 
     let topPosition = this.state.topPosition;
+
+    // handle guide Y repositioning
     if (tempY < topPosition) {
       topPosition = tempY;
     }
-
     if (tempY > topPosition + (BASE_HEIGHT * scale)) {
       topPosition = (tempY - (BASE_HEIGHT * scale));
     }
@@ -55,7 +56,7 @@ class Knob extends React.Component {
     const {min, max, step} = this.props;
     const unnormalizedValue = round((normalizedValue * (max - min)), step, min);
 
-    this.setState({xPosition, topPosition, scale, cursorPos});
+    this.setState({topPosition, scale, cursorPos});
     if (unnormalizedValue !== this.props.value) {
       this.props.onChange(unnormalizedValue);
     }
