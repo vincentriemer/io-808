@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 
-import {grey} from '../../theme/variables';
+import { grey } from 'theme/variables';
 
 @Radium
 class TimeSignatureSection extends React.Component {

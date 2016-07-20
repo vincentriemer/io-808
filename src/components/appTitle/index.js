@@ -1,8 +1,8 @@
 import React from 'react';
 import Radium from 'radium';
 
-import {stencilOrange, darkGrey} from '../../theme/variables';
-import { labelGreyLarge } from '../../theme/mixins';
+import { stencilOrange, darkGrey } from 'theme/variables';
+import { labelGreyLarge } from 'theme/mixins';
 
 const lineHeight = 3;
 const titleRight = 60;

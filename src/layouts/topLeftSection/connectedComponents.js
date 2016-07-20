@@ -6,14 +6,14 @@ import {
   onAutoFillInChange,
   onTempoChange,
   onFineTempoChange
-} from '../../actionCreators';
+} from 'actionCreators';
 
-import Button from '../../components/button/button';
-import ModeKnob from '../../components/modeKnob/modeKnob';
-import InstrumentSelectorKnob from '../../components/instrumentSelectorKnob/instrumentSelectorKnob';
-import AutoFillInKnob from '../../components/autoFillInKnob/autoFillInKnob';
-import TempoKnob from '../../components/tempoKnob/tempoKnob';
-import FineTempoKnob from '../../components/fineTempoKnob/fineTempoKnob';
+import Button from 'components/button';
+import ModeKnob from 'components/modeKnob';
+import InstrumentSelectorKnob from 'components/instrumentSelectorKnob';
+import AutoFillInKnob from 'components/autoFillInKnob';
+import TempoKnob from 'components/tempoKnob';
+import FineTempoKnob from 'components/fineTempoKnob';
 
 export const ConnectedClearButton = (() => {
   const mapDispatchToProps = (dispatch) => ({

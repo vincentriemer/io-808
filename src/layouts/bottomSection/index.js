@@ -1,11 +1,11 @@
 import React from 'react';
 import Radium from 'radium';
 
-import {grey, darkGrey, buttonColor, red, buttonOrange, yellow, offWhite, drumLabel} from '../../theme/variables';
-import { labelDarkGrey, labelGreyNormal, labelGreyXLarge } from '../../theme/mixins';
+import {grey, darkGrey, buttonColor, red, buttonOrange, yellow, offWhite, drumLabel} from 'theme/variables';
+import { labelDarkGrey, labelGreyNormal, labelGreyXLarge } from 'theme/mixins';
 
-import TimeSignatureSection from '../timeSignatureSection';
-import ArrowLabel from '../../components/arrowLabel';
+import TimeSignatureSection from 'layouts/timeSignatureSection';
+import ArrowLabel from 'components/arrowLabel';
 
 import {
   ConnectedBasicVariationSwitch,

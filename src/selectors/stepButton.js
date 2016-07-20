@@ -6,9 +6,9 @@ import {
   MODE_SECOND_PART,
 
   A_VARIATION, B_VARIATION
-} from '../constants';
+} from 'constants';
 
-import { stepKey } from '../helpers';
+import { stepKey } from 'helpers';
 
 const getPlaying = (state) => state.playing;
 const getSelectedRhythm = (state) => state.selectedRhythm;

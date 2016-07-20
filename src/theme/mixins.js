@@ -1,7 +1,7 @@
 import {
   fontFamily, fontWeight, textAlign, letterSpacing, normalSize, largeSize, smallSize, xSmallSize,
   grey, darkGrey, xLargeSize
-} from './variables';
+} from 'theme/variables';
 
 // TYPOGRAPHY PRESETS ==========================
 const basePreset = {

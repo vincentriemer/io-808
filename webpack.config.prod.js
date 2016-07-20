@@ -51,5 +51,11 @@ module.exports = {
       title: 'io-808'
     }),
     new ExtractTextPlugin('styles.css')
-  ]
+  ],
+  resolve: {
+    root: [
+      path.resolve('./node_modules'),
+      path.resolve('./src')
+    ]
+  }
 };

@@ -13,12 +13,12 @@ import {
   CLEAR_CLICK,
   START_STOP_BUTTON_CLICK,
   TICK
-} from '../actionTypes';
+} from 'actionTypes';
 
 import {
   MODE_FIRST_PART, MODE_SECOND_PART,
   MODE_TO_PART_MAPPING, FIRST_PART
-} from '../constants';
+} from 'constants';
 
 import stepClickReducer from './stepClick';
 

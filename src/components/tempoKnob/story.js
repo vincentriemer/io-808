@@ -1,11 +1,11 @@
 import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
-import ModeKnob from './modeKnob';
+import TempoKnob from './';
 
 class KnobWrapper extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { value: 0 };
+    this.state = { value: 165 };
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -15,11 +15,11 @@ class KnobWrapper extends React.Component {
   }
 
   render() {
-    return <ModeKnob value={this.state.value} onChange={this.handleChange} />;
+    return <TempoKnob value={this.state.value} onChange={this.handleChange} />;
   }
 }
 
-storiesOf('ModeKnob', module)
+storiesOf('TempoKnob', module)
   .add('default', () => (
     <KnobWrapper />
   ));

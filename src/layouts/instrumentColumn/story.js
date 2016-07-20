@@ -1,10 +1,10 @@
 import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
 
-import InstrumentColumn from '.';
-import InstrumentLabel from '../../components/instrumentLabel';
-import DrumSwitch from '../../components/drumSwitch/drumSwitch';
-import DrumKnob from '../../components/drumKnob/drumKnob';
+import InstrumentColumn from './';
+import InstrumentLabel from 'components/instrumentLabel';
+import DrumSwitch from 'components/drumSwitch';
+import DrumKnob from 'components/drumKnob';
 
 const handleEvent = (name) => ((value) => action(name)(value));
 

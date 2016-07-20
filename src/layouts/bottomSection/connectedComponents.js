@@ -6,21 +6,21 @@ import {
   onTapButtonClick,
   onPreScaleChange,
   onStepButtonClick
-} from '../../actionCreators';
+} from 'actionCreators';
 
 // Components
-import BasicVariationSwitch from '../../components/basicVariationSwitch/basicVariationSwitch';
-import Button from '../../components/button/button';
-import IFVariationSwitch from '../../components/IFVariationSwtich/IFVariationSwitch';
-import PreScaleSwitch from '../../components/preScaleSwitch/preScaleSwitch';
-import PartLights from '../../components/partLights';
-import StepButton from '../../components/stepButton';
+import BasicVariationSwitch from 'components/basicVariationSwitch';
+import Button from 'components/button';
+import IFVariationSwitch from 'components/IFVariationSwtich';
+import PreScaleSwitch from 'components/preScaleSwitch';
+import PartLights from 'components/partLights';
+import StepButton from 'components/stepButton';
 
 // Selectors
-import StepButtonSelectorFactory from '../../selectors/stepButton';
+import StepButtonSelectorFactory from 'selectors/stepButton';
 
 // Constants
-import {FIRST_PART, SECOND_PART} from '../../constants';
+import {FIRST_PART, SECOND_PART} from 'constants';
 
 export const ConnectedBasicVariationSwitch = (() => {
   // TODO: properly infer state of aActive and bActive

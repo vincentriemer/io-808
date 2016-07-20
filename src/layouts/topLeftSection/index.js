@@ -1,14 +1,8 @@
 import React from 'react';
 import Radium from 'radium';
 
-import TempoKnob from '../../components/tempoKnob/tempoKnob';
-import FineTempoKnob from '../../components/fineTempoKnob/fineTempoKnob';
-import AutoFillInKnob from '../../components/autoFillInKnob/autoFillInKnob';
-import InstrumentSelectorKnob from '../../components/instrumentSelectorKnob/instrumentSelectorKnob';
-import ModeKnob from '../../components/modeKnob/modeKnob';
-
-import {grey, drumLabel, stencilOrange, red} from '../../theme/variables';
-import {labelGreySmall} from '../../theme/mixins';
+import { grey, drumLabel, stencilOrange, red } from 'theme/variables';
+import { labelGreySmall } from 'theme/mixins';
 
 import * as stencilPaths from './stencilPaths';
 

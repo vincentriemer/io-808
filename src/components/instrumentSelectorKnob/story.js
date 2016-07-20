@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
-import InstrumentSelectorKnob from './instrumentSelectorKnob';
+import InstrumentSelectorKnob from './';
 
 class KnobWrapper extends React.Component {
   constructor(props) {

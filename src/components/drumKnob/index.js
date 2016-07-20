@@ -1,11 +1,11 @@
 import React from 'react';
 import Radium from 'radium';
 
-import Knob from '../knob/knob';
-import Guides from '../guides/guides';
+import Knob from 'components/knob';
+import Guides from 'components/guides';
 
-import { drumHandle, levelKnobInner, miscKnobInner, grey } from '../../theme/variables';
-import { labelGreyNormal, ring } from '../../theme/mixins';
+import { drumHandle, levelKnobInner, miscKnobInner, grey } from 'theme/variables';
+import { labelGreyNormal, ring } from 'theme/mixins';
 
 export const LABEL_HEIGHT = 30;
 

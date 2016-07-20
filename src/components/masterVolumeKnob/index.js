@@ -1,12 +1,12 @@
 import React from 'react';
 import Radium from 'radium';
 
-import Knob from '../knob/knob';
-import Guides from '../guides/guides';
-import SelectorKnobInner from '../selectorKnobInner/selectorKnobInner';
+import Knob from 'components/knob';
+import Guides from 'components/guides';
+import SelectorKnobInner from 'components/selectorKnobInner';
 
-import { grey } from '../../theme/variables';
-import { labelGreySmall, labelGreyNormal, ring } from '../../theme/mixins';
+import { grey } from 'theme/variables';
+import { labelGreySmall, labelGreyNormal, ring } from 'theme/mixins';
 
 const labelValues = [];
 for (let i = 0; i < 11; i++) {

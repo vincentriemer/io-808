@@ -1,9 +1,9 @@
 import React from 'react';
 import Radium from 'radium';
 
-import Light from '../light/light';
+import Light from 'components/light';
 
-import {labelGreyNormal} from '../../theme/mixins';
+import { labelGreyNormal } from 'theme/mixins';
 
 @Radium
 class PartLights extends React.Component {

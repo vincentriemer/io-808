@@ -1,15 +1,16 @@
 import React from 'react';
 import Radium from 'radium';
 
-import Knob from '../knob/knob';
-import Guides from '../guides/guides';
-import SelectorKnobInner from '../selectorKnobInner/selectorKnobInner';
+import Knob from 'components/knob';
+import Guides from 'components/guides';
+import SelectorKnobInner from 'components/selectorKnobInner';
 
 import {
   fontFamily, normalSize, letterSpacing, smallSize, fontWeight,
   darkGrey, drumLabel, stencilOrange
-} from '../../theme/variables';
-import { ring } from '../../theme/mixins';
+} from 'theme/variables';
+
+import { ring } from 'theme/mixins';
 
 const guideNumbers = [1,2,3,4,5,6,7,8,9,10,11,12];
 const guideLabels = ['AC','BD','SD','LT','MT','HT','RS','CP','CB','CY','OH','CH'];

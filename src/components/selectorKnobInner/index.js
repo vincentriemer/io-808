@@ -1,10 +1,10 @@
 import React from 'react';
 import Radium from 'radium';
 
-import Guides from '../guides/guides';
+import Guides from 'components/guides';
 
-import { ring } from '../../theme/mixins';
-import { darkBlack, slightlyDarkerBlack, drumHandle, stencilOrange } from '../../theme/variables';
+import { ring } from 'theme/mixins';
+import { darkBlack, slightlyDarkerBlack, drumHandle, stencilOrange } from 'theme/variables';
 
 const guideSize = 6;
 

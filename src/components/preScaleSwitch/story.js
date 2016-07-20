@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
-import DrumSwitch from './drumSwitch';
+import PreScaleSwitch from './';
 
 class SwitchWrapper extends React.Component {
   constructor(props) {
@@ -22,14 +22,14 @@ class SwitchWrapper extends React.Component {
   render() {
 
     return (
-      <DrumSwitch
+      <PreScaleSwitch
         onChange={this.handleChange}
         position={this.state.switchPosition} />
     );
   }
 }
 
-storiesOf('DrumSwitch', module)
+storiesOf('PreScaleSwitch', module)
   .add('default', () => (
     <SwitchWrapper />
   ));

@@ -2,12 +2,12 @@ import React from 'react';
 import Radium from 'radium';
 
 // Layouts
-import InstrumentColumnLayout from '../../layouts/instrumentColumn';
+import InstrumentColumnLayout from 'layouts/instrumentColumn';
 
 // Components
-import InstrumentLabel from '../../components/instrumentLabel';
-import DrumSwitch from '../../components/drumSwitch/drumSwitch';
-import DrumKnob, { LABEL_HEIGHT } from '../../components/drumKnob/drumKnob';
+import InstrumentLabel from 'components/instrumentLabel';
+import DrumSwitch from 'components/drumSwitch';
+import DrumKnob, { LABEL_HEIGHT } from 'components/drumKnob';
 
 export const EMPTY_CONTROL = 'EMPTY';
 

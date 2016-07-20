@@ -2,7 +2,7 @@ import React from 'react';
 import Radium from 'radium';
 
 import {BASE_HEIGHT} from './constants';
-import KnobOverlay from './knobOverlay';
+import KnobOverlay from './overlay';
 
 function emptyKnobState() {
   return {

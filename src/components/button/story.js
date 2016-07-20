@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
-import Button from './button';
+import Button from './';
 
 const customStyle = {
   button: {

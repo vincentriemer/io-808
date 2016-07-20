@@ -1,30 +1,27 @@
 import React from 'react';
 import Radium from 'radium';
 
-import Light from '../light/light';
-import Switch from '../switch/switch';
+import Switch from 'components/switch';
 
-import { grey, darkBlack, silver } from '../../theme/variables';
-import { labelDarkGrey } from '../../theme/mixins';
+import { grey, darkBlack, silver } from 'theme/variables';
+import { labelDarkGrey } from 'theme/mixins';
 
 @Radium
-class BasicVariationSwitch extends React.Component {
+class IFVariationSwitch extends React.Component {
   static propTypes = {
     onChange: React.PropTypes.func.isRequired,
-    position: React.PropTypes.number.isRequired,
-    aActive: React.PropTypes.bool.isRequired,
-    bActive: React.PropTypes.bool.isRequired,
+    position: React.PropTypes.number.isRequired
   };
 
   render() {
-    const { onChange, position, aActive, bActive } = this.props;
+    const { onChange, position } = this.props;
 
     const thickness = 30;
-    const length = 80;
+    const length = 65;
 
     const styles = {
       wrapper: {
-        minWidth: length * 1.8, height: 110,
+        minWidth: length * 1.8, height: 69,
 
         display: 'flex',
         flexDirection: 'column',
@@ -49,20 +46,7 @@ class BasicVariationSwitch extends React.Component {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        paddingTop: 10,
-        borderRadius: 1
-      },
-
-      lightsWrapper: {
-        width: length,
-        height: thickness - 3,
-        backgroundColor: darkBlack,
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: 4,
-        borderRadius: 2
+        paddingTop: 5
       },
 
       switchOuter: {
@@ -79,13 +63,13 @@ class BasicVariationSwitch extends React.Component {
 
     return (
       <div style={styles.wrapper}>
-        <div style={styles.switchTitle}>BASIC VARIATION</div>
+        <div style={styles.switchTitle}>I / F - VARIATION</div>
         <div style={styles.switchWrapper}>
           <Switch
             position={position}
             onChange={onChange}
             direction='horizontal'
-            numPositions={3}
+            numPositions={2}
             thickness={thickness}
             length={length}
             padding={4}
@@ -94,17 +78,12 @@ class BasicVariationSwitch extends React.Component {
             innerStyle={styles.switchInner} />
           <div style={styles.labelWrapper}>
             <div style={styles.label}>A</div>
-            <div style={styles.label}>AB</div>
             <div style={styles.label}>B</div>
           </div>
-        </div>
-        <div style={styles.lightsWrapper}>
-          <Light active={aActive} />
-          <Light active={bActive} />
         </div>
       </div>
     );
   }
 }
 
-export default BasicVariationSwitch;
+export default IFVariationSwitch;

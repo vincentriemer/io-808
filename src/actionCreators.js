@@ -14,7 +14,7 @@ import {
   MODE_CHANGE,
   TEMPO_CHANGE,
   TICK
-} from './actionTypes';
+} from 'actionTypes';
 
 export const onAutoFillInChange = (value) => ({
   type: AUTO_FILL_IN_CHANGE,

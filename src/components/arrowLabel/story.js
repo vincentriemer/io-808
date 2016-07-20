@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@kadira/storybook';
 import ArrowLabel from './';
 
-import {grey, darkGrey} from '../../theme/variables';
+import {grey, darkGrey} from 'theme/variables';
 
 const width  = 110;
 const height = 30;

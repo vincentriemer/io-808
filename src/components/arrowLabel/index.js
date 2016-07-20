@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 
-import {labelGreyNormal} from '../../theme/mixins';
+import {labelGreyNormal} from 'theme/mixins';
 
 @Radium
 class ArrowLabel extends React.Component {

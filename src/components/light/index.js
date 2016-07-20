@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 
-import { lightActive, lightInactive } from '../../theme/variables';
+import { lightActive, lightInactive } from 'theme/variables';
 
 const size = 18;
 const innerPadding = 4;

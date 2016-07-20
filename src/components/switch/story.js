@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
 
-import SoundSwitch from './switch';
+import SoundSwitch from './';
 
 class SwitchWrapper extends React.Component {
   constructor(props) {

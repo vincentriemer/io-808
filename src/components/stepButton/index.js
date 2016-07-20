@@ -1,8 +1,8 @@
 import React from 'react';
 import Radium from 'radium';
 
-import Button from '../button/button';
-import Light from '../light/light';
+import Button from 'components/button';
+import Light from 'components/light';
 
 @Radium
 class StepButton extends React.Component {

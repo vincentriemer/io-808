@@ -5,12 +5,12 @@ import WAAClock from 'waaclock';
 import { GatewayProvider, GatewayDest } from 'react-gateway';
 
 // Theme
-import {darkGrey, grey} from '../../theme/variables';
+import { grey } from 'theme/variables';
 
-// Components
-import TopLeftSection from '../topLeftSection';
-import TopRightSection from '../topRightSection';
-import BottomSection from '../bottomSection';
+// Sub-layouts
+import TopLeftSection from 'layouts/topLeftSection';
+import TopRightSection from 'layouts/topRightSection';
+import BottomSection from 'layouts/bottomSection';
 
 // initialize web audio api context and clock
 let audioCtx, clock;

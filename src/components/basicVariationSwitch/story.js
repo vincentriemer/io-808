@@ -1,8 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
-import BasicVariationSwitch from './BasicVariationSwitch';
+import BasicVariationSwitch from './';
 
-import { grey } from '../../theme/variables';
+import { grey } from 'theme/variables';
 
 class SwitchWrapper extends React.Component {
   constructor(props) {

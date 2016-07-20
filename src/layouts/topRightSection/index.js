@@ -4,20 +4,20 @@ import Radium from 'radium';
 import { connect } from 'react-redux';
 
 // Actions
-import { onInstrumentChange, onMasterVolumeChange } from '../../actionCreators';
+import { onInstrumentChange, onMasterVolumeChange } from 'actionCreators';
 
 // Components
-import AppTitle from '../../components/appTitle';
-import MasterVolumeKnob from '../../components/masterVolumeKnob/masterVolumeKnob';
-import InstrumentColumn, {EMPTY_CONTROL} from '../../components/instrumentColumn';
+import AppTitle from 'components/appTitle';
+import MasterVolumeKnob from 'components/masterVolumeKnob';
+import InstrumentColumn, { EMPTY_CONTROL } from 'components/instrumentColumn';
 
 // Theme
-import {grey} from '../../theme/variables';
+import { grey } from 'theme/variables';
 
 // Constants
 import { ACCENT, BASS_DRUM, SNARE_DRUM, LOW_CONGA_LOW_TOM, MID_CONGA_MID_TOM,
   HI_CONGA_HI_TOM, CLAVES_RIMSHOT, MARACAS_HANDCLAP, COWBELL, CYMBAL,
-  OPEN_HIHAT, CLSD_HIHAT } from '../../constants';
+  OPEN_HIHAT, CLSD_HIHAT } from 'constants';
 
 @Radium
 class TopRightSection extends React.Component {

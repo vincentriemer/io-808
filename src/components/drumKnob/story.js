@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
-import MasterVolumeKnob from './masterVolumeKnob';
+
+import Knob from './';
 
 class KnobWrapper extends React.Component {
   constructor(props) {
@@ -15,11 +16,14 @@ class KnobWrapper extends React.Component {
   }
 
   render() {
-    return <MasterVolumeKnob value={this.state.value} onChange={this.handleChange} />;
+    return <Knob {...this.props} min={0} max={100} value={this.state.value} onChange={this.handleChange} />;
   }
 }
 
-storiesOf('MasterVolumeKnob', module)
-  .add('default', () => (
-    <KnobWrapper />
+storiesOf('DrumKnob', module)
+  .add('styled for misc control', () => (
+    <KnobWrapper innerColor="#C8D4C8" label='TONE' />
+  ))
+  .add('styled for level control', () => (
+    <KnobWrapper level={true} innerColor="#F55D02" label='LEVEL' />
   ));

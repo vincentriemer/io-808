@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
 
-import Light from './light';
+import Light from './';
 
 storiesOf('Light', module)
   .add('Unactive', () => (

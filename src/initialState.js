@@ -6,9 +6,9 @@ import {
   OPEN_HIHAT, CLSD_HIHAT,
 
   FIRST_PART, SECOND_PART, A_VARIATION, B_VARIATION
-} from './constants';
+} from 'constants';
 
-import { stepKey } from './helpers';
+import { stepKey } from 'helpers';
 
 const PARTS = [FIRST_PART, SECOND_PART];
 const VARIATIONS = [A_VARIATION, B_VARIATION];

@@ -1,10 +1,10 @@
 import React from 'react';
 import Radium from 'radium';
 
-import Switch from '../switch/switch';
+import Switch from 'components/switch';
 
-import { darkBlack, slightlyDarkerBlack } from '../../theme/variables';
-import { labelGreyNormal, labelGreySmall } from '../../theme/mixins';
+import { darkBlack, slightlyDarkerBlack } from 'theme/variables';
+import { labelGreyNormal, labelGreySmall } from 'theme/mixins';
 
 const borderRadius = 2;
 

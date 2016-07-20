@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 
-import { fontFamily, darkGrey, drumLabel } from '../../theme/variables'
+import { fontFamily, darkGrey, drumLabel } from 'theme/variables'
 
 @Radium
 class InstrumentLabel extends React.Component {

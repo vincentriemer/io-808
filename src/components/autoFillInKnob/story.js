@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
-import AutoFillInKnob from './autoFillInKnob';
+import AutoFillInKnob from './';
 
 class KnobWrapper extends React.Component {
   constructor(props) {
