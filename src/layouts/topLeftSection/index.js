@@ -101,8 +101,7 @@ class TopLeftSection extends React.Component {
       patternClear: {
         ...labelBase,
         color: drumLabel,
-        top: 168, left: 75,
-        transform: 'translateX(-50%)',
+        top: 168, left: 30,
         ...labelBorder(drumLabel)
       },
       trackClear: {
@@ -112,15 +111,15 @@ class TopLeftSection extends React.Component {
       },
       stepNumber: {
         ...labelBase,
+        width: 45,
         color: drumLabel,
-        right: '190%', bottom: '55%',
-        transform: 'translateX(50%)'
+        right: '110%', bottom: '55%',
       },
       preScale: {
         ...labelBase,
+        width: 45,
         color: drumLabel,
-        right: '190%', top: '55%',
-        transform: 'translateX(50%)'
+        right: '110%', top: '55%',
       }
     };
 
@@ -144,8 +143,7 @@ class TopLeftSection extends React.Component {
       },
       clearWrapper: {
         position: 'absolute',
-        top: 215, left: 75,
-        transform: 'translateX(-50%) translateY(-50%)'
+        top: 202, left: 61,
       },
       clearButton: {
         width: 27, height: 27,

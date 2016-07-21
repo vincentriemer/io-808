@@ -7,11 +7,8 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
   devtool: 'cheap-module-source-map',
   entry: [
-    // necessary for hot reloading with IE:
     'eventsource-polyfill',
-    // listen to code updates emitted by hot middleware:
     'webpack-hot-middleware/client',
-    // your code:
     './src/index'
   ],
   output: {
