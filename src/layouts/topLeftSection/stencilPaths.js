@@ -8,7 +8,7 @@ export const separatorPath = Path()
   .print();
 
 export const rhythmToCompose = Path()
-  .moveto(194,25)
+  .moveto(181,25)
   .lineto(159,25)
   .smoothcurveto(157, 25, 157, 27)
   .vlineto(100)

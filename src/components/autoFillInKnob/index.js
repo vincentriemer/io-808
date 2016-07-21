@@ -21,6 +21,8 @@ class AutoFillInKnob extends React.Component {
   render() {
     const {value, onChange, size=200} = this.props;
 
+    const knobSize = size - 75;
+
     const styles = {
       wrapper: {
         display: 'flex',
@@ -43,7 +45,7 @@ class AutoFillInKnob extends React.Component {
         borderRadius: '50%'
       },
 
-      knobWrapper: ring(size / 2),
+      knobWrapper: ring(knobSize),
 
       labelWrapper: {
         position: 'relative',
@@ -72,11 +74,11 @@ class AutoFillInKnob extends React.Component {
             <Knob
               value={value}
               onChange={onChange}
-              size={size / 2}
+              size={knobSize}
               bufferSize={150}
               min={0} max={5}
               step={1}>
-              <SelectorKnobInner size={size / 2} />
+              <SelectorKnobInner size={knobSize} />
             </Knob>
           </div>
         </div>

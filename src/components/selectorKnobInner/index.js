@@ -6,8 +6,6 @@ import Guides from 'components/guides';
 import { ring } from 'theme/mixins';
 import { darkBlack, slightlyDarkerBlack, drumHandle, stencilOrange } from 'theme/variables';
 
-const guideSize = 6;
-
 @Radium
 class SelectorKnobInner extends React.Component {
   shouldComponentUpdate() {
@@ -16,6 +14,7 @@ class SelectorKnobInner extends React.Component {
 
   render() {
     const { size } = this.props;
+    const guideSize = 6;
 
     const styles = {
       guides: {
@@ -24,20 +23,18 @@ class SelectorKnobInner extends React.Component {
         backgroundColor: darkBlack
       },
 
-      spokes: ring('83%', slightlyDarkerBlack),
+      spokes: ring(size - 20, slightlyDarkerBlack),
 
       wrapper: {
         position: 'absolute',
         borderRadius: '50%',
         backgroundColor: darkBlack,
-        left: '50%', top: '50%',
-        transform: 'translateX(-50%) translateY(-50%)',
         width: size, height: size
       },
 
       inner: {
-        ...ring('75%', drumHandle),
-        ...(size < 75 ? { width: size - 8, height: size - 8 } : {})
+        ...ring(size - 30, drumHandle),
+        ...(size < 60 ? { width: size - 8, height: size - 8 } : {})
       },
 
       lowerHandle: {
@@ -59,10 +56,10 @@ class SelectorKnobInner extends React.Component {
       }
     };
 
-    const guides = size > 75 ?
-      <Guides num={60} distance={size * 0.42} guideStyle={styles.guides} /> : null;
+    const guides = size > 90 ?
+      <Guides num={60} distance={(size / 2) - 9.5} guideStyle={styles.guides} /> : null;
 
-    const spokes = size > 75 ?
+    const spokes = size > 60 ?
       <div style={styles.spokes}></div> : null;
 
     return (

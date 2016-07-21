@@ -146,12 +146,12 @@ class TopRightSection extends React.Component {
 
     // Component Dimensions
     const numInstruments = 12;
-    const titleWidth = width * 0.85;
-    const titleSectionHeight = height * 0.30;
-    const instrumentsHeight = height * 0.70;
-    const masterVolumeKnobSize = titleSectionHeight * 0.86;
+    const titleWidth = Math.ceil(width * 0.85);
+    const instrumentsHeight = Math.ceil(height * 0.70);
+    const titleSectionHeight = height - instrumentsHeight;
+    const masterVolumeKnobSize = Math.floor(titleSectionHeight * 0.86);
     const instrumentSeperatorHeight = instrumentsHeight - 10;
-    const instrumentColumnWidth = (width / numInstruments) - (seperatorWidth / numInstruments);
+    const instrumentColumnWidth = Math.floor((width / numInstruments) - (seperatorWidth / numInstruments));
 
     const styles = {
       wrapper: {

@@ -63,7 +63,7 @@ class FineTempoKnob extends React.Component {
       }
     };
 
-    const knobSize = size * 0.75;
+    const knobSize = Math.ceil(size * 0.75);
 
     return (
       <div style={styles.wrapper}>

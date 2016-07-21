@@ -26,7 +26,7 @@ class MasterVolumeKnob extends React.Component {
   render() {
     const {value, onChange, size=130} = this.props;
 
-    const knobSize = size * 0.54;
+    const knobSize = Math.ceil(size * 0.54);
 
     const styles = {
       wrapper: {

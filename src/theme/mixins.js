@@ -5,7 +5,8 @@ import {
 
 // TYPOGRAPHY PRESETS ==========================
 const basePreset = {
-  fontFamily, fontWeight, textAlign, letterSpacing
+  fontFamily, fontWeight, textAlign, letterSpacing,
+  WebkitBackfaceVisibility: 'hidden'
 };
 
 export const labelGreyNormal = {

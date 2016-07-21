@@ -1,6 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 
+import { snap } from 'helpers';
 import {BASE_HEIGHT} from './constants';
 import KnobOverlay from './overlay';
 
@@ -16,10 +17,6 @@ function emptyKnobState() {
 
 function getNormalizedValue(value, min, max) {
   return (value - min) / (max - min);
-}
-
-function round(number, increment, offset) {
-  return Math.round(number / increment ) * increment + offset;
 }
 
 @Radium
@@ -54,7 +51,7 @@ class Knob extends React.Component {
     const normalizedValue = (100 - ((tempY - topPosition) * (100 / (BASE_HEIGHT * scale)))) / 100;
 
     const {min, max, step} = this.props;
-    const unnormalizedValue = round((normalizedValue * (max - min)), step, min);
+    const unnormalizedValue = snap((normalizedValue * (max - min)), step, min);
 
     this.setState({topPosition, scale, cursorPos});
     if (unnormalizedValue !== this.props.value) {

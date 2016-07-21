@@ -18,7 +18,7 @@ class DrumKnob extends React.Component {
   render() {
     const {value, onChange, size=75, label='', level=false} = this.props;
 
-    const knobSize = size * 0.6;
+    const knobSize = Math.ceil(size * 0.6);
 
     const styles = {
       wrapper: {

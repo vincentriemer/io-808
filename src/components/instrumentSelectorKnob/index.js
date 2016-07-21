@@ -19,6 +19,7 @@ const guideLabels = ['AC','BD','SD','LT','MT','HT','RS','CP','CB','CY','OH','CH'
 class InstrumentSelectorKnob extends React.Component {
   render() {
     const {value, onChange, size=200} = this.props;
+    const knobSize = size - 75;
 
     const styles = {
       wrapper: {
@@ -34,7 +35,7 @@ class InstrumentSelectorKnob extends React.Component {
         width: size, height: size
       },
 
-      knobWrapper: ring(size / 2),
+      knobWrapper: ring(knobSize),
 
       numberGuides: {
         fontFamily,
@@ -67,11 +68,11 @@ class InstrumentSelectorKnob extends React.Component {
             <Knob
               value={value}
               onChange={onChange}
-              size={size / 2}
+              size={knobSize}
               bufferSize={330}
               min={0} max={11}
               step={1}>
-              <SelectorKnobInner size={size / 2} />
+              <SelectorKnobInner size={knobSize} />
             </Knob>
           </div>
         </div>

@@ -79,21 +79,23 @@ class TopLeftSection extends React.Component {
       patternWrite: {
         ...labelBase,
         color: drumLabel,
-        top: 10, left: 20,
-        transform: 'translateY(-50%)',
+        top: 2, left: 20,
         ...labelBorder(drumLabel)
       },
       instrumentSelect: {
         ...labelBase,
+        position: 'static',
+        width: 120,
+        marginTop: 2,
         color: drumLabel,
-        top: 10, right: 81,
-        transform: 'translateX(50%) translateY(-50%)'
+        ...labelBorder('rgba(0,0,0,0)')
       },
       rhythmTrack: {
         ...labelBase,
+        position: 'static',
+        width: 115,
+        marginTop: 1,
         color: stencilOrange,
-        top: 25, right: 81,
-        transform: 'translateX(50%) translateY(-50%)',
         ...labelBorder(stencilOrange)
       },
       patternClear: {
@@ -133,9 +135,7 @@ class TopLeftSection extends React.Component {
         top: 0, left: 0
       },
       instrumentSelectorWrapper: {
-        position: 'absolute',
-        top: 114, right: 81,
-        transform: 'translateX(50%) translateY(-50%)'
+        marginTop: 5
       },
       modeWrapper: {
         position: 'absolute',
@@ -154,9 +154,7 @@ class TopLeftSection extends React.Component {
         border: `2px solid ${grey}`
       },
       autoFillInWrapper: {
-        position: 'absolute',
-        right: 81, top: 210,
-        transform: 'translateX(50%)'
+        marginTop: 20
       },
       knobTempoWrapper: {
         position: 'absolute',
@@ -169,12 +167,21 @@ class TopLeftSection extends React.Component {
       }
     };
 
+    const alignStyles = {
+      tempoAndAutoFill: {
+        position: 'absolute',
+        top: 0, right: 7,
+        width: 149, height,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+      }
+    };
+
     return (
       <div style={styles.wrapper}>
         <div style={styles.stencilWrapper}>
           <div style={labelStyles.patternWrite}>PATTERN WRITE</div>
-          <div style={labelStyles.instrumentSelect}>INSTRUMENT-SELECT</div>
-          <div style={labelStyles.rhythmTrack}>RHYTHM TRACK</div>
           <div style={labelStyles.patternClear}>PATTERN CLEAR</div>
           <svg width={width} height={height}>
             <path d={stencilPaths.separatorPath} stroke={grey} fill='none' strokeWidth={2} />
@@ -190,8 +197,15 @@ class TopLeftSection extends React.Component {
             <path d={stencilPaths.composeToTrackClear} stroke={stencilOrange} fill='none' strokeWidth={1} />
           </svg>
         </div>
-        <div style={styles.instrumentSelectorWrapper}>
-          <ConnectedInstrumentSelectorKnob size={150} />
+        <div style={alignStyles.tempoAndAutoFill}>
+          <div style={labelStyles.instrumentSelect}>INSTRUMENT-SELECT</div>
+          <div style={labelStyles.rhythmTrack}>RHYTHM TRACK</div>
+          <div style={styles.instrumentSelectorWrapper}>
+            <ConnectedInstrumentSelectorKnob size={151} />
+          </div>
+          <div style={styles.autoFillInWrapper}>
+            <ConnectedAutoFillInKnob size={151} />
+          </div>
         </div>
         <div style={styles.modeWrapper}>
           <div style={labelStyles.firstPart}>1st PART</div>
@@ -206,9 +220,6 @@ class TopLeftSection extends React.Component {
           <div style={labelStyles.stepNumber}>STEP NUMBER</div>
           <div style={labelStyles.preScale}>PRE- SCALE</div>
           <ConnectedClearButton style={styles.clearButton} />
-        </div>
-        <div style={styles.autoFillInWrapper}>
-          <ConnectedAutoFillInKnob size={150} />
         </div>
         <div style={styles.knobTempoWrapper}>
           <ConnectedTempoKnob size={180} />

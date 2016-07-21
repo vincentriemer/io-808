@@ -24,7 +24,7 @@ class InstrumentColumn extends React.Component {
   render() {
     const { config: { type, labels, controls }, controlState, onChange, width, height } = this.props;
 
-    const DRUM_KNOB_SIZE = width * 0.72;
+    const DRUM_KNOB_SIZE = Math.ceil(width * 0.72);
 
     // create label section
     let labelComponents = [];
