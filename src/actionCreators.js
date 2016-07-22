@@ -7,13 +7,15 @@ import {
   TAP_BUTTON_CLICK,
   PRE_SCALE_CHANGE,
   STEP_BUTTON_CLICK,
-  CLEAR_CLICK,
   AUTO_FILL_IN_CHANGE,
   FINE_TEMPO_CHANGE,
   INSTRUMENT_TRACK_CHANGE,
   MODE_CHANGE,
   TEMPO_CHANGE,
-  TICK
+  TICK,
+  BLINK_TICK,
+  CLEAR_DOWN,
+  CLEAR_UP
 } from 'actionTypes';
 
 export const onAutoFillInChange = (value) => ({
@@ -81,10 +83,18 @@ export const onStepButtonClick = (index) => ({
   payload: index
 });
 
-export const onClearClick = () => ({
-    type: CLEAR_CLICK
-});
-
 export const onTick = () => ({
   type: TICK
+});
+
+export const onBlinkTick = () => ({
+  type: BLINK_TICK
+});
+
+export const onClearDown = () => ({
+  type: CLEAR_DOWN
+});
+
+export const onClearUp = () => ({
+  type: CLEAR_UP
 });

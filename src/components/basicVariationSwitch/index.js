@@ -12,12 +12,11 @@ class BasicVariationSwitch extends React.Component {
   static propTypes = {
     onChange: React.PropTypes.func.isRequired,
     position: React.PropTypes.number.isRequired,
-    aActive: React.PropTypes.bool.isRequired,
-    bActive: React.PropTypes.bool.isRequired,
+    lightState: React.PropTypes.oneOf([-1,0,1,2]).isRequired
   };
 
   render() {
-    const { onChange, position, aActive, bActive } = this.props;
+    const { onChange, position, lightState } = this.props;
 
     const thickness = 30;
     const length = 80;
@@ -76,6 +75,20 @@ class BasicVariationSwitch extends React.Component {
         border: `solid ${grey} 2px`
       }
     };
+
+    let aActive = false, bActive = false;
+    switch (lightState) {
+      case 0:
+        aActive = true;
+        break;
+      case 1:
+        aActive = true;
+        bActive = true;
+        break;
+      case 2:
+        bActive = true;
+        break;
+    }
 
     return (
       <div style={styles.wrapper}>

@@ -1,14 +1,15 @@
 import { connect } from 'react-redux';
 import {
-  onClearClick,
   onModeChange,
   onInstrumentTrackChange,
   onAutoFillInChange,
   onTempoChange,
-  onFineTempoChange
+  onFineTempoChange,
+  onClearDown,
+  onClearUp
 } from 'actionCreators';
 
-import Button from 'components/button';
+import ClearButton from 'components/clearButton'
 import ModeKnob from 'components/modeKnob';
 import InstrumentSelectorKnob from 'components/instrumentSelectorKnob';
 import AutoFillInKnob from 'components/autoFillInKnob';
@@ -17,9 +18,10 @@ import FineTempoKnob from 'components/fineTempoKnob';
 
 export const ConnectedClearButton = (() => {
   const mapDispatchToProps = (dispatch) => ({
-    onClick: () => dispatch(onClearClick())
+    onMouseDown: () => dispatch(onClearDown()),
+    onMouseUp: () => dispatch(onClearUp())
   });
-  return connect(null, mapDispatchToProps)(Button);
+  return connect(null, mapDispatchToProps)(ClearButton);
 })();
 
 export const ConnectedModeKnob = (() => {

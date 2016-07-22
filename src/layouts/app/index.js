@@ -50,15 +50,30 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { tickEvent: null, currentTempo: null };
+    this.state = { tickEvent: null, currentTempo: null, blinkIntervalID: null };
 
     this.handleTick = this.handleTick.bind(this);
+    this.handleBlinkTick = this.handleBlinkTick.bind(this);
+  }
+
+  handleBlinkTick() {
+    this.props.handleBlinkTick();
   }
 
   handleTick({ deadline }) {
     clock.setTimeout(() => {
       this.props.handleTick();
     }, deadline - audioCtx.currentTime);
+  }
+
+  componentDidMount() {
+    const blinkIntervalID = window.setInterval(this.handleBlinkTick, 750);
+    this.setState({ blinkIntervalID });
+  }
+
+  componentWillUnmount() {
+    window.clearInterval(this.state.blinkIntervalID);
+    this.setState({ blinkIntervalID: null });
   }
 
   componentWillReceiveProps({ storeState: nextStoreState }) {

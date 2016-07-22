@@ -10,17 +10,23 @@ import {
   TEMPO_CHANGE,
   TAP_BUTTON_CLICK,
   STEP_BUTTON_CLICK,
-  CLEAR_CLICK,
   START_STOP_BUTTON_CLICK,
-  TICK
+  TICK,
+  BLINK_TICK,
+  CLEAR_DOWN,
+  CLEAR_UP
 } from 'actionTypes';
 
 import {
+  MODE_PATTERN_CLEAR,
   MODE_FIRST_PART, MODE_SECOND_PART,
-  MODE_TO_PART_MAPPING, FIRST_PART
+  MODE_TO_PART_MAPPING,
+  FIRST_PART, SECOND_PART,
+  A_VARIATION, B_VARIATION
 } from 'constants';
 
-import stepClickReducer from './stepClick';
+import stepClickReducer from 'reducers/stepClick';
+import clearReducer from 'reducers/clear';
 
 export default function(state, { type, payload }) {
   switch(type) {
@@ -32,11 +38,15 @@ export default function(state, { type, payload }) {
       return stepClickReducer(state, payload);
 
     case START_STOP_BUTTON_CLICK:
-      let newState = state;
-      if (!state.playing)
-        newState = newState.set('currentStep', -1);
-      return newState.set('playing', !state.playing);
-
+      if (state.selectedMode === MODE_PATTERN_CLEAR) {
+        // start/stop button doesn't do anything if in `pattern clear` mode
+        return state;
+      } else {
+        let newState = state;
+        if (!state.playing)
+          newState = newState.set('currentStep', -1);
+        return newState.set('playing', !state.playing);
+      }
     case MASTER_VOLUME_CHANGE:
       return state.set('masterVolume', payload);
 
@@ -63,11 +73,18 @@ export default function(state, { type, payload }) {
         selectedMode: payload,
         playing: false,
         currentPart: [MODE_FIRST_PART,MODE_SECOND_PART].includes(payload) ?
-          MODE_TO_PART_MAPPING[payload]: FIRST_PART
+          MODE_TO_PART_MAPPING[payload] : FIRST_PART
       });
 
     case TICK:
       return state.set('currentStep', state.currentStep + 1);
+
+    case BLINK_TICK:
+      return state.set('blinkState', !state.blinkState);
+
+    case CLEAR_DOWN:
+    case CLEAR_UP:
+      return clearReducer(state, type);
 
     default:
       return state;

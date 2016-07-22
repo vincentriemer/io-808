@@ -18,16 +18,16 @@ import StepButton from 'components/stepButton';
 
 // Selectors
 import StepButtonSelectorFactory from 'selectors/stepButton';
+import basicVariationSelector from 'selectors/basicVariation';
 
 // Constants
-import {FIRST_PART, SECOND_PART} from 'constants';
+import {FIRST_PART, SECOND_PART, MODE_PATTERN_CLEAR} from 'constants';
 
 export const ConnectedBasicVariationSwitch = (() => {
   // TODO: properly infer state of aActive and bActive
   const mapStateToProps = (state) => ({
     position: state.basicVariationPosition,
-    aActive: false,
-    bActive: false
+    lightState: basicVariationSelector(state)
   });
 
   const mapDispatchToProps = (dispatch) => ({
@@ -42,7 +42,11 @@ export const ConnectedStartStopButton = (() => {
     onClick: () => dispatch(onStartStopButtonClick())
   });
 
-  return connect(null, mapDispatchToProps)(Button);
+  const mapStateToProps = (state) => ({
+    disabled: state.selectedMode === MODE_PATTERN_CLEAR
+  });
+
+  return connect(mapStateToProps, mapDispatchToProps)(Button);
 })();
 
 export const ConnectedIFVariationSwitch = (() => {
@@ -62,7 +66,11 @@ export const ConnectedTapButton = (() => {
     onClick: () => dispatch(onTapButtonClick())
   });
 
-  return connect(null, mapDispatchToProps)(Button);
+  const mapStateToProps = (state) => ({
+    disabled: state.selectedMode === MODE_PATTERN_CLEAR
+  });
+
+  return connect(mapStateToProps, mapDispatchToProps)(Button);
 })();
 
 export const ConnectedPreScaleSwitch = (() => {
@@ -79,10 +87,19 @@ export const ConnectedPreScaleSwitch = (() => {
 
 export const ConnectedPartLights = (() => {
   // TODO: properly infer state of firstActive and secondActive
-  const mapStateToProps = (state) => ({
-    firstActive: state.currentPart === FIRST_PART,
-    secondActive: state.currentPart === SECOND_PART
-  });
+  const mapStateToProps = (state) => {
+    if (state.selectedMode === MODE_PATTERN_CLEAR) {
+      return {
+        firstActive: !state.clearPressed,
+        secondActive: state.clearPressed
+      }
+    } else {
+      return {
+        firstActive: state.currentPart === FIRST_PART,
+        secondActive: state.currentPart === SECOND_PART
+      };
+    }
+  };
 
   return connect(mapStateToProps, null)(PartLights);
 })();

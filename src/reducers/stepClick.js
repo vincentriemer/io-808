@@ -23,15 +23,16 @@ export default (state, stepNumber) => {
         const key = stepKey(selectedRhythm, selectedInstrumentTrack, currentPart, currentVariation, stepNumber);
         return state.setIn(['steps', key], !state.steps[key]);
       default:
-        return {};
+        return state;
     }
   } else {
     switch (selectedMode) {
+      case MODE_PATTERN_CLEAR:
       case MODE_FIRST_PART:
       case MODE_SECOND_PART:
         return state.set('selectedRhythm', stepNumber);
       default:
-        return {};
+        return state;
     }
   }
 }

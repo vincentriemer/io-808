@@ -5,6 +5,12 @@ import { grey } from 'theme/variables';
 
 @Radium
 class Button extends React.Component {
+  static propTypes = {
+    onClick: React.PropTypes.func.isRequired,
+    style: React.PropTypes.object,
+    disabled: React.PropTypes.bool
+  };
+
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
@@ -15,7 +21,7 @@ class Button extends React.Component {
   }
 
   render() {
-    const {style, children} = this.props;
+    const {style, children, disabled=false} = this.props;
 
     const styles = {
       button: {
@@ -30,7 +36,11 @@ class Button extends React.Component {
         ':active': {
           transform: style.transform ? style.transform : '' + 'scale(1.0) translateZ(0)'
         },
-        userSelect: 'none'
+        userSelect: 'none',
+
+        // disabled styles
+        pointerEvents: disabled ? 'none' : 'auto',
+        opacity: disabled ? 0.5 : 1
       }
     };
 
@@ -41,10 +51,5 @@ class Button extends React.Component {
     );
   }
 }
-
-Button.propTypes = {
-  onClick: React.PropTypes.func.isRequired,
-  style: React.PropTypes.object
-};
 
 export default Button;

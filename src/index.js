@@ -6,7 +6,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider, connect } from 'react-redux';
 
-import { onTick } from 'actionCreators';
+import { onTick, onBlinkTick } from 'actionCreators';
 
 import store from 'store';
 import App from 'layouts/app';
@@ -16,7 +16,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleTick: () => dispatch(onTick())
+  handleTick: () => dispatch(onTick()),
+  handleBlinkTick: () => dispatch(onBlinkTick())
 });
 
 const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(App);

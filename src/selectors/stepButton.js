@@ -10,11 +10,15 @@ import {
 
 import { stepKey } from 'helpers';
 
-const getPlaying = (state) => state.playing;
-const getSelectedRhythm = (state) => state.selectedRhythm;
-const getSelectedMode = (state) => state.selectedMode;
-const getCurrentVariation = (state) => state.currentVariation;
-const getCurrentStep = (state) => state.currentStep;
+import {
+  getCurrentStep,
+  getCurrentVariation,
+  getPlaying,
+  getSelectedMode,
+  getSelectedRhythm
+} from 'selectors/common';
+
+const getBlinkState = (state) => state.blinkState;
 
 const getSequencerValueFactory = (stepNumber) => (state) => {
   const { selectedRhythm, currentPart, currentVariation, selectedInstrumentTrack } = state;
@@ -31,6 +35,7 @@ export default (stepNumber) => {
       getSelectedMode,
       getCurrentVariation,
       getCurrentStep,
+      getBlinkState,
       getSequencerValueFactory(stepNumber)
     ],
     (
@@ -39,6 +44,7 @@ export default (stepNumber) => {
       selectedMode,
       currentVariation,
       currentStep,
+      blinkState,
       sequencerValue
     ) => {
       // SEQUENCER IS PLAYING
@@ -61,7 +67,7 @@ export default (stepNumber) => {
           case MODE_PATTERN_CLEAR:
           case MODE_FIRST_PART:
           case MODE_SECOND_PART:
-            return selectedRhythm === stepNumber;
+            return (selectedRhythm === stepNumber) && blinkState;
           default:
             return false;
         }
