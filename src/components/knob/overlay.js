@@ -54,7 +54,7 @@ class KnobOverlay extends React.Component {
         zIndex: 100,
         top: 0, left: 0,
         width: windowWidth, height: windowHeight,
-        cursor: 'move'
+        cursor: 'ns-resize'
       },
 
       knobPath: {
