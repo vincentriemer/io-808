@@ -10,6 +10,16 @@ const innerPadding = 4;
 class Light extends React.Component {
   render() {
     const { active } = this.props;
+
+    const baseInnerStyle = {
+      position: 'absolute',
+      left: innerPadding,
+      right: innerPadding,
+      top: innerPadding,
+      bottom: innerPadding,
+      borderRadius: '50%',
+    };
+
     const styles = {
       outer: {
         position: 'relative',
@@ -17,21 +27,21 @@ class Light extends React.Component {
         width: size, height: size,
         borderRadius: '50%'
       },
-      inner: {
-        position: 'absolute',
-        left: innerPadding,
-        right: innerPadding,
-        top: innerPadding,
-        bottom: innerPadding,
-        borderRadius: '50%',
-
-        backgroundColor: active ? lightActive : lightInactive
+      innerInactive: {
+        ...baseInnerStyle,
+        backgroundColor: lightInactive
+      },
+      innerActive: {
+        ...baseInnerStyle,
+        backgroundColor: lightActive,
+        opacity: active ? 1 : 0
       }
     };
 
     return (
       <div style={styles.outer}>
-        <div style={styles.inner}></div>
+        <div style={styles.innerInactive}></div>
+        <div style={styles.innerActive}></div>
       </div>
     );
   }
