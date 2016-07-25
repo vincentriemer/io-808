@@ -21,13 +21,13 @@ class Button extends React.Component {
   }
 
   render() {
-    const {style, children, disabled=false} = this.props;
+    const {style, children, disabled=false, onClick=()=>{}} = this.props;
 
     const styles = {
       button: {
         backgroundColor: grey,
         width: 80, height: 40,
-        transition: 'transform 0.05s',
+        transition: 'transform 0.05s, opacity 0.5s',
         transform: 'scale(1.0) translateZ(0)',
         ':hover': {
           cursor: 'pointer',
@@ -44,19 +44,11 @@ class Button extends React.Component {
       }
     };
 
-    if (this.props.onClick) {
-      return (
-        <div style={[styles.button, style]} onClick={this.handleClick}>
-          {children}
-        </div>
-      );
-    } else {
-      return (
-        <div style={[styles.button, style]}>
-          {children}
-        </div>
-      );
-    }
+    return (
+      <div style={[styles.button, style]} onClick={onClick}>
+        {children}
+      </div>
+    );
   }
 }
 

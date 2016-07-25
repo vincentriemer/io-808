@@ -53,7 +53,7 @@ export default function(state, { type, payload }) {
           const part = MODE_TO_PART_MAPPING[state.selectedMode];
           const track = state.selectedRhythm;
           if (state.rhythmLengths[trackLengthKey(track, part)] === 0) {
-            window.alert('Cannot play a pattern with a 0 pattern length!');
+            window.alert('Please set a pattern length!');
             return state;
           }
         default:
@@ -107,7 +107,15 @@ export default function(state, { type, payload }) {
     case CLEAR_DRAG_DROP:
       const track = state.selectedRhythm;
       const part = MODE_TO_PART_MAPPING[state.selectedMode];
-      return state.setIn(['rhythmLengths', trackLengthKey(track, part)], payload);
+
+      if (part === FIRST_PART) {
+        return state
+          .setIn(['rhythmLengths', trackLengthKey(track, FIRST_PART)], payload)
+          .setIn(['rhythmLengths', trackLengthKey(track, SECOND_PART)], 0);
+      } else if (part === SECOND_PART) {
+        return state
+          .setIn(['rhythmLengths', trackLengthKey(track, SECOND_PART)], payload);
+      }
 
     default:
       return state;

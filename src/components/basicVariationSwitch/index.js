@@ -7,12 +7,14 @@ import Switch from 'components/switch';
 import { grey, darkBlack, silver } from 'theme/variables';
 import { labelDarkGrey } from 'theme/mixins';
 
+import {A_VARIATION, B_VARIATION, BOTH_VARIATIONS} from 'constants';
+
 @Radium
 class BasicVariationSwitch extends React.Component {
   static propTypes = {
     onChange: React.PropTypes.func.isRequired,
     position: React.PropTypes.number.isRequired,
-    lightState: React.PropTypes.oneOf([-1,0,1,2]).isRequired
+    lightState: React.PropTypes.oneOf([null, A_VARIATION, B_VARIATION, BOTH_VARIATIONS]).isRequired
   };
 
   render() {
@@ -78,14 +80,14 @@ class BasicVariationSwitch extends React.Component {
 
     let aActive = false, bActive = false;
     switch (lightState) {
-      case 0:
+      case A_VARIATION:
         aActive = true;
         break;
-      case 1:
+      case BOTH_VARIATIONS:
         aActive = true;
         bActive = true;
         break;
-      case 2:
+      case B_VARIATION:
         bActive = true;
         break;
     }

@@ -9,12 +9,15 @@ import {
 
 import { stepKey } from '../helpers';
 
-// should return only updated properties
+import basicVariationSelector from 'selectors/variation';
+
 export default (state, stepNumber) => {
   const {
     playing, selectedMode, selectedRhythm,
-    currentPart, currentVariation, selectedInstrumentTrack
+    currentPart, selectedInstrumentTrack
   } = state;
+
+  const currentVariation = basicVariationSelector(state);
 
   if (playing) {
     switch (selectedMode) {

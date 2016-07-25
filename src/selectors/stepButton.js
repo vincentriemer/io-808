@@ -8,11 +8,10 @@ import {
   A_VARIATION, B_VARIATION
 } from 'constants';
 
-import { stepKey } from 'helpers';
+import { stepKey, trackLengthKey } from 'helpers';
 
 import {
   getCurrentStep,
-  getCurrentVariation,
   getPlaying,
   getSelectedMode,
   getSelectedRhythm,
@@ -22,7 +21,8 @@ import {
 } from 'selectors/common';
 
 import currentPartSelector from 'selectors/currentPart';
-import basicVariationSelector from 'selectors/basicVariation';
+import basicVariationSelector from 'selectors/variation';
+import patternLengthSelector from 'selectors/patternLength';
 
 const getBlinkState = (state) => state.blinkState;
 
@@ -30,12 +30,12 @@ const getBlinkState = (state) => state.blinkState;
 export default (stepNumber) => {
   return createSelector([
       getPlaying, getSelectedRhythm, getSelectedMode, basicVariationSelector, getCurrentStep, getBlinkState,
-      getSelectedInstrumentTrack, getSteps, currentPartSelector, getIntroFillVariationPosition
+      getSelectedInstrumentTrack, getSteps, currentPartSelector, getIntroFillVariationPosition, patternLengthSelector
     ], (
       playing, selectedRhythm, selectedMode, basicVariation, currentStep, blinkState, selectedInstrument, steps,
-      currentPart, introFillVariation
+      currentPart, introFillVariation, patternLength
     ) => {
-      let currentVariation = selectedRhythm < 12 ? [A_VARIATION,,B_VARIATION][basicVariation] : introFillVariation;
+      let currentVariation = selectedRhythm < 12 ? basicVariation : introFillVariation;
 
       // SEQUENCER IS PLAYING
       if (playing) {
@@ -44,7 +44,7 @@ export default (stepNumber) => {
           case MODE_SECOND_PART:
             const currentStepKey = stepKey(selectedRhythm, selectedInstrument, currentPart, currentVariation, stepNumber);
             const sequencerValue = steps[currentStepKey];
-            if (currentStep % 16 === stepNumber) {
+            if (currentStep % patternLength === stepNumber) {
               return !sequencerValue;
             } else {
               return sequencerValue;

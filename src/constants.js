@@ -22,6 +22,7 @@ export const FIRST_PART = 'FIRST_PART';
 export const SECOND_PART = 'SECOND_PART';
 export const A_VARIATION = 'A_VARIATION';
 export const B_VARIATION = 'B_VARIATION';
+export const BOTH_VARIATIONS = 'BOTH_VARIATIONS';
 
 export const MODE_TO_PART_MAPPING = {
   [MODE_FIRST_PART]: FIRST_PART,

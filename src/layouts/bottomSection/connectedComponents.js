@@ -20,7 +20,7 @@ import StepButton from 'components/stepButton';
 // Selectors
 import StepButtonSelectorFactory from 'selectors/stepButton';
 import currentPartSelector from 'selectors/currentPart';
-import basicVariationSelector from 'selectors/basicVariation';
+import basicVariationSelector from 'selectors/variation';
 
 // Constants
 import {FIRST_PART, SECOND_PART, MODE_PATTERN_CLEAR} from 'constants';
@@ -69,7 +69,7 @@ export const ConnectedTapButton = (() => {
   });
 
   const mapStateToProps = (state) => ({
-    disabled: state.selectedMode === MODE_PATTERN_CLEAR
+    disabled: state.selectedMode === MODE_PATTERN_CLEAR || !state.playing
   });
 
   return connect(mapStateToProps, mapDispatchToProps)(Button);
@@ -108,7 +108,7 @@ export const ConnectedStepButtons = (() => {
 
     const mapDispatchToProps = (dispatch) => ({
       onClick: () => dispatch(onStepButtonClick(i)),
-      onDrop: () => dispatch(onClearDragDrop(i))
+      onDrop: () => dispatch(onClearDragDrop(i + 1))
     });
 
     buttons.push(connect(mapStateToProps, mapDispatchToProps)(StepButton));
