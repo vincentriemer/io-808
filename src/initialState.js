@@ -119,7 +119,7 @@ export default Immutable({
 
   currentStep: 0,
 
-  blinkState: false,
+  blinkState: true,
 
   clearPressed: false
 })

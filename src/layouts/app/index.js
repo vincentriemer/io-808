@@ -57,7 +57,10 @@ class App extends React.Component {
   }
 
   handleBlinkTick() {
-    this.props.handleBlinkTick();
+    // disable blinking in development (clogs up redux devtools)
+    if ('production' === process.env.NODE_ENV) {
+      this.props.handleBlinkTick();
+    }
   }
 
   handleTick({ deadline }) {

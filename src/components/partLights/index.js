@@ -5,18 +5,26 @@ import Light from 'components/light';
 
 import { labelGreyNormal } from 'theme/mixins';
 
+import {FIRST_PART, SECOND_PART} from 'constants';
+
 @Radium
 class PartLights extends React.Component {
   static propTypes = {
-    firstActive: React.PropTypes.bool.isRequired,
-    secondActive: React.PropTypes.bool.isRequired,
+    currentPart: React.PropTypes.oneOf([FIRST_PART, SECOND_PART]),
     width: React.PropTypes.number.isRequired,
     height: React.PropTypes.number.isRequired,
     offset: React.PropTypes.number.isRequired
   };
 
   render() {
-    const {firstActive, secondActive, width, height, offset} = this.props;
+    const {currentPart, width, height, offset} = this.props;
+
+    let firstActive = false, secondActive = false;
+    if (currentPart === FIRST_PART) {
+      firstActive = true;
+    } else if (currentPart === SECOND_PART) {
+      secondActive = true
+    }
 
     const styles = {
       wrapper: {

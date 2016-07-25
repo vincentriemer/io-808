@@ -17,10 +17,22 @@ export default (state, type) => {
           stateUpdate.clearPressed = false;
 
           const variationsToClear = [];
-          if (state.basicVariationPosition <= 1)
-            variationsToClear.push(A_VARIATION);
-          if (state.basicVariationPosition >= 1)
-            variationsToClear.push(B_VARIATION);
+
+          // is a basic rhythm
+          if (state.selectedRhythm < 12) {
+            if (state.basicVariationPosition <= 1)
+              variationsToClear.push(A_VARIATION);
+            if (state.basicVariationPosition >= 1)
+              variationsToClear.push(B_VARIATION);
+          }
+          // is a intro/fill in
+          else {
+            if (state.introFillVariationPosition === 0) {
+              variationsToClear.push(A_VARIATION);
+            } else {
+              variationsToClear.push(B_VARIATION);
+            }
+          }
 
           stateUpdate.steps = {};
           variationsToClear.forEach(variation => {

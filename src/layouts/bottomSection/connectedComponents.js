@@ -18,6 +18,7 @@ import StepButton from 'components/stepButton';
 
 // Selectors
 import StepButtonSelectorFactory from 'selectors/stepButton';
+import currentPartSelector from 'selectors/currentPart';
 import basicVariationSelector from 'selectors/basicVariation';
 
 // Constants
@@ -86,20 +87,9 @@ export const ConnectedPreScaleSwitch = (() => {
 })();
 
 export const ConnectedPartLights = (() => {
-  // TODO: properly infer state of firstActive and secondActive
-  const mapStateToProps = (state) => {
-    if (state.selectedMode === MODE_PATTERN_CLEAR) {
-      return {
-        firstActive: !state.clearPressed,
-        secondActive: state.clearPressed
-      }
-    } else {
-      return {
-        firstActive: state.currentPart === FIRST_PART,
-        secondActive: state.currentPart === SECOND_PART
-      };
-    }
-  };
+  const mapStateToProps = (state) => ({
+    currentPart: currentPartSelector(state)
+  });
 
   return connect(mapStateToProps, null)(PartLights);
 })();

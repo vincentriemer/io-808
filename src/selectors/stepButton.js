@@ -15,43 +15,35 @@ import {
   getCurrentVariation,
   getPlaying,
   getSelectedMode,
-  getSelectedRhythm
+  getSelectedRhythm,
+  getSteps,
+  getSelectedInstrumentTrack,
+  getIntroFillVariationPosition
 } from 'selectors/common';
+
+import currentPartSelector from 'selectors/currentPart';
+import basicVariationSelector from 'selectors/basicVariation';
 
 const getBlinkState = (state) => state.blinkState;
 
-const getSequencerValueFactory = (stepNumber) => (state) => {
-  const { selectedRhythm, currentPart, currentVariation, selectedInstrumentTrack } = state;
-  const key = stepKey(selectedRhythm, selectedInstrumentTrack, currentPart, currentVariation, stepNumber);
-  return state.steps[key];
-};
-
 // returns a boolean value determining if the step button light is on or not
 export default (stepNumber) => {
-  return createSelector(
-    [
-      getPlaying,
-      getSelectedRhythm,
-      getSelectedMode,
-      getCurrentVariation,
-      getCurrentStep,
-      getBlinkState,
-      getSequencerValueFactory(stepNumber)
-    ],
-    (
-      playing,
-      selectedRhythm,
-      selectedMode,
-      currentVariation,
-      currentStep,
-      blinkState,
-      sequencerValue
+  return createSelector([
+      getPlaying, getSelectedRhythm, getSelectedMode, basicVariationSelector, getCurrentStep, getBlinkState,
+      getSelectedInstrumentTrack, getSteps, currentPartSelector, getIntroFillVariationPosition
+    ], (
+      playing, selectedRhythm, selectedMode, basicVariation, currentStep, blinkState, selectedInstrument, steps,
+      currentPart, introFillVariation
     ) => {
+      let currentVariation = selectedRhythm < 12 ? [A_VARIATION,,B_VARIATION][basicVariation] : introFillVariation;
+
       // SEQUENCER IS PLAYING
       if (playing) {
         switch (selectedMode) {
           case MODE_FIRST_PART:
           case MODE_SECOND_PART:
+            const currentStepKey = stepKey(selectedRhythm, selectedInstrument, currentPart, currentVariation, stepNumber);
+            const sequencerValue = steps[currentStepKey];
             if (currentStep % 16 === stepNumber) {
               return !sequencerValue;
             } else {
