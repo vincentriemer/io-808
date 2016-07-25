@@ -15,7 +15,10 @@ import {
   TICK,
   BLINK_TICK,
   CLEAR_DOWN,
-  CLEAR_UP
+  CLEAR_UP,
+  CLEAR_DRAG_START,
+  CLEAR_DRAG_END,
+  CLEAR_DRAG_DROP
 } from 'actionTypes';
 
 export const onAutoFillInChange = (value) => ({
@@ -97,4 +100,17 @@ export const onClearDown = () => ({
 
 export const onClearUp = () => ({
   type: CLEAR_UP
+});
+
+export const onClearDragStart = () => ({
+  type: CLEAR_DRAG_START
+});
+
+export const onClearDragEnd = () => ({
+  type: CLEAR_DRAG_END
+});
+
+export const onClearDragDrop = (length) => ({
+  type: CLEAR_DRAG_DROP,
+  payload: length
 });

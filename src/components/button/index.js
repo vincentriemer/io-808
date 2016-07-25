@@ -6,7 +6,7 @@ import { grey } from 'theme/variables';
 @Radium
 class Button extends React.Component {
   static propTypes = {
-    onClick: React.PropTypes.func.isRequired,
+    onClick: React.PropTypes.func,
     style: React.PropTypes.object,
     disabled: React.PropTypes.bool
   };
@@ -44,11 +44,19 @@ class Button extends React.Component {
       }
     };
 
-    return (
-      <div style={[styles.button, style]} onClick={this.handleClick}>
-        {children}
-      </div>
-    );
+    if (this.props.onClick) {
+      return (
+        <div style={[styles.button, style]} onClick={this.handleClick}>
+          {children}
+        </div>
+      );
+    } else {
+      return (
+        <div style={[styles.button, style]}>
+          {children}
+        </div>
+      );
+    }
   }
 }
 

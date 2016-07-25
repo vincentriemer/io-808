@@ -19,12 +19,8 @@ class PartLights extends React.Component {
   render() {
     const {currentPart, width, height, offset} = this.props;
 
-    let firstActive = false, secondActive = false;
-    if (currentPart === FIRST_PART) {
-      firstActive = true;
-    } else if (currentPart === SECOND_PART) {
-      secondActive = true
-    }
+    const firstActive = currentPart === FIRST_PART;
+    const secondActive = currentPart === SECOND_PART;
 
     const styles = {
       wrapper: {

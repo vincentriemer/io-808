@@ -121,5 +121,6 @@ export default Immutable({
 
   blinkState: true,
 
-  clearPressed: false
+  clearPressed: false,
+  clearDragging: false
 })

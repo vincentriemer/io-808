@@ -164,7 +164,7 @@ class App extends React.Component {
           <GatewayDest name="knobOverlay" />
           <div style={styles.wrapper}>
             <div style={styles.appWrapper}>
-            <div style={styles.topBottomDivider}></div>
+              <div style={styles.topBottomDivider}></div>
               <div style={styles.topWrapper}>
                 <TopLeftSection width={TOP_LEFT_WIDTH} height={TOP_HEIGHT} />
                 <div style={styles.topHorizontalDivider}></div>

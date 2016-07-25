@@ -17,3 +17,6 @@ export const BLINK_TICK = 'BLINK_TICK';
 
 export const CLEAR_DOWN = 'CLEAR_DOWN';
 export const CLEAR_UP = 'CLEAR_UP';
+export const CLEAR_DRAG_START = 'CLEAR_DRAG_START';
+export const CLEAR_DRAG_END = 'CLEAR_DRAG_END';
+export const CLEAR_DRAG_DROP = 'CLEAR_DRAG_DROP';

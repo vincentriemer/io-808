@@ -25,7 +25,8 @@ class Light extends React.Component {
         position: 'relative',
         backgroundColor: 'rgba(0,0,0,0.4)',
         width: size, height: size,
-        borderRadius: '50%'
+        borderRadius: '50%',
+        pointerEvents: 'none'
       },
       innerInactive: {
         ...baseInnerStyle,

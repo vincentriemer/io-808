@@ -6,8 +6,12 @@ import {
   onTempoChange,
   onFineTempoChange,
   onClearDown,
-  onClearUp
+  onClearUp,
+  onClearDragStart,
+  onClearDragEnd
 } from 'actionCreators';
+
+import { MODE_FIRST_PART, MODE_SECOND_PART } from 'constants';
 
 import ClearButton from 'components/clearButton'
 import ModeKnob from 'components/modeKnob';
@@ -19,9 +23,16 @@ import FineTempoKnob from 'components/fineTempoKnob';
 export const ConnectedClearButton = (() => {
   const mapDispatchToProps = (dispatch) => ({
     onMouseDown: () => dispatch(onClearDown()),
-    onMouseUp: () => dispatch(onClearUp())
+    onMouseUp: () => dispatch(onClearUp()),
+    onDragStart: () => dispatch(onClearDragStart()),
+    onDragEnd: () => dispatch(onClearDragEnd())
   });
-  return connect(null, mapDispatchToProps)(ClearButton);
+
+  const mapStateToProps = (state) => ({
+    draggable: [MODE_FIRST_PART, MODE_SECOND_PART].includes(state.selectedMode) && !state.playing
+  });
+
+  return connect(mapStateToProps, mapDispatchToProps)(ClearButton);
 })();
 
 export const ConnectedModeKnob = (() => {

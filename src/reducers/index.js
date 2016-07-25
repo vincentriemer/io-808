@@ -14,7 +14,10 @@ import {
   TICK,
   BLINK_TICK,
   CLEAR_DOWN,
-  CLEAR_UP
+  CLEAR_UP,
+  CLEAR_DRAG_START,
+  CLEAR_DRAG_END,
+  CLEAR_DRAG_DROP
 } from 'actionTypes';
 
 import {
@@ -28,6 +31,8 @@ import {
 import stepClickReducer from 'reducers/stepClick';
 import clearReducer from 'reducers/clear';
 
+import { trackLengthKey } from 'helpers';
+
 export default function(state, { type, payload }) {
   switch(type) {
     case INSTRUMENT_CHANGE:
@@ -38,15 +43,26 @@ export default function(state, { type, payload }) {
       return stepClickReducer(state, payload);
 
     case START_STOP_BUTTON_CLICK:
-      if (state.selectedMode === MODE_PATTERN_CLEAR) {
-        // start/stop button doesn't do anything if in `pattern clear` mode
-        return state;
-      } else {
-        let newState = state;
-        if (!state.playing)
-          newState = newState.set('currentStep', -1);
-        return newState.set('playing', !state.playing);
+      //noinspection FallThroughInSwitchStatementJS
+      switch(state.selectedMode) {
+        case MODE_PATTERN_CLEAR:
+          // start/stop button doesn't do anything if in `pattern clear` mode
+          return state;
+        case MODE_FIRST_PART:
+        case MODE_SECOND_PART:
+          const part = MODE_TO_PART_MAPPING[state.selectedMode];
+          const track = state.selectedRhythm;
+          if (state.rhythmLengths[trackLengthKey(track, part)] === 0) {
+            window.alert('Cannot play a pattern with a 0 pattern length!');
+            return state;
+          }
+        default:
+          let newState = state;
+          if (!state.playing)
+            newState = newState.set('currentStep', -1);
+          return newState.set('playing', !state.playing);
       }
+
     case MASTER_VOLUME_CHANGE:
       return state.set('masterVolume', payload);
 
@@ -84,7 +100,14 @@ export default function(state, { type, payload }) {
 
     case CLEAR_DOWN:
     case CLEAR_UP:
+    case CLEAR_DRAG_START:
+    case CLEAR_DRAG_END:
       return clearReducer(state, type);
+
+    case CLEAR_DRAG_DROP:
+      const track = state.selectedRhythm;
+      const part = MODE_TO_PART_MAPPING[state.selectedMode];
+      return state.setIn(['rhythmLengths', trackLengthKey(track, part)], payload);
 
     default:
       return state;
