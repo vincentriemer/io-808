@@ -35,6 +35,7 @@ class Light extends React.Component {
       innerActive: {
         ...baseInnerStyle,
         backgroundColor: lightActive,
+        transition: 'opacity 0.1s',
         opacity: active ? 1 : 0
       }
     };
