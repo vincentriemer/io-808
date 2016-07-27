@@ -2,4 +2,4 @@
 
 A fully recreated web-based tr-808 drum machine.
 
-## Current Status: Implementing Sequencer Logic
+## Current Status: Implementing Drum Module Sound Generators
