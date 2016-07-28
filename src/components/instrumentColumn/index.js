@@ -31,7 +31,7 @@ class InstrumentColumn extends React.Component {
     labelComponents.push(<InstrumentLabel key={`${type}-label-0`} label={labels[0]} />)
     if (labels.length == 2) {
       labelComponents.push(
-        <DrumSwitch key={`${type}-switch`} position={controlState.switch} onChange={(value) => onChange(type, 'switch', value)} />
+        <DrumSwitch key={`${type}-switch`} position={controlState.selector} onChange={(value) => onChange(type, 'selector', value)} />
       );
       labelComponents.push(<InstrumentLabel key={`${type}-label-1`} label={labels[1]} />);
     }

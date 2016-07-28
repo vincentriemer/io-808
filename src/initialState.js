@@ -41,55 +41,55 @@ const initialRhythmLengthState = (() => {
 
 const initialInstrumentState = {
   [ACCENT]: {
-    level: 100
+    level: 75
   },
   [BASS_DRUM]: {
-    level: 100,
+    level: 75,
     tone: 50,
     decay: 50
   },
   [SNARE_DRUM]: {
-    level: 100,
+    level: 75,
     tone: 50,
     snappy: 50
   },
   [LOW_CONGA_LOW_TOM]: {
-    level: 100,
+    level: 75,
     tuning: 50,
-    switch: 1
+    selector: 1
   },
   [MID_CONGA_MID_TOM]: {
-    level: 100,
+    level: 75,
     tuning: 50,
-    switch: 1
+    selector: 1
   },
   [HI_CONGA_HI_TOM]: {
-    level: 100,
+    level: 75,
     tuning: 50,
-    switch: 1
+    selector: 1
   },
   [CLAVES_RIMSHOT]: {
-    level: 100,
-    switch: 1
+    level: 75,
+    selector: 1
   },
   [MARACAS_HANDCLAP]: {
-    level: 100,
-    switch: 1
+    level: 75,
+    selector: 1
   },
   [COWBELL]: {
-    level: 100
+    level: 75
   },
   [CYMBAL]: {
-    level: 100,
+    level: 75,
     tone: 50,
     decay: 50
   },
   [OPEN_HIHAT]: {
-    level: 100,
+    level: 75,
     decay: 50
   },
   [CLSD_HIHAT]: {
-    level: 100
+    level: 75
   }
 };
 
@@ -104,8 +104,8 @@ export default Immutable({
   currentVariation: A_VARIATION,
   playing: false,
 
-  selectedMode: 0,
-  selectedInstrumentTrack: 0,
+  selectedMode: 1,
+  selectedInstrumentTrack: 1,
 
   masterVolume: 100,
 

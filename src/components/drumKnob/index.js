@@ -88,7 +88,6 @@ class DrumKnob extends React.Component {
     let levelInd = null, maxValue = 100;
     if (level) {
       levelInd = <div style={styles.levelInd}></div>;
-      maxValue = 133;
     }
 
     return (
