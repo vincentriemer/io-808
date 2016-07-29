@@ -4,26 +4,19 @@ require('globalStyles/main.css');
 
 import React from 'react';
 import { render } from 'react-dom';
-import { Provider, connect } from 'react-redux';
-
-import { onTick, onBlinkTick } from 'actionCreators';
+import { Provider } from 'react-redux';
 
 import store from 'store';
-import App from 'layouts/app';
-
-const mapStateToProps = (state) => ({
-  storeState: state
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  handleTick: () => dispatch(onTick()),
-  handleBlinkTick: () => dispatch(onBlinkTick())
-});
-
-const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(App);
+import AppLayout from 'layouts/app';
+import Sequencer from 'sequencer';
 
 render(
-  <Provider store={store}><ConnectedApp /></Provider>,
+  <Provider store={store}>
+    <div style={{width: '100%', height: '100%'}}>
+      <Sequencer />
+      <AppLayout />
+    </div>
+  </Provider>,
   document.getElementById('root'),
   () => {
     // Custom performance marker
