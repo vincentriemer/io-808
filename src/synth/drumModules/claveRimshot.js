@@ -33,6 +33,7 @@ export default function(audioCtx, destination, time, { level, selector }) {
   // clave modules
   const claveOsc = new VCO(TRIANGLE, audioCtx);
   let claveFilter = null;
+  // 0 = clave, 1 = rimshot
   if (selector === 0) {
     claveOsc.frequency.value = CLAVE_FREQ;
     claveFilter = new VCF(BANDPASS, audioCtx);

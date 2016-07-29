@@ -3,7 +3,7 @@ import VCO, { SQUARE } from 'synth/basics/vco';
 import VCA from 'synth/basics/vca';
 
 const OSC_FREQUENCIES = [263, 400, 421, 474, 587, 845];
-const OSC_AMPLITUDE = 0.2;
+const OSC_AMPLITUDE = 0.3;
 
 const DEFAULT_OSC_CONFIG = [true, true, true, true, true, true];
 
