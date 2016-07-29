@@ -7,6 +7,7 @@ module.exports = {
   devtool: 'source-map',
   entry: [
     'core-js/es6/reflect',
+    'core-js/es7/includes',
     './src/index'
   ],
   output: {
