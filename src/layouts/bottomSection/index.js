@@ -1,11 +1,14 @@
 import React from 'react';
 import Radium from 'radium';
+import { connect } from 'react-redux';
 
 import {grey, darkGrey, buttonColor, red, buttonOrange, yellow, offWhite, drumLabel} from 'theme/variables';
 import { labelDarkGrey, labelGreyNormal, labelGreyXLarge } from 'theme/mixins';
 
 import TimeSignatureSection from 'layouts/timeSignatureSection';
 import ArrowLabel from 'components/arrowLabel';
+
+import { UNIMPLEMENTED_MODES } from 'constants';
 
 import {
   ConnectedBasicVariationSwitch,
@@ -22,7 +25,8 @@ class BottomSection extends React.Component {
   static propTypes = {
     width: React.PropTypes.number.isRequired,
     height: React.PropTypes.number.isRequired,
-    topLeftWidth: React.PropTypes.number.isRequired
+    topLeftWidth: React.PropTypes.number.isRequired,
+    mode: React.PropTypes.number.isRequired
   };
 
   static RHYTHM_LABELS = [1,2,3,4,5,6,7,8,9,10,11,12,1,2,3,4];
@@ -70,13 +74,13 @@ class BottomSection extends React.Component {
       }
     };
 
-    ConnectedStepButtons.forEach((StepButton, index) => {
+    ConnectedStepButtons.forEach((ConnectedStepButton, index) => {
       labeledButtons.push(
         <div key={`stepbutton-${index}`} style={styles.wrapper}>
           <div style={styles.stepLabelWrapper}>
             <div style={styles.stepLabel}>{index + 1}</div>
           </div>
-          <StepButton width={buttonWidth} height={stepButtonHeight} color={this.STEP_BUTTON_COLORS[index]} />
+          <ConnectedStepButton width={buttonWidth} height={stepButtonHeight} color={this.STEP_BUTTON_COLORS[index]} />
           <div style={styles.rhythmLabelWrapper}>
             <div style={styles.rhythmLabel}>{this.RHYTHM_LABELS[index]}</div>
           </div>
@@ -88,7 +92,7 @@ class BottomSection extends React.Component {
   };
 
   render() {
-    const {width, height, topLeftWidth} = this.props;
+    const {width, height, topLeftWidth, mode} = this.props;
 
     const BACKGROUND_PADDING = 10,
       BACKGROUND_BORDER_RADIUS = 8,
@@ -124,10 +128,31 @@ class BottomSection extends React.Component {
       backgroundColor: darkGrey
     });
 
+    const modeSupported = !UNIMPLEMENTED_MODES.includes(mode);
+
     const styles = {
       wrapper: {
         width, height,
         position: 'relative'
+      },
+      unsupportedWrapper: {
+        width, height,
+        position: 'relative',
+        transition: 'opacity 0.5s',
+        opacity: modeSupported ? 1.0 : 0.1
+      },
+      unsupportedLabel: {
+        ...labelGreyXLarge,
+        position: 'absolute',
+        width, height,
+        top: 0, left: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        pointerEvents: 'none',
+        color: '#F6F6F6',
+        transition: 'opacity 0.5s',
+        opacity: modeSupported ? 0.0 : 1.0
       },
       controlWrapper: {
         position: 'absolute',
@@ -309,73 +334,81 @@ class BottomSection extends React.Component {
 
     return (
       <div style={styles.wrapper}>
-        <div style={backgroundStyles.wrapper}>
-          <div style={backgroundStyles.left}></div>
-          <div style={backgroundStyles.right}></div>
-          <div style={backgroundStyles.bottomLeft}></div>
-          <div style={backgroundStyles.bottomRight}></div>
-          <div style={backgroundStyles.leftFiller}></div>
-          <div style={backgroundStyles.rightFiller}></div>
-          <div style={backgroundStyles.center}></div>
-          <div style={backgroundStyles.timeSignatureSectionWrapper}>
-            <TimeSignatureSection width={STEPS_SECTION_WIDTH} height={TIME_SIG_WRAPPER_HEIGHT}
-                                  stepPadding={BACKGROUND_PADDING} quarterStepWidth={QUARTER_STEP_WIDTH} />
+        <div className={modeSupported ? '' : 'unsupported'} style={styles.unsupportedWrapper}>
+          <div style={backgroundStyles.wrapper}>
+            <div style={backgroundStyles.left}></div>
+            <div style={backgroundStyles.right}></div>
+            <div style={backgroundStyles.bottomLeft}></div>
+            <div style={backgroundStyles.bottomRight}></div>
+            <div style={backgroundStyles.leftFiller}></div>
+            <div style={backgroundStyles.rightFiller}></div>
+            <div style={backgroundStyles.center}></div>
+            <div style={backgroundStyles.timeSignatureSectionWrapper}>
+              <TimeSignatureSection width={STEPS_SECTION_WIDTH} height={TIME_SIG_WRAPPER_HEIGHT}
+                                    stepPadding={BACKGROUND_PADDING} quarterStepWidth={QUARTER_STEP_WIDTH} />
+            </div>
           </div>
-        </div>
-        <div style={styles.controlWrapper}>
-          <div style={styles.leftSection}>
-            <ConnectedBasicVariationSwitch />
-            <div style={horizontalSeparatorStyle(2)}></div>
-            <div style={styles.buttonWrapper}>
-              <ConnectedStartStopButton style={styles.startStopButton}>
-                <div style={labelDarkGrey}>START</div>
+          <div style={styles.controlWrapper}>
+            <div style={styles.leftSection}>
+              <ConnectedBasicVariationSwitch />
+              <div style={horizontalSeparatorStyle(2)}></div>
+              <div style={styles.buttonWrapper}>
+                <ConnectedStartStopButton style={styles.startStopButton}>
+                  <div style={labelDarkGrey}>START</div>
+                  <div style={{...horizontalSeparatorStyle(1), margin: 3}}></div>
+                  <div style={labelDarkGrey}>STOP</div>
+                </ConnectedStartStopButton>
+              </div>
+            </div>
+            <div style={styles.rightSection}>
+              <ConnectedIFVariationSwitch />
+              <div style={horizontalSeparatorStyle(2)}></div>
+              <div style={styles.fillInButtonLabelWrapper}>
+                <div style={labelDarkGrey}>INTRO SET</div>
                 <div style={{...horizontalSeparatorStyle(1), margin: 3}}></div>
-                <div style={labelDarkGrey}>STOP</div>
-              </ConnectedStartStopButton>
+                <div style={labelDarkGrey}>FILL IN TRIGGER</div>
+              </div>
+              <div style={styles.buttonWrapper}>
+                <ConnectedTapButton style={styles.tapButton}>
+                  <div style={labelDarkGrey}>TAP</div>
+                </ConnectedTapButton>
+              </div>
             </div>
-          </div>
-          <div style={styles.rightSection}>
-            <ConnectedIFVariationSwitch />
-            <div style={horizontalSeparatorStyle(2)}></div>
-            <div style={styles.fillInButtonLabelWrapper}>
-              <div style={labelDarkGrey}>INTRO SET</div>
-              <div style={{...horizontalSeparatorStyle(1), margin: 3}}></div>
-              <div style={labelDarkGrey}>FILL IN TRIGGER</div>
+            <div style={styles.preScaleSection}>
+              <div style={styles.preScaleSwitchWrapper}>
+                <ConnectedPreScaleSwitch position={2} offset={STEP_BUTTON_LABEL_HEIGHT / 3} />
+              </div>
+              <div style={styles.preScaleBottomSection}>
+                <ArrowLabel label='STEP NO' width={PRE_SCALE_SECTION_WIDTH - 20} height={ARROW_LABEL_HEIGHT}
+                            textColor={darkGrey} backgroundColor={grey} direction='right'/>
+                <ConnectedPartLights offset={STEP_BUTTON_LABEL_HEIGHT / 3}
+                                     width={PRE_SCALE_SECTION_WIDTH}
+                                     height={STEP_BUTTON_HEIGHT}/>
+              </div>
             </div>
-            <div style={styles.buttonWrapper}>
-              <ConnectedTapButton style={styles.tapButton}>
-                <div style={labelDarkGrey}>TAP</div>
-              </ConnectedTapButton>
+            <div style={styles.stepButtonSection}>
+              {BottomSection.generateStepButtons(STEPS_SECTION_WIDTH, STEP_BUTTON_HEIGHT, STEP_BUTTON_LABEL_HEIGHT,
+                BACKGROUND_BOTTOM_HEIGHT, BACKGROUND_PADDING)}
             </div>
-          </div>
-          <div style={styles.preScaleSection}>
-            <div style={styles.preScaleSwitchWrapper}>
-              <ConnectedPreScaleSwitch position={2} offset={STEP_BUTTON_LABEL_HEIGHT / 3} />
+            <div style={styles.basicRhythmArrowWrapper}>
+              <ArrowLabel label="BASIC RHYTHM" width={140} height={25} direction='right'
+                          textColor={grey} backgroundColor={darkGrey}/>
             </div>
-            <div style={styles.preScaleBottomSection}>
-              <ArrowLabel label='STEP NO' width={PRE_SCALE_SECTION_WIDTH - 20} height={ARROW_LABEL_HEIGHT}
-                          textColor={darkGrey} backgroundColor={grey} direction='right'/>
-              <ConnectedPartLights offset={STEP_BUTTON_LABEL_HEIGHT / 3}
-                                   width={PRE_SCALE_SECTION_WIDTH}
-                                   height={STEP_BUTTON_HEIGHT}/>
+            <div style={styles.iFArrowWrapper}>
+              <ArrowLabel label="INTRO/FILL IN" width={140} height={25} direction='left'
+                          textColor={grey} backgroundColor={darkGrey}/>
             </div>
-          </div>
-          <div style={styles.stepButtonSection}>
-            {BottomSection.generateStepButtons(STEPS_SECTION_WIDTH, STEP_BUTTON_HEIGHT, STEP_BUTTON_LABEL_HEIGHT,
-              BACKGROUND_BOTTOM_HEIGHT, BACKGROUND_PADDING)}
-          </div>
-          <div style={styles.basicRhythmArrowWrapper}>
-            <ArrowLabel label="BASIC RHYTHM" width={140} height={25} direction='right'
-                        textColor={grey} backgroundColor={darkGrey}/>
-          </div>
-          <div style={styles.iFArrowWrapper}>
-            <ArrowLabel label="INTRO/FILL IN" width={140} height={25} direction='left'
-                        textColor={grey} backgroundColor={darkGrey}/>
           </div>
         </div>
+        <div style={styles.unsupportedLabel}>Mode Currently Unsupported</div>
       </div>
     )
   }
 }
 
-export default BottomSection;
+// subscribe to the selectedMode state to identify unimplemented features
+const mapStateToProps = (state) => ({
+  mode: state.selectedMode
+});
+
+export default connect(mapStateToProps)(BottomSection);

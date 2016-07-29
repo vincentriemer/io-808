@@ -15,6 +15,10 @@ html, body, #root {
     opacity: 0;
 }
 
+.unsupported * {
+    pointer-events: none !important;
+}
+
 .loader-wrapper {
     position: absolute;
     left: 50%; top: 50%;
