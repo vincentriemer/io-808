@@ -41,7 +41,7 @@ const initialRhythmLengthState = (() => {
 
 const initialInstrumentState = {
   [ACCENT]: {
-    level: 75
+    level: 0
   },
   [BASS_DRUM]: {
     level: 75,
