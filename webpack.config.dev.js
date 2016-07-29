@@ -9,7 +9,7 @@ module.exports = {
   entry: [
     'eventsource-polyfill',
     'webpack-hot-middleware/client',
-    'babel-polyfill',
+    'core-js/es6/reflect',
     './src/index'
   ],
   output: {
