@@ -76,10 +76,7 @@ class Sequencer extends React.Component {
   }
 
   handleBlinkTick() {
-    // disable blinking in development (clogs up redux devtools)
-    if ('production' === process.env.NODE_ENV) {
-      this.props.handleBlinkTick();
-    }
+    // this.props.handleBlinkTick();
   }
 
   handleTick({ deadline }) {

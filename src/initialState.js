@@ -8,7 +8,7 @@ import {
   FIRST_PART, SECOND_PART, A_VARIATION, B_VARIATION
 } from 'constants';
 
-import { stepKey, trackLengthKey } from 'helpers';
+import { stepKey, patternLengthKey } from 'helpers';
 
 const PARTS = [FIRST_PART, SECOND_PART];
 const VARIATIONS = [A_VARIATION, B_VARIATION];
@@ -33,8 +33,8 @@ const initialStepsState = (() => {
 const initialRhythmLengthState = (() => {
   const lengths = {};
   for (let track = 0; track < 16; track++) {
-    lengths[trackLengthKey(track, FIRST_PART)] = 16;
-    lengths[trackLengthKey(track, SECOND_PART)] = 0;
+    lengths[patternLengthKey(track, FIRST_PART)] = 16;
+    lengths[patternLengthKey(track, SECOND_PART)] = 0;
   }
   return lengths;
 })();
@@ -95,13 +95,16 @@ const initialInstrumentState = {
 
 export default Immutable({
   instrumentState: initialInstrumentState,
-
-  rhythmLengths: initialRhythmLengthState,
+  patternLengths: initialRhythmLengthState,
 
   steps: initialStepsState,
-  selectedRhythm: 0,
+
   currentPart: FIRST_PART,
   currentVariation: A_VARIATION,
+
+  selectedPattern: 0,
+  currentPattern: 0,
+
   playing: false,
 
   selectedMode: 1,
@@ -110,9 +113,12 @@ export default Immutable({
   masterVolume: 100,
 
   autoFillInPosition: 0,
-
   basicVariationPosition: 0,
   introFillVariationPosition: 0,
+
+  selectedPlayPattern: 0,
+  selectedPlayFillPattern: 0,
+  fillScheduled: false,
 
   tempo: 135,
   fineTempo: 0,

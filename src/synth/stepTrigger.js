@@ -17,9 +17,9 @@ import claveRimshot from 'synth/drumModules/claveRimshot';
 
 // selectors
 import patternSelector from 'selectors/pattern';
-import partSelector from 'selectors/currentPart';
 import variationSelector from 'selectors/variation';
 import stepSelector from 'selectors/step';
+import { getCurrentPart } from 'selectors/common';
 
 // helpers
 import { stepKey } from 'helpers';
@@ -62,7 +62,7 @@ const previousTriggers = {
 export default function (storeState, deadline, destination, clock, audioCtx) {
   // select relevant values from the global state
   const currentPattern = patternSelector(storeState);
-  const currentPart = partSelector(storeState);
+  const currentPart = getCurrentPart(storeState);
   const currentVariation = variationSelector(storeState);
   const currentStep = stepSelector(storeState);
 
@@ -76,7 +76,7 @@ export default function (storeState, deadline, destination, clock, audioCtx) {
         const prevModule = previousTriggers[drumID];
         prevModule.amplitude.cancelScheduledValues(audioCtx.currentTime);
         prevModule.amplitude.setValueAtTime(prevModule.amplitude.value, audioCtx.currentTime);
-        prevModule.amplitude.linearRampToValueAtTime(0, deadline + 0.1);
+        prevModule.amplitude.linearRampToValueAtTime(0, deadline);
 
         // remove reference from cache to let the garbage collector know to clean it up
         previousTriggers[drumID] = null;

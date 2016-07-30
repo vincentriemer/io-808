@@ -1,9 +1,9 @@
-export function stepKey(track, instrument, part, variation, step) {
-  return `TRACK_${track}-INSTRUMENT_${instrument}-${part}-${variation}-STEP_${step}`;
+export function stepKey(pattern, instrument, part, variation, step) {
+  return `PATTERN_${pattern}-INSTRUMENT_${instrument}-${part}-${variation}-STEP_${step}`;
 }
 
-export function trackLengthKey(track, part) {
-  return `TRACK_${track}-${part}-LENGTH`;
+export function patternLengthKey(pattern, part) {
+  return `PATTERN_${pattern}-${part}-LENGTH`;
 }
 
 export function snap(number, increment, offset) {

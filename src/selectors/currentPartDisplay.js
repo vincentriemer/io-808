@@ -5,10 +5,10 @@ import {
   FIRST_PART, SECOND_PART
 } from 'constants';
 
-import { getSelectedMode, getClearPressed } from 'selectors/common';
+import { getSelectedMode, getClearPressed, getCurrentPart } from 'selectors/common';
 
-export default createSelector([getSelectedMode, getClearPressed],
-  (selectedMode, clearPressed) => {
+export default createSelector([getSelectedMode, getClearPressed, getCurrentPart],
+  (selectedMode, clearPressed, currentPart) => {
     switch (selectedMode) {
       case MODE_PATTERN_CLEAR:
         return clearPressed ? SECOND_PART : FIRST_PART;
@@ -17,7 +17,7 @@ export default createSelector([getSelectedMode, getClearPressed],
       case MODE_SECOND_PART:
         return SECOND_PART;
       default:
-        return FIRST_PART;
+        return currentPart;
     }
   }
 )

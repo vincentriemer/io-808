@@ -1,13 +1,12 @@
 import { createSelector } from 'reselect';
 
-import { trackLengthKey } from 'helpers';
-import { getSelectedRhythm, getPatternLengths } from 'selectors/common';
-import getCurrentPart from 'selectors/currentPart';
+import { patternLengthKey } from 'helpers';
+import { getCurrentPattern, getPatternLengths, getCurrentPart } from 'selectors/common';
 
 export default createSelector(
-  [getSelectedRhythm, getCurrentPart, getPatternLengths],
-  (selectedPattern, currentPart, patternLengths) => {
-    return patternLengths[trackLengthKey(selectedPattern, currentPart)];
+  [getCurrentPattern, getCurrentPart, getPatternLengths],
+  (currentPattern, currentPart, patternLengths) => {
+    return patternLengths[patternLengthKey(currentPattern, currentPart)];
   });
 
 

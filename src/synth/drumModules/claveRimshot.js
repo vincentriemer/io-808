@@ -80,7 +80,7 @@ export default function(audioCtx, destination, time, { level, selector }) {
   window.setTimeout(() => {
     claveOsc.stop();
     outputVCA.disconnect();
-  }, (time - audioCtx.currentTime) + 500);
+  }, (time - audioCtx.currentTime) + 1000);
 
   return outputVCA;
 }

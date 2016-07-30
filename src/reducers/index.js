@@ -23,15 +23,33 @@ import {
 import {
   MODE_PATTERN_CLEAR,
   MODE_FIRST_PART, MODE_SECOND_PART,
+  MODE_MANUAL_PLAY,
   MODE_TO_PART_MAPPING,
   FIRST_PART, SECOND_PART,
   A_VARIATION, B_VARIATION
 } from 'constants';
 
+// sub-reducers
 import stepClickReducer from 'reducers/stepClick';
 import clearReducer from 'reducers/clear';
 
-import { trackLengthKey } from 'helpers';
+// selectors
+import patternLengthSelector from 'selectors/patternLength';
+
+import { patternLengthKey } from 'helpers';
+
+function getNextVariation(currentVariation, basicVariationPosition) {
+  switch (basicVariationPosition) {
+    case 0:
+      return A_VARIATION;
+      break;
+    case 1:
+      return currentVariation === A_VARIATION ? B_VARIATION : A_VARIATION;
+      break;
+    case 2:
+      return B_VARIATION;
+  }
+}
 
 export default function(state, { type, payload }) {
   switch(type) {
@@ -43,24 +61,23 @@ export default function(state, { type, payload }) {
       return stepClickReducer(state, payload);
 
     case START_STOP_BUTTON_CLICK:
-      //noinspection FallThroughInSwitchStatementJS
       switch(state.selectedMode) {
         case MODE_PATTERN_CLEAR:
-          // start/stop button doesn't do anything if in `pattern clear` mode
           return state;
-        case MODE_FIRST_PART:
-        case MODE_SECOND_PART:
-          const part = MODE_TO_PART_MAPPING[state.selectedMode];
-          const track = state.selectedRhythm;
-          if (state.rhythmLengths[trackLengthKey(track, part)] === 0) {
-            window.alert('Please set a pattern length!');
-            return state;
-          }
         default:
           let newState = state;
-          if (!state.playing)
-            newState = newState.set('currentStep', -1);
-          return newState.set('playing', !state.playing);
+
+          if (!state.playing) {
+            newState = newState.merge({
+              currentStep: -1,
+              currentVariation: state.basicVariationPosition > 1 ? B_VARIATION : A_VARIATION
+            });
+          }
+
+          return newState.merge({
+            playing: !state.playing,
+            currentPart: FIRST_PART
+          })
       }
 
     case MASTER_VOLUME_CHANGE:
@@ -87,13 +104,46 @@ export default function(state, { type, payload }) {
     case MODE_CHANGE:
       return state.merge({
         selectedMode: payload,
-        playing: false,
-        currentPart: [MODE_FIRST_PART,MODE_SECOND_PART].includes(payload) ?
-          MODE_TO_PART_MAPPING[payload] : FIRST_PART
+        playing: false
       });
 
     case TICK:
-      return state.set('currentStep', state.currentStep + 1);
+      const currentPatternLength = patternLengthSelector(state);
+
+      // go to next part/measure
+      if (state.currentStep + 1 >= currentPatternLength) {
+        switch(state.selectedMode) {
+          case MODE_FIRST_PART:
+            return state.merge({
+              currentStep: 0,
+              currentPart: FIRST_PART,
+              currentVariation: getNextVariation(state.currentVariation, state.basicVariationPosition)
+            });
+          case MODE_SECOND_PART:
+            let nextPart = FIRST_PART;
+            let nextVariation = state.currentVariation;
+
+            if (state.currentPart === FIRST_PART) {
+              const secondPartLength = state.patternLengths[patternLengthKey(state.currentPattern, SECOND_PART)];
+              if (secondPartLength !== 0)
+                nextPart = SECOND_PART;
+              else
+                nextVariation = getNextVariation(state.currentVariation, state.basicVariationPosition);
+            } else {
+              nextVariation = getNextVariation(state.currentVariation, state.basicVariationPosition);
+            }
+
+            return state.merge({
+              currentStep: 0,
+              currentPart: nextPart,
+              currentVariation: nextVariation
+            });
+        }
+      }
+
+      return state.merge({
+        currentStep: state.currentStep + 1
+      });
 
     case BLINK_TICK:
       return state.set('blinkState', !state.blinkState);
@@ -104,17 +154,27 @@ export default function(state, { type, payload }) {
     case CLEAR_DRAG_END:
       return clearReducer(state, type);
 
+    case TAP_BUTTON_CLICK:
+      switch (state.selectedMode) {
+        case MODE_MANUAL_PLAY:
+          return state.set('fillScheduled', !state.fillScheduled);
+        default:
+          return state;
+      }
+
     case CLEAR_DRAG_DROP:
-      const track = state.selectedRhythm;
+      const track = state.currentPattern;
       const part = MODE_TO_PART_MAPPING[state.selectedMode];
 
       if (part === FIRST_PART) {
         return state
-          .setIn(['rhythmLengths', trackLengthKey(track, FIRST_PART)], payload)
-          .setIn(['rhythmLengths', trackLengthKey(track, SECOND_PART)], 0);
+          .setIn(['patternLengths', patternLengthKey(track, FIRST_PART)], payload)
+          .setIn(['patternLengths', patternLengthKey(track, SECOND_PART)], 0);
       } else if (part === SECOND_PART) {
         return state
-          .setIn(['rhythmLengths', trackLengthKey(track, SECOND_PART)], payload);
+          .setIn(['patternLengths', patternLengthKey(track, SECOND_PART)], payload);
+      } else {
+        return state;
       }
 
     default:

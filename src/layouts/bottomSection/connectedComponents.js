@@ -19,14 +19,18 @@ import StepButton from 'components/stepButton';
 
 // Selectors
 import StepButtonSelectorFactory from 'selectors/stepButton';
-import currentPartSelector from 'selectors/currentPart';
 import basicVariationSelector from 'selectors/variation';
+import { getCurrentPart } from 'selectors/common';
 
 // Constants
-import {FIRST_PART, SECOND_PART, MODE_PATTERN_CLEAR} from 'constants';
+import {
+  MODE_PATTERN_CLEAR,
+  MODE_FIRST_PART, MODE_SECOND_PART,
+  MODE_MANUAL_PLAY,
+  FIRST_PART, SECOND_PART,
+} from 'constants';
 
 export const ConnectedBasicVariationSwitch = (() => {
-  // TODO: properly infer state of aActive and bActive
   const mapStateToProps = (state) => ({
     position: state.basicVariationPosition,
     lightState: basicVariationSelector(state)
@@ -69,7 +73,19 @@ export const ConnectedTapButton = (() => {
   });
 
   const mapStateToProps = (state) => ({
-    disabled: state.selectedMode === MODE_PATTERN_CLEAR || !state.playing
+    disabled: (() => {
+      switch (state.selectedMode) {
+        case MODE_PATTERN_CLEAR:
+          return true;
+        case MODE_FIRST_PART:
+        case MODE_SECOND_PART:
+          return !state.playing;
+        case MODE_MANUAL_PLAY:
+          return false;
+        default:
+          return true;
+      }
+    })()
   });
 
   return connect(mapStateToProps, mapDispatchToProps)(Button);
@@ -89,7 +105,7 @@ export const ConnectedPreScaleSwitch = (() => {
 
 export const ConnectedPartLights = (() => {
   const mapStateToProps = (state) => ({
-    currentPart: currentPartSelector(state)
+    currentPart: getCurrentPart(state)
   });
 
   return connect(mapStateToProps, null)(PartLights);

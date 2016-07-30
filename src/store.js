@@ -25,7 +25,7 @@ const storage = compose(
   transformState(null, Immutable),
   filter([
     'instrumentState',
-    'rhythmLengths',
+    'patternLengths',
     'steps',
     'masterVolume',
     'tempo',

@@ -4,23 +4,25 @@ import {
   MODE_PATTERN_CLEAR,
   MODE_FIRST_PART,
   MODE_SECOND_PART,
-
-  A_VARIATION, B_VARIATION
+  MODE_MANUAL_PLAY
 } from 'constants';
 
-import { stepKey, trackLengthKey } from 'helpers';
+import { stepKey } from 'helpers';
 
 import {
   getCurrentStep,
   getPlaying,
   getSelectedMode,
-  getSelectedRhythm,
+  getCurrentPattern,
   getSteps,
   getSelectedInstrumentTrack,
-  getIntroFillVariationPosition
+  getIntroFillVariationPosition,
+  getFillScheduled,
+  getSelectedPlayPattern,
+  getSelectedPlayFillPattern
 } from 'selectors/common';
 
-import currentPartSelector from 'selectors/currentPart';
+import currentPartSelector from 'selectors/currentPartDisplay';
 import basicVariationSelector from 'selectors/variation';
 import patternLengthSelector from 'selectors/patternLength';
 
@@ -29,22 +31,23 @@ const getBlinkState = (state) => state.blinkState;
 // returns a boolean value determining if the step button light is on or not
 export default (stepNumber) => {
   return createSelector([
-      getPlaying, getSelectedRhythm, getSelectedMode, basicVariationSelector, getCurrentStep, getBlinkState,
-      getSelectedInstrumentTrack, getSteps, currentPartSelector, getIntroFillVariationPosition, patternLengthSelector
+      getPlaying, getCurrentPattern, getSelectedMode, basicVariationSelector, getCurrentStep, getBlinkState,
+      getSelectedInstrumentTrack, getSteps, currentPartSelector, getIntroFillVariationPosition, patternLengthSelector,
+      getFillScheduled, getSelectedPlayPattern, getSelectedPlayFillPattern
     ], (
-      playing, selectedRhythm, selectedMode, basicVariation, currentStep, blinkState, selectedInstrument, steps,
-      currentPart, introFillVariation, patternLength
+      playing, currentPattern, selectedMode, basicVariation, currentStep, blinkState, selectedInstrument, steps,
+      currentPart, introFillVariation, patternLength, fillScheduled, selectedPlayPattern, selectedPlayFillPattern
     ) => {
-      let currentVariation = selectedRhythm < 12 ? basicVariation : introFillVariation;
+      let currentVariation = currentPattern < 12 ? basicVariation : introFillVariation;
 
       // SEQUENCER IS PLAYING
       if (playing) {
         switch (selectedMode) {
           case MODE_FIRST_PART:
           case MODE_SECOND_PART:
-            const currentStepKey = stepKey(selectedRhythm, selectedInstrument, currentPart, currentVariation, stepNumber);
+            const currentStepKey = stepKey(currentPattern, selectedInstrument, currentPart, currentVariation, stepNumber);
             const sequencerValue = steps[currentStepKey];
-            if (currentStep % patternLength === stepNumber) {
+            if (currentStep === stepNumber) {
               return !sequencerValue;
             } else {
               return sequencerValue;
@@ -59,7 +62,22 @@ export default (stepNumber) => {
           case MODE_PATTERN_CLEAR:
           case MODE_FIRST_PART:
           case MODE_SECOND_PART:
-            return (selectedRhythm === stepNumber) && blinkState;
+            return (currentPattern === stepNumber) && blinkState;
+          case MODE_MANUAL_PLAY:
+            if (stepNumber < 12) {
+              if (fillScheduled) {
+                return selectedPlayPattern === stepNumber;
+              } else {
+                return (selectedPlayPattern === stepNumber) && blinkState;
+              }
+            } else {
+              const selectedStep = selectedPlayFillPattern + 12;
+              if (fillScheduled) {
+                return (selectedStep === stepNumber) && blinkState;
+              } else {
+                return selectedStep === stepNumber;
+              }
+            }
           default:
             return false;
         }

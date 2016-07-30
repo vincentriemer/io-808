@@ -1,7 +1,7 @@
 import SquareOscBank from 'synth/basics/squareOscBank';
 import VCF, { BANDPASS, HIGHPASS } from 'synth/basics/vcf';
 import VCA from "synth/basics/vca";
-import ADGenerator, { LINEAR } from 'synth/basics/ADGenerator';
+import ADGenerator, { EXPONENTIAL } from 'synth/basics/ADGenerator';
 import {equalPower} from 'helpers';
 
 const LOW_FILTER_FREQ = 5000;
@@ -13,7 +13,7 @@ const MID_DECAY = 400;
 export default function(audioCtx, destination, time, {level, tone, decay}) {
   // parameters
   const outputLevel = equalPower(level);
-  const lowDecay = (decay * 8.5) + 350;
+  const lowDecay = (decay * 8.5) + 700;
 
   // tone ratio
   const lowEnvAmt = 0.666 - ((tone / 100) * 0.666);
@@ -46,9 +46,9 @@ export default function(audioCtx, destination, time, {level, tone, decay}) {
 
   // modulators
   // NOTE: for tone control adjust the amounts of each band's env amount instead of having a dedicated mixer node
-  const lowEnv = new ADGenerator(LINEAR, 0.1, lowDecay, 0, lowEnvAmt);
-  const midEnv = new ADGenerator(LINEAR, 0.1, MID_DECAY, 0, midEnvAmt);
-  const highEnv = new ADGenerator(LINEAR, 0.1, HIGH_DECAY, 0, highEnvAmt);
+  const lowEnv = new ADGenerator(EXPONENTIAL, 0.1, lowDecay, 0, lowEnvAmt);
+  const midEnv = new ADGenerator(EXPONENTIAL, 0.1, MID_DECAY, 0, midEnvAmt);
+  const highEnv = new ADGenerator(EXPONENTIAL, 0.1, HIGH_DECAY, 0, highEnvAmt);
 
   // band splitting
   oscBank.connect(lowBandFilter);
