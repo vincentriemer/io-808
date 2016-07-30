@@ -30,3 +30,5 @@ export const getSelectedPlayPattern = (state) => state.selectedPlayPattern;
 export const getSelectedPlayFillPattern = (state) => state.selectedPlayFillPattern;
 
 export const getCurrentPart = (state) => state.currentPart;
+
+export const getSelectedPattern = (state) => state.selectedPattern;

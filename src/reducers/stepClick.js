@@ -49,7 +49,7 @@ export default (state, stepNumber) => {
       case MODE_PATTERN_CLEAR:
       case MODE_FIRST_PART:
       case MODE_SECOND_PART:
-        return state.set('currentPattern', stepNumber);
+        return state.set('selectedPattern', stepNumber);
       case MODE_MANUAL_PLAY:
         if (stepNumber < 12) {
           return state.set('selectedPlayPattern', stepNumber);

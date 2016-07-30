@@ -19,7 +19,7 @@ export default (state, type) => {
           const variationsToClear = [];
 
           // is a basic rhythm
-          if (state.currentPattern < 12) {
+          if (state.selectedPattern < 12) {
             if (state.basicVariationPosition <= 1)
               variationsToClear.push(A_VARIATION);
             if (state.basicVariationPosition >= 1)
@@ -39,7 +39,7 @@ export default (state, type) => {
             [FIRST_PART, SECOND_PART].forEach(part => {
               for (let stepNumber = 0; stepNumber < 16; stepNumber++) {
                 for (let instrument = 0; instrument < 12; instrument++ ) {
-                  const key = stepKey(state.currentPattern, instrument, part, variation, stepNumber);
+                  const key = stepKey(state.selectedPattern, instrument, part, variation, stepNumber);
                   stateUpdate.steps[key] = false;
                 }
               }

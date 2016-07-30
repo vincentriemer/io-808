@@ -109,6 +109,22 @@ export default function(state, { type, payload }) {
       switch(state.selectedMode) {
         case MODE_PATTERN_CLEAR:
           return state;
+
+        case MODE_FIRST_PART:
+        case MODE_SECOND_PART:
+          if (!state.playing) {
+            newState = newState.merge({
+              currentStep: -1,
+              currentVariation: state.basicVariationPosition > 1 ? B_VARIATION : A_VARIATION,
+              currentPattern: state.selectedPattern
+            });
+          }
+
+          return newState.merge({
+            playing: !state.playing,
+            currentPart: FIRST_PART
+          });
+
         case MODE_MANUAL_PLAY:
           if (!state.playing) {
             newState = newState.merge({
@@ -124,18 +140,9 @@ export default function(state, { type, payload }) {
             playing: !state.playing,
             currentPart: FIRST_PART
           });
-        default:
-          if (!state.playing) {
-            newState = newState.merge({
-              currentStep: -1,
-              currentVariation: state.basicVariationPosition > 1 ? B_VARIATION : A_VARIATION
-            });
-          }
 
-          return newState.merge({
-            playing: !state.playing,
-            currentPart: FIRST_PART
-          });
+        default:
+          return state;
       }
 
     case MASTER_VOLUME_CHANGE:
