@@ -8,8 +8,13 @@ module.exports = {
         test: /\.css$/,
         loaders: [
           'style?sourceMap',
-          'css?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]'
+          'css',
         ],
+        include: path.resolve(__dirname, '../')
+      },
+      {
+        test: /\.(otf|eot|svg|ttf|woff|woff2).*$/,
+        loader: 'url?limit=8192',
         include: path.resolve(__dirname, '../')
       }
     ]
@@ -18,5 +23,11 @@ module.exports = {
     new NpmInstallPlugin({
       install: true
     })
-  ]
+  ],
+  resolve: {
+    root: [
+      path.resolve('./node_modules'),
+      path.resolve('./src'),
+    ]
+  }
 };

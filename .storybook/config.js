@@ -21,6 +21,7 @@ function loadStories() {
   require('../src/components/arrowLabel/story');
   require('../src/components/partLights/story');
   require('../src/components/stepButton/story');
+  require('../src/components/saveButton/story');
 }
 
 configure(loadStories, module);

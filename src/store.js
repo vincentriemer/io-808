@@ -9,6 +9,8 @@ import filter from 'redux-localstorage-filter';
 import rootReducer from 'reducers';
 import initialState from 'initialState';
 
+import { PERSISTANCE_FILTER } from 'constants';
+
 const middleware = [];
 
 if ('production' !== process.env.NODE_ENV && window.devToolsExtension) {
@@ -23,14 +25,7 @@ const reducer = compose(
 
 const storage = compose(
   transformState(null, Immutable),
-  filter([
-    'instrumentState',
-    'patternLengths',
-    'steps',
-    'masterVolume',
-    'tempo',
-    'fineTempo'
-  ]),
+  filter(PERSISTANCE_FILTER),
   debounce(100)
 )(adapter(window.localStorage));
 

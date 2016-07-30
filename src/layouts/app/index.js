@@ -11,6 +11,9 @@ import TopLeftSection from 'layouts/topLeftSection';
 import TopRightSection from 'layouts/topRightSection';
 import BottomSection from 'layouts/bottomSection';
 
+// Components
+import { ConnectedSaveButton } from './connectedComponents';
+
 // layout constants
 const APP_WIDTH = 1400;
 const APP_HEIGHT = 800;
@@ -62,6 +65,11 @@ class AppLayout extends React.Component {
         justifyContent: 'space-between'
       },
 
+      saveLoadClearWrapper: {
+        display: 'flex',
+        flexDirection: 'row'
+      },
+
       footerWrapper: {
         width: APP_WIDTH, height: FOOTER_HEIGHT,
         display: 'flex',
@@ -103,7 +111,11 @@ class AppLayout extends React.Component {
         <div style={styles.pageWrapper}>
           <GatewayDest name="knobOverlay" />
           <div style={styles.wrapper}>
-            <div style={styles.headerWrapper}></div>
+            <div style={styles.headerWrapper}>
+              <div style={styles.saveLoadClearWrapper}>
+                <ConnectedSaveButton size={35}/>
+              </div>
+            </div>
             <div style={styles.appWrapper}>
               <div style={styles.topBottomDivider}></div>
               <div style={styles.topWrapper}>

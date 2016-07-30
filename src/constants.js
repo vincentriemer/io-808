@@ -35,3 +35,12 @@ export const UNIMPLEMENTED_MODES = [
   MODE_RHYTHM_TRACK_PLAY,
   MODE_RHYTHM_TRACK_COMPOSE
 ];
+
+export const PERSISTANCE_FILTER = [
+  'instrumentState',
+  'patternLengths',
+  'steps',
+  'masterVolume',
+  'tempo',
+  'fineTempo'
+];
