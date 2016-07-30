@@ -24,6 +24,8 @@ export const A_VARIATION = 'A_VARIATION';
 export const B_VARIATION = 'B_VARIATION';
 export const BOTH_VARIATIONS = 'BOTH_VARIATIONS';
 
+export const AUTO_FILL_IN_MAPPING = [null, 16, 12, 8, 4, 2];
+
 export const MODE_TO_PART_MAPPING = {
   [MODE_FIRST_PART]: FIRST_PART,
   [MODE_SECOND_PART]: SECOND_PART

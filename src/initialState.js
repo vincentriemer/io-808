@@ -101,6 +101,7 @@ export default Immutable({
 
   currentPart: FIRST_PART,
   currentVariation: A_VARIATION,
+  currentMeasure: 0,
 
   selectedPattern: 0,
   currentPattern: 0,

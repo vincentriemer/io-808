@@ -1,7 +1,6 @@
 // External Deps
 import React from 'react';
 import Radium from 'radium';
-import WAAClock from 'waaclock';
 import { GatewayProvider, GatewayDest } from 'react-gateway';
 
 // Theme

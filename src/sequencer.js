@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import WAAClock from 'waaclock';
 
 import { onTick, onBlinkTick } from 'actionCreators';
 

@@ -47,11 +47,12 @@ export default (stepNumber) => {
           case MODE_SECOND_PART:
             const currentStepKey = stepKey(currentPattern, selectedInstrument, currentPart, currentVariation, stepNumber);
             const sequencerValue = steps[currentStepKey];
-            if (currentStep === stepNumber) {
-              return !sequencerValue;
-            } else {
-              return sequencerValue;
-            }
+            return currentStep === stepNumber ? !sequencerValue : sequencerValue;
+          case MODE_MANUAL_PLAY:
+            const isCurrentPattern = currentPattern === stepNumber;
+            const isCurrentStep = currentStep === stepNumber;
+
+            return isCurrentPattern ? isCurrentPattern && !isCurrentStep : isCurrentStep;
           default:
             return false;
         }

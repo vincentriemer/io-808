@@ -26,7 +26,8 @@ import {
   MODE_MANUAL_PLAY,
   MODE_TO_PART_MAPPING,
   FIRST_PART, SECOND_PART,
-  A_VARIATION, B_VARIATION
+  A_VARIATION, B_VARIATION,
+  AUTO_FILL_IN_MAPPING
 } from 'constants';
 
 // sub-reducers
@@ -51,6 +52,49 @@ function getNextVariation(currentVariation, basicVariationPosition) {
   }
 }
 
+function isMeasureAutoFill (state, measure) {
+  const autoFillInValue = AUTO_FILL_IN_MAPPING[state.autoFillInPosition];
+  return measure !== 0 && autoFillInValue && measure % autoFillInValue === 0;
+}
+
+function nextMeasure (state) {
+  const nextVariation = getNextVariation(state.currentVariation, state.basicVariationPosition);
+
+  const stateUpdate = {
+    currentStep: 0,
+    currentPart: FIRST_PART,
+    currentVariation: nextVariation
+  };
+
+  if (state.fillScheduled) {
+    return state.merge({
+      ...stateUpdate,
+      // if a fill has been scheduled then the next pattern should be the selected fill pattern
+      currentPattern: state.selectedPlayFillPattern + 12,
+      // clear out the fill schedule
+      fillScheduled: false
+    })
+  } else {
+    stateUpdate.currentPattern = state.selectedPlayPattern;
+
+    // move to the next scheduled pattern
+    if (state.currentPattern < 12) {
+      // add auto fill ins
+      if (isMeasureAutoFill(state, state.currentMeasure + 1)) {
+        stateUpdate.currentPattern = state.selectedPlayFillPattern + 12
+      }
+
+      // pattern is a basic rhythm so increment the currentMeasure
+      return state.merge({
+        ...stateUpdate,
+        currentMeasure: state.currentMeasure + 1
+      });
+    } else {
+      // pattern is a fill in so don't increment the currentMeasure
+      return state.merge(stateUpdate);
+    }
+  }
+}
 export default function(state, { type, payload }) {
   switch(type) {
     case INSTRUMENT_CHANGE:
@@ -61,12 +105,26 @@ export default function(state, { type, payload }) {
       return stepClickReducer(state, payload);
 
     case START_STOP_BUTTON_CLICK:
+      let newState = state;
       switch(state.selectedMode) {
         case MODE_PATTERN_CLEAR:
           return state;
-        default:
-          let newState = state;
+        case MODE_MANUAL_PLAY:
+          if (!state.playing) {
+            newState = newState.merge({
+              currentStep: -1,
+              currentVariation: state.basicVariationPosition > 1 ? B_VARIATION : A_VARIATION,
+              currentPattern: state.fillScheduled ? state.selectedPlayFillPattern + 12 : state.selectedPlayPattern,
+              currentMeasure: 0,
+              fillScheduled: false
+            });
+          }
 
+          return newState.merge({
+            playing: !state.playing,
+            currentPart: FIRST_PART
+          });
+        default:
           if (!state.playing) {
             newState = newState.merge({
               currentStep: -1,
@@ -77,7 +135,7 @@ export default function(state, { type, payload }) {
           return newState.merge({
             playing: !state.playing,
             currentPart: FIRST_PART
-          })
+          });
       }
 
     case MASTER_VOLUME_CHANGE:
@@ -124,12 +182,15 @@ export default function(state, { type, payload }) {
             let nextVariation = state.currentVariation;
 
             if (state.currentPart === FIRST_PART) {
+              // go to second part if it has a patternLength > 0
               const secondPartLength = state.patternLengths[patternLengthKey(state.currentPattern, SECOND_PART)];
+
               if (secondPartLength !== 0)
                 nextPart = SECOND_PART;
-              else
+              else // second part has zero length so go back to first part with the next variation
                 nextVariation = getNextVariation(state.currentVariation, state.basicVariationPosition);
-            } else {
+
+            } else { // second part has finished so go back to first part with next variation
               nextVariation = getNextVariation(state.currentVariation, state.basicVariationPosition);
             }
 
@@ -138,6 +199,23 @@ export default function(state, { type, payload }) {
               currentPart: nextPart,
               currentVariation: nextVariation
             });
+
+          case MODE_MANUAL_PLAY:
+            if (state.currentPart === FIRST_PART) {
+              // go to second part if it has a patternLength > 0
+              const secondPartLength = state.patternLengths[patternLengthKey(state.currentPattern, SECOND_PART)];
+
+              if (secondPartLength !== 0) {
+                return state.merge({
+                  currentStep: 0,
+                  currentPart: SECOND_PART
+                });
+              } else {
+                return nextMeasure(state);
+              }
+            } else {
+              return nextMeasure(state);
+            }
         }
       }
 
