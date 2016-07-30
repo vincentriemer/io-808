@@ -76,7 +76,7 @@ class Sequencer extends React.Component {
   }
 
   handleBlinkTick() {
-    // this.props.handleBlinkTick();
+    this.props.handleBlinkTick();
   }
 
   handleTick({ deadline }) {
