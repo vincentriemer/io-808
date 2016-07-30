@@ -38,10 +38,17 @@ class AppLayout extends React.Component {
 
   render() {
     const styles = {
-      wrapper: {
+      pageWrapper: {
         position: 'relative',
         width: '100%', height: '100%',
-        minWidth: APP_WIDTH + APP_PADDING, minHeight: APP_HEIGHT + HEADER_HEIGHT + FOOTER_HEIGHT + APP_PADDING,
+        minWidth: APP_WIDTH + APP_PADDING, minHeight: APP_HEIGHT + HEADER_HEIGHT + FOOTER_HEIGHT + APP_PADDING
+      },
+
+      wrapper: {
+        position: 'absolute',
+        width: APP_WIDTH, height: APP_HEIGHT + HEADER_HEIGHT + FOOTER_HEIGHT,
+        top: 0, left: 0, right: 0, bottom: 0,
+        margin: 'auto',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center'
@@ -93,7 +100,7 @@ class AppLayout extends React.Component {
 
     return (
       <GatewayProvider>
-        <div style={styles.wrapper}>
+        <div style={styles.pageWrapper}>
           <GatewayDest name="knobOverlay" />
           <div style={styles.wrapper}>
             <div style={styles.headerWrapper}></div>
