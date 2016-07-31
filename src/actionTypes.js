@@ -20,3 +20,5 @@ export const CLEAR_UP = 'CLEAR_UP';
 export const CLEAR_DRAG_START = 'CLEAR_DRAG_START';
 export const CLEAR_DRAG_END = 'CLEAR_DRAG_END';
 export const CLEAR_DRAG_DROP = 'CLEAR_DRAG_DROP';
+
+export const STATE_LOAD = 'STATE_LOAD';

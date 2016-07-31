@@ -22,6 +22,7 @@ function loadStories() {
   require('../src/components/partLights/story');
   require('../src/components/stepButton/story');
   require('../src/components/saveButton/story');
+  require('../src/components/loadButton/story');
 }
 
 configure(loadStories, module);

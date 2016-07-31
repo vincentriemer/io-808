@@ -12,7 +12,7 @@ import TopRightSection from 'layouts/topRightSection';
 import BottomSection from 'layouts/bottomSection';
 
 // Components
-import { ConnectedSaveButton } from './connectedComponents';
+import { ConnectedSaveButton, ConnectedLoadButton } from './connectedComponents';
 
 // layout constants
 const APP_WIDTH = 1400;
@@ -113,7 +113,8 @@ class AppLayout extends React.Component {
           <div style={styles.wrapper}>
             <div style={styles.headerWrapper}>
               <div style={styles.saveLoadClearWrapper}>
-                <ConnectedSaveButton size={35}/>
+                <ConnectedLoadButton size={35} />
+                <ConnectedSaveButton size={35} />
               </div>
             </div>
             <div style={styles.appWrapper}>

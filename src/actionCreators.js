@@ -18,7 +18,8 @@ import {
   CLEAR_UP,
   CLEAR_DRAG_START,
   CLEAR_DRAG_END,
-  CLEAR_DRAG_DROP
+  CLEAR_DRAG_DROP,
+  STATE_LOAD
 } from 'actionTypes';
 
 export const onAutoFillInChange = (value) => ({
@@ -113,4 +114,9 @@ export const onClearDragEnd = () => ({
 export const onClearDragDrop = (length) => ({
   type: CLEAR_DRAG_DROP,
   payload: length
+});
+
+export const onStateLoad = (loadedState) => ({
+  type: STATE_LOAD,
+  payload: loadedState
 });

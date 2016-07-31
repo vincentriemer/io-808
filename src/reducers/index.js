@@ -17,7 +17,8 @@ import {
   CLEAR_UP,
   CLEAR_DRAG_START,
   CLEAR_DRAG_END,
-  CLEAR_DRAG_DROP
+  CLEAR_DRAG_DROP,
+  STATE_LOAD
 } from 'actionTypes';
 
 import {
@@ -261,6 +262,9 @@ export default function(state, { type, payload }) {
       } else {
         return state;
       }
+
+    case STATE_LOAD:
+      return state.merge(payload);
 
     default:
       return state;

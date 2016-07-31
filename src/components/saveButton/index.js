@@ -42,7 +42,8 @@ class SaveButton extends React.Component {
       button: {
         width: size, height: size,
         borderRadius: 4,
-        backgroundColor: drumLabel
+        backgroundColor: drumLabel,
+        marginLeft: 5, marginRight: 5
       },
       icon: {
         width: size, height: size,
