@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="5px" height="10px" viewBox="0 0 5 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 39.1 (31720) - http://www.bohemiancoding.com/sketch -->
+    <title>Quarter-note</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Quarter-note" fill="#363830">
+            <path d="M3.70172187,0 L3.70172191,5.88079115 C3.70172191,5.88079115 0.971353216,5.94053841 0.313165875,8.38810558 C-0.0662483221,9.7990135 0.753797172,10.1109552 2.03593281,9.9687327 C3.31806844,9.82651024 4.55285673,8.85538253 4.66999971,7.91684005 C4.66999971,5.98330802 4.66999981,0 4.66999981,0 L3.70172187,0 Z" id="Path-18"></path>
+        </g>
+    </g>
+</svg>
