@@ -61,6 +61,8 @@ class TimeSignatureSection extends React.Component {
         position: 'relative',
         width, height: rowHeight,
         display: 'flex',
+        flexDirection: 'row',
+
         overflow: 'hidden'
       },
 
@@ -107,7 +109,7 @@ class TimeSignatureSection extends React.Component {
     const SixthLine = () => {
       const path = noteLinePath(eightWidth + 7, (quarterStepWidth / 2), 8);
       return (
-        <div style={{position: 'absolute', width: sixthStepWidth, height: rowHeight}}>
+        <div style={{position: 'absolute', width: sixthStepWidth, height: rowHeight, top: 0, left: notePadding}}>
           <svg width={sixthStepWidth} height={rowHeight}>
             <path d={path} stroke={darkGrey} fill='none' />
           </svg>
@@ -127,7 +129,7 @@ class TimeSignatureSection extends React.Component {
     const TripletLine = () => {
       const path = noteLinePath(eightWidth + 7, trippletStepWidth - (quarterStepWidth / 2), 17);
       return (
-        <div style={{position: 'absolute', width: trippletStepWidth, height: rowHeight}}>
+        <div style={{position: 'absolute', width: trippletStepWidth, height: rowHeight, top: 0, left: notePadding}}>
           <svg width={trippletStepWidth} height={rowHeight}>
             <path d={path} stroke={darkGrey} fill='none' />
           </svg>

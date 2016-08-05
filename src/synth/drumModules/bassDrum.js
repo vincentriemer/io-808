@@ -34,7 +34,7 @@ export default function (audioCtx, destination, time, {level, tone, decay}) {
   const softClipper = new SoftClipper(0.6, audioCtx);
 
   // envelopes
-  const oscEnv = new ADGenerator(EXPONENTIAL, 0, decayTime, START_FREQ, FREQ_AMT);
+  const oscEnv = new ADGenerator(EXPONENTIAL, 0.11, decayTime, START_FREQ, FREQ_AMT);
   const ampEnv = new ADGenerator(LINEAR, 2, decayTime, 0.0, 1.0);
 
   // module routing
@@ -60,7 +60,7 @@ export default function (audioCtx, destination, time, {level, tone, decay}) {
   // cleanup
   window.setTimeout(() => {
     vco.oscillator.stop();
-    vcf.disconnect();
+    outputVCA.disconnect();
   }, (time - audioCtx.currentTime) + 1000);
 
   return outputVCA;
