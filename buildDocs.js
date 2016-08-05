@@ -18,7 +18,9 @@ var css = sass.renderSync({
   outputStyle: 'compressed'
 }).css;
 
-var md = new Markdown();
+var md = new Markdown({
+  html: true
+});
 md.use(require('markdown-it-anchor'));
 md.use(require('markdown-it-table-of-contents'), { includeLevel: [2,3] });
 if (process.env.NODE_ENV === 'production')

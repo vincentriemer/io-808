@@ -50,7 +50,6 @@
     "markdown-it": "^7.0.0",
     "markdown-it-anchor": "^2.5.0",
     "markdown-it-imgix": "^0.1.0",
-    "markdown-it-imsize": "^2.0.1",
     "markdown-it-table-of-contents": "^0.2.0",
     "marked": "^0.3.6",
     "node-sass": "^3.8.0",

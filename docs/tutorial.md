@@ -36,6 +36,16 @@ First lets make sure we're going to add bass drum hits to our pattern. We determ
 
 ![BD Position](images/instrument-select-bd.png)
 
+Now just click the step buttons where you want the hits to happen and you should hear the drum hits. The positions where you sequenced in your drum hits also will stay illuminated. If you want to remove a trigger from the sequence just click the step button again and the trigger will be removed.
+
+<img class='gfyitem' data-id='FearfulTenderCapybara' data-autoplay='false'>
+
+Each drum sound also has timbral properties that can be adjusted in real time with the following controls:
+
+![Drum Sound Parameters](images/drum-sound-parameters.png)
+
+Now try adding triggers for all the other available drum sounds until you have a fully-composed 16 step pattern!
+
 ### Second Part
 
 ### Variations
