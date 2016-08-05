@@ -18,7 +18,7 @@ Each of these patterns has a first and second part along with an A and B variati
 
 Lets start programming some patterns.
 
-As a first step we need to turn the `MODE` knob (found at the top-left of the app) to `1st PART`.
+As a first step we need to turn the `MODE` knob (found at the top-left of the app) to `1st PART` position.
 
 ![1st PART Mode](images/1st-part-mode.png)
 

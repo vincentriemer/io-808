@@ -102,7 +102,7 @@ a {
 
     li {
       font-feature-settings: 'kern', 'onum', 'liga';
-      margin-left: 0;
+      margin-left: 2rem;
 
       @include breakpoint(break-1) {
         margin-left: 0;
@@ -126,7 +126,7 @@ a {
       &:before {
         content: counter(top-level) '.';
         font-feature-settings: 'lnum', 'tnum';
-        margin-left: 0;
+        margin-left: -3rem;
         position: absolute;
         text-align: right;
         width: 2em;
