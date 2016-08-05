@@ -5,6 +5,7 @@ import { GatewayProvider, GatewayDest } from 'react-gateway';
 
 // Theme
 import { grey, slightlyDarkerBlack } from 'theme/variables';
+import { labelGreyLarge } from 'theme/mixins';
 
 // Sub-layouts
 import TopLeftSection from 'layouts/topLeftSection';
@@ -34,7 +35,7 @@ const APP_HEIGHT = 800;
 const APP_PADDING = 40;
 
 const HEADER_HEIGHT = 50;
-const FOOTER_HEIGHT = 50;
+const FOOTER_HEIGHT = 40;
 
 const TOP_BOTTOM_DIVIDER_HEIGHT = 3;
 const TOP_HEIGHT = Math.ceil(APP_HEIGHT * 0.64) - (TOP_BOTTOM_DIVIDER_HEIGHT * 2);
@@ -146,7 +147,14 @@ class AppLayout extends React.Component {
                 <BottomSection width={APP_WIDTH} height={BOTTOM_HEIGHT} topLeftWidth={TOP_LEFT_WIDTH} />
               </div>
             </div>
-            <div style={styles.footerWrapper}></div>
+            <div style={styles.footerWrapper}>
+              <div style={labelGreyLarge}>
+                Made with <Octicon name="heart" /> by <a style={{ color: grey }} href="http://vincentriemer.com" target="_blank">
+                  Vincent Riemer
+                </a>
+              </div>
+              <a style={labelGreyLarge} href="https://github.com/vincentriemer/io-808/issues" target="_blank">Submit an Issue</a>
+            </div>
           </div>
         </div>
       </GatewayProvider>
