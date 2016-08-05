@@ -19,8 +19,10 @@ var css = sass.renderSync({
 }).css;
 
 var md = new Markdown();
+md.use(require('markdown-it-anchor'));
+md.use(require('markdown-it-table-of-contents'), { includeLevel: [2,3] });
 if (process.env.NODE_ENV === 'production')
-  md = md.use(imgix, {
+  md.use(imgix, {
     match: "images",
     domain: 'io808.imgix.net',
     params: {
