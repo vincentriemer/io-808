@@ -66,15 +66,21 @@ When you press play you should notice that the according to the lights on the st
 
 The reason why the sequence is only looping the `1st PART` is due to the fact that the `2nd PART`'s pattern length defaults to zero, which is a great transition to...
  
-#### Adjusting Pattern Lengths
+### Setting Pattern Lengths
 
-Coming soon...
+By default, the `1st PART` of all 16 patterns has a pattern length of 16 and the `2nd PART` has a pattern length of 0. To set the pattern length of a part you need to have the desired part selected via the `MODE` knob as well as the desired pattern selected the same way you did when selecting which pattern to program beats into.
+ 
+Now to choose the desired pattern length you drag the `CLEAR` button (below the `MODE` knob) to the step button which has the step number that corresponds to the desired pattern length.
+
+<img class='gfyitem' data-id='ExaltedSlipperyEidolonhelvum' data-autoplay='false'>
+
+This operation can be done whether the sequencer is playing or not.
+
+There is an important difference between setting the pattern length of `1st PART` vs. `2nd PART` though. When you set the pattern length of the `1st PART` of a pattern, it will also set the `2nd PART` pattern length to 0. Setting the `2nd PART` pattern length does not affect the `1st PART`.
+
+So... in order for us to program our second part we need to set a pattern length greater than 0. Try setting it to 16 and then you should be able to edit the second part in the exact same way as you did the first.
 
 ### Variations
-
-Coming Soon...
-
-### Fill-Ins
 
 Coming Soon...
 
