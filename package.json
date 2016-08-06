@@ -9,6 +9,7 @@
     "build": "npm run clean && npm run build:webpack && npm run build:docs",
     "test": "true",
     "start": "node devServer.js",
+    "tutorial-dev": "livereload ./out",
     "storybook": "start-storybook -p 9001",
     "deploy": "./deploy-ghpages.sh"
   },
@@ -43,6 +44,7 @@
     "html-webpack-plugin": "^2.22.0",
     "jade": "^1.11.0",
     "jade-loader": "^0.8.0",
+    "livereload": "^0.5.0",
     "markdown-it": "^7.0.0",
     "markdown-it-anchor": "^2.5.0",
     "markdown-it-imgix": "^0.1.0",

@@ -319,7 +319,9 @@ a {
   code, pre {
     background-color: $codeBackgroundColour;
     color: $codeColour;
-    padding: 3px;
+    padding: 2px;
+    margin-left: 1px;
+    margin-right: 1px;
     border-radius: 3px;
     font-family: unquote(map-get($monospacetype, font-family));
   }

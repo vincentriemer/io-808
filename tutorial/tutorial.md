@@ -6,7 +6,7 @@ Welcome to the iO-808 tutorial! The primary goal of this webapp is to faithful r
 
 [[toc]]
 
-## Programming a Pattern
+## Programming Patterns
 
 In the 808 there are a total of 12 basic rhythm and 4 fill in patterns that you can store in memory. These patterns are identified by the labels below the step buttons shown here:
 
@@ -54,7 +54,21 @@ The `LEVEL` knob for the `Accent` instrument determines the difference in volume
 
 ### Second Part
 
-Coming Soon...
+You know what's better than a 16 step pattern? A 32 step pattern!
+
+As mentioned before each pattern has 2 parts that can be programmed. To edit the second part you need to switch to the `2nd PART` mode via the `MODE` knob.
+
+![2nd Part Mode](images/2nd-part-mode.png)
+
+Selecting which pattern you want to edit works the same exact way as the `1st PART`. The first pattern should still be selected so you shouldn't need to do anything other than click play to start editing.
+ 
+When you press play you should notice that the according to the lights on the step buttons, the patterns are empty. You'll also notice that even though they seem empty, the sound coming out is still just looping the `1st PART`. This is by design as when you are in the `2nd PART` mode, you are editing the second part through the step buttons, but you hear the second part in context of being after the `1st PART` (loops `1st PART` -> `2nd Part` -> `REPEAT`).
+
+The reason why the sequence is only looping the `1st PART` is due to the fact that the `2nd PART`'s pattern length defaults to zero, which is a great transition to...
+ 
+#### Adjusting Pattern Lengths
+
+Coming soon...
 
 ### Variations
 

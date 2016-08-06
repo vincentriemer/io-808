@@ -20,7 +20,11 @@ var srcDir = path.resolve('./tutorial');
 var outputDir = path.resolve('./out');
 
 function renderHtml(content, css) {
-  var html = fn({ content: content, css: css });
+  var html = fn({
+    content: content,
+    css: css,
+    livereload: process.env.NODE_ENV !== 'production'
+  });
 
   var htmlPath = path.join(outputDir, 'tutorial.html');
   var imagesPath = path.join(outputDir, 'images');
