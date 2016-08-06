@@ -38,7 +38,7 @@ class AppTitle extends React.Component {
         flexWrap: 'no-wrap',
         alignItems: 'baseline',
         position: 'absolute',
-        bottom: `calc(${lineTop}% - 17px)`,
+        bottom: `calc(${lineTop}% - 17.5px)`,
         right: titleRight
       },
 
