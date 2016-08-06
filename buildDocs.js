@@ -15,8 +15,18 @@ var stringRequire = function (module, filename) {
 
 require.extensions['.md'] = stringRequire;
 
+function renderHtml(content, css) {
+  var html = fn({ content: content, css: css });
+
+  var htmlPath = './out/tutorial.html';
+  var imagesPath = './out/images';
+
+  fs.outputFileSync(htmlPath, html);
+  fs.copySync('./docs/images', imagesPath, { clobber: true });
+}
+
 // CSS
-var css = sass.renderSync({
+var rawCSS = sass.renderSync({
   file: './docs/sass/style.scss'
 }).css.toString();
 
@@ -45,19 +55,17 @@ var fn = jade.compileFile('./docs/template.jade', {});
 // remove unused css
 var testHtml = fn({ content: content, css: ""});
 
-uncss(testHtml, {
-  ignore: ['canvas'],
-  raw: css
-}, function(err, unCSS) {
-  if (err) return console.error(err);
+if (process.env.NODE_ENV === 'production') {
+  uncss(testHtml, {
+    ignore: ['canvas'],
+    raw: rawCSS
+  }, function(err, unCSS) {
+    if (err) return console.error(err);
 
-  var outputCSS = new CleanCSS({ roundingPrecision: -1 }).minify(unCSS).styles;
+    var prodCSS = new CleanCSS({ roundingPrecision: -1 }).minify(unCSS).styles;
 
-  var html = fn({ content: content, css: outputCSS });
-
-  var htmlPath = './out/tutorial.html';
-  var imagesPath = './out/images';
-
-  fs.outputFileSync(htmlPath, html);
-  fs.copySync('./docs/images', imagesPath, { clobber: true });
-});
+    renderHtml(content, prodCSS);
+  });
+} else {
+  renderHtml(content, rawCSS);
+}
