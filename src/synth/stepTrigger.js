@@ -15,6 +15,8 @@ import cymbal from 'synth/drumModules/cymbal';
 import cowbell from 'synth/drumModules/cowbell';
 import claveRimshot from 'synth/drumModules/claveRimshot';
 
+import VCA from 'synth/basics/vca';
+
 // selectors
 import patternSelector from 'selectors/pattern';
 import variationSelector from 'selectors/variation';
@@ -22,7 +24,7 @@ import stepSelector from 'selectors/step';
 import { getCurrentPart } from 'selectors/common';
 
 // helpers
-import { stepKey } from 'helpers';
+import { stepKey, equalPower } from 'helpers';
 
 const drumModuleMapping = [
   [BASS_DRUM, bassDrum],
@@ -59,8 +61,14 @@ const previousTriggers = {
   [CLSD_HIHAT]: null
 };
 
-function getAccentValues(storeState) {
+function getAccentGain(currentPattern, currentPart, currentVariation, currentStep, storeState) {
+  const stepId = stepKey(currentPattern, ACCENT, currentPart, currentVariation, currentStep);
+  const accentActive = storeState.steps[stepId];
 
+  const accentLevel = storeState.instrumentState[ACCENT].level;
+  const inactiveGainAmt = equalPower(100 - (accentLevel / 1.5));
+
+  return accentActive ? 1.0 : inactiveGainAmt;
 }
 
 export default function (storeState, deadline, destination, clock, audioCtx) {
@@ -69,6 +77,15 @@ export default function (storeState, deadline, destination, clock, audioCtx) {
   const currentPart = getCurrentPart(storeState);
   const currentVariation = variationSelector(storeState);
   const currentStep = stepSelector(storeState);
+
+  // accent destination node
+  const accentGain = getAccentGain(currentPattern, currentPart, currentVariation, currentStep, storeState);
+  const accentVCA = new VCA(audioCtx);
+  accentVCA.amplitude.value = accentGain;
+  accentVCA.connect(destination);
+
+  // accentVCA cleanup
+  window.setTimeout(() => accentVCA.disconnect, (deadline - audioCtx.currentTime) + 2000);
 
   drumModuleMapping.forEach(([drumID, drumModuleTrigger]) => {
     const stepID = stepKey(currentPattern, drumID, currentPart, currentVariation, currentStep);
@@ -87,7 +104,7 @@ export default function (storeState, deadline, destination, clock, audioCtx) {
       }
 
       // start a new trigger and store output gain node in cache
-      previousTriggers[drumID] = drumModuleTrigger(audioCtx, destination, deadline, drumState);
+      previousTriggers[drumID] = drumModuleTrigger(audioCtx, accentVCA, deadline, drumState);
     }
   });
 }
