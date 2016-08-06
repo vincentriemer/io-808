@@ -46,24 +46,50 @@ Each drum sound also has timbral properties that can be adjusted in real time wi
 
 Now try adding triggers for all the other available drum sounds until you have a fully-composed 16 step pattern!
 
+#### Note: The Accent Instrument
+
+You'll notice that if you add triggers to the `Accent` instrument it doesn't add any drum sound. What this instrument does is allow you to sequence changes to overall volume of all other instruments. The triggers in this sequence correspond to an increase in volume which can add some swing/feel to your patterns. 
+
+The `LEVEL` knob for the `Accent` instrument determines the difference in volume between inactive and active accent steps. The loudest volume will always stay the same but as you increase the Accent's `LEVEL` the inactive steps will increasingly get quieter.
+
 ### Second Part
+
+In Progress...
 
 ### Variations
 
+In Progress...
+
 ### Fill-Ins
+
+In Progress...
 
 ## Playing Patterns
 
 ### Selecting the Starting Pattern
 
+In Progress...
+
 ### Starting With an Intro
+
+In Progress...
 
 ### Scheduling Patterns
 
+In Progress...
+
 ### Adding Fill-Ins
+
+In Progress...
 
 ### Using Auto Fill-In
 
+In Progress...
+
 ## Clearing Patterns
 
+In Progress...
+
 ## Sharing Patterns
+
+In Progress...
