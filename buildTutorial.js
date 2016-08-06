@@ -56,10 +56,9 @@ var content = md.render(tutorialMD);
 // render
 var fn = jade.compileFile(path.join(srcDir, 'template.jade'), {});
 
-// remove unused css
-var testHtml = fn({ content: content, css: ""});
-
 if (process.env.NODE_ENV === 'production') {
+  var testHtml = fn({ content: content, css: ""});
+
   uncss(testHtml, {
     ignore: ['canvas'],
     raw: rawCSS
