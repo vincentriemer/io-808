@@ -90,7 +90,8 @@ class AppLayout extends React.Component {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        paddingLeft: 10, paddingRight: 10
       },
 
       appWrapper: {
