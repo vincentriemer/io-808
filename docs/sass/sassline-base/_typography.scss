@@ -319,6 +319,8 @@ a {
   code, pre {
     background-color: $codeBackgroundColour;
     color: $codeColour;
+    padding: 3px;
+    border-radius: 3px;
     font-family: unquote(map-get($monospacetype, font-family));
   }
 
