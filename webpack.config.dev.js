@@ -40,7 +40,7 @@ module.exports = {
       cache: false,
       template: 'src/index.jade',
       filename: 'index.html',
-      title: 'io-808'
+      title: 'iO-808'
     }),
     new ExtractTextPlugin('styles.css')
   ],
