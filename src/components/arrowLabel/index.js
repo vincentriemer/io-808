@@ -53,7 +53,8 @@ class ArrowLabel extends React.Component {
         backgroundColor,
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        borderRadius: 1
       },
 
       label: {
