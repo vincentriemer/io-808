@@ -39,6 +39,7 @@ import clearReducer from 'reducers/clear';
 
 // selectors
 import patternLengthSelector from 'selectors/patternLength';
+import pendingPatternLengthSelector from 'selectors/pendingPatternLength';
 
 import { patternLengthKey } from 'helpers';
 
@@ -119,17 +120,13 @@ export default function(state, { type, payload }) {
             newState = newState.merge({
               currentStep: -1,
               currentVariation: state.basicVariationPosition > 1 ? B_VARIATION : A_VARIATION,
-              currentPattern: state.selectedPattern,
-              currentPart: FIRST_PART
-            });
-          } else {
-            newState = newState.merge({
-              currentPart: MODE_TO_PART_MAPPING[state.selectedMode]
+              currentPattern: state.selectedPattern
             });
           }
 
           return newState.merge({
-            playing: !state.playing
+            playing: !state.playing,
+            currentPart: FIRST_PART
           });
 
         case MODE_MANUAL_PLAY:
@@ -175,9 +172,6 @@ export default function(state, { type, payload }) {
 
     case MODE_CHANGE:
       const additionalStateChanges = {};
-
-      if ([MODE_FIRST_PART, MODE_SECOND_PART].includes(payload))
-        additionalStateChanges.currentPart = MODE_TO_PART_MAPPING[payload];
 
       return state.merge({
         ...additionalStateChanges,
@@ -279,7 +273,9 @@ export default function(state, { type, payload }) {
       return state.merge({ pendingPatternLength: payload + 1 });
 
     case CLEAR_DRAG_EXIT:
-      return state.merge({ pendingPatternLength: patternLengthSelector(state) });
+      return state.merge({
+        pendingPatternLength: pendingPatternLengthSelector(state)
+      });
 
     case STATE_LOAD:
       return state.merge(payload);

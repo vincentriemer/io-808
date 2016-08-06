@@ -27,7 +27,6 @@ import {
 
 import currentPartSelector from 'selectors/currentPartDisplay';
 import basicVariationSelector from 'selectors/variation';
-import patternLengthSelector from 'selectors/patternLength';
 
 const getBlinkState = (state) => state.blinkState;
 
@@ -35,12 +34,11 @@ const getBlinkState = (state) => state.blinkState;
 export default (stepNumber) => {
   return createSelector([
       getPlaying, getCurrentPattern, getSelectedMode, basicVariationSelector, getCurrentStep, getBlinkState,
-      getSelectedInstrumentTrack, getSteps, currentPartSelector, getIntroFillVariationPosition, patternLengthSelector,
-      getFillScheduled, getSelectedPlayPattern, getSelectedPlayFillPattern, getSelectedPattern, getClearDragging,
-      getPendingPatternLength
+      getSelectedInstrumentTrack, getSteps, currentPartSelector, getIntroFillVariationPosition, getFillScheduled,
+      getSelectedPlayPattern, getSelectedPlayFillPattern, getSelectedPattern, getClearDragging, getPendingPatternLength
     ], (
       playing, currentPattern, selectedMode, basicVariation, currentStep, blinkState, selectedInstrument, steps,
-      currentPart, introFillVariation, patternLength, fillScheduled, selectedPlayPattern, selectedPlayFillPattern,
+      currentPart, introFillVariation, fillScheduled, selectedPlayPattern, selectedPlayFillPattern,
       selectedPattern, clearDragging, pendingPatternLength
     ) => {
       let currentVariation = currentPattern < 12 ? basicVariation : introFillVariation;

@@ -1,9 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { MODE_FIRST_PART, MODE_SECOND_PART, MODE_TO_PART_MAPPING, MODE_PATTERN_CLEAR,
-  A_VARIATION, B_VARIATION, BOTH_VARIATIONS } from 'constants';
-
-import { patternLengthKey } from 'helpers';
+import { MODE_PATTERN_CLEAR, A_VARIATION, B_VARIATION, BOTH_VARIATIONS } from 'constants';
 
 import {
   getSelectedMode,
