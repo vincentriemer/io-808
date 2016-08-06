@@ -35,7 +35,7 @@ const APP_HEIGHT = 800;
 const APP_PADDING = 40;
 
 const HEADER_HEIGHT = 50;
-const FOOTER_HEIGHT = 40;
+const FOOTER_HEIGHT = 30;
 
 const TOP_BOTTOM_DIVIDER_HEIGHT = 3;
 const TOP_HEIGHT = Math.ceil(APP_HEIGHT * 0.64) - (TOP_BOTTOM_DIVIDER_HEIGHT * 2);
@@ -148,12 +148,17 @@ class AppLayout extends React.Component {
               </div>
             </div>
             <div style={styles.footerWrapper}>
+              <div>
+                <a style={labelGreyLarge} href="/tutorial" target="_blank">Tutorial</a>
+              </div>
               <div style={labelGreyLarge}>
                 Made with <Octicon name="heart" /> by <a style={{ color: grey }} href="http://vincentriemer.com" target="_blank">
                   Vincent Riemer
                 </a>
               </div>
-              <a style={labelGreyLarge} href="https://github.com/vincentriemer/io-808/issues" target="_blank">Submit an Issue</a>
+              <div>
+                <a style={labelGreyLarge} href="https://github.com/vincentriemer/io-808/issues" target="_blank">Report an Issue</a>
+              </div>
             </div>
           </div>
         </div>
