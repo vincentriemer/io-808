@@ -1,10 +1,17 @@
 doctype html
 html(lang="en")
     head
+        meta(charset="utf-8")
+        meta(http-equiv="Content-type" content="text/html; charset=utf-8")
         meta(http-equiv="Accept-CH" content="DPR")
         title= "iO-808 Tutorial"
+        meta(name="description" content="Tutorial for the iO-808 drum machine")
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+
         style.
             !{css}
+
+        // typekit font loading
         script(type="text/javascript").
             (function (d) {
                 var config = {
@@ -30,12 +37,17 @@ html(lang="en")
                 };
                 s.parentNode.insertBefore(tk, s)
             })(document);
+
     body
         .section
             .column.typeset
                 block content
                     != content
+
+        // gfycat loading
         script(type="text/javascript" src="https://assets.gfycat.com/gfycat.js")
+
+        // google analytics
         script(type="text/javascript").
             (function (i, s, o, g, r, a, m) {
                 i['GoogleAnalyticsObject'] = r;
