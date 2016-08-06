@@ -5,7 +5,7 @@ import Octicon from 'react-octicon';
 import Button from 'components/button';
 
 import { PERSISTANCE_FILTER } from 'constants';
-import { drumLabel, darkGrey } from 'theme/variables';
+import { buttonColor, darkGrey } from 'theme/variables';
 
 @Radium
 class LoadButton extends React.Component {
@@ -67,7 +67,7 @@ class LoadButton extends React.Component {
       button: {
         width: size, height: size,
         borderRadius: 4,
-        backgroundColor: drumLabel,
+        backgroundColor: buttonColor,
         marginLeft: 5, marginRight: 5
       },
       icon: {
