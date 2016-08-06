@@ -6,6 +6,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
   devtool: 'source-map',
   entry: [
+    'core-js/es6/symbol',
     'core-js/es6/reflect',
     'core-js/fn/array/includes',
     './src/index'

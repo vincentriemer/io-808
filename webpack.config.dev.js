@@ -9,6 +9,7 @@ module.exports = {
   entry: [
     'eventsource-polyfill',
     'webpack-hot-middleware/client',
+    'core-js/es6/symbol',
     'core-js/es6/reflect',
     'core-js/fn/array/includes',
     './src/index'
