@@ -59,6 +59,10 @@ const previousTriggers = {
   [CLSD_HIHAT]: null
 };
 
+function getAccentValues(storeState) {
+
+}
+
 export default function (storeState, deadline, destination, clock, audioCtx) {
   // select relevant values from the global state
   const currentPattern = patternSelector(storeState);

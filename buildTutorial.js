@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 var fs = require('fs-extra');
+var path = require('path');
 
 var Markdown = require('markdown-it');
 var jade = require('jade');
@@ -15,19 +16,22 @@ var stringRequire = function (module, filename) {
 
 require.extensions['.md'] = stringRequire;
 
+var srcDir = path.resolve('./tutorial');
+var outputDir = path.resolve('./out');
+
 function renderHtml(content, css) {
   var html = fn({ content: content, css: css });
 
-  var htmlPath = './out/tutorial.html';
-  var imagesPath = './out/images';
+  var htmlPath = path.join(outputDir, 'tutorial.html');
+  var imagesPath = path.join(outputDir, 'images');
 
   fs.outputFileSync(htmlPath, html);
-  fs.copySync('./docs/images', imagesPath, { clobber: true });
+  fs.copySync('./tutorial/images', imagesPath, { clobber: true });
 }
 
 // CSS
 var rawCSS = sass.renderSync({
-  file: './docs/sass/style.scss'
+  file: path.join(srcDir, 'sass', 'style.scss')
 }).css.toString();
 
 var md = new Markdown({ html: true });
@@ -40,17 +44,17 @@ if (process.env.NODE_ENV === 'production')
     params: {
       ch: 'DPR',
       dpr: 2,
-      h: 300,
+      h: 225,
       auto: 'compress'
     }
   });
 
 // pages
-var tutorialMD = require('./docs/tutorial.md');
+var tutorialMD = require('./tutorial/tutorial.md');
 var content = md.render(tutorialMD);
 
 // render
-var fn = jade.compileFile('./docs/template.jade', {});
+var fn = jade.compileFile(path.join(srcDir, 'template.jade'), {});
 
 // remove unused css
 var testHtml = fn({ content: content, css: ""});
