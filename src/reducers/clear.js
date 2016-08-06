@@ -2,6 +2,8 @@ import { MODE_PATTERN_CLEAR, A_VARIATION, B_VARIATION, FIRST_PART, SECOND_PART, 
 import { CLEAR_DOWN, CLEAR_UP, CLEAR_DRAG_START, CLEAR_DRAG_END, CLEAR_DRAG_DROP } from 'actionTypes';
 import { stepKey, patternLengthKey } from 'helpers';
 
+import patternLengthSelector from 'selectors/patternLength';
+
 export default (state, type) => {
   switch (type) {
     case CLEAR_DOWN:
@@ -52,7 +54,10 @@ export default (state, type) => {
       }
 
     case CLEAR_DRAG_START:
-      return state.set('clearDragging', true);
+      return state.merge({
+        clearDragging: true,
+        pendingPatternLength: patternLengthSelector(state)
+      });
 
     case CLEAR_DRAG_END:
       return state.set('clearDragging', false);

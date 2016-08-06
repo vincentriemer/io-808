@@ -18,6 +18,8 @@ import {
   CLEAR_UP,
   CLEAR_DRAG_START,
   CLEAR_DRAG_END,
+  CLEAR_DRAG_ENTER,
+  CLEAR_DRAG_EXIT,
   CLEAR_DRAG_DROP,
   STATE_LOAD
 } from 'actionTypes';
@@ -119,4 +121,13 @@ export const onClearDragDrop = (length) => ({
 export const onStateLoad = (loadedState) => ({
   type: STATE_LOAD,
   payload: loadedState
+});
+
+export const onClearDragEnter = (length) => ({
+  type: CLEAR_DRAG_ENTER,
+  payload: length
+});
+
+export const onClearDragExit = () => ({
+  type: CLEAR_DRAG_EXIT
 });

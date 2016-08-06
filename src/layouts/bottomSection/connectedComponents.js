@@ -6,7 +6,9 @@ import {
   onTapButtonClick,
   onPreScaleChange,
   onStepButtonClick,
-  onClearDragDrop
+  onClearDragDrop,
+  onClearDragEnter,
+  onClearDragExit
 } from 'actionCreators';
 
 // Components
@@ -124,7 +126,9 @@ export const ConnectedStepButtons = (() => {
 
     const mapDispatchToProps = (dispatch) => ({
       onClick: () => dispatch(onStepButtonClick(i)),
-      onDrop: () => dispatch(onClearDragDrop(i + 1))
+      onDrop: () => dispatch(onClearDragDrop(i + 1)),
+      onDragEnter: () => dispatch(onClearDragEnter(i)),
+      onDragExit: () => dispatch(onClearDragExit())
     });
 
     buttons.push(connect(mapStateToProps, mapDispatchToProps)(StepButton));

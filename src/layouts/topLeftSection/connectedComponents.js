@@ -29,7 +29,7 @@ export const ConnectedClearButton = (() => {
   });
 
   const mapStateToProps = (state) => ({
-    draggable: [MODE_FIRST_PART, MODE_SECOND_PART].includes(state.selectedMode) && !state.playing
+    draggable: [MODE_FIRST_PART, MODE_SECOND_PART].includes(state.selectedMode)
   });
 
   return connect(mapStateToProps, mapDispatchToProps)(ClearButton);

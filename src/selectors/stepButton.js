@@ -20,7 +20,9 @@ import {
   getFillScheduled,
   getSelectedPlayPattern,
   getSelectedPlayFillPattern,
-  getSelectedPattern
+  getSelectedPattern,
+  getClearDragging,
+  getPendingPatternLength
 } from 'selectors/common';
 
 import currentPartSelector from 'selectors/currentPartDisplay';
@@ -34,11 +36,12 @@ export default (stepNumber) => {
   return createSelector([
       getPlaying, getCurrentPattern, getSelectedMode, basicVariationSelector, getCurrentStep, getBlinkState,
       getSelectedInstrumentTrack, getSteps, currentPartSelector, getIntroFillVariationPosition, patternLengthSelector,
-      getFillScheduled, getSelectedPlayPattern, getSelectedPlayFillPattern, getSelectedPattern
+      getFillScheduled, getSelectedPlayPattern, getSelectedPlayFillPattern, getSelectedPattern, getClearDragging,
+      getPendingPatternLength
     ], (
       playing, currentPattern, selectedMode, basicVariation, currentStep, blinkState, selectedInstrument, steps,
       currentPart, introFillVariation, patternLength, fillScheduled, selectedPlayPattern, selectedPlayFillPattern,
-      selectedPattern
+      selectedPattern, clearDragging, pendingPatternLength
     ) => {
       let currentVariation = currentPattern < 12 ? basicVariation : introFillVariation;
 
@@ -47,6 +50,8 @@ export default (stepNumber) => {
         switch (selectedMode) {
           case MODE_FIRST_PART:
           case MODE_SECOND_PART:
+            if (clearDragging)
+              return pendingPatternLength > stepNumber;
             const currentStepKey = stepKey(currentPattern, selectedInstrument, currentPart, currentVariation, stepNumber);
             const sequencerValue = steps[currentStepKey];
             return currentStep === stepNumber ? !sequencerValue : sequencerValue;
@@ -65,6 +70,8 @@ export default (stepNumber) => {
           case MODE_PATTERN_CLEAR:
           case MODE_FIRST_PART:
           case MODE_SECOND_PART:
+            if (clearDragging)
+              return pendingPatternLength > stepNumber;
             return (selectedPattern === stepNumber) && blinkState;
           case MODE_MANUAL_PLAY:
             if (stepNumber < 12) {

@@ -13,7 +13,9 @@ class StepButton extends React.Component {
     width: React.PropTypes.number,
     height: React.PropTypes.number,
     dropable: React.PropTypes.bool,
-    onDrop: React.PropTypes.func.isRequired
+    onDrop: React.PropTypes.func.isRequired,
+    onDragEnter: React.PropTypes.func.isRequired,
+    onDragExit: React.PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -33,6 +35,7 @@ class StepButton extends React.Component {
   handleDragExit(e) {
     e.preventDefault();
     e.stopPropagation();
+    this.props.onDragExit();
     this.setState({ over: false });
     return false;
   }
@@ -46,6 +49,7 @@ class StepButton extends React.Component {
   handleDragEnter(e) {
     e.preventDefault();
     e.stopPropagation();
+    this.props.onDragEnter();
     this.setState({ over: true });
     return false;
   }
@@ -80,7 +84,7 @@ class StepButton extends React.Component {
              onDragExit={this.handleDragExit}
              onDrop={this.handleDrop}>
           <Button style={styles.button} onClick={onClick}>
-            <Light active={false}/>
+            <Light active={active}/>
           </Button>
         </div>
       );

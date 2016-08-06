@@ -32,3 +32,7 @@ export const getSelectedPlayFillPattern = (state) => state.selectedPlayFillPatte
 export const getCurrentPart = (state) => state.currentPart;
 
 export const getSelectedPattern = (state) => state.selectedPattern;
+
+export const getClearDragging = (state) => state.clearDragging;
+
+export const getPendingPatternLength = (state) => state.pendingPatternLength;

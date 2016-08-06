@@ -17,6 +17,8 @@ import {
   CLEAR_UP,
   CLEAR_DRAG_START,
   CLEAR_DRAG_END,
+  CLEAR_DRAG_ENTER,
+  CLEAR_DRAG_EXIT,
   CLEAR_DRAG_DROP,
   STATE_LOAD
 } from 'actionTypes';
@@ -117,13 +119,17 @@ export default function(state, { type, payload }) {
             newState = newState.merge({
               currentStep: -1,
               currentVariation: state.basicVariationPosition > 1 ? B_VARIATION : A_VARIATION,
-              currentPattern: state.selectedPattern
+              currentPattern: state.selectedPattern,
+              currentPart: FIRST_PART
+            });
+          } else {
+            newState = newState.merge({
+              currentPart: MODE_TO_PART_MAPPING[state.selectedMode]
             });
           }
 
           return newState.merge({
-            playing: !state.playing,
-            currentPart: FIRST_PART
+            playing: !state.playing
           });
 
         case MODE_MANUAL_PLAY:
@@ -168,7 +174,13 @@ export default function(state, { type, payload }) {
       return state.set('selectedInstrumentTrack', payload);
 
     case MODE_CHANGE:
+      const additionalStateChanges = {};
+
+      if ([MODE_FIRST_PART, MODE_SECOND_PART].includes(payload))
+        additionalStateChanges.currentPart = MODE_TO_PART_MAPPING[payload];
+
       return state.merge({
+        ...additionalStateChanges,
         selectedMode: payload,
         playing: false
       });
@@ -262,6 +274,12 @@ export default function(state, { type, payload }) {
       } else {
         return state;
       }
+
+    case CLEAR_DRAG_ENTER:
+      return state.merge({ pendingPatternLength: payload + 1 });
+
+    case CLEAR_DRAG_EXIT:
+      return state.merge({ pendingPatternLength: patternLengthSelector(state) });
 
     case STATE_LOAD:
       return state.merge(payload);
