@@ -82,7 +82,7 @@ So... in order for us to program our second part we need to set a pattern length
 
 ### Variations
 
-Coming Soon...
+Tutorial Coming Soon...
 
 ## Playing Patterns
 
@@ -92,23 +92,19 @@ To load this save into your own app, download the `JSON` file to your desktop an
 
 ![Load Button](images/load-button.png)
 
-With a full save loaded, you need to switch to the `MANUAL PLAY` mode using the `MODE` knob.
+With the full save loaded, you need to switch to the `MANUAL PLAY` mode using the `MODE` knob.
 
 ![Manual Play Mode](images/manual-play-mode.png)
 
 ### Selecting the Starting Pattern
 
-Coming Soon...
+When you switch to the `MANUAL_PLAY` mode you'll notice that there will be one step button light blinking and one solid. Each of these illuminated lights represents the selected `BASIC RHYTHM` and `INTRO/FILL IN`. To change the selected `BASIC RHYTHM` you click one of the first 12 step buttons and to select the `INTRO/FILL IN` you click one of the 4 last step buttons.
 
-### Starting With an Intro
+The blinking of the two illuminated step buttons represents what pattern is going to start when the `START/STOP` button is pressed. By default the `BASIC RHYTHM` pattern is scheduled to be the first patter but if you press the `TAP` button it will toggle between the `BASIC RHYTHM` and the `INTRO/FILL IN`.
 
-Coming Soon...
+<img class='gfyitem' data-id='LameSpryBellfrog' data-autoplay='false'>
 
 ### Scheduling Patterns
-
-Coming Soon...
-
-### Adding Fill-Ins
 
 Coming Soon...
 
