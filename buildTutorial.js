@@ -58,7 +58,9 @@ var md = new Markdown({ html: true });
 md.use(require('markdown-it-anchor'));
 md.use(require('markdown-it-table-of-contents'), { includeLevel: [2,3] });
 md.use(require('markdown-it-decorate'));
-md.use(require('markdown-it-video'));
+md.use(require('markdown-it-video'), {
+  youtube: { width: 853, height: 480 }
+});
 
 if (process.env.NODE_ENV === 'production')
   md.use(require('markdown-it-imgix'), {

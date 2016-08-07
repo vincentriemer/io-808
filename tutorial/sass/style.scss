@@ -26,9 +26,14 @@ canvas {
 .embed-responsive {
   iframe {
     position: relative;
-    max-width: 100%;
+    max-width: 90%;
     top: 0; left: 50%;
     transform: translateX(-50%);
+    max-height: 225px;
+
+    @include breakpoint(break-1) {
+      max-height: none;
+    }
   }
 }
 
