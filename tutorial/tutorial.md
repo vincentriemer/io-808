@@ -18,7 +18,7 @@ Each of these patterns has a first and second part along with an A and B variati
 
 Lets start programming some patterns.
 
-As a first step we need to turn the `MODE` knob (found at the top-left of the app) to `1st PART` position.
+As a first step we need to turn the mode knob (found at the top-left of the app) to `1st PART` position.
 
 ![1st PART Mode](images/1st-part-mode.png)
 
@@ -32,7 +32,7 @@ If you look at the step buttons you'll notice that one of the lights will be bli
 
 Now when you press the Start/Stop button the lights on the step buttons will be lighting up one by one in sequence. This light represents the current position of the beat. There's no sound coming out though...well that's because we haven't programmed any drum hits into the pattern yet! Lets add some bass drums to our pattern.
 
-First lets make sure we're going to add bass drum hits to our pattern. We determine which drum we're programming using the `INSTRUMENT-SELECT` knob (next to the `MODE` knob in the top-left). So if we want to add bass drum hits to our pattern the `INSTRUMENT-SELECT` knob should be in the `BD` position.
+First lets make sure we're going to add bass drum hits to our pattern. We determine which drum we're programming using the `INSTRUMENT-SELECT` knob (next to the mode knob in the top-left). So if we want to add bass drum hits to our pattern the `INSTRUMENT-SELECT` knob should be in the `BD` position.
 
 ![BD Position](images/instrument-select-bd.png)
 
@@ -56,7 +56,7 @@ The `LEVEL` knob for the `Accent` instrument determines the difference in volume
 
 You know what's better than a 16 step pattern? A 32 step pattern!
 
-As mentioned before each pattern has 2 parts that can be programmed. To edit the second part you need to switch to the `2nd PART` mode via the `MODE` knob.
+As mentioned before each pattern has 2 parts that can be programmed. To edit the second part you need to switch to the `2nd PART` mode via the mode knob.
 
 ![2nd Part Mode](images/2nd-part-mode.png)
 
@@ -68,9 +68,9 @@ The reason why the sequence is only looping the `1st PART` is due to the fact th
  
 ### Setting Pattern Lengths
 
-By default, the `1st PART` of all 16 patterns has a pattern length of 16 and the `2nd PART` has a pattern length of 0. To set the pattern length of a part you need to have the desired part selected via the `MODE` knob as well as the desired pattern selected the same way you did when selecting which pattern to program beats into.
+By default, the `1st PART` of all 16 patterns has a pattern length of 16 and the `2nd PART` has a pattern length of 0. To set the pattern length of a part you need to have the desired part selected via the mode knob as well as the desired pattern selected the same way you did when selecting which pattern to program beats into.
  
-Now to choose the desired pattern length you drag the `CLEAR` button (below the `MODE` knob) to the step button which has the step number that corresponds to the desired pattern length.
+Now to choose the desired pattern length you drag the `CLEAR` button (below the mode knob) to the step button which has the step number that corresponds to the desired pattern length.
 
 <img class='gfyitem' data-id='ExaltedSlipperyEidolonhelvum' data-autoplay='false'>
 
@@ -80,9 +80,9 @@ There is an important difference between setting the pattern length of `1st PART
 
 So... in order for us to program our second part we need to set a pattern length greater than 0. Try setting it to 16 and then you should be able to edit the second part in the exact same way as you did the first.
 
-### Variations
+<!--### Variations-->
 
-Tutorial Coming Soon...
+<!--Coming Soon...-->
 
 ## Playing Patterns
 
@@ -92,7 +92,7 @@ To load this save into your own app, download the `JSON` file to your desktop an
 
 ![Load Button](images/load-button.png)
 
-With the full save loaded, you need to switch to the `MANUAL PLAY` mode using the `MODE` knob.
+With the full save loaded, you need to switch to the `MANUAL PLAY` mode using the mode knob.
 
 ![Manual Play Mode](images/manual-play-mode.png)
 
@@ -117,14 +117,22 @@ To trigger an `INTRO/FILL IN` you need to press the `TAP` button which schedules
 
 @[youtube](QKh7mlte3Ls)
 
-### Using Auto Fill-In
+<!--### Using Auto Fill-In-->
 
-Coming Soon...
+<!--Coming Soon...-->
 
 ## Clearing Patterns
 
-Coming Soon...
+To clear a pattern you first need to change the mode knob to `PATTERN CLEAR`:
 
-## Sharing Patterns
+![Pattern Clear Mode](images/pattern-clear-mode.png)
 
-Coming Soon...
+Then select the pattern that you want to clear using the step buttons in the same way you've done for selecting which patterns to edit in the `1st PART` and `2nd PART` modes. To finally perform a pattern clear just press the clear button (same button you used to drag in order to set pattern length) and both the `1st PART` and `2nd PART` of that pattern will be cleared. Note that the pattern lengths for both parts will not be affected.
+
+![Pattern Clear Button](images/pattern-clear-button.png)
+
+Another selection to keep in mind is the `BASIC VARIATION` switch which will determine which variations of the selected pattern will be cleared.
+
+<!--## Sharing Patterns-->
+
+<!--Coming Soon...-->
