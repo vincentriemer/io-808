@@ -108,8 +108,8 @@ The blinking of the two illuminated step buttons represents what pattern is goin
 
 While the sequencer is playing in `MANUAL PLAY` mode there are two states that the sequence can be in:
 
-1. A `BASIC RHYTHM` is playing and will move to the next selected pattern (if no different pattern was selected it will loop).
-2. An `INTRO/FILL IN` is playing but when it finishes the pattern the state will switch back to state 1.
+1. `BASIC RHYTHM` is playing and will move to the next selected pattern (if no different pattern was selected it will loop).
+2. `INTRO/FILL IN` is playing but when it finishes the pattern the state will switch back to state 1.
 
 To select the next `BASIC RHYTHM` to play just click its corresponding step button and it will be played once the current pattern has finished playing. Clicking an `INTRO/FILL IN` step button does not schedule it to be played next but selects which pattern will be played when a fill in is triggered.
 
