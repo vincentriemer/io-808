@@ -86,6 +86,16 @@ Coming Soon...
 
 ## Playing Patterns
 
+After you program a collection of patterns the next step is to turn those patterns into a song. If case you haven't already filled up all your patterns and want to follow along you can download [this example save](io808-full-example.json) <!--{target="_blank" download="io808-example.json"}-->.
+
+To load this save into your own app, download the `JSON` file to your desktop and click the load button (the top left-most button) and select the file you downloaded.
+
+![Load Button](images/load-button.png)
+
+With a full save loaded, you need to switch to the `MANUAL PLAY` mode using the `MODE` knob.
+
+![Manual Play Mode](images/manual-play-mode.png)
+
 ### Selecting the Starting Pattern
 
 Coming Soon...

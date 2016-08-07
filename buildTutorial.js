@@ -37,9 +37,16 @@ function renderHtml(content, css) {
 
   var htmlPath = path.join(outputDir, 'tutorial.html');
   var imagesPath = path.join(outputDir, 'images');
+  var exampleFilename = 'io808-full-example.json';
 
+  // save html file
   fs.outputFileSync(htmlPath, htmlMin);
+
+  // copy images
   fs.copySync('./tutorial/images', imagesPath, { clobber: true });
+
+  // copy example savefile
+  fs.copySync(path.join(srcDir, exampleFilename), path.join(outputDir, exampleFilename), { clobber: true });
 }
 
 // CSS
@@ -50,6 +57,7 @@ var rawCSS = sass.renderSync({
 var md = new Markdown({ html: true });
 md.use(require('markdown-it-anchor'));
 md.use(require('markdown-it-table-of-contents'), { includeLevel: [2,3] });
+md.use(require('markdown-it-decorate'));
 if (process.env.NODE_ENV === 'production')
   md.use(require('markdown-it-imgix'), {
     match: "images",
