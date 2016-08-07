@@ -10,6 +10,8 @@ var sass = require('node-sass');
 var uncss = require('uncss');
 var CleanCSS = require('clean-css');
 
+var htmlMinify = require('html-minifier').minify;
+
 var stringRequire = function (module, filename) {
   module.exports = fs.readFileSync(filename, 'utf8');
 };
@@ -26,10 +28,17 @@ function renderHtml(content, css) {
     livereload: process.env.NODE_ENV !== 'production'
   });
 
+  // minify html
+  var htmlMin = htmlMinify(html, {
+    removeComments: true,
+    collapseWhitespace: true,
+    processScripts: [ 'text/javascript' ]
+  });
+
   var htmlPath = path.join(outputDir, 'tutorial.html');
   var imagesPath = path.join(outputDir, 'images');
 
-  fs.outputFileSync(htmlPath, html);
+  fs.outputFileSync(htmlPath, htmlMin);
   fs.copySync('./tutorial/images', imagesPath, { clobber: true });
 }
 
