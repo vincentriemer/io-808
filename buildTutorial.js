@@ -50,7 +50,7 @@ if (process.env.NODE_ENV === 'production')
       ch: 'dpr',
       dpr: 1.5,
       fit: 'max',
-      w: 750,
+      w: 960,
       h: 225,
       fm: 'jpg',
     }
