@@ -46,10 +46,13 @@ if (process.env.NODE_ENV === 'production')
     match: "images",
     domain: 'io808.imgix.net',
     params: {
-      ch: 'DPR',
-      dpr: 2,
+      auto: 'compress,format',
+      ch: 'dpr',
+      dpr: 1.5,
+      fit: 'max',
+      w: 960,
       h: 225,
-      auto: 'compress'
+      fm: 'jpg',
     }
   });
 
