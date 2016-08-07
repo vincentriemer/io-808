@@ -2,6 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
@@ -37,6 +38,24 @@ module.exports = {
     new webpack.optimize.UglifyJsPlugin({
       compressor: {
         warnings: false
+      }
+    }),
+    new FaviconsWebpackPlugin({
+      logo: './base-favicon.png',
+      inject: true,
+      background: '#363830',
+      title: 'iO-808',
+      icons: {
+        android: true,
+        appleIcon: true,
+        appleStartup: true,
+        coast: false,
+        favicons: true,
+        firefox: true,
+        opengraph: false,
+        twitter: true,
+        yandex: false,
+        windows: true
       }
     }),
     new HtmlWebpackPlugin({
