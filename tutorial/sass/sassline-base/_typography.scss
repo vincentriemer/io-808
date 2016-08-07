@@ -340,6 +340,7 @@ a {
     @include fontsize(theta, all);
 
     line-height: 1rem;
+    white-space: nowrap;
   }
 
   // Letter space those capitals people, Jan Tschichold would be proud.

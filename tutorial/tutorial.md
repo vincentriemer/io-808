@@ -98,7 +98,7 @@ With the full save loaded, you need to switch to the `MANUAL PLAY` mode using th
 
 ### Selecting the Starting Pattern
 
-When you switch to the `MANUAL_PLAY` mode you'll notice that there will be one step button light blinking and one solid. Each of these illuminated lights represents the selected `BASIC RHYTHM` and `INTRO/FILL IN`. To change the selected `BASIC RHYTHM` you click one of the first 12 step buttons and to select the `INTRO/FILL IN` you click one of the 4 last step buttons.
+When you switch to the `MANUAL PLAY` mode you'll notice that there will be one step button light blinking and one solid. Each of these illuminated lights represents the selected `BASIC RHYTHM` and `INTRO/FILL IN`. To change the selected `BASIC RHYTHM` you click one of the first 12 step buttons and to select the `INTRO/FILL IN` you click one of the 4 last step buttons.
 
 The blinking of the two illuminated step buttons represents what pattern is going to start when the `START/STOP` button is pressed. By default the `BASIC RHYTHM` pattern is scheduled to be the first patter but if you press the `TAP` button it will toggle between the `BASIC RHYTHM` and the `INTRO/FILL IN`.
 
@@ -106,7 +106,16 @@ The blinking of the two illuminated step buttons represents what pattern is goin
 
 ### Scheduling Patterns
 
-Coming Soon...
+While the sequencer is playing in `MANUAL PLAY` mode there are two states that the sequence can be in:
+
+1. A `BASIC RHYTHM` is playing and will move to the next selected pattern (if no different pattern was selected it will loop).
+2. An `INTRO/FILL IN` is playing but when it finishes the pattern the state will switch back to state 1.
+
+To select the next `BASIC RHYTHM` to play just click its corresponding step button and it will be played once the current pattern has finished playing. Clicking an `INTRO/FILL IN` step button does not schedule it to be played next but selects which pattern will be played when a fill in is triggered.
+
+To trigger an `INTRO/FILL IN` you need to press the `TAP` button which schedules the fill pattern to be played after the currently playing pattern has finished. Here's a video example of switching `BASIC RHYTHM`s and triggering `INTRO/FILL IN`s:
+
+@[youtube](QKh7mlte3Ls)
 
 ### Using Auto Fill-In
 
