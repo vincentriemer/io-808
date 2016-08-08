@@ -21,7 +21,8 @@ import {
   CLEAR_DRAG_ENTER,
   CLEAR_DRAG_EXIT,
   CLEAR_DRAG_DROP,
-  STATE_LOAD
+  STATE_LOAD,
+  RESET
 } from 'actionTypes';
 
 export const onAutoFillInChange = (value) => ({
@@ -130,4 +131,8 @@ export const onClearDragEnter = (length) => ({
 
 export const onClearDragExit = () => ({
   type: CLEAR_DRAG_EXIT
+});
+
+export const onReset = () => ({
+  type: RESET
 });

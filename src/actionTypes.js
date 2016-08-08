@@ -24,3 +24,4 @@ export const CLEAR_DRAG_EXIT = 'CLEAR_DRAG_EXIT';
 export const CLEAR_DRAG_DROP = 'CLEAR_DRAG_DROP';
 
 export const STATE_LOAD = 'STATE_LOAD';
+export const RESET = 'RESET';

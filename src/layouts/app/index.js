@@ -14,7 +14,7 @@ import BottomSection from 'layouts/bottomSection';
 
 // Components
 import Octicon from 'react-octicon';
-import { ConnectedSaveButton, ConnectedLoadButton } from './connectedComponents';
+import { ConnectedSaveButton, ConnectedLoadButton, ConnectedResetButton } from './connectedComponents';
 
 const GithubLink = Radium(() => (
   <a style={{
@@ -28,6 +28,7 @@ const GithubLink = Radium(() => (
     <Octicon name="mark-github" mega/>
   </a>
 ));
+
 
 // layout constants
 const APP_WIDTH = 1400;
@@ -131,6 +132,7 @@ class AppLayout extends React.Component {
               <div style={styles.saveLoadClearWrapper}>
                 <ConnectedLoadButton size={35} />
                 <ConnectedSaveButton size={35} />
+                <ConnectedResetButton size={35} />
               </div>
               <GithubLink />
             </div>

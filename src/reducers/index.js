@@ -20,7 +20,8 @@ import {
   CLEAR_DRAG_ENTER,
   CLEAR_DRAG_EXIT,
   CLEAR_DRAG_DROP,
-  STATE_LOAD
+  STATE_LOAD,
+  RESET
 } from 'actionTypes';
 
 import {
@@ -32,6 +33,8 @@ import {
   A_VARIATION, B_VARIATION,
   AUTO_FILL_IN_MAPPING
 } from 'constants';
+
+import initialState from 'initialState';
 
 // sub-reducers
 import stepClickReducer from 'reducers/stepClick';
@@ -279,6 +282,9 @@ export default function(state, { type, payload }) {
 
     case STATE_LOAD:
       return state.merge(payload);
+
+    case RESET:
+      return state.merge(initialState);
 
     default:
       return state;
