@@ -1,7 +1,7 @@
 {
   "name": "io-808",
   "version": "1.0.0",
-  "description": "A fully recreated web-based tr-808 drum machine.",
+  "description": "An attempt at a fully recreated web-based tr-808 drum machine.",
   "scripts": {
     "clean": "rimraf out",
     "build:docs": "cross-env NODE_ENV=production node buildTutorial.js",

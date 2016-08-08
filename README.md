@@ -1,3 +1,3 @@
 # io-808
 
-A fully recreated web-based tr-808 drum machine.
+An attempt at a fully recreated web-based tr-808 drum machine.
