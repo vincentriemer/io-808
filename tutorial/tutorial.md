@@ -86,11 +86,7 @@ So... in order for us to program our second part we need to set a pattern length
 
 ## Playing Patterns
 
-After you program a collection of patterns the next step is to turn those patterns into a song. If case you haven't already filled up all your patterns and want to follow along you can download [this example save](io808-full-example.json) <!--{target="_blank" download="io808-example.json"}-->.
-
-To load this save into your own app, download the `JSON` file to your desktop and click the load button (the top left-most button) and select the file you downloaded.
-
-![Load Button](images/load-button.png)
+After you program a collection of patterns the next step is to turn those patterns into a song. If case you haven't already filled up all your patterns and want to follow along you can download [this example save](io808-full-example.json) <!--{target="_blank" download="io808-example.json"}-->. To load the save see [the loading section](#loading) of this tutorial.
 
 With the full save loaded, you need to switch to the `MANUAL PLAY` mode using the mode knob.
 
@@ -133,6 +129,20 @@ Then select the pattern that you want to clear using the step buttons in the sam
 
 Another selection to keep in mind is the `BASIC VARIATION` switch which will determine which variations of the selected pattern will be cleared.
 
-<!--## Sharing Patterns-->
+## Sharing
 
-<!--Coming Soon...-->
+iO-808 provides the ability to save and load your collection of patterns.
+
+### Saving
+
+If you would like to share your collection of patterns click the save button (the second button on the top left). Your save file should then download to your computer.
+
+![Save Button](images/save-button.png)
+
+Note that you do not need to save your patterns in order to continue programming later. This is done automatically so when you open the app after closing it all your progress should still be there.
+
+### Loading
+
+To load a save into your own app, click the load button (the top left-most button) and select an iO-808 `.json` save file.
+
+![Load Button](images/load-button.png)
