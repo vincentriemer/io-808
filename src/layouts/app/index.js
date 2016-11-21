@@ -5,7 +5,7 @@ import { GatewayProvider, GatewayDest } from 'react-gateway';
 
 // Theme
 import { grey, slightlyDarkerBlack } from 'theme/variables';
-import { labelGreyLarge } from 'theme/mixins';
+import { labelGreyLarge, autoCursor } from 'theme/mixins';
 
 // Sub-layouts
 import TopLeftSection from 'layouts/topLeftSection';
@@ -120,6 +120,11 @@ class AppLayout extends React.Component {
 
       bottomWrapper: {
         width: APP_WIDTH, height: BOTTOM_HEIGHT
+      },
+
+      footerText: {
+        ...labelGreyLarge,
+        ...autoCursor
       }
     };
 
@@ -152,7 +157,7 @@ class AppLayout extends React.Component {
             </div>
             <div style={styles.footerWrapper}>
               <div>
-                <a style={labelGreyLarge} href="/tutorial" target="_blank">Tutorial</a>
+                <a style={styles.footerText} href="/tutorial" target="_blank">Tutorial</a>
               </div>
               <div style={labelGreyLarge}>
                 Made with <Octicon name="heart" /> by <a style={{ color: grey }} href="http://vincentriemer.com" target="_blank">
@@ -160,7 +165,7 @@ class AppLayout extends React.Component {
                 </a>
               </div>
               <div>
-                <a style={labelGreyLarge} href="https://github.com/vincentriemer/io-808/issues" target="_blank">Report an Issue</a>
+                <a style={styles.footerText} href="https://github.com/vincentriemer/io-808/issues" target="_blank">Report an Issue</a>
               </div>
             </div>
           </div>

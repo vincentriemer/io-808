@@ -9,6 +9,7 @@ import {
   fontFamily, normalSize, letterSpacing, smallSize, fontWeight,
   darkGrey, drumLabel, stencilOrange
 } from 'theme/variables';
+import { unselectableText } from 'theme/mixins';
 
 import { ring } from 'theme/mixins';
 
@@ -42,7 +43,8 @@ class InstrumentSelectorKnob extends React.Component {
         fontSize: smallSize,
         fontWeight,
         letterSpacing,
-        color: stencilOrange
+        color: stencilOrange,
+        ...unselectableText
       },
 
       labelGuides: {
@@ -55,7 +57,8 @@ class InstrumentSelectorKnob extends React.Component {
         borderRadius: 3,
         textAlign: 'center',
         width: 27,
-        paddingTop: 2, paddingBottom: 2
+        paddingTop: 2, paddingBottom: 2,
+        ...unselectableText
       }
     };
 

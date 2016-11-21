@@ -1,7 +1,8 @@
 import React from 'react';
 import Radium from 'radium';
 
-import { fontFamily, darkGrey, drumLabel } from 'theme/variables'
+import { fontFamily, darkGrey, drumLabel } from 'theme/variables';
+import { unselectableText } from 'theme/mixins';
 
 @Radium
 class InstrumentLabel extends React.Component {
@@ -16,7 +17,8 @@ class InstrumentLabel extends React.Component {
       fontFamily,
       whiteSpace: 'pre',
       color: darkGrey,
-      letterSpacing: -0.4
+      letterSpacing: -0.4,
+      ...unselectableText
     };
 
     const styles = {
