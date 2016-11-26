@@ -2,6 +2,7 @@ import React from 'react';
 import Radium from 'radium';
 
 const baseGuideStyle = {
+  cursor: "default",
   position: 'absolute',
   top: '50%', left: '50%'
 };

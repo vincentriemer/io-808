@@ -122,7 +122,8 @@ class SoundSwitch extends React.Component {
         position: 'absolute',
         ...innerStyle,
         width: innerWidth, height: innerHeight,
-        transform
+        transform,
+        transition: "transform cubic-bezier(0.4, 0.0, 0.2, 1) .1s"
       },
       innerHover: {
         position: 'absolute',

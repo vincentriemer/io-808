@@ -34,9 +34,10 @@ class InstrumentLabel extends React.Component {
       },
 
       innerWrapper: {
+        alignItems: 'baseline',
+        cursor: "default",
         display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'baseline'
+        flexDirection: 'row'
       },
 
       smallLabel: {
