@@ -62,21 +62,6 @@ md.use(require('markdown-it-video'), {
   youtube: { width: 853, height: 480 }
 });
 
-if (process.env.NODE_ENV === 'production')
-  md.use(require('markdown-it-imgix'), {
-    match: "images",
-    domain: 'io808.imgix.net',
-    params: {
-      auto: 'compress,format',
-      ch: 'dpr',
-      dpr: 1.5,
-      fit: 'max',
-      w: 960,
-      h: 225,
-      fm: 'jpg',
-    }
-  });
-
 // pages
 var tutorialMD = require('./tutorial/tutorial.md');
 var content = md.render(tutorialMD);

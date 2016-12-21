@@ -34,7 +34,8 @@ class AutoFillInKnob extends React.Component {
 
       controlWrapper: {
         position: 'relative',
-        width: size, height: size
+        width: size, height: size,
+        minWidth: size, minHeight: size
       },
 
       labelGuide: labelGreySmall,
@@ -49,7 +50,7 @@ class AutoFillInKnob extends React.Component {
 
       labelWrapper: {
         position: 'relative',
-        transform: 'translateY(-70%)',
+        top: -30,
         width: size, height: labelHeight,
         display: 'flex',
         flexDirection: 'column',
@@ -60,7 +61,7 @@ class AutoFillInKnob extends React.Component {
       measuresLabel: labelGreySmall,
 
       autoLabel: {
-        position: 'relative', top: -4,
+        position: 'relative', top: -2,
         ...labelGreyLarge
       }
     };

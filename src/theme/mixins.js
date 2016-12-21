@@ -4,8 +4,24 @@ import {
 } from 'theme/variables';
 
 // TYPOGRAPHY PRESETS ==========================
+export const unselectableText = {
+  MozUserSelect: 'none',
+  WebkitUserSelect: 'none',
+  msUserSelect: 'none'
+};
+
+export const defaultCursor = {
+  cursor: 'default'
+};
+
+export const autoCursor = {
+  cursor: 'auto'
+};
+
 const basePreset = {
-  fontFamily, fontWeight, textAlign, letterSpacing
+  fontFamily, fontWeight, textAlign, letterSpacing,
+  ...unselectableText,
+  ...defaultCursor
 };
 
 export const labelGreyNormal = {
@@ -45,6 +61,11 @@ export const labelDarkGrey = {
   fontSize: normalSize,
   color: darkGrey,
   fontWeight: 'normal'
+};
+
+export const labelText = {
+  userSelect: 'none',
+  cursor: 'default'
 };
 
 // LAYOUT MACROS ==========================

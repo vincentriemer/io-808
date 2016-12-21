@@ -189,6 +189,10 @@ class BottomSection extends React.Component {
         padding: 11,
         borderRadius: 4
       },
+      darkGreyButtonLabel: {
+        ...labelDarkGrey,
+        cursor: 'inherit'
+      },
       rightSection: {
         position: 'absolute',
         width: RIGHT_WIDTH, height: LEFT_SECTION_HEIGHT,
@@ -354,9 +358,9 @@ class BottomSection extends React.Component {
               <div style={horizontalSeparatorStyle(2)}></div>
               <div style={styles.buttonWrapper}>
                 <ConnectedStartStopButton style={styles.startStopButton}>
-                  <div style={labelDarkGrey}>START</div>
+                  <div style={styles.darkGreyButtonLabel}>START</div>
                   <div style={{...horizontalSeparatorStyle(1), margin: 3}}></div>
-                  <div style={labelDarkGrey}>STOP</div>
+                  <div style={styles.darkGreyButtonLabel}>STOP</div>
                 </ConnectedStartStopButton>
               </div>
             </div>
@@ -370,7 +374,7 @@ class BottomSection extends React.Component {
               </div>
               <div style={styles.buttonWrapper}>
                 <ConnectedTapButton style={styles.tapButton}>
-                  <div style={labelDarkGrey}>TAP</div>
+                  <div style={styles.darkGreyButtonLabel}>TAP</div>
                 </ConnectedTapButton>
               </div>
             </div>

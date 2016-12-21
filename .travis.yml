@@ -1,5 +1,7 @@
 sudo: false
 language: node_js
+node_js:
+- "6"
 cache:
   directories:
   - node_modules
@@ -9,6 +11,9 @@ node_js:
 - stable
 before_script:
 - npm prune
+script:
+- npm test
+- npm run build
 after_success:
 - npm run deploy
 env:
