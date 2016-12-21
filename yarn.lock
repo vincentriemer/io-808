@@ -3115,10 +3115,6 @@ markdown-it-decorate@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/markdown-it-decorate/-/markdown-it-decorate-1.2.1.tgz#08a924e963e294a2084e54b10bf711810ba0bdf4"
 
-markdown-it-imgix@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/markdown-it-imgix/-/markdown-it-imgix-0.1.0.tgz#7081d1b10adcbfb3ca6965a45c7a0bb348502d2d"
-
 markdown-it-table-of-contents@^0.2.0:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/markdown-it-table-of-contents/-/markdown-it-table-of-contents-0.2.3.tgz#8f6167103f349834aedb28d69a3ed71baeb98237"
