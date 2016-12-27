@@ -3,6 +3,7 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+var OfflinePlugin = require('offline-plugin');
 
 module.exports = {
   devtool: 'source-map',
@@ -73,7 +74,8 @@ module.exports = {
       filename: 'index.html',
       title: 'iO-808'
     }),
-    new ExtractTextPlugin('styles.css')
+    new ExtractTextPlugin('styles.css'),
+    new OfflinePlugin()
   ],
   resolve: {
     root: [
