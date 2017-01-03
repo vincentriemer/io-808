@@ -121,7 +121,7 @@ export default Immutable({
   selectedPlayFillPattern: 0,
   fillScheduled: false,
 
-  tempo: 135,
+  tempo: 118,
   fineTempo: 0,
 
   currentStep: 0,
