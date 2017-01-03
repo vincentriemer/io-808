@@ -29,9 +29,9 @@ export default function (audioCtx, destination, time, {level, tone, decay}) {
   vca.amplitude.value = 0;
 
   const outputVCA = new VCA(audioCtx);
-  outputVCA.amplitude.value = outputLevel + 0.4;
+  outputVCA.amplitude.value = outputLevel + 0.2;
 
-  const softClipper = new SoftClipper(0.9, audioCtx);
+  const softClipper = new SoftClipper(0.7, audioCtx);
 
   // envelopes
   const oscEnv = new ADGenerator(EXPONENTIAL, 0.12, decayTime, START_FREQ, FREQ_AMT);

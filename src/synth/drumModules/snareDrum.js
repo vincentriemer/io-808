@@ -10,8 +10,8 @@ const lowOscFreq = 238;
 export default function (audioCtx, destination, time, { level, tone, snappy }) {
   // parameters
   const outputLevel = equalPower(level);
-  const noiseVCFFreq = (tone * 100) + 800;
-  const snappyEnvAmt = snappy / 200;
+  const noiseVCFFreq = (tone * 100) + 500;
+  const snappyEnvAmt = snappy / 180;
 
   // audio modules
   const highOsc = new VCO(SINE, audioCtx);
@@ -32,7 +32,7 @@ export default function (audioCtx, destination, time, { level, tone, snappy }) {
   outputVCA.amplitude.value = outputLevel;
 
   // envelopes
-  const noiseEnv = new ADGenerator(LINEAR, 0.1, 75, 0, 0.5);
+  const noiseEnv = new ADGenerator(LINEAR, 0.1, 160, 0, 0.9);
   const snappyEnv = new ADGenerator(LINEAR, 0.1, 50, 0, snappyEnvAmt);
 
   // module routing
