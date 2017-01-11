@@ -2,20 +2,15 @@ sudo: false
 language: node_js
 node_js:
 - "6"
-cache:
-  directories:
-  - node_modules
 notifications:
   email: false
 node_js:
 - stable
-before_script:
-- npm prune
 script:
-- npm test
-- npm run build
+- yarn run test
+- yarn run build
 after_success:
-- npm run deploy
+- yarn run deploy
 env:
   global:
   - GH_REF: github.com/vincentriemer/io-808.git

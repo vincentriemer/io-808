@@ -3,6 +3,7 @@ var webpack = require('webpack');
 var NpmInstallPlugin = require('npm-install-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var OfflinePlugin = require('offline-plugin');
 
 module.exports = {
   devtool: 'cheap-module-source-map',
@@ -43,7 +44,8 @@ module.exports = {
       filename: 'index.html',
       title: 'iO-808'
     }),
-    new ExtractTextPlugin('styles.css')
+    new ExtractTextPlugin('styles.css'),
+    new OfflinePlugin()
   ],
   resolve: {
     root: [
