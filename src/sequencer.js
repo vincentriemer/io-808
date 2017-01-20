@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import WAAClock from 'waaclock';
+import WebMidi from 'webmidi';
 
 import { onTick, onBlinkTick } from 'actionCreators';
 
@@ -10,15 +11,16 @@ import VCA from 'synth/basics/vca';
 import stepTrigger from 'synth/stepTrigger';
 
 import {equalPower} from 'helpers';
+import {onStartStopButtonClick} from "./actionCreators";
 
 // fix for safari weirdness, found in this thread: http://www.html5gamedevs.com/topic/18872-safari-9-desktop-totally-weird-audio-bug-audio-only-after-reloading-a-page-ignore-caching/
 function fixSuspendedState (ac) {
-  if (ac.state == 'suspended') {
+  if (ac.state === 'suspended') {
     console.warn('AudioContext FIX: suspended. Trying to wake it.');
     if (ac.resume) {
       ac.resume();
     }
-    return ac.state == 'running';
+    return ac.state === 'running';
   } else {
     console.log('AudioContext FIX: not suspended, nothing to do.');
     return true;
@@ -66,13 +68,13 @@ class Sequencer extends React.Component {
     outputGain.amplitude.value = equalPower(props.storeState.masterVolume);
 
     this.state = {
-      tickEvent: null,
-      currentTempo: null,
+      // tickEvent: null,
+      // currentTempo: null,
       blinkIntervalID: null,
       masterVolume: props.storeState.masterVolume
     };
 
-    this.handleTick = this.handleTick.bind(this);
+    // this.handleTick = this.handleTick.bind(this);
     this.handleBlinkTick = this.handleBlinkTick.bind(this);
   }
 
@@ -80,15 +82,47 @@ class Sequencer extends React.Component {
     this.props.handleBlinkTick();
   }
 
-  handleTick({ deadline }) {
-    stepTrigger(this.props.storeState, deadline, outputGain, clock, audioCtx);
-
-    clock.setTimeout(() => {
-      this.props.handleTick();
-    }, deadline - audioCtx.currentTime);
-  }
+  // handleTick({ deadline }) {
+  //   stepTrigger(this.props.storeState, deadline, outputGain, clock, audioCtx);
+  //
+  //   clock.setTimeout(() => {
+  //     this.props.handleTick();
+  //   }, deadline - audioCtx.currentTime);
+  // }
 
   componentDidMount() {
+    this.currentTick = 6;
+
+    WebMidi.enable(err => {
+      if (err)
+        console.error(err);
+      else {
+        const midiIn = WebMidi.inputs[0];
+
+        midiIn.addListener('clock', 1, () => {
+          if (this.currentTick % 6 === 0) {
+            this.currentTick -= 6;
+            stepTrigger(this.props.storeState, audioCtx.currentTime + 0.1, outputGain, clock, audioCtx);
+            setTimeout(() => {
+              this.props.handleTick();
+            }, 0.1);
+          }
+          this.currentTick++;
+        });
+
+        midiIn.addListener('start', 1, () => {
+          console.log('started');
+          this.currentTick = 6;
+          this.props.onStartStop();
+        });
+
+        midiIn.addListener('stop', 1, () => {
+          console.log('stopped');
+          this.props.onStartStop();
+        });
+      }
+    });
+
     const blinkIntervalID = window.setInterval(this.handleBlinkTick, 750);
     this.setState({ blinkIntervalID });
   }
@@ -99,27 +133,27 @@ class Sequencer extends React.Component {
   }
 
   componentWillReceiveProps({ storeState: nextStoreState }) {
-    // start sequencer
-    if (nextStoreState.playing && this.state.tickEvent === null) {
-      clock.start();
+    // // start sequencer
+    // if (nextStoreState.playing && this.state.tickEvent === null) {
+    //   clock.start();
+    //
+    //   const currentTempo = nextStoreState.tempo + nextStoreState.fineTempo;
+    //   const beatDuration = (60 / currentTempo) / 4;
+    //
+    //   const tickEvent = clock.callbackAtTime(this.handleTick, audioCtx.currentTime + 0.1)
+    //     .repeat(beatDuration)
+    //     .tolerance({late: 0.01});
+    //
+    //   return this.setState({ tickEvent, currentTempo });
+    // }
 
-      const currentTempo = nextStoreState.tempo + nextStoreState.fineTempo;
-      const beatDuration = (60 / currentTempo) / 4;
-
-      const tickEvent = clock.callbackAtTime(this.handleTick, audioCtx.currentTime + 0.1)
-        .repeat(beatDuration)
-        .tolerance({late: 0.01});
-
-      return this.setState({ tickEvent, currentTempo });
-    }
-
-    // stop sequencer
-    if (!nextStoreState.playing && this.state.tickEvent !== null) {
-      this.state.tickEvent.clear();
-      clock.stop();
-
-      return this.setState({ tickEvent: null, currentTempo: null });
-    }
+    // // stop sequencer
+    // if (!nextStoreState.playing && this.state.tickEvent !== null) {
+    //   this.state.tickEvent.clear();
+    //   clock.stop();
+    //
+    //   return this.setState({ tickEvent: null, currentTempo: null });
+    // }
 
     // change tempo
     if (nextStoreState.playing &&
@@ -156,7 +190,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   handleTick: () => dispatch(onTick()),
-  handleBlinkTick: () => dispatch(onBlinkTick())
+  handleBlinkTick: () => dispatch(onBlinkTick()),
+  onStartStop: () => dispatch(onStartStopButtonClick())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sequencer);

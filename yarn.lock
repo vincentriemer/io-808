@@ -3212,6 +3212,10 @@ micromatch@^2.1.5:
     parse-glob "^3.0.4"
     regex-cache "^0.4.2"
 
+midi-clock:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/midi-clock/-/midi-clock-0.0.1.tgz#6fafc715f4764da5980adc0c946c020863f7d750"
+
 mime-db@~1.25.0:
   version "1.25.0"
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.25.0.tgz#c18dbd7c73a5dbf6f44a024dc0d165a1e7b1c392"
@@ -4120,9 +4124,9 @@ querystring@^0.2.0, querystring@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/querystring/-/querystring-0.2.0.tgz#b209849203bb25df820da756e747005878521620"
 
-radium@^0.17.1:
-  version "0.17.2"
-  resolved "https://registry.yarnpkg.com/radium/-/radium-0.17.2.tgz#2ba0e5a374e34f63ccc410ede16cdd7eb7f4c5f9"
+radium:
+  version "0.18.1"
+  resolved "https://registry.yarnpkg.com/radium/-/radium-0.18.1.tgz#a01db9b4c6e6364de3b02d5976adf28d0b98351d"
   dependencies:
     array-find "^1.0.0"
     exenv "^1.2.0"
@@ -5239,6 +5243,10 @@ watchpack@^0.2.1:
     async "^0.9.0"
     chokidar "^1.0.0"
     graceful-fs "^4.1.2"
+
+webmidi:
+  version "2.0.0-rc.4"
+  resolved "https://registry.yarnpkg.com/webmidi/-/webmidi-2.0.0-rc.4.tgz#1aec2bd098e32e449b557fb74a6c717f7e26db04"
 
 webpack-core@~0.6.0:
   version "0.6.8"

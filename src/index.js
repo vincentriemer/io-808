@@ -1,5 +1,7 @@
 // import offline runtime
-require('offline-plugin/runtime').install();
+if (process.env.NODE_ENV === 'production') {
+  require('offline-plugin/runtime').install();
+}
 
 // import global styles
 require('globalStyles/reset.css');
@@ -30,10 +32,10 @@ render(
   () => {
     // Custom performance marker
     if ('performance' in window && 'mark' in window.performance)
-      performance.mark('first_layout_render');
+      window.performance.mark('first_layout_render');
 
     // Hide loading spinner and reveal the app layout
-    var loaderElement = document.getElementById('loader');
+    const loaderElement = document.getElementById('loader');
     loaderElement.className = "loader-wrapper done";
     document.getElementById('root').className = "";
   }
