@@ -5,6 +5,11 @@ import WebMidi from 'webmidi';
 
 import { onTick, onBlinkTick } from 'actionCreators';
 
+import {
+  BASS_DRUM, SNARE_DRUM, LOW_CONGA_LOW_TOM, MID_CONGA_MID_TOM, HI_CONGA_HI_TOM, CLAVES_RIMSHOT,
+  MARACAS_HANDCLAP, COWBELL, CYMBAL, OPEN_HIHAT, CLSD_HIHAT
+} from 'constants';
+
 // Web Audio Modules
 import Limiter from 'synth/effects/limiter';
 import VCA from 'synth/basics/vca';
@@ -26,6 +31,24 @@ function fixSuspendedState (ac) {
     return true;
   }
 }
+
+const sampleMapping = [
+  [BASS_DRUM, require('synth/sampleDrumModules/samples/BD/BD5050.WAV')],
+  [SNARE_DRUM, require('synth/sampleDrumModules/samples/SD/SD5050.WAV')],
+  [LOW_CONGA_LOW_TOM, require('synth/sampleDrumModules/samples/LT/LT50.WAV')],
+  [MID_CONGA_MID_TOM, require('synth/sampleDrumModules/samples/MT/MT50.WAV')],
+  [HI_CONGA_HI_TOM, require('synth/sampleDrumModules/samples/HT/HT50.WAV')],
+  [CLAVES_RIMSHOT, require('synth/sampleDrumModules/samples/CL/CL.WAV')],
+  [MARACAS_HANDCLAP, require('synth/sampleDrumModules/samples/HC/HC50.WAV')],
+  [COWBELL, require('synth/sampleDrumModules/samples/CB/CB.WAV')],
+  [CYMBAL, require('synth/sampleDrumModules/samples/CY/CY5050.WAV')],
+  [OPEN_HIHAT, require('synth/sampleDrumModules/samples/OH/OH50.WAV')],
+  [CLSD_HIHAT, require('synth/sampleDrumModules/samples/CH/CH.WAV')]
+];
+
+const MIDI_EVENTS = {
+  CLOCK: 0xf8
+};
 
 // initialize web audio api context and clock
 let audioCtx, clock;
@@ -100,12 +123,13 @@ class Sequencer extends React.Component {
         const midiIn = WebMidi.inputs[0];
 
         midiIn.addListener('clock', 1, () => {
+          console.log('library clock', performance.now());
           if (this.currentTick % 6 === 0) {
             this.currentTick -= 6;
-            stepTrigger(this.props.storeState, audioCtx.currentTime + 0.1, outputGain, clock, audioCtx);
+            stepTrigger(this.props.storeState, audioCtx.currentTime + 0.01, outputGain, clock, this.state.bufferMapping, audioCtx);
             setTimeout(() => {
               this.props.handleTick();
-            }, 0.1);
+            }, 0.01);
           }
           this.currentTick++;
         });
@@ -123,6 +147,26 @@ class Sequencer extends React.Component {
       }
     });
 
+    // load drum samples
+    (async () => {
+      console.log('preparing drum sample requests...');
+      const loaders = sampleMapping.map(([name, sampleURL]) =>
+        Promise.resolve()
+          .then(() => fetch(sampleURL))
+          .then(res => res.arrayBuffer())
+          .then(arrayBuffer => audioCtx.decodeAudioData(arrayBuffer))
+          .then(audioBuffer => [name, audioBuffer])
+      );
+
+      console.log('loading drum samples...');
+      const bufferMapping = await Promise.all(loaders);
+
+      console.log('done loading samples!');
+      console.table(bufferMapping);
+
+      this.setState({ bufferMapping });
+    })();
+
     const blinkIntervalID = window.setInterval(this.handleBlinkTick, 750);
     this.setState({ blinkIntervalID });
   }
@@ -133,7 +177,7 @@ class Sequencer extends React.Component {
   }
 
   componentWillReceiveProps({ storeState: nextStoreState }) {
-    // // start sequencer
+    // start sequencer
     // if (nextStoreState.playing && this.state.tickEvent === null) {
     //   clock.start();
     //
@@ -147,7 +191,7 @@ class Sequencer extends React.Component {
     //   return this.setState({ tickEvent, currentTempo });
     // }
 
-    // // stop sequencer
+    // stop sequencer
     // if (!nextStoreState.playing && this.state.tickEvent !== null) {
     //   this.state.tickEvent.clear();
     //   clock.stop();
@@ -156,16 +200,16 @@ class Sequencer extends React.Component {
     // }
 
     // change tempo
-    if (nextStoreState.playing &&
-      (nextStoreState.tempo !== this.props.storeState.tempo ||
-      nextStoreState.fineTempo !== this.props.storeState.fineTempo)) {
-
-      const newTempo = nextStoreState.tempo + nextStoreState.fineTempo;
-
-      clock.timeStretch(audioCtx.currentTime, [this.state.tickEvent], this.state.currentTempo / newTempo);
-
-      this.setState({ currentTempo: newTempo });
-    }
+    // if (nextStoreState.playing &&
+    //   (nextStoreState.tempo !== this.props.storeState.tempo ||
+    //   nextStoreState.fineTempo !== this.props.storeState.fineTempo)) {
+    //
+    //   const newTempo = nextStoreState.tempo + nextStoreState.fineTempo;
+    //
+    //   clock.timeStretch(audioCtx.currentTime, [this.state.tickEvent], this.state.currentTempo / newTempo);
+    //
+    //   this.setState({ currentTempo: newTempo });
+    // }
 
     // change master volume
     if (this.state.masterVolume !== nextStoreState.masterVolume) {

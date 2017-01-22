@@ -14,6 +14,7 @@ import openHat from 'synth/drumModules/openHat';
 import cymbal from 'synth/drumModules/cymbal';
 import cowbell from 'synth/drumModules/cowbell';
 import claveRimshot from 'synth/drumModules/claveRimshot';
+import sampleDrum from 'synth/sampleDrumModules/sampleDrum';
 
 import VCA from 'synth/basics/vca';
 
@@ -71,7 +72,7 @@ function getAccentGain(currentPattern, currentPart, currentVariation, currentSte
   return accentActive ? 1.0 : inactiveGainAmt;
 }
 
-export default function (storeState, deadline, destination, clock, audioCtx) {
+export default function (storeState, deadline, destination, clock, bufferMapping, audioCtx) {
   // select relevant values from the global state
   const currentPattern = patternSelector(storeState);
   const currentPart = getCurrentPart(storeState);
@@ -84,10 +85,7 @@ export default function (storeState, deadline, destination, clock, audioCtx) {
   accentVCA.amplitude.value = accentGain;
   accentVCA.connect(destination);
 
-  // accentVCA cleanup
-  window.setTimeout(() => accentVCA.disconnect, (deadline - audioCtx.currentTime) + 2000);
-
-  drumModuleMapping.forEach(([drumID, drumModuleTrigger]) => {
+  bufferMapping.forEach(([drumID, drumBuffer]) => {
     const stepID = stepKey(currentPattern, drumID, currentPart, currentVariation, currentStep);
     const drumState = storeState.instrumentState[drumID];
 
@@ -104,7 +102,11 @@ export default function (storeState, deadline, destination, clock, audioCtx) {
       }
 
       // start a new trigger and store output gain node in cache
-      previousTriggers[drumID] = drumModuleTrigger(audioCtx, accentVCA, deadline, drumState);
+      previousTriggers[drumID] = sampleDrum(audioCtx, accentVCA, deadline, drumBuffer, drumState);
+      // previousTriggers[drumID] = drumModuleTrigger(audioCtx, accentVCA, deadline, drumState);
     }
   });
+
+  // accentVCA cleanup
+  window.setTimeout(() => accentVCA.disconnect, (deadline - audioCtx.currentTime) + 1000);
 }

@@ -27,7 +27,8 @@ module.exports = {
       { test: /\.jade$/, loader: 'jade' },
       { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader') },
       { test: /\.js$/, loaders: ['babel'], include: path.join(__dirname, 'src') },
-      { test: /\.(otf|eot|svg|ttf|woff|woff2).*$/, loader: 'url?limit=8192' }
+      { test: /\.(otf|eot|svg|ttf|woff|woff2).*$/, loader: 'url?limit=8192' },
+      { test: /\.(WAV|wav)$/, loader: 'file'}
     ]
   },
   postcss: [
