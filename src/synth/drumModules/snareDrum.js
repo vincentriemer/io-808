@@ -1,18 +1,21 @@
 import VCO, { SINE, WHITE_NOISE } from 'synth/basics/vco';
 import VCF, { HIGHPASS } from 'synth/basics/vcf';
 import VCA from 'synth/basics/vca';
-import ADGenerator, { LINEAR } from 'synth/basics/ADGenerator';
+import ADGenerator, { LINEAR, EXPONENTIAL } from 'synth/basics/ADGenerator';
 import {equalPower} from 'helpers';
-
-const highOscFreq = 476;
-const lowOscFreq = 238;
-
+var highOscFreq = 478;
+var lowOscFreq = 238;
 export default function (audioCtx, destination, time, { level, tone, snappy }) {
+  tone = tone == 0 ? 1 : tone;
   // parameters
   const outputLevel = equalPower(level);
-  const noiseVCFFreq = (tone * 100) + 800;
-  const snappyEnvAmt = snappy / 200;
-
+  const noiseVCFFreq = 300;
+  const snappyEnvAmt = snappy / 10;
+  var oscVCFFreq = (function(){
+      var freq = 20;
+      freq = freq * tone 
+      return freq;
+    })();
   // audio modules
   const highOsc = new VCO(SINE, audioCtx);
   highOsc.frequency.value = highOscFreq;
@@ -24,6 +27,9 @@ export default function (audioCtx, destination, time, { level, tone, snappy }) {
 
   const noiseVCF = new VCF(HIGHPASS, audioCtx);
   noiseVCF.frequency.value = noiseVCFFreq;
+  
+  const oscVCF = new VCF(HIGHPASS, audioCtx);
+  oscVCF.frequency.value = oscVCFFreq;
 
   const oscVCA = new VCA(audioCtx);
   const noiseVCA = new VCA(audioCtx);
@@ -32,14 +38,14 @@ export default function (audioCtx, destination, time, { level, tone, snappy }) {
   outputVCA.amplitude.value = outputLevel;
 
   // envelopes
-  const noiseEnv = new ADGenerator(LINEAR, 0.1, 75, 0, 0.5);
-  const snappyEnv = new ADGenerator(LINEAR, 0.1, 50, 0, snappyEnvAmt);
+  const noiseEnv = new ADGenerator(EXPONENTIAL, 0.1, 100, 0, snappyEnvAmt*.5);
+  const snappyEnv = new ADGenerator(EXPONENTIAL, 0.1, 80, 0, tone);
 
   // module routing
   highOsc.connect(oscVCA);
   lowOsc.connect(oscVCA);
   oscVCA.connect(outputVCA);
-
+  oscVCF.connect(oscVCF);
   noiseOsc.connect(noiseVCF);
   noiseVCF.connect(noiseVCA);
   noiseVCA.connect(outputVCA);

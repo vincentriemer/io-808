@@ -6,14 +6,14 @@ import PulseTrigger from 'synth/basics/pulseTrigger';
 import SoftClipper from 'synth/effects/softClipper';
 import {equalPower} from 'helpers';
 
-const FREQ_AMT = 50;
-const START_FREQ = 48;
+const FREQ_AMT = 14;
+const START_FREQ = 44;
 
 export default function (audioCtx, destination, time, {level, tone, decay}) {
   // parameters
   const outputLevel = equalPower(level);
-  const vcfFreq = 200 + tone * 20;
-  const decayTime = decay * 5 + 50;
+  const vcfFreq = 100 + tone * 20;
+  const decayTime = decay * 8 + 50;
 
   // audio modules
   const vco = new VCO(SINE, audioCtx);
@@ -29,13 +29,13 @@ export default function (audioCtx, destination, time, {level, tone, decay}) {
   vca.amplitude.value = 0;
 
   const outputVCA = new VCA(audioCtx);
-  outputVCA.amplitude.value = outputLevel + 0.4;
+  outputVCA.amplitude.value = outputLevel + 0.2;
 
-  const softClipper = new SoftClipper(0.6, audioCtx);
+  const softClipper = new SoftClipper(0.7, audioCtx);
 
   // envelopes
-  const oscEnv = new ADGenerator(EXPONENTIAL, 0.11, decayTime, START_FREQ, FREQ_AMT);
-  const ampEnv = new ADGenerator(LINEAR, 2, decayTime, 0.0, 1.0);
+  const oscEnv = new ADGenerator(EXPONENTIAL, 0.12, decayTime, START_FREQ, FREQ_AMT);
+  const ampEnv = new ADGenerator(LINEAR, 2, decayTime, 0.0, 1.4);
 
   // module routing
   vco.connect(vca);
