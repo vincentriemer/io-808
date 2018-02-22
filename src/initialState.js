@@ -107,6 +107,7 @@ export default Immutable({
   currentPattern: 0,
 
   playing: false,
+  isLinkEnabled: false,
 
   selectedMode: 1,
   selectedInstrumentTrack: 1,

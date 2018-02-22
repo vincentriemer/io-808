@@ -22,6 +22,7 @@ import {
   CLEAR_DRAG_ENTER,
   CLEAR_DRAG_EXIT,
   CLEAR_DRAG_DROP,
+  CHNAGE_LINK_STATE,
   STATE_LOAD,
   RESET
 } from 'actionTypes';
@@ -52,8 +53,7 @@ export const onTempoChange = (value) => ({
 });
 
 export const onLinkChange = (value) => ({
-  type: LINK_TEMPO,
-  payload: value
+  type: CHNAGE_LINK_STATE,
 });
 
 export const onInstrumentChange = (type, controlName, value) => ({

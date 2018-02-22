@@ -14,6 +14,7 @@ export const TEMPO_CHANGE = 'TEMPO_CHANGE';
 export const LINK_TEMPO = 'tempo';
 export const TICK = 'TICK';
 export const BLINK_TICK = 'BLINK_TICK';
+export const CHNAGE_LINK_STATE = 'CHANGE_LINK_STATE'
 
 export const CLEAR_DOWN = 'CLEAR_DOWN';
 export const CLEAR_UP = 'CLEAR_UP';

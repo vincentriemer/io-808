@@ -68,7 +68,8 @@ export const ConnectedAutoFillInKnob = (() => {
 
 export const ConnectedTempoKnob = (() => {
   const mapStateToProps = (state) => ({
-    value: state.tempo
+    value: state.tempo,
+    disabled: state.isLinkEnabled
   });
   const mapDispatchToProps = (dispatch) => ({
     onChange: (value) => dispatch(onTempoChange(value))
@@ -78,7 +79,8 @@ export const ConnectedTempoKnob = (() => {
 
 export const ConnectedFineTempoKnob = (() => {
   const mapStateToProps = (state) => ({
-    value: state.fineTempo
+    value: state.fineTempo,
+    disabled: state.isLinkEnabled
   });
   const mapDispatchToProps = (dispatch) => ({
     onChange: (value) => dispatch(onFineTempoChange(value))

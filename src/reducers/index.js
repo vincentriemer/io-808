@@ -21,6 +21,7 @@ import {
   CLEAR_DRAG_ENTER,
   CLEAR_DRAG_EXIT,
   CLEAR_DRAG_DROP,
+  CHNAGE_LINK_STATE,
   STATE_LOAD,
   RESET
 } from 'actionTypes';
@@ -283,6 +284,9 @@ export default function(state, { type, payload }) {
 
     case STATE_LOAD:
       return state.merge(payload);
+
+    case CHNAGE_LINK_STATE:
+      return state.merge({isLinkEnabled: !state.isLinkEnabled});
 
     case LINK_TEMPO:
       return state.set('tempo', payload.bpm);

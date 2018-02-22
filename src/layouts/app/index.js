@@ -14,7 +14,7 @@ import BottomSection from 'layouts/bottomSection';
 
 // Components
 import Octicon from 'react-octicon';
-import { ConnectedSaveButton, ConnectedLoadButton, ConnectedResetButton } from './connectedComponents';
+import { ConnectedSaveButton, ConnectedLoadButton, ConnectedResetButton, ConnectedAbletonLinkButton } from './connectedComponents';
 
 const GithubLink = Radium(() => (
   <a style={{
@@ -138,7 +138,7 @@ class AppLayout extends React.Component {
                 <ConnectedLoadButton size={35} />
                 <ConnectedSaveButton size={35} />
                 <ConnectedResetButton size={35} />
-                <ConnectedResetButton size={35} />
+                <ConnectedAbletonLinkButton size={35} />
               </div>
               <GithubLink />
             </div>
