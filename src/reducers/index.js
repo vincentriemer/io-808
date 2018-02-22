@@ -8,6 +8,7 @@ import {
   INSTRUMENT_TRACK_CHANGE,
   MODE_CHANGE,
   TEMPO_CHANGE,
+  LINK_TEMPO,
   TAP_BUTTON_CLICK,
   STEP_BUTTON_CLICK,
   START_STOP_BUTTON_CLICK,
@@ -282,6 +283,9 @@ export default function(state, { type, payload }) {
 
     case STATE_LOAD:
       return state.merge(payload);
+
+    case LINK_TEMPO:
+      return state.set('tempo', payload.bpm);
 
     case RESET:
       return state.merge(initialState);

@@ -138,6 +138,7 @@ class AppLayout extends React.Component {
                 <ConnectedLoadButton size={35} />
                 <ConnectedSaveButton size={35} />
                 <ConnectedResetButton size={35} />
+                <ConnectedResetButton size={35} />
               </div>
               <GithubLink />
             </div>
