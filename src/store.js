@@ -1,5 +1,7 @@
-import { compose, createStore } from 'redux';
+import { compose, createStore, applyMiddleware } from 'redux';
 import Immutable from 'seamless-immutable';
+import createSocketIoMiddleware from 'redux-socket.io';
+import io from 'socket.io-client';
 
 import persistState, { mergePersistedState, transformState } from 'redux-localstorage';
 import adapter from 'redux-localstorage/lib/adapters/localStorage';
@@ -10,6 +12,9 @@ import rootReducer from 'reducers';
 import initialState from 'initialState';
 
 import { PERSISTANCE_FILTER } from 'constants';
+
+let socket = io();
+let socketIoMiddleware = createSocketIoMiddleware(socket, "server/");
 
 const middleware = [];
 
@@ -33,4 +38,4 @@ middleware.push(persistState(storage, 'io-808'));
 
 const enhancer = compose(...middleware);
 
-export default createStore(reducer, initialState, enhancer);
+export default applyMiddleware(socketIoMiddleware)(createStore)(reducer, initialState, enhancer)
