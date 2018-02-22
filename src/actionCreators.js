@@ -10,6 +10,7 @@ import {
   AUTO_FILL_IN_CHANGE,
   FINE_TEMPO_CHANGE,
   INSTRUMENT_TRACK_CHANGE,
+  LINK_TEMPO,
   MODE_CHANGE,
   TEMPO_CHANGE,
   TICK,
@@ -47,6 +48,11 @@ export const onModeChange = (value) => ({
 
 export const onTempoChange = (value) => ({
   type: TEMPO_CHANGE,
+  payload: value
+});
+
+export const onLinkChange = (value) => ({
+  type: LINK_TEMPO,
   payload: value
 });
 

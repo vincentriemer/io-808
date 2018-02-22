@@ -4,6 +4,7 @@ import {
   onInstrumentTrackChange,
   onAutoFillInChange,
   onTempoChange,
+  onLinkChange,
   onFineTempoChange,
   onClearDown,
   onClearUp,
