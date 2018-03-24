@@ -68,7 +68,7 @@ export const ConnectedAbletonLinkButton = (() => {
     }
   });
   return connect(mapStateToProps, mapDispatchToProps)(
-    createButton("Ablteon Link")
+    createButton("Ableton Link")
   );
 })();
 
