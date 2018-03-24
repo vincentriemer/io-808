@@ -10,6 +10,7 @@ import {
   AUTO_FILL_IN_CHANGE,
   FINE_TEMPO_CHANGE,
   INSTRUMENT_TRACK_CHANGE,
+  LINK_TEMPO,
   MODE_CHANGE,
   TEMPO_CHANGE,
   TICK,
@@ -21,6 +22,7 @@ import {
   CLEAR_DRAG_ENTER,
   CLEAR_DRAG_EXIT,
   CLEAR_DRAG_DROP,
+  CHNAGE_LINK_STATE,
   STATE_LOAD,
   RESET
 } from 'actionTypes';
@@ -48,6 +50,10 @@ export const onModeChange = (value) => ({
 export const onTempoChange = (value) => ({
   type: TEMPO_CHANGE,
   payload: value
+});
+
+export const onLinkChange = (value) => ({
+  type: CHNAGE_LINK_STATE,
 });
 
 export const onInstrumentChange = (type, controlName, value) => ({
