@@ -1,8 +1,8 @@
-import SquareOscBank from 'synth/basics/squareOscBank';
-import VCF, { BANDPASS, HIGHPASS } from 'synth/basics/vcf';
+import SquareOscBank from "synth/basics/squareOscBank";
+import VCF, { BANDPASS, HIGHPASS } from "synth/basics/vcf";
 import VCA from "synth/basics/vca";
-import ADGenerator, { EXPONENTIAL } from 'synth/basics/ADGenerator';
-import {equalPower} from 'helpers';
+import ADGenerator, { EXPONENTIAL } from "synth/basics/ADGenerator";
+import { equalPower } from "helpers";
 
 const LOW_FILTER_FREQ = 5000;
 const MID_HIGH_FILTER_FREQ = 10000;
@@ -10,15 +10,15 @@ const HIGH_FILTER_FREQ = 8000;
 const HIGH_DECAY = 150;
 const MID_DECAY = 400;
 
-export default function(audioCtx, destination, time, {level, tone, decay}) {
+export default function(audioCtx, destination, time, { level, tone, decay }) {
   // parameters
   const outputLevel = equalPower(level);
-  const lowDecay = (decay * 8.5) + 700;
+  const lowDecay = decay * 8.5 + 700;
 
   // tone ratio
-  const lowEnvAmt = 0.666 - ((tone / 100) * 0.666);
+  const lowEnvAmt = 0.666 - (tone / 100) * 0.666;
   const midEnvAmt = 0.333;
-  const highEnvAmt = 0.666 - ((1 - (tone / 100)) * 0.666);
+  const highEnvAmt = 0.666 - (1 - tone / 100) * 0.666;
 
   // audio modules
   const oscBank = new SquareOscBank(audioCtx);
@@ -87,7 +87,7 @@ export default function(audioCtx, destination, time, {level, tone, decay}) {
   window.setTimeout(() => {
     oscBank.stop();
     outputVCA.disconnect();
-  }, (time - audioCtx.currentTime) + 2000);
+  }, time - audioCtx.currentTime + 2000);
 
   return outputVCA;
 }

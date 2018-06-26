@@ -1,13 +1,12 @@
-import WebAudioModule from 'synth/webAudioModule';
+import WebAudioModule from "synth/webAudioModule";
 
-import VCA from 'synth/basics/vca';
+import VCA from "synth/basics/vca";
 
-import SoftClipper from 'synth/effects/softClipper';
-import HalfWaveRectifier from 'synth/effects/halfWaveRectifier';
+import SoftClipper from "synth/effects/softClipper";
+import HalfWaveRectifier from "synth/effects/halfWaveRectifier";
 
-@WebAudioModule
-export default class SwingVCA {
-  constructor (audioCtx) {
+class SwingVCA {
+  constructor(audioCtx) {
     this.rectifier = new HalfWaveRectifier(audioCtx);
     this.clipper = new SoftClipper(3, audioCtx);
     this.vca = new VCA(audioCtx);
@@ -21,3 +20,5 @@ export default class SwingVCA {
     this.output = this.vca.output;
   }
 }
+
+export default WebAudioModule(SwingVCA);

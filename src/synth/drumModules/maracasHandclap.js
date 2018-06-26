@@ -1,12 +1,12 @@
-import VCO, { WHITE_NOISE } from 'synth/basics/vco';
-import VCF, { BANDPASS, HIGHPASS } from 'synth/basics/vcf';
-import VCA from 'synth/basics/vca';
-import ADGenerator, { LINEAR } from 'synth/basics/ADGenerator';
-import SawEnvGenerator from 'synth/basics/sawEnvGenerator';
-import {equalPower} from 'helpers';
+import VCO, { WHITE_NOISE } from "synth/basics/vco";
+import VCF, { BANDPASS, HIGHPASS } from "synth/basics/vcf";
+import VCA from "synth/basics/vca";
+import ADGenerator, { LINEAR } from "synth/basics/ADGenerator";
+import SawEnvGenerator from "synth/basics/sawEnvGenerator";
+import { equalPower } from "helpers";
 
 // selector: 0 = maracas, 1 = handclap
-export default function (audioCtx, destination, time, { level, selector }) {
+export default function(audioCtx, destination, time, { level, selector }) {
   // parameters
   const outputLevel = equalPower(level);
 
@@ -24,7 +24,7 @@ export default function (audioCtx, destination, time, { level, selector }) {
     maracasFilter.frequency.value = 5000;
 
     const maracasVCA = new VCA(audioCtx);
-    const maracasEnv = new ADGenerator(LINEAR, 0.2, 30, 0, 0.50);
+    const maracasEnv = new ADGenerator(LINEAR, 0.2, 30, 0, 0.5);
 
     // routing
     osc.connect(maracasFilter);
@@ -70,7 +70,7 @@ export default function (audioCtx, destination, time, { level, selector }) {
   window.setTimeout(() => {
     osc.stop();
     outputVCA.disconnect();
-  }, (time - audioCtx.currentTime) + 1000);
+  }, time - audioCtx.currentTime + 1000);
 
   return outputVCA;
 }

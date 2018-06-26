@@ -10,9 +10,9 @@ export default class SawEnvGenerator {
 
     let timeOffset = 0;
     for (let i = 0; i < 4; i++) {
-      this.param.setValueAtTime(1 - (i / 2), time + timeOffset);
+      this.param.setValueAtTime(1 - i / 2, time + timeOffset);
       timeOffset += REVER_INTERVAL;
-      this.param.linearRampToValueAtTime(0, time + timeOffset)
+      this.param.linearRampToValueAtTime(0, time + timeOffset);
     }
   }
 }

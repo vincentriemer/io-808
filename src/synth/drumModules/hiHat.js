@@ -1,7 +1,7 @@
-import SquareOscBank from 'synth/basics/squareOscBank';
-import VCF, { BANDPASS, HIGHPASS } from 'synth/basics/vcf';
+import SquareOscBank from "synth/basics/squareOscBank";
+import VCF, { BANDPASS, HIGHPASS } from "synth/basics/vcf";
 import VCA from "synth/basics/vca";
-import ADGenerator, { LINEAR } from 'synth/basics/ADGenerator';
+import ADGenerator, { LINEAR } from "synth/basics/ADGenerator";
 
 const MID_FILTER_FREQ = 10000;
 const HIGH_FILTER_FREQ = 8000;
@@ -44,7 +44,7 @@ export default function(audioCtx, destination, time, outputLevel, decay) {
   window.setTimeout(() => {
     oscBank.stop();
     outputVCA.disconnect();
-  }, (time - audioCtx.currentTime) + 1000);
+  }, time - audioCtx.currentTime + 1000);
 
   return outputVCA;
 }

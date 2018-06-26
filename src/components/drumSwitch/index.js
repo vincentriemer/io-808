@@ -1,26 +1,26 @@
-import React from 'react';
-import Radium from 'radium';
+import React from "react";
+import PropTypes from 'prop-types';
+import Radium from "radium";
 
-import Switch from 'components/switch';
+import Switch from "components/switch";
 
-import { darkBlack, slightlyDarkerBlack } from 'theme/variables';
+import { darkBlack, slightlyDarkerBlack } from "theme/variables";
 
 const borderRadius = 2;
 
-@Radium
 class DrumSwitch extends React.Component {
   static propTypes = {
-    onChange: React.PropTypes.func.isRequired,
-    position: React.PropTypes.number.isRequired
+    onChange: PropTypes.func.isRequired,
+    position: PropTypes.number.isRequired
   };
 
   render() {
     const styles = {
       wrapper: {
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center'
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
       },
 
       inner: {
@@ -38,17 +38,18 @@ class DrumSwitch extends React.Component {
       <div style={styles.wrapper}>
         <Switch
           {...this.props}
-          direction='vertical'
+          direction="vertical"
           numPositions={2}
           thickness={30}
           length={50}
           padding={4}
           innerThickness={22}
           outerStyle={styles.outer}
-          innerStyle={styles.inner} />
+          innerStyle={styles.inner}
+        />
       </div>
     );
   }
 }
 
-export default DrumSwitch;
+export default Radium(DrumSwitch);

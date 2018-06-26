@@ -1,20 +1,25 @@
-import React from 'react';
-import Radium from 'radium';
+import React from "react";
+import PropTypes from 'prop-types';
+import Radium from "radium";
 
-import Light from 'components/light';
-import Switch from 'components/switch';
+import Light from "components/light";
+import Switch from "components/switch";
 
-import { grey, darkBlack, silver } from 'theme/variables';
-import { labelDarkGrey } from 'theme/mixins';
+import { grey, darkBlack, silver } from "theme/variables";
+import { labelDarkGrey } from "theme/mixins";
 
-import {A_VARIATION, B_VARIATION, BOTH_VARIATIONS} from 'constants';
+import { A_VARIATION, B_VARIATION, BOTH_VARIATIONS } from "store-constants";
 
-@Radium
 class BasicVariationSwitch extends React.Component {
   static propTypes = {
-    onChange: React.PropTypes.func.isRequired,
-    position: React.PropTypes.number.isRequired,
-    lightState: React.PropTypes.oneOf([null, A_VARIATION, B_VARIATION, BOTH_VARIATIONS]).isRequired
+    onChange: PropTypes.func.isRequired,
+    position: PropTypes.number.isRequired,
+    lightState: PropTypes.oneOf([
+      null,
+      A_VARIATION,
+      B_VARIATION,
+      BOTH_VARIATIONS
+    ]).isRequired
   };
 
   render() {
@@ -25,12 +30,13 @@ class BasicVariationSwitch extends React.Component {
 
     const styles = {
       wrapper: {
-        minWidth: length * 1.8, height: 110,
+        minWidth: length * 1.8,
+        height: 110,
 
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'space-between'
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "space-between"
       },
 
       switchTitle: labelDarkGrey,
@@ -39,17 +45,17 @@ class BasicVariationSwitch extends React.Component {
 
       switchWrapper: {
         width: length,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center'
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
       },
 
       labelWrapper: {
         width: length - 15,
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
         paddingTop: 10,
         borderRadius: 1
       },
@@ -58,27 +64,28 @@ class BasicVariationSwitch extends React.Component {
         width: length,
         height: thickness - 3,
         backgroundColor: darkBlack,
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
         padding: 4,
         borderRadius: 2
       },
 
       switchOuter: {
         backgroundColor: darkBlack,
-        borderRadius: thickness * .475
+        borderRadius: thickness * 0.475
       },
 
       switchInner: {
         backgroundColor: silver,
-        borderRadius: '50%',
+        borderRadius: "50%",
         border: `solid ${grey} 2px`
       }
     };
 
-    let aActive = false, bActive = false;
+    let aActive = false,
+      bActive = false;
     switch (lightState) {
       case A_VARIATION:
         aActive = true;
@@ -99,14 +106,15 @@ class BasicVariationSwitch extends React.Component {
           <Switch
             position={position}
             onChange={onChange}
-            direction='horizontal'
+            direction="horizontal"
             numPositions={3}
             thickness={thickness}
             length={length}
             padding={4}
             innerThickness={thickness - 8}
             outerStyle={styles.switchOuter}
-            innerStyle={styles.switchInner} />
+            innerStyle={styles.switchInner}
+          />
           <div style={styles.labelWrapper}>
             <div style={styles.label}>A</div>
             <div style={styles.label}>AB</div>
@@ -122,4 +130,4 @@ class BasicVariationSwitch extends React.Component {
   }
 }
 
-export default BasicVariationSwitch;
+export default Radium(BasicVariationSwitch);

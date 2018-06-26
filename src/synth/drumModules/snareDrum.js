@@ -1,16 +1,16 @@
-import VCO, { SINE, WHITE_NOISE } from 'synth/basics/vco';
-import VCF, { HIGHPASS } from 'synth/basics/vcf';
-import VCA from 'synth/basics/vca';
-import ADGenerator, { LINEAR } from 'synth/basics/ADGenerator';
-import {equalPower} from 'helpers';
+import VCO, { SINE, WHITE_NOISE } from "synth/basics/vco";
+import VCF, { HIGHPASS } from "synth/basics/vcf";
+import VCA from "synth/basics/vca";
+import ADGenerator, { LINEAR } from "synth/basics/ADGenerator";
+import { equalPower } from "helpers";
 
 const highOscFreq = 476;
 const lowOscFreq = 238;
 
-export default function (audioCtx, destination, time, { level, tone, snappy }) {
+export default function(audioCtx, destination, time, { level, tone, snappy }) {
   // parameters
   const outputLevel = equalPower(level);
-  const noiseVCFFreq = (tone * 100) + 800;
+  const noiseVCFFreq = tone * 100 + 800;
   const snappyEnvAmt = snappy / 200;
 
   // audio modules
@@ -63,7 +63,7 @@ export default function (audioCtx, destination, time, { level, tone, snappy }) {
     highOsc.stop();
     lowOsc.stop();
     outputVCA.disconnect();
-  }, (time - audioCtx.currentTime) + 1000);
+  }, time - audioCtx.currentTime + 1000);
 
   return outputVCA;
 }

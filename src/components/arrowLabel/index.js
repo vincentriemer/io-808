@@ -1,59 +1,74 @@
-import React from 'react';
-import Radium from 'radium';
+import React from "react";
+import PropTypes from 'prop-types';
+import Radium from "radium";
 
-import {labelGreyNormal} from 'theme/mixins';
+import { labelGreyNormal } from "theme/mixins";
 
-@Radium
 class ArrowLabel extends React.Component {
   static propTypes = {
-    label: React.PropTypes.string.isRequired,
-    width: React.PropTypes.number.isRequired,
-    height: React.PropTypes.number.isRequired,
-    textColor: React.PropTypes.string.isRequired,
-    backgroundColor: React.PropTypes.string.isRequired,
-    direction: React.PropTypes.oneOf(['right', 'left'])
+    label: PropTypes.string.isRequired,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    textColor: PropTypes.string.isRequired,
+    backgroundColor: PropTypes.string.isRequired,
+    direction: PropTypes.oneOf(["right", "left"])
   };
 
   render() {
-    const {label, width, height, textColor, backgroundColor, direction} = this.props;
+    const {
+      label,
+      width,
+      height,
+      textColor,
+      backgroundColor,
+      direction
+    } = this.props;
 
     const arrowEndWidth = height;
     const arrowShaftWidth = height / 4;
     const arrowShaftHeight = height / 3;
     const labelWrapperWidth = width - arrowEndWidth - arrowShaftWidth;
 
-    const transparentTriangeSides = `${arrowEndWidth * 3 / 8}px solid transparent`;
-    const coloredTriangleSide = `${arrowEndWidth / 2}px solid ${backgroundColor}`;
+    const transparentTriangeSides = `${(arrowEndWidth * 3) /
+      8}px solid transparent`;
+    const coloredTriangleSide = `${arrowEndWidth /
+      2}px solid ${backgroundColor}`;
 
-    const styles ={
+    const styles = {
       wrapper: {
-        position: 'relative',
-        width, height,
-        display: 'flex',
-        alignItems: 'center',
-        flexDirection: direction === 'left' ? 'row-reverse' : 'row'
+        position: "relative",
+        width,
+        height,
+        display: "flex",
+        alignItems: "center",
+        flexDirection: direction === "left" ? "row-reverse" : "row"
       },
 
       arrowPoint: {
-        width: 0, height: 0,
+        width: 0,
+        height: 0,
         borderTop: transparentTriangeSides,
         borderBottom: transparentTriangeSides,
-        [direction === 'left' ? 'borderRight' : 'borderLeft']: coloredTriangleSide
+        [direction === "left"
+          ? "borderRight"
+          : "borderLeft"]: coloredTriangleSide
       },
 
       arrowShaft: {
-        position: 'relative',
-        width: arrowShaftWidth, height: arrowShaftHeight,
-        transform: 'scaleX(1.1)',
+        position: "relative",
+        width: arrowShaftWidth,
+        height: arrowShaftHeight,
+        transform: "scaleX(1.1)",
         backgroundColor
       },
 
       labelWrapper: {
-        width: labelWrapperWidth + (arrowEndWidth / 2), height,
+        width: labelWrapperWidth + arrowEndWidth / 2,
+        height,
         backgroundColor,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
         borderRadius: 1
       },
 
@@ -68,11 +83,11 @@ class ArrowLabel extends React.Component {
         <div style={styles.labelWrapper}>
           <div style={styles.label}>{label}</div>
         </div>
-        <div style={styles.arrowShaft}></div>
-        <div style={styles.arrowPoint}></div>
+        <div style={styles.arrowShaft} />
+        <div style={styles.arrowPoint} />
       </div>
     );
   }
 }
 
-export default ArrowLabel;
+export default Radium(ArrowLabel);

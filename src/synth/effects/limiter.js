@@ -1,7 +1,6 @@
-import WebAudioModule from 'synth/webAudioModule';
+import WebAudioModule from "synth/webAudioModule";
 
-@WebAudioModule
-export default class Limiter {
+class Limiter {
   constructor(audioCtx) {
     this.limiter = audioCtx.createDynamicsCompressor();
     this.limiter.threshold.value = 0.0;
@@ -14,3 +13,5 @@ export default class Limiter {
     this.output = this.limiter;
   }
 }
+
+export default WebAudioModule(Limiter);

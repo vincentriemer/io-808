@@ -1,56 +1,76 @@
-var path = require('path');
-var webpack = require('webpack');
-var NpmInstallPlugin = require('npm-install-webpack-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var OfflinePlugin = require('offline-plugin');
+var path = require("path");
+var webpack = require("webpack");
+var HtmlWebpackPlugin = require("html-webpack-plugin");
+var MiniCssExtractPlugin = require("mini-css-extract-plugin");
+var OfflinePlugin = require("offline-plugin");
+var BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
 
 module.exports = {
-  devtool: 'cheap-module-source-map',
+  mode: "development",
   entry: [
-    'eventsource-polyfill',
-    'webpack-hot-middleware/client',
-    'core-js/es6/symbol',
-    'core-js/es6/reflect',
-    'core-js/fn/array/includes',
-    './src/index'
+    "core-js/es6/symbol",
+    "core-js/es6/reflect",
+    "core-js/fn/array/includes",
+    "./src/index",
   ],
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/',
+    path: path.join(__dirname, "dist"),
+    filename: "bundle.js",
+    publicPath: "/",
     hotUpdateChunkFilename: "[id].hot-update.js",
-    hotUpdateMainFilename: "hot-update.json"
+    hotUpdateMainFilename: "hot-update.json",
   },
   module: {
-    loaders: [
-      { test: /\.jade$/, loader: 'jade' },
-      { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader') },
-      { test: /\.js$/, loaders: ['babel'], include: path.join(__dirname, 'src') },
-      { test: /\.(otf|eot|svg|ttf|woff|woff2).*$/, loader: 'url?limit=8192' }
-    ]
+    rules: [
+      {
+        test: /\.pug$/,
+        use: [{ loader: "pug-loader", options: {} }],
+      },
+      {
+        test: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          { loader: "css-loader", options: { importLoaders: 1 } },
+          {
+            loader: "postcss-loader",
+            options: {
+              ident: "postcss",
+              plugins: [require("autoprefixer")],
+            },
+          },
+        ],
+      },
+      {
+        test: /\.js$/,
+        use: [
+          {
+            loader: "babel-loader",
+            options: {
+              include: path.join(__dirname, "src"),
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(otf|eot|svg|ttf|woff|woff2).*$/,
+        use: "url-loader?limit=8192",
+      },
+    ],
   },
-  postcss: [
-    require('autoprefixer')
-  ],
   plugins: [
-    new NpmInstallPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new MiniCssExtractPlugin({}),
     new HtmlWebpackPlugin({
       inject: false,
       cache: false,
-      template: 'src/index.jade',
-      filename: 'index.html',
-      title: 'iO-808'
+      template: "src/index.pug",
+      filename: "index.html",
+      title: "iO-808",
     }),
-    new ExtractTextPlugin('styles.css'),
-    new OfflinePlugin()
+    new BundleAnalyzerPlugin(),
   ],
   resolve: {
-    root: [
-      path.resolve('./node_modules'),
-      path.resolve('./src')
-    ]
-  }
+    modules: [path.resolve(__dirname, "src"), "node_modules"],
+    extensions: [".js", ".json"],
+  },
 };

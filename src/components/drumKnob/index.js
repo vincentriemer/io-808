@@ -1,40 +1,52 @@
-import React from 'react';
-import Radium from 'radium';
+import React from "react";
+import PropTypes from 'prop-types';
+import Radium from "radium";
 
-import Knob from 'components/knob';
-import Guides from 'components/guides';
+import Knob from "components/knob";
+import Guides from "components/guides";
 
-import { drumHandle, levelKnobInner, miscKnobInner, grey } from 'theme/variables';
-import { labelGreyNormal, ring } from 'theme/mixins';
+import {
+  drumHandle,
+  levelKnobInner,
+  miscKnobInner,
+  grey
+} from "theme/variables";
+import { labelGreyNormal, ring } from "theme/mixins";
 
 export const LABEL_HEIGHT = 30;
 
-@Radium
 class DrumKnob extends React.Component {
   shouldComponentUpdate(nextProps) {
     return nextProps.value !== this.props.value;
   }
 
   render() {
-    const {value, onChange, size=75, label='', level=false} = this.props;
+    const {
+      value,
+      onChange,
+      size = 75,
+      label = "",
+      level = false
+    } = this.props;
 
     const knobSize = Math.ceil(size * 0.6);
 
     const styles = {
       wrapper: {
-        position: 'relative',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        width: size, height: size + LABEL_HEIGHT
+        position: "relative",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "space-between",
+        width: size,
+        height: size + LABEL_HEIGHT
       },
 
       labelWrapper: {
-        position: 'relative',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        position: "relative",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
         flexGrow: 1
       },
 
@@ -43,51 +55,59 @@ class DrumKnob extends React.Component {
       },
 
       controlWrapper: {
-        position: 'relative',
-        width: size, height: size
+        position: "relative",
+        width: size,
+        height: size
       },
 
       knobWrapper: {
         ...ring(knobSize),
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
       },
 
       inner: {
-        position: 'relative',
-        overflow: 'hidden',
-        width: '100%', height: '100%',
-        borderRadius: '50%',
+        position: "relative",
+        overflow: "hidden",
+        width: "100%",
+        height: "100%",
+        borderRadius: "50%",
         border: `solid ${drumHandle} 8px`,
         backgroundColor: level ? levelKnobInner : miscKnobInner
       },
 
       handle: {
-        position: 'absolute',
-        width: 4, height: 12,
+        position: "absolute",
+        width: 4,
+        height: 12,
         backgroundColor: drumHandle,
-        top: -6, left: '50%',
-        transform: 'translateX(-50%)'
+        top: -6,
+        left: "50%",
+        transform: "translateX(-50%)"
       },
 
       guide: {
-        width: 2, height: size / 3,
+        width: 2,
+        height: size / 3,
         backgroundColor: grey
       },
 
       levelInd: {
-        position: 'absolute',
-        width: 5, height: 5,
-        borderRadius: '50%',
+        position: "absolute",
+        width: 5,
+        height: 5,
+        borderRadius: "50%",
         backgroundColor: levelKnobInner,
-        right: '8%', top: '37%'
+        right: "8%",
+        top: "37%"
       }
     };
 
-    let levelInd = null, maxValue = 100;
+    let levelInd = null,
+      maxValue = 100;
     if (level) {
-      levelInd = <div style={styles.levelInd}></div>;
+      levelInd = <div style={styles.levelInd} />;
     }
 
     return (
@@ -98,12 +118,25 @@ class DrumKnob extends React.Component {
         <div style={styles.controlWrapper}>
           {levelInd}
           <div style={styles.guideWrapper}>
-            <Guides num={11} distance={size / 3} hideCount={1} guideStyle={styles.guide} />
+            <Guides
+              num={11}
+              distance={size / 3}
+              hideCount={1}
+              guideStyle={styles.guide}
+            />
           </div>
           <div style={styles.knobWrapper}>
-            <Knob value={value} onChange={onChange} size={knobSize} min={0} max={maxValue} step={2} bufferSize={300}>
+            <Knob
+              value={value}
+              onChange={onChange}
+              size={knobSize}
+              min={0}
+              max={maxValue}
+              step={2}
+              bufferSize={300}
+            >
               <div style={styles.inner}>
-                <div style={styles.handle}></div>
+                <div style={styles.handle} />
               </div>
             </Knob>
           </div>
@@ -114,12 +147,11 @@ class DrumKnob extends React.Component {
 }
 
 DrumKnob.propTypes = {
-  value: React.PropTypes.number.isRequired,
-  onChange: React.PropTypes.func.isRequired,
-  label: React.PropTypes.string.isRequired,
-  size: React.PropTypes.number,
-  level: React.PropTypes.bool
+  value: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired,
+  size: PropTypes.number,
+  level: PropTypes.bool
 };
 
-export default DrumKnob;
-
+export default Radium(DrumKnob);

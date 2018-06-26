@@ -1,5 +1,5 @@
-import HiHat from 'synth/drumModules/hiHat';
-import {equalPower} from 'helpers';
+import HiHat from "synth/drumModules/hiHat";
+import { equalPower } from "helpers";
 
 export default function(audioCtx, destination, time, { level }) {
   // parameters

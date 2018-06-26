@@ -23,29 +23,29 @@ import {
   CLEAR_DRAG_DROP,
   STATE_LOAD,
   RESET
-} from 'actionTypes';
+} from "actionTypes";
 
-export const onAutoFillInChange = (value) => ({
+export const onAutoFillInChange = value => ({
   type: AUTO_FILL_IN_CHANGE,
   payload: value
 });
 
-export const onFineTempoChange = (value) => ({
+export const onFineTempoChange = value => ({
   type: FINE_TEMPO_CHANGE,
   payload: value
 });
 
-export const onInstrumentTrackChange = (value) => ({
+export const onInstrumentTrackChange = value => ({
   type: INSTRUMENT_TRACK_CHANGE,
   payload: value
 });
 
-export const onModeChange = (value) => ({
+export const onModeChange = value => ({
   type: MODE_CHANGE,
   payload: value
 });
 
-export const onTempoChange = (value) => ({
+export const onTempoChange = value => ({
   type: TEMPO_CHANGE,
   payload: value
 });
@@ -53,16 +53,18 @@ export const onTempoChange = (value) => ({
 export const onInstrumentChange = (type, controlName, value) => ({
   type: INSTRUMENT_CHANGE,
   payload: {
-    type, controlName, value
+    type,
+    controlName,
+    value
   }
 });
 
-export const onMasterVolumeChange = (value) => ({
+export const onMasterVolumeChange = value => ({
   type: MASTER_VOLUME_CHANGE,
   payload: value
 });
 
-export const onBasicVariationChange = (position) => ({
+export const onBasicVariationChange = position => ({
   type: BASIC_VARIATION_CHANGE,
   payload: position
 });
@@ -71,7 +73,7 @@ export const onStartStopButtonClick = () => ({
   type: START_STOP_BUTTON_CLICK
 });
 
-export const onIFVariationChange = (position) => ({
+export const onIFVariationChange = position => ({
   type: IF_VARIATION_CHANGE,
   payload: position
 });
@@ -80,12 +82,12 @@ export const onTapButtonClick = () => ({
   type: TAP_BUTTON_CLICK
 });
 
-export const onPreScaleChange = (position) => ({
+export const onPreScaleChange = position => ({
   type: PRE_SCALE_CHANGE,
   payload: position
 });
 
-export const onStepButtonClick = (index) => ({
+export const onStepButtonClick = index => ({
   type: STEP_BUTTON_CLICK,
   payload: index
 });
@@ -114,17 +116,17 @@ export const onClearDragEnd = () => ({
   type: CLEAR_DRAG_END
 });
 
-export const onClearDragDrop = (length) => ({
+export const onClearDragDrop = length => ({
   type: CLEAR_DRAG_DROP,
   payload: length
 });
 
-export const onStateLoad = (loadedState) => ({
+export const onStateLoad = loadedState => ({
   type: STATE_LOAD,
   payload: loadedState
 });
 
-export const onClearDragEnter = (length) => ({
+export const onClearDragEnter = length => ({
   type: CLEAR_DRAG_ENTER,
   payload: length
 });

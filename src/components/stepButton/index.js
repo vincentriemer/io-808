@@ -1,21 +1,21 @@
-import React from 'react';
-import Radium from 'radium';
+import React from "react";
+import PropTypes from 'prop-types';
+import Radium from "radium";
 
-import Button from 'components/button';
-import Light from 'components/light';
+import Button from "components/button";
+import Light from "components/light";
 
-@Radium
 class StepButton extends React.Component {
   static propTypes = {
-    color: React.PropTypes.string.isRequired,
-    onClick: React.PropTypes.func.isRequired,
-    active: React.PropTypes.bool.isRequired,
-    width: React.PropTypes.number,
-    height: React.PropTypes.number,
-    dropable: React.PropTypes.bool,
-    onDrop: React.PropTypes.func.isRequired,
-    onDragEnter: React.PropTypes.func.isRequired,
-    onDragExit: React.PropTypes.func.isRequired
+    color: PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired,
+    active: PropTypes.bool.isRequired,
+    width: PropTypes.number,
+    height: PropTypes.number,
+    dropable: PropTypes.bool,
+    onDrop: PropTypes.func.isRequired,
+    onDragEnter: PropTypes.func.isRequired,
+    onDragExit: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -55,36 +55,47 @@ class StepButton extends React.Component {
   }
 
   render() {
-    const {color, onClick, active, width=50, height=80, dropable=false} = this.props;
+    const {
+      color,
+      onClick,
+      active,
+      width = 50,
+      height = 80,
+      dropable = false
+    } = this.props;
 
-    const dropableTransform = dropable && !this.state.over ? 'scale(1.05)' : 'scale(1)';
+    const dropableTransform =
+      dropable && !this.state.over ? "scale(1.05)" : "scale(1)";
 
     const styles = {
       dragWrapper: {
-        transition: 'transform 0.2s',
+        transition: "transform 0.2s",
         transform: dropableTransform
       },
       button: {
-        width, height,
+        width,
+        height,
         backgroundColor: color,
         borderRadius: 4,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        padding: 5,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        padding: 5
       }
     };
 
     if (dropable) {
       return (
-        <div style={styles.dragWrapper}
-             onDragEnter={this.handleDragEnter}
-             onDragOver={this.handleDragOver}
-             onDragLeave={this.handleDragExit}
-             onDragExit={this.handleDragExit}
-             onDrop={this.handleDrop}>
+        <div
+          style={styles.dragWrapper}
+          onDragEnter={this.handleDragEnter}
+          onDragOver={this.handleDragOver}
+          onDragLeave={this.handleDragExit}
+          onDragExit={this.handleDragExit}
+          onDrop={this.handleDrop}
+        >
           <Button style={styles.button} onClick={onClick}>
-            <Light active={active}/>
+            <Light active={active} />
           </Button>
         </div>
       );
@@ -92,7 +103,7 @@ class StepButton extends React.Component {
       return (
         <div style={styles.dragWrapper}>
           <Button style={styles.button} onClick={onClick}>
-            <Light active={active}/>
+            <Light active={active} />
           </Button>
         </div>
       );
@@ -100,4 +111,4 @@ class StepButton extends React.Component {
   }
 }
 
-export default StepButton;
+export default Radium(StepButton);

@@ -1,16 +1,16 @@
-import React from 'react';
-import Radium from 'radium';
+import React from "react";
+import PropTypes from 'prop-types';
+import Radium from "radium";
 
-import Switch from 'components/switch';
+import Switch from "components/switch";
 
-import { grey, darkBlack, silver } from 'theme/variables';
-import { labelDarkGrey } from 'theme/mixins';
+import { grey, darkBlack, silver } from "theme/variables";
+import { labelDarkGrey } from "theme/mixins";
 
-@Radium
 class IFVariationSwitch extends React.Component {
   static propTypes = {
-    onChange: React.PropTypes.func.isRequired,
-    position: React.PropTypes.number.isRequired
+    onChange: PropTypes.func.isRequired,
+    position: PropTypes.number.isRequired
   };
 
   render() {
@@ -21,12 +21,13 @@ class IFVariationSwitch extends React.Component {
 
     const styles = {
       wrapper: {
-        minWidth: length * 1.8, height: 69,
+        minWidth: length * 1.8,
+        height: 69,
 
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'space-between'
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "space-between"
       },
 
       switchTitle: labelDarkGrey,
@@ -35,28 +36,28 @@ class IFVariationSwitch extends React.Component {
 
       switchWrapper: {
         width: length,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center'
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
       },
 
       labelWrapper: {
         width: length - 15,
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
         paddingTop: 5
       },
 
       switchOuter: {
         backgroundColor: darkBlack,
-        borderRadius: thickness * .475
+        borderRadius: thickness * 0.475
       },
 
       switchInner: {
         backgroundColor: silver,
-        borderRadius: '50%',
+        borderRadius: "50%",
         border: `solid ${grey} 2px`
       }
     };
@@ -68,14 +69,15 @@ class IFVariationSwitch extends React.Component {
           <Switch
             position={position}
             onChange={onChange}
-            direction='horizontal'
+            direction="horizontal"
             numPositions={2}
             thickness={thickness}
             length={length}
             padding={4}
             innerThickness={thickness - 8}
             outerStyle={styles.switchOuter}
-            innerStyle={styles.switchInner} />
+            innerStyle={styles.switchInner}
+          />
           <div style={styles.labelWrapper}>
             <div style={styles.label}>A</div>
             <div style={styles.label}>B</div>
@@ -86,4 +88,4 @@ class IFVariationSwitch extends React.Component {
   }
 }
 
-export default IFVariationSwitch;
+export default Radium(IFVariationSwitch);

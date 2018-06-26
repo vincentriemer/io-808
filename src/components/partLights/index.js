@@ -1,43 +1,44 @@
-import React from 'react';
-import Radium from 'radium';
+import React from "react";
+import PropTypes from 'prop-types';
+import Radium from "radium";
 
-import Light from 'components/light';
+import Light from "components/light";
 
-import { labelGreyNormal } from 'theme/mixins';
+import { labelGreyNormal } from "theme/mixins";
 
-import {FIRST_PART, SECOND_PART} from 'constants';
+import { FIRST_PART, SECOND_PART } from "store-constants";
 
-@Radium
 class PartLights extends React.Component {
   static propTypes = {
-    currentPart: React.PropTypes.oneOf([FIRST_PART, SECOND_PART]),
-    width: React.PropTypes.number.isRequired,
-    height: React.PropTypes.number.isRequired,
-    offset: React.PropTypes.number.isRequired
+    currentPart: PropTypes.oneOf([FIRST_PART, SECOND_PART]),
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    offset: PropTypes.number.isRequired
   };
 
   render() {
-    const {currentPart, width, height, offset} = this.props;
+    const { currentPart, width, height, offset } = this.props;
 
     const firstActive = currentPart === FIRST_PART;
     const secondActive = currentPart === SECOND_PART;
 
     const styles = {
       wrapper: {
-        position: 'relative',
+        position: "relative",
         right: offset,
-        width, height,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'space-between',
+        width,
+        height,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "space-between",
         padding: 7
       },
 
       partWrapper: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
       },
 
       label: {
@@ -57,8 +58,8 @@ class PartLights extends React.Component {
           <div style={styles.label}>2nd PART</div>
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default PartLights;
+export default Radium(PartLights);

@@ -1,33 +1,33 @@
-import React from 'react';
-import Radium from 'radium';
+import React from "react";
+import PropTypes from 'prop-types';
+import Radium from "radium";
 
-import Switch from 'components/switch';
+import Switch from "components/switch";
 
-import { darkBlack, slightlyDarkerBlack } from 'theme/variables';
-import { labelGreyNormal, labelGreySmall } from 'theme/mixins';
+import { darkBlack, slightlyDarkerBlack } from "theme/variables";
+import { labelGreyNormal, labelGreySmall } from "theme/mixins";
 
 const borderRadius = 2;
 
-@Radium
 class PreScaleSwitch extends React.Component {
   static propTypes = {
-    onChange: React.PropTypes.func.isRequired,
-    position: React.PropTypes.number.isRequired,
-    offset: React.PropTypes.number
+    onChange: PropTypes.func.isRequired,
+    position: PropTypes.number.isRequired,
+    offset: PropTypes.number
   };
 
   render() {
-    const {offset=0, position} = this.props;
+    const { offset = 0, position } = this.props;
 
     const titlePadding = 5;
 
     const styles = {
       wrapper: {
-        position: 'relative',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
+        position: "relative",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
         right: offset
       },
 
@@ -37,19 +37,20 @@ class PreScaleSwitch extends React.Component {
       },
 
       switchWrapper: {
-        position: 'relative'
+        position: "relative"
       },
 
       labelWrapper: {
-        position: 'absolute',
-        height: '80%',
-        top: '50%', right: -15,
-        transform: 'translateY(-50%)',
+        position: "absolute",
+        height: "80%",
+        top: "50%",
+        right: -15,
+        transform: "translateY(-50%)",
 
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'space-between',
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "space-between"
       },
 
       label: labelGreySmall,
@@ -78,18 +79,19 @@ class PreScaleSwitch extends React.Component {
           <Switch
             onChange={() => {}}
             position={position}
-            direction='vertical'
+            direction="vertical"
             numPositions={4}
             thickness={25}
             length={80}
             padding={4}
             innerThickness={21}
             outerStyle={styles.outer}
-            innerStyle={styles.inner} />
+            innerStyle={styles.inner}
+          />
         </div>
       </div>
     );
   }
 }
 
-export default PreScaleSwitch;
+export default Radium(PreScaleSwitch);

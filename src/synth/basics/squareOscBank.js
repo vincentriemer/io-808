@@ -1,15 +1,14 @@
-import WebAudioModule from 'synth/webAudioModule';
-import VCO, { SQUARE } from 'synth/basics/vco';
-import VCA from 'synth/basics/vca';
+import WebAudioModule from "synth/webAudioModule";
+import VCO, { SQUARE } from "synth/basics/vco";
+import VCA from "synth/basics/vca";
 
 const OSC_FREQUENCIES = [263, 400, 421, 474, 587, 845];
 const OSC_AMPLITUDE = 0.3;
 
 const DEFAULT_OSC_CONFIG = [true, true, true, true, true, true];
 
-@WebAudioModule
-export default class SquareOSCBank {
-  constructor (audioCtx, oscConfig=DEFAULT_OSC_CONFIG) {
+class SquareOSCBank {
+  constructor(audioCtx, oscConfig = DEFAULT_OSC_CONFIG) {
     this.output = new VCA(audioCtx);
     this.output.amplitude.value = 1;
 
@@ -43,3 +42,5 @@ export default class SquareOSCBank {
     });
   }
 }
+
+export default WebAudioModule(SquareOSCBank);

@@ -1,6 +1,11 @@
-import { createSelector } from 'reselect';
+import { createSelector } from "reselect";
 
-import { MODE_PATTERN_CLEAR, A_VARIATION, B_VARIATION, BOTH_VARIATIONS } from 'constants';
+import {
+  MODE_PATTERN_CLEAR,
+  A_VARIATION,
+  B_VARIATION,
+  BOTH_VARIATIONS
+} from "store-constants";
 
 import {
   getSelectedMode,
@@ -9,24 +14,37 @@ import {
   getCurrentPattern,
   getIntroFillVariationPosition,
   getCurrentVariation
-} from 'selectors/common';
+} from "selectors/common";
 
-const getBasicVariationPosition = (state) => state.basicVariationPosition;
-const getPartLengths = (state) => state.patternLengths;
-const getClearPressed = (state) => state.clearPressed;
+const getBasicVariationPosition = state => state.basicVariationPosition;
+const getPartLengths = state => state.patternLengths;
+const getClearPressed = state => state.clearPressed;
 
 const variationMap = [A_VARIATION, BOTH_VARIATIONS, B_VARIATION];
 
 export default createSelector(
   [
-    getPlaying, getSelectedMode, getCurrentStep, getCurrentPattern, getCurrentVariation,
-    getPartLengths, getBasicVariationPosition, getClearPressed, getIntroFillVariationPosition
+    getPlaying,
+    getSelectedMode,
+    getCurrentStep,
+    getCurrentPattern,
+    getCurrentVariation,
+    getPartLengths,
+    getBasicVariationPosition,
+    getClearPressed,
+    getIntroFillVariationPosition
   ],
   (
-    playing, selectedMode, currentStep, currentPattern, currentVariation, rhythmLengths, basicVariationPosition,
-    clearPressed, introFillVariation
+    playing,
+    selectedMode,
+    currentStep,
+    currentPattern,
+    currentVariation,
+    rhythmLengths,
+    basicVariationPosition,
+    clearPressed,
+    introFillVariation
   ) => {
-
     // if current pattern is an intro/fillin lights should reflect switch position
     if (currentPattern >= 12) {
       if (selectedMode === MODE_PATTERN_CLEAR && !clearPressed) {
@@ -46,4 +64,4 @@ export default createSelector(
       }
     }
   }
-)
+);

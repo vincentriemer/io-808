@@ -1,7 +1,6 @@
-import WebAudioModule from 'synth/webAudioModule';
+import WebAudioModule from "synth/webAudioModule";
 
-@WebAudioModule
-export default class VCA {
+class VCA {
   constructor(audioCtx) {
     this.gain = audioCtx.createGain();
 
@@ -16,3 +15,5 @@ export default class VCA {
     this.amplitude = this.gain.gain;
   }
 }
+
+export default WebAudioModule(VCA);

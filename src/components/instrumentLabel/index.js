@@ -1,13 +1,13 @@
-import React from 'react';
-import Radium from 'radium';
+import React from "react";
+import PropTypes from 'prop-types';
+import Radium from "radium";
 
-import { fontFamily, darkGrey, drumLabel } from 'theme/variables';
-import { unselectableText } from 'theme/mixins';
+import { fontFamily, darkGrey, drumLabel } from "theme/variables";
+import { unselectableText } from "theme/mixins";
 
-@Radium
 class InstrumentLabel extends React.Component {
   static propTypes = {
-    label: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+    label: PropTypes.arrayOf(PropTypes.string).isRequired
   };
 
   render() {
@@ -15,7 +15,7 @@ class InstrumentLabel extends React.Component {
 
     const baseLabelStyle = {
       fontFamily,
-      whiteSpace: 'pre',
+      whiteSpace: "pre",
       color: darkGrey,
       letterSpacing: -0.4,
       ...unselectableText
@@ -23,21 +23,22 @@ class InstrumentLabel extends React.Component {
 
     const styles = {
       wrapper: {
-        width: '100%', height: 36,
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
+        width: "100%",
+        height: 36,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
 
         backgroundColor: drumLabel,
         borderRadius: 4
       },
 
       innerWrapper: {
-        alignItems: 'baseline',
+        alignItems: "baseline",
         cursor: "default",
-        display: 'flex',
-        flexDirection: 'row'
+        display: "flex",
+        flexDirection: "row"
       },
 
       smallLabel: {
@@ -53,11 +54,11 @@ class InstrumentLabel extends React.Component {
 
     const formattedLabel = label.map((section, index) => {
       let style, value;
-      if (section[0] === '*') {
-        style = 'largeLabel';
+      if (section[0] === "*") {
+        style = "largeLabel";
         value = section.slice(1);
       } else {
-        style = 'smallLabel';
+        style = "smallLabel";
         value = section;
       }
 
@@ -70,12 +71,10 @@ class InstrumentLabel extends React.Component {
 
     return (
       <div style={styles.wrapper}>
-        <div style={styles.innerWrapper}>
-          {formattedLabel}
-        </div>
+        <div style={styles.innerWrapper}>{formattedLabel}</div>
       </div>
     );
   }
 }
 
-export default InstrumentLabel;
+export default Radium(InstrumentLabel);

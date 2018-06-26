@@ -1,12 +1,11 @@
-import WebAudioModule from 'synth/webAudioModule';
+import WebAudioModule from "synth/webAudioModule";
 
 // filter types
-export const LOWPASS = 'lowpass';
-export const HIGHPASS = 'highpass';
-export const BANDPASS = 'bandpass';
+export const LOWPASS = "lowpass";
+export const HIGHPASS = "highpass";
+export const BANDPASS = "bandpass";
 
-@WebAudioModule
-export default class VCF {
+class VCF {
   constructor(type, audioCtx) {
     this.filter = audioCtx.createBiquadFilter();
 
@@ -26,3 +25,5 @@ export default class VCF {
     this.Q = this.filter.Q;
   }
 }
+
+export default WebAudioModule(VCF);

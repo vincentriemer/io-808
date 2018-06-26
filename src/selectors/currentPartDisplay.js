@@ -1,13 +1,21 @@
-import { createSelector } from 'reselect';
+import { createSelector } from "reselect";
 
 import {
-  MODE_PATTERN_CLEAR, MODE_FIRST_PART, MODE_SECOND_PART,
-  FIRST_PART, SECOND_PART
-} from 'constants';
+  MODE_PATTERN_CLEAR,
+  MODE_FIRST_PART,
+  MODE_SECOND_PART,
+  FIRST_PART,
+  SECOND_PART
+} from "store-constants";
 
-import { getSelectedMode, getClearPressed, getCurrentPart } from 'selectors/common';
+import {
+  getSelectedMode,
+  getClearPressed,
+  getCurrentPart
+} from "selectors/common";
 
-export default createSelector([getSelectedMode, getClearPressed, getCurrentPart],
+export default createSelector(
+  [getSelectedMode, getClearPressed, getCurrentPart],
   (selectedMode, clearPressed, currentPart) => {
     switch (selectedMode) {
       case MODE_PATTERN_CLEAR:
@@ -20,4 +28,4 @@ export default createSelector([getSelectedMode, getClearPressed, getCurrentPart]
         return currentPart;
     }
   }
-)
+);

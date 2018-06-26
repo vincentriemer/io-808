@@ -1,9 +1,9 @@
-import VCO, { SINE, PINK_NOISE } from 'synth/basics/vco';
-import PulseTrigger from 'synth/basics/pulseTrigger';
-import VCF, { LOWPASS } from 'synth/basics/vcf';
-import VCA from 'synth/basics/vca';
-import ADGenerator, { LINEAR } from 'synth/basics/ADGenerator';
-import {equalPower} from 'helpers';
+import VCO, { SINE, PINK_NOISE } from "synth/basics/vco";
+import PulseTrigger from "synth/basics/pulseTrigger";
+import VCF, { LOWPASS } from "synth/basics/vcf";
+import VCA from "synth/basics/vca";
+import ADGenerator, { LINEAR } from "synth/basics/ADGenerator";
+import { equalPower } from "helpers";
 
 // 0 = conga, 1 = tom
 const parameterMap = {
@@ -41,10 +41,13 @@ const parameterMap = {
   ]
 };
 
-export default function (type) {
+export default function(type) {
   return function(audioCtx, destination, time, { level, tuning, selector }) {
     // parameters
-    const { frequencies: [highFreq, lowFreq], decay: [oscDecay, noiseDecay] } = parameterMap[type][selector];
+    const {
+      frequencies: [highFreq, lowFreq],
+      decay: [oscDecay, noiseDecay]
+    } = parameterMap[type][selector];
     const oscFreq = (tuning / 100) * (highFreq - lowFreq) + lowFreq;
     const outputLevel = equalPower(level / 4);
 
@@ -74,7 +77,8 @@ export default function (type) {
     osc.connect(oscVCA);
     oscVCA.connect(outputVCA);
 
-    if (selector === 1) { // only the toms get noise
+    if (selector === 1) {
+      // only the toms get noise
       noiseOsc.connect(noiseVCF);
       noiseVCF.connect(noiseVCA);
       noiseVCA.connect(outputVCA);
@@ -102,8 +106,8 @@ export default function (type) {
       osc.stop();
       noiseOsc.stop();
       outputVCA.disconnect();
-    }, (time - audioCtx.currentTime) + 1000);
+    }, time - audioCtx.currentTime + 1000);
 
     return outputVCA;
-  }
+  };
 }

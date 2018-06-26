@@ -1,17 +1,16 @@
-import WebAudioModule from 'synth/webAudioModule';
+import WebAudioModule from "synth/webAudioModule";
 
-import VCF, { LOWPASS } from 'synth/basics/vcf';
-import VCA from 'synth/basics/vca';
+import VCF, { LOWPASS } from "synth/basics/vcf";
+import VCA from "synth/basics/vca";
 
-@WebAudioModule
-export default class PulseTrigger {
+class PulseTrigger {
   constructor(audioCtx) {
     const sampleRate = audioCtx.sampleRate;
     const pulseLength = 0.001 * sampleRate;
 
     this.buffer = audioCtx.createBuffer(1, pulseLength, sampleRate);
     this.data = this.buffer.getChannelData(0);
-    for ( var i = 0; i < this.data.length; i++ ) {
+    for (var i = 0; i < this.data.length; i++) {
       this.data[i] = 1;
     }
 
@@ -35,3 +34,5 @@ export default class PulseTrigger {
     source.start(time);
   }
 }
+
+export default WebAudioModule(PulseTrigger);

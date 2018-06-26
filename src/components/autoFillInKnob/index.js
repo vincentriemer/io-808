@@ -1,67 +1,77 @@
-import React from 'react';
-import Radium from 'radium';
+import React from "react";
+import PropTypes from 'prop-types';
+import Radium from "radium";
 
-import Knob from 'components/knob';
-import Guides from 'components/guides';
-import SelectorKnobInner from 'components/selectorKnobInner';
+import Knob from "components/knob";
+import Guides from "components/guides";
+import SelectorKnobInner from "components/selectorKnobInner";
 
-import { grey } from 'theme/variables';
-import { labelGreySmall, labelGreyLarge, ring } from 'theme/mixins';
+import { grey } from "theme/variables";
+import { labelGreySmall, labelGreyLarge, ring } from "theme/mixins";
 
 const labelHeight = 33;
 
 const guideValues = [
-  <div style={{transform: 'translateX(-15px)'}}>MANUAL</div>,
-  16,12,8,4,2
+  <div style={{ transform: "translateX(-15px)" }}>MANUAL</div>,
+  16,
+  12,
+  8,
+  4,
+  2
 ];
 guideValues.push();
 
-@Radium
 class AutoFillInKnob extends React.Component {
   render() {
-    const {value, onChange, size=200} = this.props;
+    const { value, onChange, size = 200 } = this.props;
 
     const knobSize = size - 75;
 
     const styles = {
       wrapper: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'stretch',
-        justifyContent: 'space-between',
-        width: size, height: size
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "stretch",
+        justifyContent: "space-between",
+        width: size,
+        height: size
       },
 
       controlWrapper: {
-        position: 'relative',
-        width: size, height: size,
-        minWidth: size, minHeight: size
+        position: "relative",
+        width: size,
+        height: size,
+        minWidth: size,
+        minHeight: size
       },
 
       labelGuide: labelGreySmall,
 
       dotGuide: {
-        width: 5, height: 5,
+        width: 5,
+        height: 5,
         backgroundColor: grey,
-        borderRadius: '50%'
+        borderRadius: "50%"
       },
 
       knobWrapper: ring(knobSize),
 
       labelWrapper: {
-        position: 'relative',
+        position: "relative",
         top: -30,
-        width: size, height: labelHeight,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'space-between'
+        width: size,
+        height: labelHeight,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "space-between"
       },
 
       measuresLabel: labelGreySmall,
 
       autoLabel: {
-        position: 'relative', top: -2,
+        position: "relative",
+        top: -2,
         ...labelGreyLarge
       }
     };
@@ -69,16 +79,29 @@ class AutoFillInKnob extends React.Component {
     return (
       <div style={styles.wrapper}>
         <div style={styles.controlWrapper}>
-          <Guides num={6} distance={size*0.29} hideCount={6} guideStyle={styles.dotGuide} />
-          <Guides distance={size*0.37} hideCount={5.5} values={guideValues} rotate={false} guideStyle={styles.labelGuide} />
+          <Guides
+            num={6}
+            distance={size * 0.29}
+            hideCount={6}
+            guideStyle={styles.dotGuide}
+          />
+          <Guides
+            distance={size * 0.37}
+            hideCount={5.5}
+            values={guideValues}
+            rotate={false}
+            guideStyle={styles.labelGuide}
+          />
           <div style={styles.knobWrapper}>
             <Knob
               value={value}
               onChange={onChange}
               size={knobSize}
               bufferSize={150}
-              min={0} max={5}
-              step={1}>
+              min={0}
+              max={5}
+              step={1}
+            >
               <SelectorKnobInner size={knobSize} />
             </Knob>
           </div>
@@ -93,8 +116,8 @@ class AutoFillInKnob extends React.Component {
 }
 
 AutoFillInKnob.propTypes = {
-  onChange: React.PropTypes.func.isRequired,
-  value: React.PropTypes.number.isRequired
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.number.isRequired
 };
 
-export default AutoFillInKnob;
+export default Radium(AutoFillInKnob);

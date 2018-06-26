@@ -1,4 +1,4 @@
-import Path from 'paths-js/path';
+import Path from "paths-js/path";
 
 export const separatorPath = Path()
   .moveto(317, 200)
@@ -8,8 +8,8 @@ export const separatorPath = Path()
   .print();
 
 export const rhythmToCompose = Path()
-  .moveto(181,25)
-  .lineto(159,25)
+  .moveto(181, 25)
+  .lineto(159, 25)
   .smoothcurveto(157, 25, 157, 27)
   .vlineto(100)
   .smoothcurveto(157, 103, 154, 103)
@@ -44,7 +44,7 @@ export const firstToSecondPart = Path()
   .print();
 
 export const patternToParts = Path()
-  .moveto(35.5,17)
+  .moveto(35.5, 17)
   .vlineto(22)
   .print();
 

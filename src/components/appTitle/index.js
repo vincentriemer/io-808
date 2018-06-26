@@ -1,43 +1,46 @@
-import React from 'react';
-import Radium from 'radium';
+import React from "react";
+import PropTypes from 'prop-types';
+import Radium from "radium";
 
-import { stencilOrange, darkGrey } from 'theme/variables';
-import { labelGreyLarge } from 'theme/mixins';
+import { stencilOrange, darkGrey } from "theme/variables";
+import { labelGreyLarge } from "theme/mixins";
 
 const lineHeight = 3;
 const titleRight = 60;
 const lineTop = 55.2;
 
-@Radium
 class AppTitle extends React.Component {
   static propTypes = {
-    width: React.PropTypes.number,
-    height: React.PropTypes.number
+    width: PropTypes.number,
+    height: PropTypes.number
   };
 
   render() {
-    const {width=955, height=151} = this.props;
+    const { width = 955, height = 151 } = this.props;
 
     const styles = {
       wrapper: {
-        width, height,
-        position: 'relative'
+        width,
+        height,
+        position: "relative"
       },
 
       titleLine: {
-        position: 'absolute',
-        width: width - 20, height: `${lineHeight}%`,
-        left: '50%', transform: 'translateX(-50%)',
+        position: "absolute",
+        width: width - 20,
+        height: `${lineHeight}%`,
+        left: "50%",
+        transform: "translateX(-50%)",
         top: `${lineTop}%`,
         backgroundColor: stencilOrange
       },
 
       titleWrapper: {
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'no-wrap',
-        alignItems: 'baseline',
-        position: 'absolute',
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "no-wrap",
+        alignItems: "baseline",
+        position: "absolute",
         bottom: `calc(${lineTop}% - 17.5px)`,
         right: titleRight
       },
@@ -59,8 +62,8 @@ class AppTitle extends React.Component {
 
       subtitle: {
         ...labelGreyLarge,
-        position: 'absolute',
-        top: `${lineTop + (lineHeight * 1.5)}%`,
+        position: "absolute",
+        top: `${lineTop + lineHeight * 1.5}%`,
         right: titleRight,
         fontSize: 28,
         letterSpacing: -0.75
@@ -69,7 +72,7 @@ class AppTitle extends React.Component {
 
     return (
       <div style={styles.wrapper}>
-        <div style={styles.titleLine}></div>
+        <div style={styles.titleLine} />
         <div style={styles.titleWrapper}>
           <div style={styles.titleBig}>Rhythm Composer</div>
           <div style={styles.titleSmall}>iO-808</div>
@@ -80,4 +83,4 @@ class AppTitle extends React.Component {
   }
 }
 
-export default AppTitle;
+export default Radium(AppTitle);

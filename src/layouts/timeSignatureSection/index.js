@@ -1,34 +1,36 @@
-import React from 'react';
-import Radium from 'radium';
+import React from "react";
+import PropTypes from 'prop-types';
+import Radium from "radium";
 
-import { grey, darkGrey } from 'theme/variables';
+import { grey, darkGrey } from "theme/variables";
 
 import {
-  quarterNotePath, quarterViewBox,
-  eighthNotePath, eightViewBox,
+  quarterNotePath,
+  quarterViewBox,
+  eighthNotePath,
+  eightViewBox,
   noteLinePath
-} from './stencilPaths';
+} from "./stencilPaths";
 
-@Radium
 class TimeSignatureSection extends React.Component {
   static propTypes = {
-    width: React.PropTypes.number.isRequired,
-    height: React.PropTypes.number.isRequired,
-    stepPadding: React.PropTypes.number.isRequired,
-    quarterStepWidth: React.PropTypes.number.isRequired
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    stepPadding: PropTypes.number.isRequired,
+    quarterStepWidth: PropTypes.number.isRequired
   };
 
   render() {
-    const {width, height, stepPadding, quarterStepWidth} = this.props;
+    const { width, height, stepPadding, quarterStepWidth } = this.props;
 
     const sigBorderRadius = 6;
 
     const verticalPadding = 2,
-      rowHeight = (height / 4) - (verticalPadding * (0.75));
+      rowHeight = height / 4 - verticalPadding * 0.75;
 
     const halfStepWidth = (width - stepPadding) / 2;
-    const trippletStepWidth = (quarterStepWidth * 1.5) + (stepPadding * 0.5);
-    const sixthStepWidth = (trippletStepWidth / 2) - (stepPadding / 2);
+    const trippletStepWidth = quarterStepWidth * 1.5 + stepPadding * 0.5;
+    const sixthStepWidth = trippletStepWidth / 2 - stepPadding / 2;
 
     const noteHeight = 16;
     const notePadding = quarterStepWidth / 12;
@@ -36,34 +38,37 @@ class TimeSignatureSection extends React.Component {
     const eightWidth = 11;
 
     const baseStepStyle = {
-      position: 'relative',
+      position: "relative",
       height: rowHeight,
       borderRadius: sigBorderRadius,
       backgroundColor: grey,
       flexShrink: 0,
       marginRight: stepPadding,
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      paddingLeft: notePadding, paddingRight: notePadding
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      paddingLeft: notePadding,
+      paddingRight: notePadding
     };
 
     const styles = {
       wrapper: {
-        position: 'relative',
-        width, height,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between'
+        position: "relative",
+        width,
+        height,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between"
       },
       row: {
-        position: 'relative',
-        width, height: rowHeight,
-        display: 'flex',
-        flexDirection: 'row',
+        position: "relative",
+        width,
+        height: rowHeight,
+        display: "flex",
+        flexDirection: "row",
 
-        overflow: 'hidden'
+        overflow: "hidden"
       },
 
       halfStep: {
@@ -77,7 +82,7 @@ class TimeSignatureSection extends React.Component {
       trippletStep: {
         ...baseStepStyle,
         width: trippletStepWidth,
-        paddingRight: baseStepStyle.paddingRight + (quarterStepWidth / 3.8)
+        paddingRight: baseStepStyle.paddingRight + quarterStepWidth / 3.8
       },
       sixthStep: {
         ...baseStepStyle,
@@ -85,9 +90,9 @@ class TimeSignatureSection extends React.Component {
       }
     };
 
-    const EighthNote = ({visible=false, sixth=false}) => (
+    const EighthNote = ({ visible = false, sixth = false }) => (
       <svg viewBox={eightViewBox} width={eightWidth} height={noteHeight}>
-        <path d={eighthNotePath} fill={visible ? darkGrey : 'none'} />
+        <path d={eighthNotePath} fill={visible ? darkGrey : "none"} />
       </svg>
     );
 
@@ -98,98 +103,122 @@ class TimeSignatureSection extends React.Component {
     );
 
     const LinePadding = () => (
-      <div style={{
-        position: 'absolute',
-        width: 5, height: rowHeight,
-        right: 0, top: 0,
-        backgroundColor: grey
-      }}></div>
+      <div
+        style={{
+          position: "absolute",
+          width: 5,
+          height: rowHeight,
+          right: 0,
+          top: 0,
+          backgroundColor: grey
+        }}
+      />
     );
 
     const SixthLine = () => {
-      const path = noteLinePath(eightWidth + 7, (quarterStepWidth / 2), 8);
+      const path = noteLinePath(eightWidth + 7, quarterStepWidth / 2, 8);
       return (
-        <div style={{position: 'absolute', width: sixthStepWidth, height: rowHeight, top: 0, left: notePadding}}>
+        <div
+          style={{
+            position: "absolute",
+            width: sixthStepWidth,
+            height: rowHeight,
+            top: 0,
+            left: notePadding
+          }}
+        >
           <svg width={sixthStepWidth} height={rowHeight}>
-            <path d={path} stroke={darkGrey} fill='none' />
+            <path d={path} stroke={darkGrey} fill="none" />
           </svg>
         </div>
-      )
+      );
     };
 
     const SixthStep = () => (
       <div style={styles.sixthStep}>
-        <SixthLine/>
-        <EighthNote visible sixth/>
-        <EighthNote visible sixth/>
-        <EighthNote visible sixth/>
+        <SixthLine />
+        <EighthNote visible sixth />
+        <EighthNote visible sixth />
+        <EighthNote visible sixth />
       </div>
     );
 
     const TripletLine = () => {
-      const path = noteLinePath(eightWidth + 7, trippletStepWidth - (quarterStepWidth / 2), 17);
+      const path = noteLinePath(
+        eightWidth + 7,
+        trippletStepWidth - quarterStepWidth / 2,
+        17
+      );
       return (
-        <div style={{position: 'absolute', width: trippletStepWidth, height: rowHeight, top: 0, left: notePadding}}>
+        <div
+          style={{
+            position: "absolute",
+            width: trippletStepWidth,
+            height: rowHeight,
+            top: 0,
+            left: notePadding
+          }}
+        >
           <svg width={trippletStepWidth} height={rowHeight}>
-            <path d={path} stroke={darkGrey} fill='none' />
+            <path d={path} stroke={darkGrey} fill="none" />
           </svg>
         </div>
-      )
+      );
     };
 
     const TrippletStep = () => (
       <div style={styles.trippletStep}>
-        <TripletLine/>
-        <EighthNote visible/>
-        <EighthNote/>
-        <EighthNote visible/>
-        <EighthNote/>
-        <EighthNote visible/>
+        <TripletLine />
+        <EighthNote visible />
+        <EighthNote />
+        <EighthNote visible />
+        <EighthNote />
+        <EighthNote visible />
       </div>
     );
 
     const QuarterStep = () => (
       <div style={styles.quarterStep}>
-        <QuarterNote/>
+        <QuarterNote />
       </div>
     );
 
     const HalfStep = () => (
       <div style={styles.halfStep}>
-        <QuarterNote/>
+        <QuarterNote />
       </div>
     );
 
     return (
       <div style={styles.wrapper}>
         <div style={styles.row}>
-          <SixthStep/>
-          <SixthStep/>
-          <SixthStep/>
-          <SixthStep/>
-          <SixthStep/>
-          <SixthStep/>
-          <LinePadding/>
+          <SixthStep />
+          <SixthStep />
+          <SixthStep />
+          <SixthStep />
+          <SixthStep />
+          <SixthStep />
+          <LinePadding />
         </div>
         <div style={styles.row}>
-          <TrippletStep/>
-          <TrippletStep/>
-          <TrippletStep/>
-          <LinePadding/>
+          <TrippletStep />
+          <TrippletStep />
+          <TrippletStep />
+          <LinePadding />
         </div>
         <div style={styles.row}>
-          <QuarterStep/>
-          <QuarterStep/>
-          <QuarterStep/>
-          <QuarterStep/>
+          <QuarterStep />
+          <QuarterStep />
+          <QuarterStep />
+          <QuarterStep />
         </div>
         <div style={styles.row}>
-          <HalfStep/>
-          <HalfStep/>
+          <HalfStep />
+          <HalfStep />
         </div>
       </div>
     );
   }
 }
 
-export default TimeSignatureSection;
+export default Radium(TimeSignatureSection);

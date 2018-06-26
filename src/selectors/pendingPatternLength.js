@@ -1,8 +1,12 @@
-import { createSelector } from 'reselect';
+import { createSelector } from "reselect";
 
-import { MODE_TO_PART_MAPPING } from 'constants';
-import { patternLengthKey } from 'helpers';
-import { getCurrentPattern, getPatternLengths, getSelectedMode } from 'selectors/common';
+import { MODE_TO_PART_MAPPING } from "store-constants";
+import { patternLengthKey } from "helpers";
+import {
+  getCurrentPattern,
+  getPatternLengths,
+  getSelectedMode
+} from "selectors/common";
 
 export default createSelector(
   [getCurrentPattern, getPatternLengths, getSelectedMode],

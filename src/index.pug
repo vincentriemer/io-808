@@ -48,7 +48,7 @@ html(lang="en")
 
         // main app bundle
         each jsFile in htmlWebpackPlugin.files.js
-            script(type="text/javascript" src="#{jsFile}" async)
+            script(type="text/javascript" src=jsFile async)
 
         // piwik analytics
         script(type="text/javascript").

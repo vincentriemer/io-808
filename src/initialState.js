@@ -1,14 +1,25 @@
-import Immutable from 'seamless-immutable';
+import Immutable from "seamless-immutable";
 
 import {
-  ACCENT, BASS_DRUM, SNARE_DRUM, LOW_CONGA_LOW_TOM, MID_CONGA_MID_TOM,
-  HI_CONGA_HI_TOM, CLAVES_RIMSHOT, MARACAS_HANDCLAP, COWBELL, CYMBAL,
-  OPEN_HIHAT, CLSD_HIHAT,
+  ACCENT,
+  BASS_DRUM,
+  SNARE_DRUM,
+  LOW_CONGA_LOW_TOM,
+  MID_CONGA_MID_TOM,
+  HI_CONGA_HI_TOM,
+  CLAVES_RIMSHOT,
+  MARACAS_HANDCLAP,
+  COWBELL,
+  CYMBAL,
+  OPEN_HIHAT,
+  CLSD_HIHAT,
+  FIRST_PART,
+  SECOND_PART,
+  A_VARIATION,
+  B_VARIATION,
+} from "store-constants";
 
-  FIRST_PART, SECOND_PART, A_VARIATION, B_VARIATION
-} from 'constants';
-
-import { stepKey, patternLengthKey } from 'helpers';
+import { stepKey, patternLengthKey } from "helpers";
 
 const PARTS = [FIRST_PART, SECOND_PART];
 const VARIATIONS = [A_VARIATION, B_VARIATION];
@@ -23,7 +34,7 @@ const initialStepsState = (() => {
             const key = stepKey(track, instrument, part, variation, step);
             steps[key] = false;
           }
-        })
+        });
       });
     }
   }
@@ -41,56 +52,56 @@ const initialRhythmLengthState = (() => {
 
 const initialInstrumentState = {
   [ACCENT]: {
-    level: 0
+    level: 0,
   },
   [BASS_DRUM]: {
     level: 75,
     tone: 50,
-    decay: 50
+    decay: 50,
   },
   [SNARE_DRUM]: {
     level: 75,
     tone: 50,
-    snappy: 50
+    snappy: 50,
   },
   [LOW_CONGA_LOW_TOM]: {
     level: 75,
     tuning: 50,
-    selector: 1
+    selector: 1,
   },
   [MID_CONGA_MID_TOM]: {
     level: 75,
     tuning: 50,
-    selector: 1
+    selector: 1,
   },
   [HI_CONGA_HI_TOM]: {
     level: 75,
     tuning: 50,
-    selector: 1
+    selector: 1,
   },
   [CLAVES_RIMSHOT]: {
     level: 75,
-    selector: 1
+    selector: 1,
   },
   [MARACAS_HANDCLAP]: {
     level: 75,
-    selector: 1
+    selector: 1,
   },
   [COWBELL]: {
-    level: 75
+    level: 75,
   },
   [CYMBAL]: {
     level: 75,
     tone: 50,
-    decay: 50
+    decay: 50,
   },
   [OPEN_HIHAT]: {
     level: 75,
-    decay: 50
+    decay: 50,
   },
   [CLSD_HIHAT]: {
-    level: 75
-  }
+    level: 75,
+  },
 };
 
 export default Immutable({
@@ -111,7 +122,7 @@ export default Immutable({
   selectedMode: 1,
   selectedInstrumentTrack: 1,
 
-  masterVolume: 100,
+  masterVolume: 70,
 
   autoFillInPosition: 0,
   basicVariationPosition: 0,
@@ -131,5 +142,5 @@ export default Immutable({
   clearPressed: false,
   clearDragging: false,
 
-  pendingPatternLength: 0
-})
+  pendingPatternLength: 0,
+});

@@ -1,10 +1,10 @@
-import VCO, { TRIANGLE, SINE } from 'synth/basics/vco';
-import VCF, { BANDPASS, HIGHPASS } from 'synth/basics/vcf';
-import VCA from 'synth/basics/vca';
-import SwingVCA from 'synth/basics/swingVCA';
-import ADGenerator, {EXPONENTIAL, LINEAR} from 'synth/basics/ADGenerator';
+import VCO, { TRIANGLE, SINE } from "synth/basics/vco";
+import VCF, { BANDPASS, HIGHPASS } from "synth/basics/vcf";
+import VCA from "synth/basics/vca";
+import SwingVCA from "synth/basics/swingVCA";
+import ADGenerator, { EXPONENTIAL, LINEAR } from "synth/basics/ADGenerator";
 
-import {equalPower} from 'helpers';
+import { equalPower } from "helpers";
 
 const RIM_CLAVE_FREQ = 1750;
 const CLAVE_FREQ = 2450;
@@ -80,7 +80,7 @@ export default function(audioCtx, destination, time, { level, selector }) {
   window.setTimeout(() => {
     claveOsc.stop();
     outputVCA.disconnect();
-  }, (time - audioCtx.currentTime) + 1000);
+  }, time - audioCtx.currentTime + 1000);
 
   return outputVCA;
 }
