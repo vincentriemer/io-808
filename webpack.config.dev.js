@@ -56,6 +56,15 @@ module.exports = {
         test: /\.(otf|eot|svg|ttf|woff|woff2).*$/,
         use: "url-loader?limit=8192",
       },
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {},
+          },
+        ],
+      },
     ],
   },
   plugins: [

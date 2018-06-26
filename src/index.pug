@@ -7,6 +7,15 @@ html(lang="en")
         meta(name="description" content="A fully recreated web-based TR-808 drum machine using React, Redux, and the Web Audio API.")
         meta(name="viewport" content="width=device-width, initial-scale=1")
 
+        // apple splash screens
+        link(href=require('../splashscreens/iphone5_splash.png'), media='(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)', rel='apple-touch-startup-image')
+        link(href=require('../splashscreens/iphone6_splash.png'), media='(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)', rel='apple-touch-startup-image')
+        link(href=require('../splashscreens/iphoneplus_splash.png'), media='(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)', rel='apple-touch-startup-image')
+        link(href=require('../splashscreens/iphonex_splash.png'), media='(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)', rel='apple-touch-startup-image')
+        link(href=require('../splashscreens/ipad_splash.png'), media='(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)', rel='apple-touch-startup-image')
+        link(href=require('../splashscreens/ipadpro1_splash.png'), media='(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)', rel='apple-touch-startup-image')
+        link(href=require('../splashscreens/ipadpro2_splash.png'), media='(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)', rel='apple-touch-startup-image')
+
         // inline global css
         each cssFile in htmlWebpackPlugin.files.css
             style !{compilation.assets[cssFile.substr(htmlWebpackPlugin.files.publicPath.length)].source()}

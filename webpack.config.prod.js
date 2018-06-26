@@ -6,6 +6,7 @@ var UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 var MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 var OfflinePlugin = require("offline-plugin");
+var WebpackPwaManifest = require("webpack-pwa-manifest");
 
 module.exports = {
   mode: "production",
@@ -76,6 +77,15 @@ module.exports = {
         test: /\.(otf|eot|svg|ttf|woff|woff2).*$/,
         loader: "url-loader?limit=8192",
       },
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {},
+          },
+        ],
+      },
     ],
   },
   plugins: [
@@ -111,6 +121,24 @@ module.exports = {
       template: "src/index.pug",
       filename: "index.html",
       title: "iO-808",
+    }),
+    new WebpackPwaManifest({
+      lang: "en",
+      dir: "ltr",
+      name: "iO-808",
+      short_name: "io808",
+      description:
+        "A fully recreated web-based TR-808 drum machine using React, Redux, and the Web Audio API.",
+      background_color: "#363830",
+      theme_color: "#363830",
+      orientation: "landscape",
+      display: "standalone",
+      icons: [
+        {
+          src: path.resolve("./base-favicon.png"),
+          sizes: [96, 128, 192, 256, 384, 512],
+        },
+      ],
     }),
     new MiniCssExtractPlugin({
       filename: "styles.css",
