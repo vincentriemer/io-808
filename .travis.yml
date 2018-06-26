@@ -1,11 +1,7 @@
 sudo: false
 language: node_js
-node_js:
-- "8"
 notifications:
   email: false
-node_js:
-- stable
 script:
 - yarn run test
 - yarn run build
