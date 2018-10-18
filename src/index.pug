@@ -59,7 +59,7 @@ html(lang="en")
         each jsFile in htmlWebpackPlugin.files.js
             script(type="text/javascript" src=jsFile async)
 
-        // piwik analytics
+        // fathom analytics
         script(type="text/javascript").
             (function(f, a, t, h, o, m){
                 a[h]=a[h]||function(){
@@ -69,5 +69,6 @@ html(lang="en")
                 m=f.getElementsByTagName('script')[0];
                 o.async=1; o.src=t; o.id='fathom-script';
                 m.parentNode.insertBefore(o,m)
-            })(document, window, '//io808-analytics.vincentriemer.com/tracker.js', 'fathom');
+            })(document, window, '//analytics.vincentriemer.com/tracker.js', 'fathom');
+            fathom('set', 'siteId', 'XVJNW');
             fathom('trackPageview');

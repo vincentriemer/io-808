@@ -63,5 +63,6 @@ html(lang="en")
                 m=f.getElementsByTagName('script')[0];
                 o.async=1; o.src=t; o.id='fathom-script';
                 m.parentNode.insertBefore(o,m)
-            })(document, window, '//io808-analytics.vincentriemer.com/tracker.js', 'fathom');
+            })(document, window, '//analytics.vincentriemer.com/tracker.js', 'fathom');
+            fathom('set', 'siteId', 'XVJNW');
             fathom('trackPageview');
