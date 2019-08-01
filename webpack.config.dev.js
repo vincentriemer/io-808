@@ -5,17 +5,21 @@ var MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var OfflinePlugin = require("offline-plugin");
 var BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
+var { WebpackPluginServe: Serve } = require('webpack-plugin-serve');
+
+var outputPath = path.join(__dirname, "dist");
 
 module.exports = {
   mode: "development",
   entry: [
-    "core-js/es6/symbol",
-    "core-js/es6/reflect",
-    "core-js/fn/array/includes",
+    "core-js/features/symbol",
+    "core-js/features/reflect",
+    "core-js/features/array/includes",
     "./src/index",
+    'webpack-plugin-serve/client'
   ],
   output: {
-    path: path.join(__dirname, "dist"),
+    path: outputPath,
     filename: "bundle.js",
     publicPath: "/",
     hotUpdateChunkFilename: "[id].hot-update.js",
@@ -76,10 +80,13 @@ module.exports = {
       filename: "index.html",
       title: "iO-808",
     }),
-    new BundleAnalyzerPlugin(),
+    new Serve({
+      static: outputPath
+    })
   ],
   resolve: {
     modules: [path.resolve(__dirname, "src"), "node_modules"],
     extensions: [".js", ".json"],
   },
+  watch: true
 };

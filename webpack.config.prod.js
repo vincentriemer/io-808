@@ -11,9 +11,9 @@ var WebpackPwaManifest = require("webpack-pwa-manifest");
 module.exports = {
   mode: "production",
   entry: [
-    "core-js/es6/symbol",
-    "core-js/es6/reflect",
-    "core-js/fn/array/includes",
+    "core-js/features/symbol",
+    "core-js/features/reflect",
+    "core-js/features/array/includes",
     "./src/index",
   ],
   optimization: {
