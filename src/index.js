@@ -19,26 +19,26 @@ import React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
 import Loadable from "react-loadable";
+import { PersistGate } from "redux-persist/integration/react";
 
-import store from "store";
+import { store, persistor } from "store";
 import AppLayout from "layouts/app";
-
-// TODO: Figure out what to do with react-redux's decpricated lifecyles usage
-const AsyncMode = React.unstable_AsyncMode;
 
 const Sequencer = Loadable({
   loader: () => import("./sequencer"),
-  loading: () => null,
+  loading: () => null
 });
 
 class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <div style={{ width: "100%", height: "100%" }}>
-          <Sequencer />
-          <AppLayout />
-        </div>
+        <PersistGate loading={null} persistor={persistor}>
+          <div style={{ width: "100%", height: "100%" }}>
+            <Sequencer />
+            <AppLayout />
+          </div>
+        </PersistGate>
       </Provider>
     );
   }

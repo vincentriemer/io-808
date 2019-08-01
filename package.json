@@ -84,9 +84,7 @@
     "react-octicon": "^3.0.1",
     "react-redux": "^7.1.0",
     "redux": "^4.0.4",
-    "redux-localstorage": "^1.0.0-rc5",
-    "redux-localstorage-debounce": "^0.1.0",
-    "redux-localstorage-filter": "^0.1.1",
+    "redux-persist": "^5.10.0",
     "reselect": "^4.0.0",
     "waaclock": "^0.5.3"
   }
