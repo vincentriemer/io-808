@@ -55,10 +55,8 @@ function getNextVariation(currentVariation, basicVariationPosition) {
   switch (basicVariationPosition) {
     case 0:
       return A_VARIATION;
-      break;
     case 1:
       return currentVariation === A_VARIATION ? B_VARIATION : A_VARIATION;
-      break;
     case 2:
       return B_VARIATION;
   }
@@ -358,13 +356,13 @@ export default function(state, { type, payload }) {
     }
 
     case STATE_LOAD: {
-      return produce(state, draft => {
+      return produce(state, () => {
         return payload;
       });
     }
 
     case RESET: {
-      return produce(state, draft => {
+      return produce(state, () => {
         return initialState;
       });
     }

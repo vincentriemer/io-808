@@ -1,5 +1,5 @@
 import { compose, createStore } from "redux";
-import produce, { setAutoFreeze } from "immer";
+import { setAutoFreeze } from "immer";
 
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";

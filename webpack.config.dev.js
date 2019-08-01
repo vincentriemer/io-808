@@ -1,11 +1,7 @@
 var path = require("path");
-var webpack = require("webpack");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
 var MiniCssExtractPlugin = require("mini-css-extract-plugin");
-var OfflinePlugin = require("offline-plugin");
-var BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-  .BundleAnalyzerPlugin;
-var { WebpackPluginServe: Serve } = require('webpack-plugin-serve');
+var { WebpackPluginServe: Serve } = require("webpack-plugin-serve");
 
 var outputPath = path.join(__dirname, "dist");
 
@@ -16,20 +12,18 @@ module.exports = {
     "core-js/features/reflect",
     "core-js/features/array/includes",
     "./src/index",
-    'webpack-plugin-serve/client'
+    "webpack-plugin-serve/client"
   ],
   output: {
     path: outputPath,
     filename: "bundle.js",
-    publicPath: "/",
-    hotUpdateChunkFilename: "[id].hot-update.js",
-    hotUpdateMainFilename: "hot-update.json",
+    publicPath: "/"
   },
   module: {
     rules: [
       {
         test: /\.pug$/,
-        use: [{ loader: "pug-loader", options: {} }],
+        use: [{ loader: "pug-loader", options: {} }]
       },
       {
         test: /\.css$/,
@@ -40,10 +34,10 @@ module.exports = {
             loader: "postcss-loader",
             options: {
               ident: "postcss",
-              plugins: [require("autoprefixer")],
-            },
-          },
-        ],
+              plugins: [require("autoprefixer")]
+            }
+          }
+        ]
       },
       {
         test: /\.js$/,
@@ -51,25 +45,25 @@ module.exports = {
           {
             loader: "babel-loader",
             options: {
-              include: path.join(__dirname, "src"),
-            },
-          },
-        ],
+              include: path.join(__dirname, "src")
+            }
+          }
+        ]
       },
       {
         test: /\.(otf|eot|svg|ttf|woff|woff2).*$/,
-        use: "url-loader?limit=8192",
+        use: "url-loader?limit=8192"
       },
       {
         test: /\.(png|jpg|gif)$/,
         use: [
           {
             loader: "file-loader",
-            options: {},
-          },
-        ],
-      },
-    ],
+            options: {}
+          }
+        ]
+      }
+    ]
   },
   plugins: [
     new MiniCssExtractPlugin({}),
@@ -78,15 +72,18 @@ module.exports = {
       cache: false,
       template: "src/index.pug",
       filename: "index.html",
-      title: "iO-808",
+      title: "iO-808"
     }),
     new Serve({
-      static: outputPath
+      static: outputPath,
+      hmr: false,
+      liveReload: true,
+      host: "0.0.0.0"
     })
   ],
   resolve: {
     modules: [path.resolve(__dirname, "src"), "node_modules"],
-    extensions: [".js", ".json"],
+    extensions: [".js", ".json"]
   },
   watch: true
 };

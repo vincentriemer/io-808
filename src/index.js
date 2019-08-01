@@ -15,19 +15,15 @@ if (browser.gecko) {
   );
 }
 
-import React from "react";
+import * as React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
-import Loadable from "react-loadable";
 import { PersistGate } from "redux-persist/integration/react";
 
 import { store, persistor } from "store";
 import AppLayout from "layouts/app";
 
-const Sequencer = Loadable({
-  loader: () => import("./sequencer"),
-  loading: () => null
-});
+const Sequencer = React.lazy(() => import("./sequencer"));
 
 class App extends React.Component {
   render() {
@@ -35,20 +31,15 @@ class App extends React.Component {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <div style={{ width: "100%", height: "100%" }}>
-            <Sequencer />
+            <React.Suspense fallback={null}>
+              <Sequencer />
+            </React.Suspense>
             <AppLayout />
           </div>
         </PersistGate>
       </Provider>
     );
   }
-}
-
-// __optimizeReactComponentTree is only known to Prepack
-// so we wrap it in a conditional so the code still works
-// for local development testing without Prpeack
-if (global.__optimizeReactComponentTree) {
-  __optimizeReactComponentTree(App);
 }
 
 function onMount() {

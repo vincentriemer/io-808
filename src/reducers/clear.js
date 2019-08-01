@@ -4,15 +4,13 @@ import {
   A_VARIATION,
   B_VARIATION,
   FIRST_PART,
-  SECOND_PART,
-  MODE_TO_PART_MAPPING
+  SECOND_PART
 } from "store-constants";
 import {
   CLEAR_DOWN,
   CLEAR_UP,
   CLEAR_DRAG_START,
-  CLEAR_DRAG_END,
-  CLEAR_DRAG_DROP
+  CLEAR_DRAG_END
 } from "actionTypes";
 import { stepKey } from "helpers";
 
