@@ -1,3 +1,5 @@
+import produce from "immer";
+
 import {
   INSTRUMENT_CHANGE,
   MASTER_VOLUME_CHANGE,
@@ -80,12 +82,14 @@ function nextMeasure(state) {
   };
 
   if (state.fillScheduled) {
-    return state.merge({
-      ...stateUpdate,
-      // if a fill has been scheduled then the next pattern should be the selected fill pattern
-      currentPattern: state.selectedPlayFillPattern + 12,
-      // clear out the fill schedule
-      fillScheduled: false
+    return produce(state, draft => {
+      Object.assign(draft, {
+        ...stateUpdate,
+        // if a fill has been scheduled then the next pattern should be the selected fill pattern
+        currentPattern: state.selectedPlayFillPattern + 12,
+        // clear out the fill schedule
+        fillScheduled: false
+      });
     });
   } else {
     stateUpdate.currentPattern = state.selectedPlayPattern;
@@ -98,119 +102,145 @@ function nextMeasure(state) {
       }
 
       // pattern is a basic rhythm so increment the currentMeasure
-      return state.merge({
-        ...stateUpdate,
-        currentMeasure: state.currentMeasure + 1
+      return produce(state, draft => {
+        Object.assign(draft, {
+          ...stateUpdate,
+          currentMeasure: state.currentMeasure + 1
+        });
       });
     } else {
       // pattern is a fill in so don't increment the currentMeasure
-      return state.merge(stateUpdate);
+      return produce(state, draft => {
+        Object.assign(draft, stateUpdate);
+      });
     }
   }
 }
 export default function(state, { type, payload }) {
   switch (type) {
-    case INSTRUMENT_CHANGE:
+    case INSTRUMENT_CHANGE: {
       const { type: instrumentType, controlName, value } = payload;
-      return state.setIn(
-        ["instrumentState", instrumentType, controlName],
-        value
-      );
-
-    case STEP_BUTTON_CLICK:
-      return stepClickReducer(state, payload);
-
-    case START_STOP_BUTTON_CLICK:
-      let newState = state;
-      switch (state.selectedMode) {
-        case MODE_PATTERN_CLEAR:
-          return state;
-
-        case MODE_FIRST_PART:
-        case MODE_SECOND_PART:
-          if (!state.playing) {
-            newState = newState.merge({
-              currentStep: -1,
-              currentVariation:
-                state.basicVariationPosition > 1 ? B_VARIATION : A_VARIATION,
-              currentPattern: state.selectedPattern
-            });
-          }
-
-          return newState.merge({
-            playing: !state.playing,
-            currentPart: FIRST_PART
-          });
-
-        case MODE_MANUAL_PLAY:
-          if (!state.playing) {
-            newState = newState.merge({
-              currentStep: -1,
-              currentVariation:
-                state.basicVariationPosition > 1 ? B_VARIATION : A_VARIATION,
-              currentPattern: state.fillScheduled
-                ? state.selectedPlayFillPattern + 12
-                : state.selectedPlayPattern,
-              currentMeasure: 0,
-              fillScheduled: false
-            });
-          }
-
-          return newState.merge({
-            playing: !state.playing,
-            currentPart: FIRST_PART
-          });
-
-        default:
-          return state;
-      }
-
-    case MASTER_VOLUME_CHANGE:
-      return state.set("masterVolume", payload);
-
-    case BASIC_VARIATION_CHANGE:
-      return state.set("basicVariationPosition", payload);
-
-    case IF_VARIATION_CHANGE:
-      return state.set("introFillVariationPosition", payload);
-
-    case TEMPO_CHANGE:
-      return state.set("tempo", payload);
-
-    case FINE_TEMPO_CHANGE:
-      return state.set("fineTempo", payload);
-
-    case AUTO_FILL_IN_CHANGE:
-      return state.set("autoFillInPosition", payload);
-
-    case INSTRUMENT_TRACK_CHANGE:
-      return state.set("selectedInstrumentTrack", payload);
-
-    case MODE_CHANGE:
-      const additionalStateChanges = {};
-
-      return state.merge({
-        ...additionalStateChanges,
-        selectedMode: payload,
-        playing: false
+      return produce(state, draft => {
+        draft.instrumentState[instrumentType][controlName] = value;
       });
+    }
 
-    case TICK:
+    case STEP_BUTTON_CLICK: {
+      return stepClickReducer(state, payload);
+    }
+
+    case START_STOP_BUTTON_CLICK: {
+      return produce(state, draft => {
+        switch (state.selectedMode) {
+          case MODE_PATTERN_CLEAR: {
+            break;
+          }
+
+          case MODE_FIRST_PART:
+          case MODE_SECOND_PART: {
+            if (!state.playing) {
+              draft.currentStep = -1;
+              draft.currentVariation =
+                state.basicVariationPosition > 1 ? B_VARIATION : A_VARIATION;
+              draft.currentPattern = state.selectedPattern;
+            }
+
+            draft.playing = !state.playing;
+            draft.currentPart = FIRST_PART;
+            break;
+          }
+
+          case MODE_MANUAL_PLAY: {
+            if (!state.playing) {
+              draft.currentStep = -1;
+              draft.currentVariation =
+                state.basicVariationPosition > 1 ? B_VARIATION : A_VARIATION;
+              draft.currentPattern = state.fillScheduled
+                ? state.selectedPlayFillPattern + 12
+                : state.selectedPlayPattern;
+              draft.currentMeasure = 0;
+              draft.fillScheduled = false;
+            }
+
+            draft.playing = !state.playing;
+            draft.currentPart = FIRST_PART;
+            break;
+          }
+
+          default: {
+            break;
+          }
+        }
+      });
+    }
+
+    case MASTER_VOLUME_CHANGE: {
+      return produce(state, draft => {
+        draft.masterVolume = payload;
+      });
+    }
+
+    case BASIC_VARIATION_CHANGE: {
+      return produce(state, draft => {
+        draft.basicVariationPosition = payload;
+      });
+    }
+
+    case IF_VARIATION_CHANGE: {
+      return produce(state, draft => {
+        draft.introFillVariationPosition = payload;
+      });
+    }
+
+    case TEMPO_CHANGE: {
+      return produce(state, draft => {
+        draft.tempo = payload;
+      });
+    }
+
+    case FINE_TEMPO_CHANGE: {
+      return produce(state, draft => {
+        draft.fineTempo = payload;
+      });
+    }
+
+    case AUTO_FILL_IN_CHANGE: {
+      return produce(state, draft => {
+        draft.autoFillInPosition = payload;
+      });
+    }
+
+    case INSTRUMENT_TRACK_CHANGE: {
+      return produce(state, draft => {
+        draft.selectedInstrumentTrack = payload;
+      });
+    }
+
+    case MODE_CHANGE: {
+      return produce(state, draft => {
+        draft.selectedMode = payload;
+        draft.playing = false;
+      });
+    }
+
+    case TICK: {
       const currentPatternLength = patternLengthSelector(state);
 
       // go to next part/measure
       if (state.currentStep + 1 >= currentPatternLength) {
         switch (state.selectedMode) {
-          case MODE_FIRST_PART:
-            return state.merge({
-              currentStep: 0,
-              currentPart: FIRST_PART,
-              currentVariation: getNextVariation(
+          case MODE_FIRST_PART: {
+            return produce(state, draft => {
+              draft.currentStep = 0;
+              draft.currentPart = FIRST_PART;
+              draft.currentVariation = getNextVariation(
                 state.currentVariation,
                 state.basicVariationPosition
-              )
+              );
             });
-          case MODE_SECOND_PART:
+          }
+
+          case MODE_SECOND_PART: {
             let nextPart = FIRST_PART;
             let nextVariation = state.currentVariation;
 
@@ -236,13 +266,14 @@ export default function(state, { type, payload }) {
               );
             }
 
-            return state.merge({
-              currentStep: 0,
-              currentPart: nextPart,
-              currentVariation: nextVariation
+            return produce(state, draft => {
+              draft.currentStep = 0;
+              draft.currentPart = nextPart;
+              draft.currentVariation = nextVariation;
             });
+          }
 
-          case MODE_MANUAL_PLAY:
+          case MODE_MANUAL_PLAY: {
             if (state.currentPart === FIRST_PART) {
               // go to second part if it has a patternLength > 0
               const secondPartLength =
@@ -251,9 +282,9 @@ export default function(state, { type, payload }) {
                 ];
 
               if (secondPartLength !== 0) {
-                return state.merge({
-                  currentStep: 0,
-                  currentPart: SECOND_PART
+                return produce(state, draft => {
+                  draft.currentStep = 0;
+                  draft.currentPart = SECOND_PART;
                 });
               } else {
                 return nextMeasure(state);
@@ -261,65 +292,85 @@ export default function(state, { type, payload }) {
             } else {
               return nextMeasure(state);
             }
+          }
         }
       }
 
-      return state.merge({
-        currentStep: state.currentStep + 1
+      return produce(state, draft => {
+        draft.currentStep = state.currentStep + 1;
       });
+    }
 
-    case BLINK_TICK:
-      return state.set("blinkState", !state.blinkState);
+    case BLINK_TICK: {
+      return produce(state, draft => {
+        draft.blinkState = !state.blinkState;
+      });
+    }
 
     case CLEAR_DOWN:
     case CLEAR_UP:
     case CLEAR_DRAG_START:
-    case CLEAR_DRAG_END:
+    case CLEAR_DRAG_END: {
       return clearReducer(state, type);
+    }
 
-    case TAP_BUTTON_CLICK:
+    case TAP_BUTTON_CLICK: {
       switch (state.selectedMode) {
-        case MODE_MANUAL_PLAY:
-          return state.set("fillScheduled", !state.fillScheduled);
-        default:
+        case MODE_MANUAL_PLAY: {
+          return produce(state, draft => {
+            draft.fillScheduled = !state.fillScheduled;
+          });
+        }
+        default: {
           return state;
+        }
       }
+    }
 
-    case CLEAR_DRAG_DROP:
+    case CLEAR_DRAG_DROP: {
       const track = state.currentPattern;
       const part = MODE_TO_PART_MAPPING[state.selectedMode];
 
       if (part === FIRST_PART) {
-        return state
-          .setIn(
-            ["patternLengths", patternLengthKey(track, FIRST_PART)],
-            payload
-          )
-          .setIn(["patternLengths", patternLengthKey(track, SECOND_PART)], 0);
+        return produce(state, draft => {
+          draft.patternLengths[patternLengthKey(track, FIRST_PART)] = payload;
+          draft.patternLengths[patternLengthKey(track, SECOND_PART)] = 0;
+        });
       } else if (part === SECOND_PART) {
-        return state.setIn(
-          ["patternLengths", patternLengthKey(track, SECOND_PART)],
-          payload
-        );
+        return produce(state, draft => {
+          draft.patternLengths[patternLengthKey(track, SECOND_PART)] = payload;
+        });
       } else {
         return state;
       }
+    }
 
-    case CLEAR_DRAG_ENTER:
-      return state.merge({ pendingPatternLength: payload + 1 });
-
-    case CLEAR_DRAG_EXIT:
-      return state.merge({
-        pendingPatternLength: pendingPatternLengthSelector(state)
+    case CLEAR_DRAG_ENTER: {
+      return produce(state, draft => {
+        draft.pendingPatternLength = payload + 1;
       });
+    }
 
-    case STATE_LOAD:
-      return state.merge(payload);
+    case CLEAR_DRAG_EXIT: {
+      return produce(state, draft => {
+        draft.pendingPatternLength = pendingPatternLengthSelector(state);
+      });
+    }
 
-    case RESET:
-      return state.merge(initialState);
+    case STATE_LOAD: {
+      return produce(state, draft => {
+        return payload;
+      });
+    }
 
-    default:
+    case RESET: {
+      return produce(state, draft => {
+        return initialState;
+      });
+    }
+
+    default: {
       return state;
+    }
   }
 }
