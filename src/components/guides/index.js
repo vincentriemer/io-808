@@ -13,12 +13,8 @@ const baseWrapperStyle = {
   height: "100%"
 };
 
-class Guides extends React.Component {
-  shouldComponentUpdate() {
-    return false;
-  }
-
-  render() {
+const Guides = React.memo(
+  props => {
     let {
       num,
       distance,
@@ -27,7 +23,7 @@ class Guides extends React.Component {
       rotate = true,
       values,
       offset
-    } = this.props;
+    } = props;
 
     let useValues = false;
     if (values != null && values.length !== 0) {
@@ -67,7 +63,6 @@ class Guides extends React.Component {
 
       currentAngle += angleCounter;
     }
-
     return (
       <div
         style={{
@@ -78,7 +73,9 @@ class Guides extends React.Component {
         {guides}
       </div>
     );
-  }
-}
+  },
+  // This is a static component so it should never need to update
+  () => true
+);
 
 export default Guides;
