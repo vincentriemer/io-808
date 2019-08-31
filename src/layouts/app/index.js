@@ -1,5 +1,6 @@
 // External Deps
 import React from "react";
+import { useHover } from "react-events/hover";
 
 // Theme
 import { grey, slightlyDarkerBlack } from "theme/variables";
@@ -18,24 +19,28 @@ import {
   ConnectedResetButton
 } from "./connectedComponents";
 
-const GithubLink = () => (
-  <a
-    style={{
-      color: slightlyDarkerBlack,
-      opacity: 0.5,
-      transition: "opacity 0.2s",
-      ":hover": {
-        opacity: 1.0
-      }
-    }}
-    href="https://github.com/vincentriemer/io-808"
-    target="_blank"
-    rel="noopener noreferrer"
-    title="Github Repo"
-  >
-    <Octicon name="mark-github" mega />
-  </a>
-);
+const GithubLink = () => {
+  const [hovered, setHovered] = React.useState();
+  const hoverListener = useHover({
+    onHoverChange: setHovered
+  });
+  return (
+    <a
+      listeners={hoverListener}
+      style={{
+        color: slightlyDarkerBlack,
+        opacity: hovered ? 1.0 : 0.5,
+        transition: "opacity 0.2s"
+      }}
+      href="https://github.com/vincentriemer/io-808"
+      target="_blank"
+      rel="noopener noreferrer"
+      title="Github Repo"
+    >
+      <Octicon name="mark-github" mega />
+    </a>
+  );
+};
 
 // layout constants
 const APP_WIDTH = 1400;
@@ -56,98 +61,94 @@ const TOP_RIGHT_WIDTH = APP_WIDTH - TOP_LEFT_WIDTH;
 
 const TOP_HORIZONTAL_SEPERATOR_HEIGHT = TOP_HEIGHT - 10;
 
-class AppLayout extends React.Component {
-  shouldComponentUpdate() {
-    return false;
+const styles = {
+  pageWrapper: {
+    position: "relative",
+    width: "100%",
+    height: "100%",
+    minWidth: APP_WIDTH + APP_PADDING,
+    minHeight: APP_HEIGHT + HEADER_HEIGHT + FOOTER_HEIGHT + APP_PADDING
+  },
+
+  wrapper: {
+    position: "absolute",
+    width: APP_WIDTH,
+    height: APP_HEIGHT + HEADER_HEIGHT + FOOTER_HEIGHT,
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    margin: "auto",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+  },
+
+  headerWrapper: {
+    width: APP_WIDTH,
+    height: HEADER_HEIGHT,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+
+  saveLoadClearWrapper: {
+    display: "flex",
+    flexDirection: "row"
+  },
+
+  footerWrapper: {
+    width: APP_WIDTH,
+    height: FOOTER_HEIGHT,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingLeft: 10,
+    paddingRight: 10
+  },
+
+  appWrapper: {
+    width: APP_WIDTH,
+    height: APP_HEIGHT,
+    display: "flex",
+    flexDirection: "column"
+  },
+
+  topBottomDivider: {
+    width: APP_WIDTH,
+    height: TOP_BOTTOM_DIVIDER_HEIGHT,
+    backgroundColor: grey
+  },
+
+  topHorizontalDivider: {
+    width: INSTRUMENT_SEPERATOR_WIDTH,
+    height: TOP_HORIZONTAL_SEPERATOR_HEIGHT,
+    backgroundColor: grey
+  },
+
+  topWrapper: {
+    width: APP_WIDTH,
+    height: TOP_HEIGHT,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center"
+  },
+
+  bottomWrapper: {
+    width: APP_WIDTH,
+    height: BOTTOM_HEIGHT
+  },
+
+  footerText: {
+    ...labelGreyLarge,
+    ...autoCursor
   }
+};
 
-  render() {
-    const styles = {
-      pageWrapper: {
-        position: "relative",
-        width: "100%",
-        height: "100%",
-        minWidth: APP_WIDTH + APP_PADDING,
-        minHeight: APP_HEIGHT + HEADER_HEIGHT + FOOTER_HEIGHT + APP_PADDING
-      },
-
-      wrapper: {
-        position: "absolute",
-        width: APP_WIDTH,
-        height: APP_HEIGHT + HEADER_HEIGHT + FOOTER_HEIGHT,
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        margin: "auto",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center"
-      },
-
-      headerWrapper: {
-        width: APP_WIDTH,
-        height: HEADER_HEIGHT,
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between"
-      },
-
-      saveLoadClearWrapper: {
-        display: "flex",
-        flexDirection: "row"
-      },
-
-      footerWrapper: {
-        width: APP_WIDTH,
-        height: FOOTER_HEIGHT,
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        paddingLeft: 10,
-        paddingRight: 10
-      },
-
-      appWrapper: {
-        width: APP_WIDTH,
-        height: APP_HEIGHT,
-        display: "flex",
-        flexDirection: "column"
-      },
-
-      topBottomDivider: {
-        width: APP_WIDTH,
-        height: TOP_BOTTOM_DIVIDER_HEIGHT,
-        backgroundColor: grey
-      },
-
-      topHorizontalDivider: {
-        width: INSTRUMENT_SEPERATOR_WIDTH,
-        height: TOP_HORIZONTAL_SEPERATOR_HEIGHT,
-        backgroundColor: grey
-      },
-
-      topWrapper: {
-        width: APP_WIDTH,
-        height: TOP_HEIGHT,
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center"
-      },
-
-      bottomWrapper: {
-        width: APP_WIDTH,
-        height: BOTTOM_HEIGHT
-      },
-
-      footerText: {
-        ...labelGreyLarge,
-        ...autoCursor
-      }
-    };
-
+const AppLayout = React.memo(
+  () => {
     return (
       <div style={styles.pageWrapper}>
         <div style={styles.wrapper}>
@@ -211,7 +212,8 @@ class AppLayout extends React.Component {
         </div>
       </div>
     );
-  }
-}
+  },
+  () => true
+);
 
 export default AppLayout;
