@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 import Knob from "components/knob";
 import Guides from "components/guides";
@@ -35,93 +34,76 @@ const guideLabels = [
   "CH"
 ];
 
-class InstrumentSelectorKnob extends React.Component {
-  render() {
-    const { value, onChange, size = 200 } = this.props;
-    const knobSize = size - 75;
+const styles = {
+  wrapper: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "stretch",
+    justifyContent: "space-between"
+  },
+  controlWrapper: {
+    position: "relative"
+  },
+  numberGuides: {
+    fontFamily,
+    fontSize: smallSize,
+    fontWeight,
+    letterSpacing,
+    color: stencilOrange,
+    ...unselectableText
+  },
+  labelGuides: {
+    fontFamily,
+    fontSize: normalSize,
+    fontWeight: "normal",
+    letterSpacing,
+    color: darkGrey,
+    backgroundColor: drumLabel,
+    borderRadius: 3,
+    textAlign: "center",
+    width: 27,
+    paddingTop: 2,
+    paddingBottom: 2,
+    ...unselectableText
+  }
+};
 
-    const styles = {
-      wrapper: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "stretch",
-        justifyContent: "space-between",
-        width: size,
-        height: size
-      },
-
-      controlWrapper: {
-        position: "relative",
-        width: size,
-        height: size
-      },
-
-      knobWrapper: ring(knobSize),
-
-      numberGuides: {
-        fontFamily,
-        fontSize: smallSize,
-        fontWeight,
-        letterSpacing,
-        color: stencilOrange,
-        ...unselectableText
-      },
-
-      labelGuides: {
-        fontFamily,
-        fontSize: normalSize,
-        fontWeight: "normal",
-        letterSpacing,
-        color: darkGrey,
-        backgroundColor: drumLabel,
-        borderRadius: 3,
-        textAlign: "center",
-        width: 27,
-        paddingTop: 2,
-        paddingBottom: 2,
-        ...unselectableText
-      }
-    };
-
-    return (
-      <div style={styles.wrapper}>
-        <div style={styles.controlWrapper}>
-          <Guides
-            distance={size * 0.3}
-            offset={15}
-            rotate={false}
-            values={guideNumbers}
-            guideStyle={styles.numberGuides}
-          />
-          <Guides
-            distance={size * 0.45}
-            offset={15}
-            rotate={false}
-            values={guideLabels}
-            guideStyle={styles.labelGuides}
-          />
-          <div style={styles.knobWrapper}>
-            <Knob
-              value={value}
-              onChange={onChange}
-              size={knobSize}
-              bufferSize={330}
-              min={0}
-              max={11}
-              step={1}
-            >
-              <SelectorKnobInner size={knobSize} />
-            </Knob>
-          </div>
+const InstrumentSelectorKnob = props => {
+  const { value, onChange, size = 200 } = props;
+  const knobSize = size - 75;
+  return (
+    <div style={{ ...styles.wrapper, width: size, height: size }}>
+      <div style={{ ...styles.controlWrapper, width: size, height: size }}>
+        <Guides
+          distance={size * 0.3}
+          offset={15}
+          rotate={false}
+          values={guideNumbers}
+          guideStyle={styles.numberGuides}
+        />
+        <Guides
+          distance={size * 0.45}
+          offset={15}
+          rotate={false}
+          values={guideLabels}
+          guideStyle={styles.labelGuides}
+        />
+        <div style={ring(knobSize)}>
+          <Knob
+            value={value}
+            onChange={onChange}
+            size={knobSize}
+            bufferSize={330}
+            min={0}
+            max={11}
+            step={1}
+          >
+            <SelectorKnobInner size={knobSize} />
+          </Knob>
         </div>
       </div>
-    );
-  }
-}
-
-InstrumentSelectorKnob.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.number.isRequired
+    </div>
+  );
 };
 
 export default InstrumentSelectorKnob;
