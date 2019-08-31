@@ -6,7 +6,10 @@ import { grey } from "theme/variables";
 
 const styles = {
   button: {
+    border: "none",
+    display: "block",
     backgroundColor: grey,
+    padding: 0,
     width: 80,
     height: 40,
     transition: "transform cubic-bezier(0.4, 0.0, 0.2, 1) .1s, opacity 0.5s",
@@ -14,7 +17,8 @@ const styles = {
     boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
     userSelect: "none",
     pointerEvents: "auto",
-    opacity: 1
+    opacity: 1,
+    WebkitAppearance: "none"
   },
   hover: {
     cursor: "pointer",
@@ -68,9 +72,9 @@ const Button = props => {
   }, [disabled, isHovered, isPressed, style]);
 
   return (
-    <div style={buttonStyle} listeners={listeners}>
+    <button style={buttonStyle} listeners={listeners}>
       {children}
-    </div>
+    </button>
   );
 };
 

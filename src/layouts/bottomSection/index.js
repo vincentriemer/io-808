@@ -11,7 +11,7 @@ import {
   buttonOrange,
   yellow,
   offWhite,
-  drumLabel,
+  drumLabel
 } from "theme/variables";
 import { labelDarkGrey, labelGreyNormal, labelGreyXLarge } from "theme/mixins";
 
@@ -27,7 +27,7 @@ import {
   ConnectedTapButton,
   ConnectedPreScaleSwitch,
   ConnectedPartLights,
-  ConnectedStepButtons,
+  ConnectedStepButtons
 } from "./connectedComponents";
 
 class BottomSection extends React.Component {
@@ -35,7 +35,7 @@ class BottomSection extends React.Component {
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
     topLeftWidth: PropTypes.number.isRequired,
-    mode: PropTypes.number.isRequired,
+    mode: PropTypes.number.isRequired
   };
 
   static RHYTHM_LABELS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4];
@@ -55,7 +55,7 @@ class BottomSection extends React.Component {
     offWhite,
     offWhite,
     offWhite,
-    offWhite,
+    offWhite
   ];
 
   static generateStepButtons(
@@ -74,31 +74,31 @@ class BottomSection extends React.Component {
         width: buttonWidth,
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
+        alignItems: "center"
       },
 
       stepLabelWrapper: {
         height: labelHeight,
         display: "flex",
-        alignItems: "center",
+        alignItems: "center"
       },
 
       stepLabel: {
         ...labelGreyNormal,
-        color: drumLabel,
+        color: drumLabel
       },
 
       rhythmLabelWrapper: {
         marginTop: padding,
         height: bottomHeight,
         display: "flex",
-        alignItems: "center",
+        alignItems: "center"
       },
 
       rhythmLabel: {
         ...labelGreyXLarge,
-        color: darkGrey,
-      },
+        color: darkGrey
+      }
     };
 
     ConnectedStepButtons.forEach((ConnectedStepButton, index) => {
@@ -170,7 +170,7 @@ class BottomSection extends React.Component {
 
     const horizontalSeparatorStyle = thickness => ({
       height: thickness,
-      backgroundColor: darkGrey,
+      backgroundColor: darkGrey
     });
 
     const modeSupported = !UNIMPLEMENTED_MODES.includes(mode);
@@ -179,14 +179,14 @@ class BottomSection extends React.Component {
       wrapper: {
         width,
         height,
-        position: "relative",
+        position: "relative"
       },
       unsupportedWrapper: {
         width,
         height,
         position: "relative",
         transition: "opacity 0.5s",
-        opacity: modeSupported ? 1.0 : 0.1,
+        opacity: modeSupported ? 1.0 : 0.1
       },
       unsupportedLabel: {
         ...labelGreyXLarge,
@@ -201,21 +201,21 @@ class BottomSection extends React.Component {
         pointerEvents: "none",
         color: "#F6F6F6",
         transition: "opacity 0.5s",
-        opacity: modeSupported ? 0.0 : 1.0,
+        opacity: modeSupported ? 0.0 : 1.0
       },
       controlWrapper: {
         position: "absolute",
         width,
         height,
         left: 0,
-        top: BACKGROUND_PADDING,
+        top: BACKGROUND_PADDING
       },
       sequencerSection: {
         position: "absolute",
         width: SEQUENCER_SECTION_WIDTH,
         height: SEQUENCER_SECTION_HEIGHT,
         top: 0,
-        left: LEFT_WIDTH,
+        left: LEFT_WIDTH
       },
       leftSection: {
         position: "absolute",
@@ -227,12 +227,12 @@ class BottomSection extends React.Component {
         flexDirection: "column",
         alignItems: "stretch",
         justifyContent: "space-between",
-        padding: BACKGROUND_PADDING,
+        padding: BACKGROUND_PADDING
       },
       buttonWrapper: {
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
+        alignItems: "center"
       },
       startStopButton: {
         width: LEFT_WIDTH * 0.7,
@@ -242,12 +242,12 @@ class BottomSection extends React.Component {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "stretch",
-        padding: 11,
-        borderRadius: 4,
+        padding: 8,
+        borderRadius: 4
       },
       darkGreyButtonLabel: {
         ...labelDarkGrey,
-        cursor: "inherit",
+        cursor: "inherit"
       },
       rightSection: {
         position: "absolute",
@@ -259,13 +259,13 @@ class BottomSection extends React.Component {
         flexDirection: "column",
         alignItems: "stretch",
         justifyContent: "space-between",
-        padding: BACKGROUND_PADDING,
+        padding: BACKGROUND_PADDING
       },
       fillInButtonLabelWrapper: {
         paddingTop: 5,
         paddingBottom: 5,
         paddingLeft: 10,
-        paddingRight: 10,
+        paddingRight: 10
       },
       tapButton: {
         width: LEFT_SECTION_HEIGHT * 0.25,
@@ -276,7 +276,7 @@ class BottomSection extends React.Component {
         justifyContent: "center",
         alignItems: "stretch",
         padding: 11,
-        borderRadius: 4,
+        borderRadius: 4
       },
       preScaleSection: {
         position: "absolute",
@@ -287,19 +287,19 @@ class BottomSection extends React.Component {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "space-between",
+        justifyContent: "space-between"
       },
       preScaleSwitchWrapper: {
         // disable switch until prescale functionality is implemented (stretch-goal)
         pointerEvents: "none",
-        opacity: 0.6,
+        opacity: 0.6
       },
       preScaleBottomSection: {
         width: "100%",
         height: STEP_CONTROL_WRAPPER_HEIGHT,
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
+        alignItems: "center"
       },
       stepButtonSection: {
         position: "absolute",
@@ -309,7 +309,7 @@ class BottomSection extends React.Component {
         left: LEFT_WIDTH + PRE_SCALE_SECTION_WIDTH,
         display: "flex",
         justifyContent: "space-between",
-        alignItems: "stretch",
+        alignItems: "stretch"
       },
       basicRhythmArrowWrapper: {
         position: "absolute",
@@ -319,7 +319,7 @@ class BottomSection extends React.Component {
         top: BACKGROUND_CENTER_HEIGHT,
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
+        alignItems: "center"
       },
       iFArrowWrapper: {
         position: "absolute",
@@ -329,8 +329,8 @@ class BottomSection extends React.Component {
         top: BACKGROUND_CENTER_HEIGHT,
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
-      },
+        alignItems: "center"
+      }
     };
 
     const backgroundStyles = {
@@ -339,7 +339,7 @@ class BottomSection extends React.Component {
         height: height - BACKGROUND_PADDING,
         position: "absolute",
         bottom: 0,
-        left: 0,
+        left: 0
       },
 
       left: {
@@ -349,7 +349,7 @@ class BottomSection extends React.Component {
         width: LEFT_WIDTH,
         height: height - BACKGROUND_PADDING,
         backgroundColor: grey,
-        borderRadius: BACKGROUND_BORDER_RADIUS,
+        borderRadius: BACKGROUND_BORDER_RADIUS
       },
 
       right: {
@@ -359,7 +359,7 @@ class BottomSection extends React.Component {
         width: RIGHT_WIDTH,
         height: height - BACKGROUND_PADDING,
         backgroundColor: grey,
-        borderRadius: BACKGROUND_BORDER_RADIUS,
+        borderRadius: BACKGROUND_BORDER_RADIUS
       },
 
       center: {
@@ -369,7 +369,7 @@ class BottomSection extends React.Component {
         right: RIGHT_WIDTH,
         height: BACKGROUND_CENTER_HEIGHT,
         backgroundColor: darkGrey,
-        borderRadius: BACKGROUND_BORDER_RADIUS,
+        borderRadius: BACKGROUND_BORDER_RADIUS
       },
 
       bottomLeft: {
@@ -379,7 +379,7 @@ class BottomSection extends React.Component {
         width: BACKGROUND_BOTTOM_LEFT_WIDTH,
         height: BACKGROUND_BOTTOM_HEIGHT,
         backgroundColor: grey,
-        borderRadius: BACKGROUND_BORDER_RADIUS,
+        borderRadius: BACKGROUND_BORDER_RADIUS
       },
 
       bottomRight: {
@@ -389,7 +389,7 @@ class BottomSection extends React.Component {
         width: BACKGROUND_BOTTOM_RIGHT_WIDTH,
         height: BACKGROUND_BOTTOM_HEIGHT,
         backgroundColor: grey,
-        borderRadius: BACKGROUND_BORDER_RADIUS,
+        borderRadius: BACKGROUND_BORDER_RADIUS
       },
 
       leftFiller: {
@@ -399,7 +399,7 @@ class BottomSection extends React.Component {
         transform: "translateX(-50%)",
         width: 20,
         height: 20,
-        backgroundColor: grey,
+        backgroundColor: grey
       },
 
       rightFiller: {
@@ -409,7 +409,7 @@ class BottomSection extends React.Component {
         transform: "translateX(50%)",
         width: 20,
         height: 20,
-        backgroundColor: grey,
+        backgroundColor: grey
       },
 
       timeSignatureSectionWrapper: {
@@ -417,8 +417,8 @@ class BottomSection extends React.Component {
         width: STEPS_SECTION_WIDTH,
         height: TIME_SIG_WRAPPER_HEIGHT,
         top: 0,
-        left: LEFT_WIDTH + PRE_SCALE_SECTION_WIDTH,
-      },
+        left: LEFT_WIDTH + PRE_SCALE_SECTION_WIDTH
+      }
     };
 
     return (
@@ -532,7 +532,7 @@ class BottomSection extends React.Component {
 
 // subscribe to the selectedMode state to identify unimplemented features
 const mapStateToProps = state => ({
-  mode: state.selectedMode,
+  mode: state.selectedMode
 });
 
 export default connect(mapStateToProps)(Radium(BottomSection));
