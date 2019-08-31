@@ -16,7 +16,7 @@ if (browser.gecko) {
 }
 
 import * as React from "react";
-import { render } from "react-dom";
+import { unstable_createRoot } from "react-dom";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 
@@ -25,22 +25,18 @@ import AppLayout from "layouts/app";
 
 const Sequencer = React.lazy(() => import("./sequencer"));
 
-class App extends React.Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <div style={{ width: "100%", height: "100%" }}>
-            <React.Suspense fallback={null}>
-              <Sequencer />
-            </React.Suspense>
-            <AppLayout />
-          </div>
-        </PersistGate>
-      </Provider>
-    );
-  }
-}
+const App = () => (
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <div style={{ width: "100%", height: "100%" }}>
+        <React.Suspense fallback={null}>
+          <Sequencer />
+        </React.Suspense>
+        <AppLayout />
+      </div>
+    </PersistGate>
+  </Provider>
+);
 
 function onMount() {
   // Custom performance marker
@@ -53,4 +49,5 @@ function onMount() {
   document.getElementById("root").className = "";
 }
 
-render(<App />, document.getElementById("root"), onMount);
+const root = unstable_createRoot(document.getElementById("root"));
+root.render(<App />, onMount);
