@@ -15,7 +15,8 @@
     "react/prop-types": "off",
     "react/jsx-no-bind": ["error"],
     "react/jsx-key": "off",
-    "react/display-name": "off"
+    "react/display-name": "off",
+    "no-prototype-builtins": "off"
   },
   "env": {
     "browser": true,
