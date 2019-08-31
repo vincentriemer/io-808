@@ -1,106 +1,98 @@
 import React from "react";
-import PropTypes from "prop-types";
+import { usePress } from "react-events/press";
+import { useHover } from "react-events/hover";
 
 import { red, grey } from "theme/variables";
 import { labelGreySmall } from "theme/mixins";
 
 const noOp = () => {};
 
-class ClearButton extends React.Component {
-  static propTypes = {
-    onMouseDown: PropTypes.func,
-    onMouseUp: PropTypes.func,
-    draggable: PropTypes.bool,
-    onDragStart: PropTypes.func,
-    onDragEnd: PropTypes.func
-  };
-
-  constructor(props) {
-    super(props);
-
-    this.handleDragStart = this.handleDragStart.bind(this);
+const styles = {
+  wrapper: {
+    position: "relative"
+  },
+  instructionLabel: {
+    ...labelGreySmall,
+    color: "#FFF",
+    position: "absolute",
+    width: 100,
+    bottom: -36,
+    left: -15,
+    transition: "opacity 1s"
+  },
+  clearButton: {
+    width: 27,
+    height: 27,
+    borderRadius: "50%",
+    backgroundColor: red,
+    border: `2px solid ${grey}`
+  },
+  clearButtonHover: {
+    cursor: "move"
   }
+};
 
-  handleDragStart() {
-    this.props.onDragStart();
-  }
+const ClearButton = props => {
+  const {
+    onMouseDown = noOp,
+    onMouseUp = noOp,
+    draggable = false,
+    onDragEnd = noOp,
+    onDragStart = noOp
+  } = props;
 
-  render() {
-    const {
-      onMouseDown = noOp,
-      onMouseUp = noOp,
-      draggable = false,
-      onDragEnd = noOp
-    } = this.props;
+  const [isHovered, setIsHovered] = React.useState(false);
+  const hoverListener = useHover({
+    onHoverChange: setIsHovered
+  });
 
-    const styles = {
-      wrapper: {
-        position: "relative"
-      },
+  const [isActive, setIsActive] = React.useState(false);
+  const pressListener = usePress({
+    onPressChange: setIsActive,
+    onPressStart: onMouseDown,
+    onPressEnd: onMouseUp
+  });
 
-      instructionLabel: {
-        ...labelGreySmall,
-        color: "#FFF",
-        position: "absolute",
-        width: 100,
-        bottom: -36,
-        left: -15,
-        transition: "opacity 1s",
-        opacity: draggable ? 1.0 : 0.0
-      },
-
-      clearButton: {
-        width: 27,
-        height: 27,
-        borderRadius: "50%",
-        backgroundColor: red,
-        border: `2px solid ${grey}`,
-        ":hover": {
-          cursor: "move"
-        }
-      }
-    };
-
-    if (draggable) {
-      return (
-        <div style={styles.wrapper}>
-          <div
-            style={styles.clearButton}
-            draggable={true}
-            onDragEnd={onDragEnd}
-            onDragStart={this.handleDragStart}
-          />
-          <div style={styles.instructionLabel}>
-            Drag to a Step Button to set Pattern Length
-          </div>
+  if (draggable) {
+    const listeners = [hoverListener];
+    return (
+      <div style={styles.wrapper}>
+        <div
+          style={{
+            ...styles.clearButton,
+            ...(isHovered && styles.clearButtonHover)
+          }}
+          draggable={true}
+          onDragEnd={onDragEnd}
+          onDragStart={onDragStart}
+          listeners={listeners}
+        />
+        <div
+          style={{ ...styles.instructionLabel, opacity: draggable ? 1.0 : 0.0 }}
+        >
+          Drag to a Step Button to set Pattern Length
         </div>
-      );
-    } else {
-      styles.clearButton = {
-        ...styles.clearButton,
-        ":hover": {
-          cursor: "pointer",
-          transform: "scale(1.08) translateZ(0)"
-        },
-        ":active": {
-          transform: "scale(1.0) translateZ(0)"
-        }
-      };
-
-      return (
-        <div style={styles.wrapper}>
-          <div
-            style={styles.clearButton}
-            onMouseDown={onMouseDown}
-            onMouseUp={onMouseUp}
-          />
-          <div style={styles.instructionLabel}>
-            Drag to a Step Button to set Pattern Length
-          </div>
-        </div>
-      );
-    }
+      </div>
+    );
   }
-}
+
+  const buttonStyle = { ...styles.clearButton };
+  if (isHovered) {
+    buttonStyle.cursor = "pointer";
+    buttonStyle.transform = "scale(1.08) translateZ(0)";
+  }
+  if (isActive) {
+    buttonStyle.transform = "scale(1.0) translateZ(0)";
+  }
+  const listeners = [hoverListener, pressListener];
+  return (
+    <div style={styles.wrapper}>
+      <div style={buttonStyle} listeners={listeners} />
+      <div style={styles.instructionLabel}>
+        Drag to a Step Button to set Pattern Length
+      </div>
+    </div>
+  );
+};
 
 export default ClearButton;
