@@ -1,113 +1,103 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 import Button from "components/button";
 import Light from "components/light";
 
-class StepButton extends React.Component {
-  static propTypes = {
-    color: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired,
-    active: PropTypes.bool.isRequired,
-    width: PropTypes.number,
-    height: PropTypes.number,
-    dropable: PropTypes.bool,
-    onDrop: PropTypes.func.isRequired,
-    onDragEnter: PropTypes.func.isRequired,
-    onDragExit: PropTypes.func.isRequired
-  };
-
-  constructor(props) {
-    super(props);
-    this.state = { over: false };
-    this.handleDrop = this.handleDrop.bind(this);
-    this.handleDragExit = this.handleDragExit.bind(this);
-    this.handleDragEnter = this.handleDragEnter.bind(this);
+const styles = {
+  dragWrapper: {
+    transition: "transform 0.2s"
+  },
+  button: {
+    borderRadius: 4,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: 5
   }
+};
 
-  handleDrop(e) {
-    this.props.onDrop();
-    this.setState({ over: false });
-    e.preventDefault();
-  }
+const StepButton = props => {
+  const {
+    color,
+    onClick,
+    active,
+    onDrop,
+    onDragExit,
+    onDragEnter,
+    width = 50,
+    height = 80,
+    dropable = false
+  } = props;
 
-  handleDragExit(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    this.props.onDragExit();
-    this.setState({ over: false });
+  const [over, setOver] = React.useState(false);
+
+  const handleDrop = React.useCallback(
+    evt => {
+      evt.preventDefault();
+      onDrop();
+      setOver(false);
+      return false;
+    },
+    [onDrop]
+  );
+  const handleDragExit = React.useCallback(
+    evt => {
+      evt.preventDefault();
+      evt.stopPropagation();
+      onDragExit();
+      setOver(false);
+      return false;
+    },
+    [onDragExit]
+  );
+  const handleDragOver = React.useCallback(evt => {
+    evt.preventDefault();
+    evt.stopPropagation();
     return false;
-  }
+  }, []);
+  const handleDragEnter = React.useCallback(
+    evt => {
+      evt.preventDefault();
+      evt.stopPropagation();
+      onDragEnter();
+      setOver(true);
+      return false;
+    },
+    [onDragEnter]
+  );
 
-  handleDragOver(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    return false;
-  }
+  const dropableTransform = dropable && !over ? "scale(1.05)" : "scale(1)";
 
-  handleDragEnter(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    this.props.onDragEnter();
-    this.setState({ over: true });
-    return false;
-  }
-
-  render() {
-    const {
-      color,
-      onClick,
-      active,
-      width = 50,
-      height = 80,
-      dropable = false
-    } = this.props;
-
-    const dropableTransform =
-      dropable && !this.state.over ? "scale(1.05)" : "scale(1)";
-
-    const styles = {
-      dragWrapper: {
-        transition: "transform 0.2s",
-        transform: dropableTransform
-      },
-      button: {
-        width,
-        height,
-        backgroundColor: color,
-        borderRadius: 4,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        padding: 5
-      }
-    };
-
-    if (dropable) {
-      return (
-        <div
-          style={styles.dragWrapper}
-          onDragEnter={this.handleDragEnter}
-          onDragOver={this.handleDragOver}
-          onDragLeave={this.handleDragExit}
-          onDragExit={this.handleDragExit}
-          onDrop={this.handleDrop}
+  if (dropable) {
+    return (
+      <div
+        style={{ ...styles.dragWrapper, transform: dropableTransform }}
+        onDragEnter={handleDragEnter}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragExit}
+        onDragExit={handleDragExit}
+        onDrop={handleDrop}
+      >
+        <Button
+          style={{ ...styles.button, width, height, backgroundColor: color }}
+          onClick={onClick}
         >
-          <Button style={styles.button} onClick={onClick}>
-            <Light active={active} />
-          </Button>
-        </div>
-      );
-    } else {
-      return (
-        <div style={styles.dragWrapper}>
-          <Button style={styles.button} onClick={onClick}>
-            <Light active={active} />
-          </Button>
-        </div>
-      );
-    }
+          <Light active={active} />
+        </Button>
+      </div>
+    );
   }
-}
+
+  return (
+    <div style={styles.dragWrapper}>
+      <Button
+        style={{ ...styles.button, width, height, backgroundColor: color }}
+        onClick={onClick}
+      >
+        <Light active={active} />
+      </Button>
+    </div>
+  );
+};
 
 export default StepButton;
