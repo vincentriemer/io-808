@@ -6,15 +6,13 @@ var MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 var OfflinePlugin = require("offline-plugin");
 var WebpackPwaManifest = require("webpack-pwa-manifest");
+var BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
 
 module.exports = {
   mode: "production",
-  entry: [
-    "core-js/features/symbol",
-    "core-js/features/reflect",
-    "core-js/features/array/includes",
-    "./src/index"
-  ],
+  devtool: "source-map",
+  entry: ["./src/index"],
   optimization: {
     minimizer: [
       new UglifyJsPlugin({
@@ -36,6 +34,7 @@ module.exports = {
     },
     nodeEnv: "production"
   },
+  node: false,
   output: {
     path: path.join(__dirname, "out"),
     filename: "bundle.js",
@@ -142,7 +141,8 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "styles.css"
     }),
-    new OfflinePlugin()
+    new OfflinePlugin(),
+    new BundleAnalyzerPlugin()
   ],
   resolve: {
     modules: [path.resolve(__dirname, "src"), "node_modules"],

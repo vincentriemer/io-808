@@ -7,13 +7,7 @@ var outputPath = path.join(__dirname, "dist");
 
 module.exports = {
   mode: "development",
-  entry: [
-    "core-js/features/symbol",
-    "core-js/features/reflect",
-    "core-js/features/array/includes",
-    "./src/index",
-    "webpack-plugin-serve/client"
-  ],
+  entry: ["./src/index", "webpack-plugin-serve/client"],
   output: {
     path: outputPath,
     filename: "bundle.js",
@@ -65,6 +59,7 @@ module.exports = {
       }
     ]
   },
+  node: false,
   plugins: [
     new MiniCssExtractPlugin({}),
     new HtmlWebpackPlugin({

@@ -7,14 +7,6 @@ if (process.env.NODE_ENV === "production") {
 require("globalStyles/reset.css");
 require("globalStyles/main.css");
 
-// Add a warning to Firefox users due to a buggy AudioParam implementation
-import browser from "bowser";
-if (browser.gecko) {
-  window.alert(
-    "WARNING: Firefox currently has a buggy Web Audio API implementation which causes loud pops and clicks, continue at your own risk"
-  );
-}
-
 import * as React from "react";
 import { unstable_createRoot } from "react-dom";
 import { Provider } from "react-redux";
