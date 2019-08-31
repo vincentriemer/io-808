@@ -85,7 +85,6 @@
     "react-dom": "file:vendor/react-dom",
     "react-events": "file:vendor/react-events",
     "scheduler": "file:vendor/scheduler",
-    "react-loadable": "^5.5.0",
     "react-octicon": "^3.0.1",
     "react-redux": "^7.1.0",
     "redux": "^4.0.4",
