@@ -1,79 +1,71 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 import { fontFamily, darkGrey, drumLabel } from "theme/variables";
 import { unselectableText } from "theme/mixins";
 
-class InstrumentLabel extends React.Component {
-  static propTypes = {
-    label: PropTypes.arrayOf(PropTypes.string).isRequired
-  };
+const baseLabelStyle = {
+  fontFamily,
+  whiteSpace: "pre",
+  color: darkGrey,
+  letterSpacing: -0.4,
+  ...unselectableText
+};
 
-  render() {
-    const { label } = this.props;
+const styles = {
+  wrapper: {
+    width: "100%",
+    height: 36,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
 
-    const baseLabelStyle = {
-      fontFamily,
-      whiteSpace: "pre",
-      color: darkGrey,
-      letterSpacing: -0.4,
-      ...unselectableText
-    };
+    backgroundColor: drumLabel,
+    borderRadius: 4
+  },
 
-    const styles = {
-      wrapper: {
-        width: "100%",
-        height: 36,
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
+  innerWrapper: {
+    alignItems: "baseline",
+    cursor: "default",
+    display: "flex",
+    flexDirection: "row"
+  },
 
-        backgroundColor: drumLabel,
-        borderRadius: 4
-      },
+  smallLabel: {
+    ...baseLabelStyle,
+    fontSize: 11
+  },
 
-      innerWrapper: {
-        alignItems: "baseline",
-        cursor: "default",
-        display: "flex",
-        flexDirection: "row"
-      },
+  largeLabel: {
+    ...baseLabelStyle,
+    fontSize: 19
+  }
+};
 
-      smallLabel: {
-        ...baseLabelStyle,
-        fontSize: 11
-      },
-
-      largeLabel: {
-        ...baseLabelStyle,
-        fontSize: 19
-      }
-    };
-
-    const formattedLabel = label.map((section, index) => {
-      let style, value;
-      if (section[0] === "*") {
-        style = "largeLabel";
-        value = section.slice(1);
-      } else {
-        style = "smallLabel";
-        value = section;
-      }
-
-      return (
-        <div key={index} style={styles[style]}>
-          {value}
-        </div>
-      );
-    });
+const InstrumentLabel = props => {
+  const { label } = props;
+  const formattedLabel = label.map((section, index) => {
+    let style, value;
+    if (section[0] === "*") {
+      style = "largeLabel";
+      value = section.slice(1);
+    } else {
+      style = "smallLabel";
+      value = section;
+    }
 
     return (
-      <div style={styles.wrapper}>
-        <div style={styles.innerWrapper}>{formattedLabel}</div>
+      <div key={index} style={styles[style]}>
+        {value}
       </div>
     );
-  }
-}
+  });
+
+  return (
+    <div style={styles.wrapper}>
+      <div style={styles.innerWrapper}>{formattedLabel}</div>
+    </div>
+  );
+};
 
 export default InstrumentLabel;
