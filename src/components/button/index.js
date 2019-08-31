@@ -1,70 +1,77 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import Radium from "radium";
+import { usePress } from "react-events/press";
+import { useHover } from "react-events/hover";
 
 import { grey } from "theme/variables";
 
-class Button extends React.Component {
-  static propTypes = {
-    onClick: PropTypes.func,
-    style: PropTypes.object,
-    disabled: PropTypes.bool
-  };
-
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
+const styles = {
+  button: {
+    backgroundColor: grey,
+    width: 80,
+    height: 40,
+    transition: "transform cubic-bezier(0.4, 0.0, 0.2, 1) .1s, opacity 0.5s",
+    transform: "scale(1.0) translateZ(0)",
+    boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
+    userSelect: "none",
+    pointerEvents: "auto",
+    opacity: 1
+  },
+  hover: {
+    cursor: "pointer",
+    boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
+    transform: "scale(1.04) translateZ(0)"
+  },
+  active: {
+    boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
+    transform: "scale(1.0) translateZ(0)"
+  },
+  disabled: {
+    pointerEvents: "none",
+    opacity: 0.5
   }
+};
 
-  handleClick() {
-    this.props.onClick();
-  }
+const Button = props => {
+  const { style, children, disabled = false, onClick = () => {} } = props;
 
-  render() {
-    const {
-      style,
-      children,
-      disabled = false,
-      onClick = () => {}
-    } = this.props;
-    const styles = {
-      button: {
-        backgroundColor: grey,
-        width: 80,
-        height: 40,
-        transition:
-          "transform cubic-bezier(0.4, 0.0, 0.2, 1) .1s, opacity 0.5s",
-        transform: "scale(1.0) translateZ(0)",
-        boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
-        ":hover": {
-          cursor: "pointer",
-          transform:
-            style && style.transform
-              ? style.transform
-              : "scale(1.04) translateZ(0)",
-          boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)"
-        },
-        ":active": {
-          transform:
-            style && style.transform
-              ? style.transform
-              : "scale(1.0) translateZ(0)",
-          boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)"
-        },
-        userSelect: "none",
+  const [isPressed, setIsPressed] = React.useState(false);
+  const pressListener = usePress({
+    onPress: onClick,
+    onPressChange: setIsPressed
+  });
 
-        // disabled styles
-        pointerEvents: disabled ? "none" : "auto",
-        opacity: disabled ? 0.5 : 1
-      }
+  const [isHovered, setIsHovered] = React.useState(false);
+  const hoverListener = useHover({
+    onHoverChange: setIsHovered
+  });
+
+  const listeners = React.useMemo(() => [pressListener, hoverListener], [
+    hoverListener,
+    pressListener
+  ]);
+
+  const buttonStyle = React.useMemo(() => {
+    let result = styles.button;
+    if (isHovered) {
+      result = { ...result, ...styles.hover };
+    }
+    if (isPressed) {
+      result = { ...result, ...styles.active };
+    }
+    if (disabled) {
+      result = { ...result, ...styles.disabled };
+    }
+    return {
+      ...result,
+      ...style
     };
+  }, [disabled, isHovered, isPressed, style]);
 
-    return (
-      <div style={[styles.button, style]} onClick={onClick}>
-        {children}
-      </div>
-    );
-  }
-}
+  return (
+    <div style={buttonStyle} listeners={listeners}>
+      {children}
+    </div>
+  );
+};
 
-export default Radium(Button);
+export default Button;
