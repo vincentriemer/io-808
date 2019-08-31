@@ -6,8 +6,9 @@ var MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 var OfflinePlugin = require("offline-plugin");
 var WebpackPwaManifest = require("webpack-pwa-manifest");
-var BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-  .BundleAnalyzerPlugin;
+var ReplacePlugin = require("webpack-plugin-replace");
+// var BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+//   .BundleAnalyzerPlugin;
 
 module.exports = {
   mode: "production",
@@ -87,6 +88,9 @@ module.exports = {
     ]
   },
   plugins: [
+    new ReplacePlugin({
+      "process.nextTick": "Promise.resolve().then"
+    }),
     new FaviconsWebpackPlugin({
       logo: "./base-favicon.png",
       inject: true,
@@ -141,8 +145,8 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "styles.css"
     }),
-    new OfflinePlugin(),
-    new BundleAnalyzerPlugin()
+    new OfflinePlugin()
+    // new BundleAnalyzerPlugin()
   ],
   resolve: {
     modules: [path.resolve(__dirname, "src"), "node_modules"],

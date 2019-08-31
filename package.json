@@ -71,6 +71,7 @@
     "webpack-command": "^0.4.2",
     "webpack-dev-middleware": "^3.7.0",
     "webpack-hot-middleware": "^2.25.0",
+    "webpack-plugin-replace": "^1.2.0",
     "webpack-pwa-manifest": "^4.0.0",
     "webpack-serve": "^3.1.1"
   },
@@ -83,12 +84,12 @@
     "react": "file:vendor/react",
     "react-dom": "file:vendor/react-dom",
     "react-events": "file:vendor/react-events",
-    "scheduler": "file:vendor/scheduler",
     "react-octicon": "^3.0.1",
     "react-redux": "^7.1.0",
     "redux": "^4.0.4",
     "redux-persist": "^5.10.0",
     "reselect": "^4.0.0",
+    "scheduler": "file:vendor/scheduler",
     "waaclock": "^0.5.3"
   }
 }

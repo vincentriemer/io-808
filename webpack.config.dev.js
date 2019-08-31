@@ -2,6 +2,7 @@ var path = require("path");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
 var MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var { WebpackPluginServe: Serve } = require("webpack-plugin-serve");
+var ReplacePlugin = require("webpack-plugin-replace");
 
 var outputPath = path.join(__dirname, "dist");
 
@@ -12,6 +13,9 @@ module.exports = {
     path: outputPath,
     filename: "bundle.js",
     publicPath: "/"
+  },
+  optimization: {
+    nodeEnv: "development"
   },
   module: {
     rules: [
@@ -61,6 +65,9 @@ module.exports = {
   },
   node: false,
   plugins: [
+    new ReplacePlugin({
+      "process.nextTick": "Promise.resolve().then"
+    }),
     new MiniCssExtractPlugin({}),
     new HtmlWebpackPlugin({
       inject: false,
