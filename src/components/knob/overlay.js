@@ -12,127 +12,123 @@ function cartesian2Polar([x1, y1], [x2, y2]) {
   return { distance, degrees };
 }
 
-class KnobOverlayPortal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.el = document.createElement("div");
-  }
+const KnobOverlayPortal = props => {
+  const [targetElement] = React.useState(() => document.createElement("div"));
 
-  componentDidMount() {
-    document.body.appendChild(this.el);
-  }
+  React.useEffect(() => {
+    document.body.appendChild(targetElement);
+    return () => {
+      document.body.removeChild(targetElement);
+    };
+  }, [targetElement]);
 
-  componentWillUnmount() {
-    document.body.removeChild(this.el);
-  }
+  return ReactDOM.createPortal(props.children, targetElement);
+};
 
-  render() {
-    return ReactDOM.createPortal(this.props.children, this.el);
-  }
+function getWindowSize() {
+  return {
+    windowWidth: window.innerWidth,
+    windowHeight: window.innerHeight
+  };
 }
 
-class KnobOverlay extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight
+const KnobOverlay = props => {
+  const { topPosition, scale, knobCenter, cursorPos, overlayColor } = props;
+
+  const [windowSize, setWindowSize] = React.useState(getWindowSize);
+  const { windowWidth, windowHeight } = windowSize;
+
+  const handleResize = React.useCallback(() => {
+    setWindowSize(getWindowSize);
+  }, []);
+  React.useEffect(() => {
+    window.addEventListener("resize", handleResize, false);
+    return () => {
+      window.removeEventListener("resize", handleResize, false);
     };
-  }
+  }, [handleResize]);
 
-  render() {
-    const {
-      topPosition,
-      scale,
-      knobCenter,
-      cursorPos,
-      overlayColor
-    } = this.props;
+  const baseLineStyle = {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: 1,
+    height: 1,
+    backgroundColor: overlayColor
+  };
 
-    const { windowWidth, windowHeight } = this.state;
+  const { distance, degrees } = cartesian2Polar(knobCenter, cursorPos);
+  const verticalLineScale = BASE_HEIGHT * scale;
 
-    const baseLineStyle = {
-      position: "absolute",
+  const styles = {
+    overlay: {
+      position: "fixed",
+      zIndex: 100,
       top: 0,
       left: 0,
-      width: 1,
-      height: 1,
-      backgroundColor: overlayColor
-    };
+      width: windowWidth,
+      height: windowHeight,
+      cursor: "ns-resize"
+    },
 
-    const { distance, degrees } = cartesian2Polar(knobCenter, cursorPos);
-    const verticalLineScale = BASE_HEIGHT * scale;
+    knobPath: {
+      ...baseLineStyle,
+      opacity: 0.5,
+      transformOrigin: "left center",
+      transform:
+        `translateX(${knobCenter[0]}px) translateY(${
+          knobCenter[1]
+        }px) translateZ(0) ` +
+        `rotate(${degrees}deg) ` +
+        `scaleX(${distance})`
+    },
 
-    const styles = {
-      overlay: {
-        position: "fixed",
-        zIndex: 100,
-        top: 0,
-        left: 0,
-        width: windowWidth,
-        height: windowHeight,
-        cursor: "ns-resize"
-      },
+    bodyPath: {
+      ...baseLineStyle,
+      transformOrigin: "center top",
+      transform:
+        `translateX(${
+          cursorPos[0]
+        }px) translateY(${topPosition}px) translateZ(0) ` +
+        `scaleY(${verticalLineScale})`
+    },
 
-      knobPath: {
-        ...baseLineStyle,
-        opacity: 0.5,
-        transformOrigin: "left center",
-        transform:
-          `translateX(${knobCenter[0]}px) translateY(${
-            knobCenter[1]
-          }px) translateZ(0) ` +
-          `rotate(${degrees}deg) ` +
-          `scaleX(${distance})`
-      },
+    topPath: {
+      ...baseLineStyle,
+      transform:
+        `translateX(${
+          cursorPos[0]
+        }px) translateY(${topPosition}px) translateZ(0) ` + `scaleX(12)`
+    },
 
-      bodyPath: {
-        ...baseLineStyle,
-        transformOrigin: "center top",
-        transform:
-          `translateX(${
-            cursorPos[0]
-          }px) translateY(${topPosition}px) translateZ(0) ` +
-          `scaleY(${verticalLineScale})`
-      },
+    centerPath: {
+      ...baseLineStyle,
+      transform:
+        `translateX(${cursorPos[0]}px) ` +
+        `translateY(${topPosition + verticalLineScale / 2}px) ` +
+        `translateZ(0) scaleX(12)`
+    },
 
-      topPath: {
-        ...baseLineStyle,
-        transform:
-          `translateX(${
-            cursorPos[0]
-          }px) translateY(${topPosition}px) translateZ(0) ` + `scaleX(12)`
-      },
+    bottomPath: {
+      ...baseLineStyle,
+      transform:
+        `translateX(${cursorPos[0]}px) ` +
+        `translateY(${topPosition + verticalLineScale}px) ` +
+        `translateZ(0) scaleX(12)`
+    }
+  };
 
-      centerPath: {
-        ...baseLineStyle,
-        transform:
-          `translateX(${cursorPos[0]}px) ` +
-          `translateY(${topPosition + verticalLineScale / 2}px) ` +
-          `translateZ(0) scaleX(12)`
-      },
-
-      bottomPath: {
-        ...baseLineStyle,
-        transform:
-          `translateX(${cursorPos[0]}px) ` +
-          `translateY(${topPosition + verticalLineScale}px) ` +
-          `translateZ(0) scaleX(12)`
-      }
-    };
-
-    return (
-      <KnobOverlayPortal>
-        <div style={styles.overlay}>
-          <div style={styles.knobPath} />
-          <div style={styles.bodyPath} />
-          <div style={styles.topPath} />
-          <div style={styles.centerPath} />
-          <div style={styles.bottomPath} />
-        </div>
-      </KnobOverlayPortal>
-    );
-  }
-}
+  return (
+    <KnobOverlayPortal>
+      <div style={styles.overlay}>
+        <div style={styles.knobPath} />
+        <div style={styles.bodyPath} />
+        <div style={styles.topPath} />
+        <div style={styles.centerPath} />
+        <div style={styles.bottomPath} />
+      </div>
+    </KnobOverlayPortal>
+  );
+};
 
 export default KnobOverlay;
