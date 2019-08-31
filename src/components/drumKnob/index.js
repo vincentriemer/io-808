@@ -19,7 +19,6 @@ const styles = {
     alignItems: "center",
     justifyContent: "space-between"
   },
-
   labelWrapper: {
     position: "relative",
     display: "flex",
@@ -27,21 +26,17 @@ const styles = {
     justifyContent: "center",
     flexGrow: 1
   },
-
   label: {
     ...labelGreyNormal
   },
-
   controlWrapper: {
     position: "relative"
   },
-
   knobWrapper: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center"
   },
-
   inner: {
     position: "relative",
     overflow: "hidden",
@@ -50,7 +45,6 @@ const styles = {
     borderRadius: "50%",
     border: `solid ${drumHandle} 8px`
   },
-
   handle: {
     position: "absolute",
     width: 4,
@@ -60,12 +54,10 @@ const styles = {
     left: "50%",
     transform: "translateX(-50%)"
   },
-
   guide: {
     width: 2,
     backgroundColor: grey
   },
-
   levelInd: {
     position: "absolute",
     width: 5,
