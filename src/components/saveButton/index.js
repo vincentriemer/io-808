@@ -1,28 +1,35 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 import Octicon from "react-octicon";
-import { saveAs } from "file-saver";
 
 import Button from "components/button";
 
 import { PERSISTANCE_FILTER } from "store-constants";
 import { buttonColor, darkGrey } from "theme/variables";
 
-class SaveButton extends React.Component {
-  static propTypes = {
-    storeState: PropTypes.object.isRequired,
-    size: PropTypes.number
-  };
-
-  constructor(props) {
-    super(props);
-
-    this.handleClick = this.handleClick.bind(this);
+const styles = {
+  button: {
+    borderRadius: 4,
+    backgroundColor: buttonColor,
+    marginLeft: 5,
+    marginRight: 5
+  },
+  icon: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    color: darkGrey,
+    transform: "scale(0.7)"
   }
+};
 
-  handleClick() {
-    const storeState = this.props.storeState;
+const SaveButton = props => {
+  const { storeState, size = 50 } = props;
+
+  const saveOpCounter = React.useRef(0);
+  const handlePress = React.useCallback(() => {
+    const opId = ++saveOpCounter.current;
+    const fileSaverPromise = import("file-saver");
 
     // only save properties defined by persistance filter
     const saveObj = {};
@@ -34,47 +41,28 @@ class SaveButton extends React.Component {
     const saveData = new Blob([saveString], {
       type: "text/plain;charset=utf-8"
     });
-    saveAs(saveData, "io808.json");
-  }
 
-  render() {
-    const { storeState, size = 50 } = this.props;
-
-    const styles = {
-      button: {
-        width: size,
-        height: size,
-        borderRadius: 4,
-        backgroundColor: buttonColor,
-        marginLeft: 5,
-        marginRight: 5
-      },
-      icon: {
-        width: size,
-        height: size,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        color: darkGrey,
-        transform: "scale(0.7)"
+    fileSaverPromise.then(({ saveAs }) => {
+      if (opId === saveOpCounter.current) {
+        saveAs(saveData, "io808.json");
       }
-    };
+    });
+  }, [storeState]);
 
-    return (
-      <Button
-        style={styles.button}
-        disabled={storeState.playing}
-        onClick={this.handleClick}
-      >
-        <Octicon
-          title="Save"
-          style={styles.icon}
-          name="desktop-download"
-          mega
-        />
-      </Button>
-    );
-  }
-}
+  return (
+    <Button
+      style={{ ...styles.button, width: size, height: size }}
+      disabled={storeState.playing}
+      onClick={handlePress}
+    >
+      <Octicon
+        title="Save"
+        style={{ ...styles.icon, width: size, height: size }}
+        name="desktop-download"
+        mega
+      />
+    </Button>
+  );
+};
 
 export default SaveButton;
