@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 import Knob from "components/knob";
 import Guides from "components/guides";
@@ -34,96 +33,76 @@ for (let i = 0; i < 41; i++) {
 
 const labelHeight = 25;
 
-class TempoKnob extends React.Component {
-  render() {
-    const { value, onChange, size = 216 } = this.props;
-    const innerSize = size - 30;
-    const knobSize = Math.floor(size * 0.75);
+const styles = {
+  wrapper: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "stretch",
+    justifyContent: "space-between"
+  },
+  labelWrapper: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  label: labelGreyLarge,
+  controlWrapper: {
+    position: "relative"
+  },
+  labelGuides: {
+    fontFamily,
+    fontWeight,
+    letterSpacing,
+    fontSize: normalSize,
+    color: darkGrey,
+    ...unselectableText
+  }
+};
 
-    const styles = {
-      wrapper: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "stretch",
-        justifyContent: "space-between",
-        width: size,
-        height: size + labelHeight
-      },
-
-      labelWrapper: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center"
-      },
-
-      label: labelGreyLarge,
-
-      controlWrapper: {
-        position: "relative",
-        width: size,
-        height: size
-      },
-
-      ringOuter: ring(size, grey),
-      ringInner: ring(innerSize, darkGrey),
-      knobWrapper: ring(knobSize),
-
-      labelGuides: {
-        fontFamily,
-        fontWeight,
-        letterSpacing,
-        fontSize: normalSize,
-        color: darkGrey,
-        ...unselectableText
-      }
-    };
-
-    return (
-      <div style={styles.wrapper}>
-        <div style={styles.labelWrapper}>
-          <div style={styles.label}>TEMPO</div>
-        </div>
-        <div style={styles.controlWrapper}>
-          <div style={styles.ringOuter}>
+const TempoKnob = props => {
+  const { value, onChange, size = 216 } = props;
+  const innerSize = size - 30;
+  const knobSize = Math.floor(size * 0.75);
+  return (
+    <div style={{ ...styles.wrapper, width: size, height: size + labelHeight }}>
+      <div style={styles.labelWrapper}>
+        <div style={styles.label}>TEMPO</div>
+      </div>
+      <div style={{ ...styles.controlWrapper, width: size, height: size }}>
+        <div style={ring(size, grey)}>
+          <Guides
+            distance={size - 97.5}
+            hideCount={1}
+            values={guideNumbers}
+            rotate={false}
+            guideStyle={styles.labelGuides}
+          />
+          <div style={ring(innerSize, darkGrey)}>
             <Guides
-              distance={size - 97.5}
-              hideCount={1}
-              values={guideNumbers}
-              rotate={false}
-              guideStyle={styles.labelGuides}
+              num={41}
+              distance={size - 109}
+              hideCount={7}
+              values={guideValues}
             />
-            <div style={styles.ringInner}>
-              <Guides
-                num={41}
-                distance={size - 109}
-                hideCount={7}
-                values={guideValues}
-              />
-              <div style={styles.knobWrapper}>
-                <Knob
-                  value={value}
-                  onChange={onChange}
-                  size={knobSize}
-                  bufferSize={300}
-                  min={30}
-                  max={300}
-                  step={6.75}
-                >
-                  <SelectorKnobInner size={knobSize} />
-                </Knob>
-              </div>
+            <div style={ring(knobSize)}>
+              <Knob
+                value={value}
+                onChange={onChange}
+                size={knobSize}
+                bufferSize={300}
+                min={30}
+                max={300}
+                step={6.75}
+              >
+                <SelectorKnobInner size={knobSize} />
+              </Knob>
             </div>
           </div>
         </div>
       </div>
-    );
-  }
-}
-
-TempoKnob.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.number.isRequired
+    </div>
+  );
 };
 
 export default TempoKnob;
