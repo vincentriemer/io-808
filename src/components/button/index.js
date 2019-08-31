@@ -6,7 +6,6 @@ import { grey } from "theme/variables";
 
 const styles = {
   button: {
-    border: "none",
     display: "block",
     backgroundColor: grey,
     padding: 0,
@@ -17,8 +16,7 @@ const styles = {
     boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
     userSelect: "none",
     pointerEvents: "auto",
-    opacity: 1,
-    WebkitAppearance: "none"
+    opacity: 1
   },
   hover: {
     cursor: "pointer",
