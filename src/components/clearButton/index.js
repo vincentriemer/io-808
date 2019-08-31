@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import Radium from "radium";
+import PropTypes from "prop-types";
 
 import { red, grey } from "theme/variables";
 import { labelGreySmall } from "theme/mixins";
@@ -22,7 +21,7 @@ class ClearButton extends React.Component {
     this.handleDragStart = this.handleDragStart.bind(this);
   }
 
-  handleDragStart(e) {
+  handleDragStart() {
     this.props.onDragStart();
   }
 
@@ -104,4 +103,4 @@ class ClearButton extends React.Component {
   }
 }
 
-export default Radium(ClearButton);
+export default ClearButton;

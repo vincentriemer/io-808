@@ -1,6 +1,5 @@
 // External Deps
 import React from "react";
-import Radium from "radium";
 
 // Theme
 import { grey, slightlyDarkerBlack } from "theme/variables";
@@ -16,26 +15,27 @@ import Octicon from "react-octicon";
 import {
   ConnectedSaveButton,
   ConnectedLoadButton,
-  ConnectedResetButton,
+  ConnectedResetButton
 } from "./connectedComponents";
 
-const GithubLink = Radium(() => (
+const GithubLink = () => (
   <a
     style={{
       color: slightlyDarkerBlack,
       opacity: 0.5,
       transition: "opacity 0.2s",
       ":hover": {
-        opacity: 1.0,
-      },
+        opacity: 1.0
+      }
     }}
     href="https://github.com/vincentriemer/io-808"
     target="_blank"
+    rel="noopener noreferrer"
     title="Github Repo"
   >
     <Octicon name="mark-github" mega />
   </a>
-));
+);
 
 // layout constants
 const APP_WIDTH = 1400;
@@ -68,7 +68,7 @@ class AppLayout extends React.Component {
         width: "100%",
         height: "100%",
         minWidth: APP_WIDTH + APP_PADDING,
-        minHeight: APP_HEIGHT + HEADER_HEIGHT + FOOTER_HEIGHT + APP_PADDING,
+        minHeight: APP_HEIGHT + HEADER_HEIGHT + FOOTER_HEIGHT + APP_PADDING
       },
 
       wrapper: {
@@ -82,7 +82,7 @@ class AppLayout extends React.Component {
         margin: "auto",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
+        alignItems: "center"
       },
 
       headerWrapper: {
@@ -91,12 +91,12 @@ class AppLayout extends React.Component {
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "space-between",
+        justifyContent: "space-between"
       },
 
       saveLoadClearWrapper: {
         display: "flex",
-        flexDirection: "row",
+        flexDirection: "row"
       },
 
       footerWrapper: {
@@ -107,26 +107,26 @@ class AppLayout extends React.Component {
         alignItems: "center",
         justifyContent: "space-between",
         paddingLeft: 10,
-        paddingRight: 10,
+        paddingRight: 10
       },
 
       appWrapper: {
         width: APP_WIDTH,
         height: APP_HEIGHT,
         display: "flex",
-        flexDirection: "column",
+        flexDirection: "column"
       },
 
       topBottomDivider: {
         width: APP_WIDTH,
         height: TOP_BOTTOM_DIVIDER_HEIGHT,
-        backgroundColor: grey,
+        backgroundColor: grey
       },
 
       topHorizontalDivider: {
         width: INSTRUMENT_SEPERATOR_WIDTH,
         height: TOP_HORIZONTAL_SEPERATOR_HEIGHT,
-        backgroundColor: grey,
+        backgroundColor: grey
       },
 
       topWrapper: {
@@ -134,18 +134,18 @@ class AppLayout extends React.Component {
         height: TOP_HEIGHT,
         display: "flex",
         flexDirection: "row",
-        alignItems: "center",
+        alignItems: "center"
       },
 
       bottomWrapper: {
         width: APP_WIDTH,
-        height: BOTTOM_HEIGHT,
+        height: BOTTOM_HEIGHT
       },
 
       footerText: {
         ...labelGreyLarge,
-        ...autoCursor,
-      },
+        ...autoCursor
+      }
     };
 
     return (
@@ -192,6 +192,7 @@ class AppLayout extends React.Component {
                 style={{ color: grey }}
                 href="http://vincentriemer.com"
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 Vincent Riemer
               </a>
@@ -201,6 +202,7 @@ class AppLayout extends React.Component {
                 style={styles.footerText}
                 href="https://github.com/vincentriemer/io-808/issues"
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 Report an Issue
               </a>
@@ -212,4 +214,4 @@ class AppLayout extends React.Component {
   }
 }
 
-export default Radium(AppLayout);
+export default AppLayout;

@@ -1,5 +1,4 @@
 import React from "react";
-import Radium from "radium";
 
 import Guides from "components/guides";
 
@@ -85,4 +84,4 @@ class SelectorKnobInner extends React.Component {
   }
 }
 
-export default Radium(SelectorKnobInner);
+export default SelectorKnobInner;

@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import Radium from "radium";
+import PropTypes from "prop-types";
 
 import { fontFamily, darkGrey, drumLabel } from "theme/variables";
 import { unselectableText } from "theme/mixins";
@@ -77,4 +76,4 @@ class InstrumentLabel extends React.Component {
   }
 }
 
-export default Radium(InstrumentLabel);
+export default InstrumentLabel;

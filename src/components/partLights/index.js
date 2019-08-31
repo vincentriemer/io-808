@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import Radium from "radium";
+import PropTypes from "prop-types";
 
 import Light from "components/light";
 
@@ -62,4 +61,4 @@ class PartLights extends React.Component {
   }
 }
 
-export default Radium(PartLights);
+export default PartLights;

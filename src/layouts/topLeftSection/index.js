@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import Radium from "radium";
+import PropTypes from "prop-types";
 
 import { grey, drumLabel, stencilOrange, red } from "theme/variables";
 import { labelGreySmall } from "theme/mixins";
@@ -305,4 +304,4 @@ class TopLeftSection extends React.Component {
   }
 }
 
-export default Radium(TopLeftSection);
+export default TopLeftSection;

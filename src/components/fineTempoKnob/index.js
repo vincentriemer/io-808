@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import Radium from "radium";
+import PropTypes from "prop-types";
 
 import Knob from "components/knob";
 import Guides from "components/guides";
@@ -25,31 +24,25 @@ class FineTempoKnob extends React.Component {
         width: size,
         height: size + labelHeight
       },
-
       labelWrapper: {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center"
       },
-
       label: labelGreyNormal,
-
       controlWrapper: {
         position: "relative",
         width: size,
         height: size
       },
-
       guides: {
         width: 4,
         height: 4,
         backgroundColor: grey,
         borderRadius: "50%"
       },
-
       knobWrapper: ring("75%"),
-
       knobLabelWrapper: {
         position: "absolute",
         display: "flex",
@@ -61,7 +54,6 @@ class FineTempoKnob extends React.Component {
         left: "50%",
         transform: "translateX(-50%)"
       },
-
       knobLabel: {
         ...labelGreySmall,
         width: 35
@@ -97,8 +89,8 @@ class FineTempoKnob extends React.Component {
           </div>
         </div>
         <div style={styles.knobLabelWrapper}>
-          <div style={[styles.knobLabel, { textAlign: "right" }]}>SLOW</div>
-          <div style={[styles.knobLabel, { textAlign: "left" }]}>FAST</div>
+          <div style={{ ...styles.knobLabel, textAlign: "right" }}>SLOW</div>
+          <div style={{ ...styles.knobLabel, textAlign: "left" }}>FAST</div>
         </div>
       </div>
     );
@@ -110,4 +102,4 @@ FineTempoKnob.propTypes = {
   value: PropTypes.number.isRequired
 };
 
-export default Radium(FineTempoKnob);
+export default FineTempoKnob;

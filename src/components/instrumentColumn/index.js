@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import Radium from "radium";
+import PropTypes from "prop-types";
 
 // Layouts
 import InstrumentColumnLayout from "layouts/instrumentColumn";
@@ -98,4 +97,4 @@ class InstrumentColumn extends React.Component {
   }
 }
 
-export default Radium(InstrumentColumn);
+export default InstrumentColumn;

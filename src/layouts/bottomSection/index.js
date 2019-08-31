@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Radium from "radium";
+
 import { connect } from "react-redux";
 
 import {
@@ -535,4 +535,4 @@ const mapStateToProps = state => ({
   mode: state.selectedMode
 });
 
-export default connect(mapStateToProps)(Radium(BottomSection));
+export default connect(mapStateToProps)(BottomSection);

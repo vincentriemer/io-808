@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import Radium from "radium";
+import PropTypes from "prop-types";
 
 import { grey, darkGrey } from "theme/variables";
 
@@ -221,4 +220,4 @@ class TimeSignatureSection extends React.Component {
   }
 }
 
-export default Radium(TimeSignatureSection);
+export default TimeSignatureSection;

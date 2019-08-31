@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import Radium from "radium";
+import PropTypes from "prop-types";
 
 import Switch from "components/switch";
 
@@ -52,4 +51,4 @@ class DrumSwitch extends React.Component {
   }
 }
 
-export default Radium(DrumSwitch);
+export default DrumSwitch;

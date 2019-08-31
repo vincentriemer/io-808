@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import Radium from "radium";
+import PropTypes from "prop-types";
 
 import { lightActive, lightInactive } from "theme/variables";
 
@@ -54,4 +53,4 @@ Light.propTypes = {
   active: PropTypes.bool.isRequired
 };
 
-export default Radium(Light);
+export default Light;

@@ -1,5 +1,4 @@
 import React from "react";
-import Radium from "radium";
 
 const baseGuideStyle = {
   cursor: "default",
@@ -82,4 +81,4 @@ class Guides extends React.Component {
   }
 }
 
-export default Radium(Guides);
+export default Guides;

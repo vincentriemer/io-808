@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Radium from "radium";
 
 import { snap } from "helpers";
 import { BASE_HEIGHT } from "./constants";
@@ -12,7 +11,7 @@ function emptyKnobState() {
     xPosition: null,
     scale: null,
     knobCenter: null,
-    cursorPos: null,
+    cursorPos: null
   };
 }
 
@@ -75,7 +74,7 @@ class Knob extends React.Component {
     const knobRect = e.currentTarget.getBoundingClientRect();
     const knobCenter = [
       knobRect.left + knobRect.width / 2,
-      knobRect.top + knobRect.height / 2,
+      knobRect.top + knobRect.height / 2
     ];
 
     const xPosition = e.clientX;
@@ -101,7 +100,7 @@ class Knob extends React.Component {
       max,
       overlayColor = "#fff",
       size,
-      bufferSize = 360,
+      bufferSize = 360
     } = this.props;
 
     const rotationAmount =
@@ -114,16 +113,16 @@ class Knob extends React.Component {
         height: size,
         width: size,
         ":hover": {
-          cursor: "pointer",
-        },
+          cursor: "pointer"
+        }
       },
       knob: {
         position: "relative",
         borderRadius: "50%",
         height: "100%",
         width: "100%",
-        transform: "rotate(" + rotationAmount + "deg) translateZ(0px)",
-      },
+        transform: "rotate(" + rotationAmount + "deg) translateZ(0px)"
+      }
     };
 
     let helper = null;
@@ -151,7 +150,7 @@ Knob.propTypes = {
   onChange: PropTypes.func.isRequired,
   bufferSize: PropTypes.number,
   overlayColor: PropTypes.string,
-  innerColor: PropTypes.string,
+  innerColor: PropTypes.string
 };
 
-export default Radium(Knob);
+export default Knob;

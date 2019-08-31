@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Radium from "radium";
 
 import { BASE_HEIGHT } from "./constants";
 
@@ -37,7 +36,7 @@ class KnobOverlay extends React.Component {
     super(props);
     this.state = {
       windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight,
+      windowHeight: window.innerHeight
     };
   }
 
@@ -47,7 +46,7 @@ class KnobOverlay extends React.Component {
       scale,
       knobCenter,
       cursorPos,
-      overlayColor,
+      overlayColor
     } = this.props;
 
     const { windowWidth, windowHeight } = this.state;
@@ -58,7 +57,7 @@ class KnobOverlay extends React.Component {
       left: 0,
       width: 1,
       height: 1,
-      backgroundColor: overlayColor,
+      backgroundColor: overlayColor
     };
 
     const { distance, degrees } = cartesian2Polar(knobCenter, cursorPos);
@@ -72,7 +71,7 @@ class KnobOverlay extends React.Component {
         left: 0,
         width: windowWidth,
         height: windowHeight,
-        cursor: "ns-resize",
+        cursor: "ns-resize"
       },
 
       knobPath: {
@@ -84,7 +83,7 @@ class KnobOverlay extends React.Component {
             knobCenter[1]
           }px) translateZ(0) ` +
           `rotate(${degrees}deg) ` +
-          `scaleX(${distance})`,
+          `scaleX(${distance})`
       },
 
       bodyPath: {
@@ -94,7 +93,7 @@ class KnobOverlay extends React.Component {
           `translateX(${
             cursorPos[0]
           }px) translateY(${topPosition}px) translateZ(0) ` +
-          `scaleY(${verticalLineScale})`,
+          `scaleY(${verticalLineScale})`
       },
 
       topPath: {
@@ -102,7 +101,7 @@ class KnobOverlay extends React.Component {
         transform:
           `translateX(${
             cursorPos[0]
-          }px) translateY(${topPosition}px) translateZ(0) ` + `scaleX(12)`,
+          }px) translateY(${topPosition}px) translateZ(0) ` + `scaleX(12)`
       },
 
       centerPath: {
@@ -110,7 +109,7 @@ class KnobOverlay extends React.Component {
         transform:
           `translateX(${cursorPos[0]}px) ` +
           `translateY(${topPosition + verticalLineScale / 2}px) ` +
-          `translateZ(0) scaleX(12)`,
+          `translateZ(0) scaleX(12)`
       },
 
       bottomPath: {
@@ -118,8 +117,8 @@ class KnobOverlay extends React.Component {
         transform:
           `translateX(${cursorPos[0]}px) ` +
           `translateY(${topPosition + verticalLineScale}px) ` +
-          `translateZ(0) scaleX(12)`,
-      },
+          `translateZ(0) scaleX(12)`
+      }
     };
 
     return (
@@ -136,4 +135,4 @@ class KnobOverlay extends React.Component {
   }
 }
 
-export default Radium(KnobOverlay);
+export default KnobOverlay;

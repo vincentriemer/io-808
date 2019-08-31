@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Radium from "radium";
+
 import Octicon from "react-octicon";
 
 import Button from "components/button";
@@ -12,7 +12,7 @@ class LoadButton extends React.Component {
   static propTypes = {
     playing: PropTypes.bool.isRequired,
     onLoadedState: PropTypes.func.isRequired,
-    size: PropTypes.number,
+    size: PropTypes.number
   };
 
   constructor(props) {
@@ -69,7 +69,7 @@ class LoadButton extends React.Component {
         borderRadius: 4,
         backgroundColor: buttonColor,
         marginLeft: 5,
-        marginRight: 5,
+        marginRight: 5
       },
       icon: {
         width: size,
@@ -78,11 +78,11 @@ class LoadButton extends React.Component {
         justifyContent: "center",
         alignItems: "center",
         color: darkGrey,
-        transform: "scale(0.8)",
+        transform: "scale(0.8)"
       },
       input: {
-        display: "none",
-      },
+        display: "none"
+      }
     };
 
     return (
@@ -110,4 +110,4 @@ class LoadButton extends React.Component {
   }
 }
 
-export default Radium(LoadButton);
+export default LoadButton;

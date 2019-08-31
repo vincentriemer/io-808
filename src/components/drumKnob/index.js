@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import Radium from "radium";
+import PropTypes from "prop-types";
 
 import Knob from "components/knob";
 import Guides from "components/guides";
@@ -154,4 +153,4 @@ DrumKnob.propTypes = {
   level: PropTypes.bool
 };
 
-export default Radium(DrumKnob);
+export default DrumKnob;

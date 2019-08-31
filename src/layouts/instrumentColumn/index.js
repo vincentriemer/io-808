@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import Radium from "radium";
+import PropTypes from "prop-types";
 
 class InstrumentColumn extends React.Component {
   static propTypes = {
@@ -69,4 +68,4 @@ class InstrumentColumn extends React.Component {
   }
 }
 
-export default Radium(InstrumentColumn);
+export default InstrumentColumn;

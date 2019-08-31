@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import Radium from "radium";
+import PropTypes from "prop-types";
 
 import Knob from "components/knob";
 import Guides from "components/guides";
@@ -73,4 +72,4 @@ ModeKnob.propTypes = {
   value: PropTypes.number.isRequired
 };
 
-export default Radium(ModeKnob);
+export default ModeKnob;

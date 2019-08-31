@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import Radium from "radium";
+import PropTypes from "prop-types";
 
 import Button from "components/button";
 import Light from "components/light";
@@ -111,4 +110,4 @@ class StepButton extends React.Component {
   }
 }
 
-export default Radium(StepButton);
+export default StepButton;

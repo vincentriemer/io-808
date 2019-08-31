@@ -2,8 +2,6 @@ import React from "react";
 
 // External Deps
 import PropTypes from "prop-types";
-
-import Radium from "radium";
 import { connect } from "react-redux";
 
 // Actions
@@ -30,77 +28,77 @@ import {
   COWBELL,
   CYMBAL,
   OPEN_HIHAT,
-  CLSD_HIHAT,
+  CLSD_HIHAT
 } from "store-constants";
 
 class TopRightSection extends React.Component {
   static propTypes = {
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
-    seperatorWidth: PropTypes.number.isRequired,
+    seperatorWidth: PropTypes.number.isRequired
   };
 
   static instrumentConfig = [
     {
       type: ACCENT,
       labels: [["*A", "*C", "CENT"]],
-      controls: [],
+      controls: []
     },
     {
       type: BASS_DRUM,
       labels: [["*B", "ASS ", "*D", "RUM"]],
-      controls: ["tone", "decay"],
+      controls: ["tone", "decay"]
     },
     {
       type: SNARE_DRUM,
       labels: [["*S", "NARE ", "*D", "RUM"]],
-      controls: ["tone", "snappy"],
+      controls: ["tone", "snappy"]
     },
     {
       type: LOW_CONGA_LOW_TOM,
       labels: [["*L", "OW ", "*C", "ONGA"], ["*L", "OW ", "*T", "OM"]],
-      controls: ["tuning"],
+      controls: ["tuning"]
     },
     {
       type: MID_CONGA_MID_TOM,
       labels: [["*M", "ID ", "*C", "ONGA"], ["*M", "ID ", "*T", "OM"]],
-      controls: ["tuning"],
+      controls: ["tuning"]
     },
     {
       type: HI_CONGA_HI_TOM,
       labels: [["*H", "I ", "*C", "ONGA"], ["*H", "I ", "*T", "OM"]],
-      controls: ["tuning"],
+      controls: ["tuning"]
     },
     {
       type: CLAVES_RIMSHOT,
       labels: [["*C", "*L", "AVES"], ["*R", "IM ", "*S", "HOT"]],
-      controls: [],
+      controls: []
     },
     {
       type: MARACAS_HANDCLAP,
       labels: [["*M", "*A", "RACAS"], ["HAND ", "*C", "LA", "*P"]],
-      controls: [],
+      controls: []
     },
     {
       type: COWBELL,
       labels: [["*C", "OW ", "*B", "ELL"]],
-      controls: [],
+      controls: []
     },
     {
       type: CYMBAL,
       labels: [["*C", "*Y", "MBAL"]],
-      controls: ["tone", "decay"],
+      controls: ["tone", "decay"]
     },
     {
       type: OPEN_HIHAT,
       labels: [["*O", "PEN ", "*H", "IHAT"]],
-      controls: [EMPTY_CONTROL, "decay"],
+      controls: [EMPTY_CONTROL, "decay"]
     },
     {
       type: CLSD_HIHAT,
       labels: [["*C", "LS'D ", "*H", "IHAT"]],
-      controls: [],
-    },
+      controls: []
+    }
   ];
 
   static generateInstrumentColumns(
@@ -113,7 +111,7 @@ class TopRightSection extends React.Component {
     const seperatorStyle = {
       width: seperatorWidth,
       height: instrumentSeperatorHeight,
-      backgroundColor: grey,
+      backgroundColor: grey
     };
 
     return TopRightSection.instrumentConfig.reduce(
@@ -125,14 +123,14 @@ class TopRightSection extends React.Component {
 
         const mapStateToProps = state => {
           return {
-            controlState: state.instrumentState[config.type],
+            controlState: state.instrumentState[config.type]
           };
         };
 
         const mapDispatchToProps = dispatch => ({
           onChange: (type, controlName, value) => {
             dispatch(onInstrumentChange(type, controlName, value));
-          },
+          }
         });
 
         const ConnectedInstrumentColumn = connect(
@@ -156,11 +154,11 @@ class TopRightSection extends React.Component {
 
   static connectedMasterVolumeKnob() {
     const mapStateToProps = state => ({
-      value: state.masterVolume,
+      value: state.masterVolume
     });
 
     const mapDispatchToProps = dispatch => ({
-      onChange: value => dispatch(onMasterVolumeChange(value)),
+      onChange: value => dispatch(onMasterVolumeChange(value))
     });
 
     return connect(
@@ -188,7 +186,7 @@ class TopRightSection extends React.Component {
         width,
         height,
         display: "flex",
-        flexDirection: "column",
+        flexDirection: "column"
       },
 
       instrumentsWrapper: {
@@ -196,7 +194,7 @@ class TopRightSection extends React.Component {
         height: instrumentsHeight,
         display: "flex",
         flexDirection: "row",
-        alignItems: "center",
+        alignItems: "center"
       },
 
       titleWrapper: {
@@ -205,7 +203,7 @@ class TopRightSection extends React.Component {
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "space-between",
+        justifyContent: "space-between"
       },
 
       masterVolumeWrapper: {
@@ -213,14 +211,14 @@ class TopRightSection extends React.Component {
         display: "flex",
         flex: 1,
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "center"
       },
 
       instrumentSeperator: {
         width: seperatorWidth,
         height: instrumentSeperatorHeight,
-        backgroundColor: grey,
-      },
+        backgroundColor: grey
+      }
     };
 
     const ConnectedMasterVolumeKnob = TopRightSection.connectedMasterVolumeKnob();
@@ -245,4 +243,4 @@ class TopRightSection extends React.Component {
   }
 }
 
-export default Radium(TopRightSection);
+export default TopRightSection;

@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Radium from "radium";
 
 const VERTICAL = "vertical";
 const HORIZONTAL = "horizontal";
@@ -12,7 +11,7 @@ class SoundSwitch extends React.Component {
       hover: false,
       hoverPosition: props.position,
       xPosition: null,
-      yPosition: null,
+      yPosition: null
     };
 
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
@@ -56,7 +55,7 @@ class SoundSwitch extends React.Component {
   handleMouseEnter({ currentTarget }) {
     const {
       left: xPosition,
-      top: yPosition,
+      top: yPosition
     } = currentTarget.getBoundingClientRect();
 
     currentTarget.addEventListener("mousemove", this.handleMouseHover, false);
@@ -75,7 +74,7 @@ class SoundSwitch extends React.Component {
       hover: false,
       xPosition: null,
       yPosition: null,
-      hoverPosition: this.props.position,
+      hoverPosition: this.props.position
     });
   }
 
@@ -89,7 +88,7 @@ class SoundSwitch extends React.Component {
       innerThickness,
       padding = 0,
       innerStyle = {},
-      outerStyle = {},
+      outerStyle = {}
     } = this.props;
 
     const positionIncrement =
@@ -134,7 +133,7 @@ class SoundSwitch extends React.Component {
         ...outerStyle,
         width,
         height,
-        padding,
+        padding
       },
       inner: {
         position: "absolute",
@@ -142,7 +141,7 @@ class SoundSwitch extends React.Component {
         width: innerWidth,
         height: innerHeight,
         transform,
-        transition: "transform cubic-bezier(0.4, 0.0, 0.2, 1) .1s",
+        transition: "transform cubic-bezier(0.4, 0.0, 0.2, 1) .1s"
       },
       innerHover: {
         position: "absolute",
@@ -150,8 +149,8 @@ class SoundSwitch extends React.Component {
         ...innerStyle,
         width: innerWidth,
         height: innerHeight,
-        transform: hoverTransform,
-      },
+        transform: hoverTransform
+      }
     };
 
     if (this.state.hover) {
@@ -179,7 +178,7 @@ SoundSwitch.propTypes = {
   numPositions: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
   outerStyle: PropTypes.object,
-  innerStyle: PropTypes.object,
+  innerStyle: PropTypes.object
 };
 
-export default Radium(SoundSwitch);
+export default SoundSwitch;
