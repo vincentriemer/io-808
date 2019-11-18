@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   onBasicVariationChange,
   onStartStopButtonClick,
@@ -9,7 +9,7 @@ import {
   onStepButtonClick,
   onClearDragDrop,
   onClearDragEnter,
-  onClearDragExit,
+  onClearDragExit
 } from "actionCreators";
 import AudioCtxContext from "audioCtxContext";
 
@@ -31,146 +31,131 @@ import {
   MODE_PATTERN_CLEAR,
   MODE_FIRST_PART,
   MODE_SECOND_PART,
-  MODE_MANUAL_PLAY,
-  FIRST_PART,
-  SECOND_PART,
+  MODE_MANUAL_PLAY
 } from "store-constants";
 
-export const ConnectedBasicVariationSwitch = (() => {
-  const mapStateToProps = state => ({
-    position: state.basicVariationPosition,
-    lightState: basicVariationSelector(state),
-  });
+export const ConnectedBasicVariationSwitch = props => {
+  const position = useSelector(state => state.basicVariationPosition);
+  const lightState = useSelector(basicVariationSelector);
 
-  const mapDispatchToProps = dispatch => ({
-    onChange: position => dispatch(onBasicVariationChange(position)),
-  });
-
-  return connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(BasicVariationSwitch);
-})();
-
-export const ConnectedStartStopButton = (() => {
-  const mapDispatchToProps = (dispatch, { requestInit }) => ({
-    onClick: () => {
-      requestInit();
-      dispatch(onStartStopButtonClick());
-    },
-  });
-
-  const mapStateToProps = state => ({
-    disabled: state.selectedMode === MODE_PATTERN_CLEAR,
-  });
-
-  const ConnectedButton = connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(Button);
-
-  return rootProps => (
-    <AudioCtxContext.Consumer>
-      {({ requestInit }) => (
-        <ConnectedButton requestInit={requestInit} {...rootProps} />
-      )}
-    </AudioCtxContext.Consumer>
+  const dispatch = useDispatch();
+  const onChange = React.useCallback(
+    position => dispatch(onBasicVariationChange(position)),
+    [dispatch]
   );
-})();
 
-export const ConnectedIFVariationSwitch = (() => {
-  const mapStateToProps = state => ({
-    position: state.introFillVariationPosition,
+  return (
+    <BasicVariationSwitch
+      {...props}
+      position={position}
+      lightState={lightState}
+      onChange={onChange}
+    />
+  );
+};
+
+export const ConnectedStartStopButton = props => {
+  const { requestInit } = React.useContext(AudioCtxContext);
+
+  const disabled = useSelector(
+    state => state.selectedMode === MODE_PATTERN_CLEAR
+  );
+
+  const dispatch = useDispatch();
+  const onClick = React.useCallback(() => {
+    requestInit();
+    dispatch(onStartStopButtonClick());
+  }, [dispatch, requestInit]);
+
+  return <Button {...props} disabled={disabled} onClick={onClick} />;
+};
+
+export const ConnectedIFVariationSwitch = props => {
+  const position = useSelector(state => state.introFillVariationPosition);
+
+  const dispatch = useDispatch();
+  const onChange = React.useCallback(
+    position => dispatch(onIFVariationChange(position)),
+    [dispatch]
+  );
+
+  return (
+    <IFVariationSwitch {...props} position={position} onChange={onChange} />
+  );
+};
+
+export const ConnectedTapButton = props => {
+  const disabled = useSelector(state => {
+    switch (state.selectedMode) {
+      case MODE_PATTERN_CLEAR:
+        return true;
+      case MODE_FIRST_PART:
+      case MODE_SECOND_PART:
+        return !state.playing;
+      case MODE_MANUAL_PLAY:
+        return false;
+      default:
+        return true;
+    }
   });
 
-  const mapDispatchToProps = dispatch => ({
-    onChange: position => dispatch(onIFVariationChange(position)),
-  });
+  const dispatch = useDispatch();
+  const onClick = React.useCallback(() => dispatch(onTapButtonClick()), [
+    dispatch
+  ]);
 
-  return connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(IFVariationSwitch);
-})();
+  return <Button {...props} disabled={disabled} onClick={onClick} />;
+};
 
-export const ConnectedTapButton = (() => {
-  const mapDispatchToProps = dispatch => ({
-    onClick: () => dispatch(onTapButtonClick()),
-  });
+export const ConnectedPreScaleSwitch = props => {
+  const position = useSelector(() => 2);
 
-  const mapStateToProps = state => ({
-    disabled: (() => {
-      switch (state.selectedMode) {
-        case MODE_PATTERN_CLEAR:
-          return true;
-        case MODE_FIRST_PART:
-        case MODE_SECOND_PART:
-          return !state.playing;
-        case MODE_MANUAL_PLAY:
-          return false;
-        default:
-          return true;
-      }
-    })(),
-  });
+  const dispatch = useDispatch();
+  const onChange = React.useCallback(
+    position => dispatch(onPreScaleChange(position)),
+    [dispatch]
+  );
 
-  return connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(Button);
-})();
+  return <PreScaleSwitch {...props} position={position} onChange={onChange} />;
+};
 
-export const ConnectedPreScaleSwitch = (() => {
-  const mapStateToProps = state => ({
-    position: 2,
-  });
+export const ConnectedPartLights = props => {
+  const currentPart = useSelector(getCurrentPart);
+  return <PartLights {...props} currentPart={currentPart} />;
+};
 
-  const mapDispatchToProps = dispatch => ({
-    onChange: position => dispatch(onPreScaleChange(position)),
-  });
+export const ConnectedStepButtons = [];
+for (let i = 0; i < 16; i++) {
+  const selector = StepButtonSelectorFactory(i);
+  const ConnectedStepButton = props => {
+    const active = useSelector(selector);
+    const dropable = useSelector(state => state.clearDragging);
 
-  return connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(PreScaleSwitch);
-})();
+    const dispatch = useDispatch();
+    const onClick = React.useCallback(() => dispatch(onStepButtonClick(i)), [
+      dispatch
+    ]);
+    const onDrop = React.useCallback(() => dispatch(onClearDragDrop(i + 1)), [
+      dispatch
+    ]);
+    const onDragEnter = React.useCallback(() => dispatch(onClearDragEnter(i)), [
+      dispatch
+    ]);
+    const onDragExit = React.useCallback(() => dispatch(onClearDragExit()), [
+      dispatch
+    ]);
 
-export const ConnectedPartLights = (() => {
-  const mapStateToProps = state => ({
-    currentPart: getCurrentPart(state),
-  });
-
-  return connect(
-    mapStateToProps,
-    null
-  )(PartLights);
-})();
-
-export const ConnectedStepButtons = (() => {
-  const buttons = [];
-
-  for (let i = 0; i < 16; i++) {
-    const selector = StepButtonSelectorFactory(i);
-
-    const mapStateToProps = state => ({
-      active: selector(state),
-      dropable: state.clearDragging,
-    });
-
-    const mapDispatchToProps = dispatch => ({
-      onClick: () => dispatch(onStepButtonClick(i)),
-      onDrop: () => dispatch(onClearDragDrop(i + 1)),
-      onDragEnter: () => dispatch(onClearDragEnter(i)),
-      onDragExit: () => dispatch(onClearDragExit()),
-    });
-
-    buttons.push(
-      connect(
-        mapStateToProps,
-        mapDispatchToProps
-      )(StepButton)
+    return (
+      <StepButton
+        {...props}
+        active={active}
+        dropable={dropable}
+        onClick={onClick}
+        onDrop={onDrop}
+        onDragEnter={onDragEnter}
+        onDragExit={onDragExit}
+      />
     );
-  }
-
-  return buttons;
-})();
+  };
+  ConnectedStepButtons.push(ConnectedStepButton);
+}
