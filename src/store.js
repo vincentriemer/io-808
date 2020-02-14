@@ -3,7 +3,7 @@ import Immutable from "seamless-immutable";
 
 import persistState, {
   mergePersistedState,
-  transformState,
+  transformState
 } from "redux-localstorage";
 import adapter from "redux-localstorage/lib/adapters/localStorage";
 import debounce from "redux-localstorage-debounce";
@@ -20,10 +20,11 @@ if ("production" !== process.env.NODE_ENV && window.devToolsExtension) {
   middleware.push(window.devToolsExtension());
 }
 
-const reducer = compose()(rootReducer);
-mergePersistedState((initialState, persistedState) =>
-  initialState.merge(persistedState)
-);
+const reducer = compose(
+  mergePersistedState((initialState, persistedState) =>
+    initialState.merge(persistedState)
+  )
+)(rootReducer);
 
 const storage = compose(
   transformState(null, Immutable),
