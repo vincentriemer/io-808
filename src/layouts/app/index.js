@@ -63,6 +63,18 @@ class AppLayout extends React.Component {
 
   render() {
     const styles = {
+      blmLink: {
+        position: "relative",
+        color: "white",
+        fontFamily: "aktiv-grotesk, sans-serif",
+        fontSize: 32,
+        fontWeight: "bold",
+        textDecoration: "underline",
+        backgroundColor: "black",
+        padding: "10px 15px",
+        top: -10
+      },
+
       pageWrapper: {
         position: "relative",
         width: "100%",
@@ -157,6 +169,7 @@ class AppLayout extends React.Component {
               <ConnectedSaveButton size={35} />
               <ConnectedResetButton size={35} />
             </div>
+            <a href="https://blacklivesmatters.carrd.co" rel="noopener" style={styles.blmLink} target="_blank">#BlackLivesMatter</a>
             <GithubLink />
           </div>
           <div style={styles.appWrapper}>
