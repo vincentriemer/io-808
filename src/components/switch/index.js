@@ -1,21 +1,25 @@
 import React from "react";
-import { useHover } from "react-events/hover";
-import { usePress } from "react-events/press";
+import useTap from "hooks/useTap";
+import useContinuousHover from "hooks/useContinuousHover";
 
 const VERTICAL = "vertical";
 const HORIZONTAL = "horizontal";
 
 const styles = {
   outer: {
-    position: "relative",
-    cursor: "pointer"
+    position: "relative"
   },
   inner: {
-    position: "absolute"
+    position: "absolute",
+    pointerEvents: "none"
   },
   innerHover: {
     position: "absolute",
-    opacity: 0.5
+    opacity: 0.5,
+    pointerEvents: "none"
+  },
+  transition: {
+    transition: "transform cubic-bezier(0.4, 0.0, 0.2, 1) .1s"
   }
 };
 
@@ -33,24 +37,76 @@ const SoundSwitch = props => {
     outerStyle = {}
   } = props;
 
+  const ref = React.useRef(null);
+
   const [state, setState] = React.useState(() => ({
     hover: false,
     hoverPosition: position,
+    hasMovedWhilePressed: false,
+    initiallyPressedPosition: null,
     xPosition: null,
     yPosition: null
   }));
+
+  const handlePress = React.useCallback(() => {
+    setState(prev => ({
+      ...prev,
+      hasMovedWhilePressed: false,
+      initiallyPressedPosition: null
+    }));
+    onChange(state.hoverPosition);
+  }, [onChange, state.hoverPosition]);
+
+  // console.log(state);
+
+  const pressed = useTap(ref, handlePress);
+  React.useEffect(() => {
+    const {
+      hasMovedWhilePressed,
+      hoverPosition,
+      initiallyPressedPosition
+    } = state;
+    if (pressed && initiallyPressedPosition === null) {
+      setState(prev => ({
+        ...prev,
+        initiallyPressedPosition: hoverPosition,
+        hasMovedWhilePressed: false
+      }));
+    } else if (
+      pressed &&
+      !hasMovedWhilePressed &&
+      initiallyPressedPosition !== hoverPosition
+    ) {
+      setState(prev => ({ ...prev, hasMovedWhilePressed: true }));
+    }
+  }, [pressed, state]);
+  React.useEffect(() => {
+    const { hoverPosition, hasMovedWhilePressed } = state;
+    if (pressed && hasMovedWhilePressed && position !== hoverPosition) {
+      onChange(hoverPosition);
+    }
+  }, [handlePress, onChange, position, pressed, state]);
 
   const handleHoverStart = React.useCallback(evt => {
     const {
       left: xPosition,
       top: yPosition
     } = evt.target.getBoundingClientRect();
-    setState(prev => ({ ...prev, hover: true, xPosition, yPosition }));
+    setState(prev => ({
+      ...prev,
+      hasMovedWhilePressed: false,
+      hover: true,
+      xPosition,
+      yPosition
+    }));
   }, []);
 
   const handleHoverMove = React.useCallback(
     ({ clientX, clientY }) => {
       setState(prevState => {
+        if (!prevState.hover) {
+          return prevState;
+        }
         const { xPosition, yPosition } = prevState;
         const totalLength = length - padding * 2;
 
@@ -84,13 +140,17 @@ const SoundSwitch = props => {
       hover: false,
       xPosition: null,
       yPosition: null,
+      hasMovedWhilePressed: false,
+      initiallyPressedPosition: null,
       hoverPosition: position
     }));
   }, [position]);
 
-  const handlePress = React.useCallback(() => {
-    onChange(state.hoverPosition);
-  }, [onChange, state.hoverPosition]);
+  useContinuousHover(ref, {
+    onHoverStart: handleHoverStart,
+    onHoverEnd: handleHoverEnd,
+    onHoverMove: handleHoverMove
+  });
 
   const positionIncrement =
     (length - padding * 2 - innerThickness) / (numPositions - 1);
@@ -102,7 +162,8 @@ const SoundSwitch = props => {
     innerWidth,
     innerHeight,
     transform,
-    hoverTransform = null;
+    hoverTransform,
+    touchAction = null;
   switch (direction) {
     case VERTICAL:
       width = thickness;
@@ -113,6 +174,8 @@ const SoundSwitch = props => {
 
       transform = `translateY(${positionChange}px)`;
       hoverTransform = `translateY(${hoverPositionChange}px)`;
+
+      touchAction = "pan-x";
       break;
     case HORIZONTAL:
       width = length;
@@ -123,25 +186,58 @@ const SoundSwitch = props => {
 
       transform = `translateX(${positionChange}px)`;
       hoverTransform = `translateX(${hoverPositionChange}px)`;
+
+      touchAction = "pan-y";
       break;
     default:
       throw new Error(`Invalid Direction: ${direction}`);
   }
 
-  const hoverListener = useHover({
-    onHoverStart: handleHoverStart,
-    onHoverEnd: handleHoverEnd,
-    onHoverMove: handleHoverMove
-  });
-
-  const pressListener = usePress({
-    onPress: handlePress
-  });
+  const cursor = (() => {
+    const {
+      hover: hovered,
+      hoverPosition,
+      hasMovedWhilePressed,
+      initiallyPressedPosition
+    } = state;
+    if (hovered) {
+      if (pressed) {
+        if (hoverPosition === position) {
+          if (
+            hasMovedWhilePressed ||
+            hoverPosition === initiallyPressedPosition
+          ) {
+            return "grabbing";
+          }
+          return "pointer";
+        } else {
+          if (hasMovedWhilePressed) {
+            return "grab";
+          }
+          return "pointer";
+        }
+      } else {
+        if (hoverPosition === position) {
+          return "grab";
+        }
+        return "pointer";
+      }
+    }
+    return undefined;
+  })();
 
   return (
     <div
-      listeners={[hoverListener, pressListener]}
-      style={{ ...styles.outer, ...outerStyle, width, height, padding }}
+      ref={ref}
+      style={{
+        ...styles.outer,
+        ...outerStyle,
+        width,
+        height,
+        padding,
+        touchAction,
+        cursor
+      }}
     >
       <div
         style={{
@@ -150,7 +246,7 @@ const SoundSwitch = props => {
           width: innerWidth,
           height: innerHeight,
           transform,
-          transition: "transform cubic-bezier(0.4, 0.0, 0.2, 1) .1s"
+          ...styles.transition
         }}
       />
       <div
@@ -159,7 +255,8 @@ const SoundSwitch = props => {
           ...innerStyle,
           width: innerWidth,
           height: innerHeight,
-          transform: hoverTransform
+          transform: hoverTransform,
+          ...(pressed && styles.transition)
         }}
       />
     </div>

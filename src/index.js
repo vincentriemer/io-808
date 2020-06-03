@@ -8,7 +8,7 @@ require("globalStyles/reset.css");
 require("globalStyles/main.css");
 
 import * as React from "react";
-import { unstable_createRoot } from "react-dom";
+import { createRoot } from "react-dom";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 
@@ -17,29 +17,31 @@ import AppLayout from "layouts/app";
 
 const Sequencer = React.lazy(() => import("./sequencer"));
 
-const App = () => (
-  <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-      <div style={{ width: "100%", height: "100%" }}>
-        <React.Suspense fallback={null}>
-          <Sequencer />
-        </React.Suspense>
-        <AppLayout />
-      </div>
-    </PersistGate>
-  </Provider>
-);
+const App = () => {
+  React.useLayoutEffect(() => {
+    // Custom performance marker
+    if ("performance" in window && "mark" in window.performance)
+      performance.mark("first_layout_render");
 
-function onMount() {
-  // Custom performance marker
-  if ("performance" in window && "mark" in window.performance)
-    performance.mark("first_layout_render");
+    // Hide loading spinner and reveal the app layout
+    var loaderElement = document.getElementById("loader");
+    loaderElement.className = "loader-wrapper done";
+    document.getElementById("root").className = "";
+  }, []);
 
-  // Hide loading spinner and reveal the app layout
-  var loaderElement = document.getElementById("loader");
-  loaderElement.className = "loader-wrapper done";
-  document.getElementById("root").className = "";
-}
+  return (
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <div style={{ width: "100%", height: "100%" }}>
+          <React.Suspense fallback={null}>
+            <Sequencer />
+          </React.Suspense>
+          <AppLayout />
+        </div>
+      </PersistGate>
+    </Provider>
+  );
+};
 
-const root = unstable_createRoot(document.getElementById("root"));
-root.render(<App />, onMount);
+const root = createRoot(document.getElementById("root"));
+root.render(<App />);

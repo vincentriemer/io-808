@@ -1,5 +1,5 @@
 import React from "react";
-import { useDrag } from "react-events/drag";
+// import { useDrag } from "react-events/drag";
 
 import { snap } from "helpers";
 import { BASE_HEIGHT } from "./constants";
@@ -77,12 +77,12 @@ const Knob = props => {
     ];
     setKnobCenter(knobCenter);
   }, []);
-  const dragListener = useDrag({
-    onDragStart: handleDragStart,
-    onDragEnd: handleDragEnd,
-    onDragMove: handleDrag,
-    shouldClaimOwnership: () => true
-  });
+  // const dragListener = useDrag({
+  //   onDragStart: handleDragStart,
+  //   onDragEnd: handleDragEnd,
+  //   onDragMove: handleDrag,
+  //   shouldClaimOwnership: () => true
+  // });
 
   const rotationAmount =
     getNormalizedValue(value, min, max) * bufferSize - bufferSize / 2;
@@ -120,9 +120,7 @@ const Knob = props => {
 
   return (
     <div style={styles.wrapper}>
-      <div style={styles.knob} listeners={dragListener}>
-        {props.children}
-      </div>
+      <div style={styles.knob}>{props.children}</div>
       {helper}
     </div>
   );

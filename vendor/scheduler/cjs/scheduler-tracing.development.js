@@ -15,69 +15,6 @@ if (process.env.NODE_ENV !== "production") {
   (function() {
 'use strict';
 
-Object.defineProperty(exports, '__esModule', { value: true });
-
-// Helps identify side effects in begin-phase lifecycle hooks and setState reducers:
-
- // In some cases, StrictMode should also double-render lifecycles.
-// This can be confusing for tests though,
-// And it can be bad for performance in production.
-// This feature flag can be used to control the behavior:
-
- // To preserve the "Pause on caught exceptions" behavior of the debugger, we
-// replay the begin phase of a failed component inside invokeGuardedCallback.
-
- // Warn about deprecated, async-unsafe lifecycles; relates to RFC #6:
-
- // Gather advanced timing metrics for Profiler subtrees.
-
- // Trace which interactions trigger each commit.
-
-var enableSchedulerTracing = true; // Only used in www builds.
-
- // TODO: true? Here it might just be false.
-// Only used in www builds.
-
- // Only used in www builds.
-
- // Disable javascript: URL strings in href for XSS protection.
-
- // React Fire: prevent the value and checked attributes from syncing
-// with their related DOM properties
-
- // These APIs will no longer be "unstable" in the upcoming 16.7 release,
-// Control this behavior with a flag to support 16.6 minor releases in the meanwhile.
-
-
- // See https://github.com/react-native-community/discussions-and-proposals/issues/72 for more information
-// This is a flag so we can fix warnings in RN core before turning it on
-
- // Experimental React Flare event system and event components support.
-
- // Experimental Host Component support.
-
- // New API for JSX transforms to target - https://github.com/reactjs/rfcs/pull/107
-
- // We will enforce mocking scheduler with scheduler/unstable_mock at some point. (v17?)
-// Till then, we warn about the missing mock, but still fallback to a sync mode compatible version
-
- // For tests, we flush suspense fallbacks in an act scope;
-// *except* in some of our own tests, where we test incremental loading states.
-
- // Changes priority of some events like mousemove to user-blocking priority,
-// but without making them discrete. The flag exists in case it causes
-// starvation problems.
-
- // Add a callback property to suspense to notify which promises are currently
-// in the update queue. This allows reporting and tracing of what is causing
-// the user to see a loading state.
-// Also allows hydration callbacks to fire when a dehydrated boundary gets
-// hydrated or deleted.
-
- // Part of the simplification of React.createElement so we can eventually move
-// from React.createElement to React.jsx
-// https://github.com/reactjs/rfcs/blob/createlement-rfc/text/0000-create-element-changes.md
-
 var DEFAULT_THREAD_ID = 0; // Counters used to generate unique IDs.
 
 var interactionIDCounter = 0;
@@ -90,7 +27,7 @@ exports.__interactionsRef = null; // Listener(s) to notify when interactions beg
 
 exports.__subscriberRef = null;
 
-if (enableSchedulerTracing) {
+{
   exports.__interactionsRef = {
     current: new Set()
   };
@@ -98,11 +35,7 @@ if (enableSchedulerTracing) {
     current: null
   };
 }
-
 function unstable_clear(callback) {
-  if (!enableSchedulerTracing) {
-    return callback();
-  }
 
   var prevInteractions = exports.__interactionsRef.current;
   exports.__interactionsRef.current = new Set();
@@ -114,9 +47,7 @@ function unstable_clear(callback) {
   }
 }
 function unstable_getCurrent() {
-  if (!enableSchedulerTracing) {
-    return null;
-  } else {
+  {
     return exports.__interactionsRef.current;
   }
 }
@@ -125,10 +56,6 @@ function unstable_getThreadID() {
 }
 function unstable_trace(name, timestamp, callback) {
   var threadID = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : DEFAULT_THREAD_ID;
-
-  if (!enableSchedulerTracing) {
-    return callback();
-  }
 
   var interaction = {
     __count: 1,
@@ -181,10 +108,6 @@ function unstable_trace(name, timestamp, callback) {
 }
 function unstable_wrap(callback) {
   var threadID = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : DEFAULT_THREAD_ID;
-
-  if (!enableSchedulerTracing) {
-    return callback;
-  }
 
   var wrappedInteractions = exports.__interactionsRef.current;
   var subscriber = exports.__subscriberRef.current;
@@ -271,12 +194,12 @@ function unstable_wrap(callback) {
 
 var subscribers = null;
 
-if (enableSchedulerTracing) {
+{
   subscribers = new Set();
 }
 
 function unstable_subscribe(subscriber) {
-  if (enableSchedulerTracing) {
+  {
     subscribers.add(subscriber);
 
     if (subscribers.size === 1) {
@@ -292,7 +215,7 @@ function unstable_subscribe(subscriber) {
   }
 }
 function unstable_unsubscribe(subscriber) {
-  if (enableSchedulerTracing) {
+  {
     subscribers.delete(subscriber);
 
     if (subscribers.size === 0) {
@@ -418,9 +341,9 @@ function onWorkCanceled(interactions, threadID) {
 exports.unstable_clear = unstable_clear;
 exports.unstable_getCurrent = unstable_getCurrent;
 exports.unstable_getThreadID = unstable_getThreadID;
-exports.unstable_trace = unstable_trace;
-exports.unstable_wrap = unstable_wrap;
 exports.unstable_subscribe = unstable_subscribe;
+exports.unstable_trace = unstable_trace;
 exports.unstable_unsubscribe = unstable_unsubscribe;
+exports.unstable_wrap = unstable_wrap;
   })();
 }

@@ -1,6 +1,6 @@
 import React from "react";
-import { usePress } from "react-events/press";
-import { useHover } from "react-events/hover";
+import useTap from "hooks/useTap";
+import useHover from "hooks/useHover";
 
 import { grey } from "theme/variables";
 
@@ -36,21 +36,10 @@ const styles = {
 const Button = props => {
   const { style, children, disabled = false, onClick = () => {} } = props;
 
-  const [isPressed, setIsPressed] = React.useState(false);
-  const pressListener = usePress({
-    onPress: onClick,
-    onPressChange: setIsPressed
-  });
+  const ref = React.useRef(null);
 
-  const [isHovered, setIsHovered] = React.useState(false);
-  const hoverListener = useHover({
-    onHoverChange: setIsHovered
-  });
-
-  const listeners = React.useMemo(() => [pressListener, hoverListener], [
-    hoverListener,
-    pressListener
-  ]);
+  const isPressed = useTap(ref, onClick);
+  const isHovered = useHover(ref);
 
   const buttonStyle = React.useMemo(() => {
     let result = styles.button;
@@ -70,7 +59,7 @@ const Button = props => {
   }, [disabled, isHovered, isPressed, style]);
 
   return (
-    <button style={buttonStyle} listeners={listeners}>
+    <button ref={ref} style={buttonStyle}>
       {children}
     </button>
   );

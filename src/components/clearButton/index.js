@@ -1,6 +1,6 @@
 import React from "react";
-import { usePress } from "react-events/press";
-import { useHover } from "react-events/hover";
+import useTap from "hooks/useTap";
+import useHover from "hooks/useHover";
 
 import { red, grey } from "theme/variables";
 import { labelGreySmall } from "theme/mixins";
@@ -41,23 +41,18 @@ const ClearButton = props => {
     onDragStart = noOp
   } = props;
 
-  const [isHovered, setIsHovered] = React.useState(false);
-  const hoverListener = useHover({
-    onHoverChange: setIsHovered
+  const ref = React.useRef(null);
+  const isActive = useTap(ref, null, {
+    onPressDown: onMouseDown,
+    onPressUp: onMouseUp
   });
-
-  const [isActive, setIsActive] = React.useState(false);
-  const pressListener = usePress({
-    onPressChange: setIsActive,
-    onPressStart: onMouseDown,
-    onPressEnd: onMouseUp
-  });
+  const isHovered = useHover(ref);
 
   if (draggable) {
-    const listeners = [hoverListener];
     return (
       <div style={styles.wrapper}>
         <div
+          ref={ref}
           style={{
             ...styles.clearButton,
             ...(isHovered && styles.clearButtonHover)
@@ -65,7 +60,6 @@ const ClearButton = props => {
           draggable={true}
           onDragEnd={onDragEnd}
           onDragStart={onDragStart}
-          listeners={listeners}
         />
         <div
           style={{ ...styles.instructionLabel, opacity: draggable ? 1.0 : 0.0 }}
@@ -84,10 +78,9 @@ const ClearButton = props => {
   if (isActive) {
     buttonStyle.transform = "scale(1.0) translateZ(0)";
   }
-  const listeners = [hoverListener, pressListener];
   return (
     <div style={styles.wrapper}>
-      <div style={buttonStyle} listeners={listeners} />
+      <div ref={ref} style={buttonStyle} />
       <div style={styles.instructionLabel}>
         Drag to a Step Button to set Pattern Length
       </div>

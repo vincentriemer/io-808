@@ -1,5 +1,5 @@
 import React from "react";
-import { useInput } from "react-events/input";
+// import { useInput } from "react-events/input";
 
 import Octicon from "react-octicon";
 
@@ -71,9 +71,9 @@ const LoadButton = props => {
     }
   }, [onLoadedState]);
 
-  const inputListener = useInput({
-    onChange: handleFileChange
-  });
+  // const inputListener = useInput({
+  //   onChange: handleFileChange
+  // });
 
   return (
     <Button
@@ -81,12 +81,7 @@ const LoadButton = props => {
       disabled={playing}
       onClick={handlePress}
     >
-      <input
-        ref={fileUploadRef}
-        type="file"
-        style={styles.input}
-        listeners={inputListener}
-      />
+      <input ref={fileUploadRef} type="file" style={styles.input} />
       <Octicon
         title="Load"
         style={{ ...styles.icon, width: size, height: size }}

@@ -1,6 +1,6 @@
 // External Deps
 import React from "react";
-import { useHover } from "react-events/hover";
+import useHover from "hooks/useHover";
 
 // Theme
 import { grey, slightlyDarkerBlack } from "theme/variables";
@@ -20,13 +20,11 @@ import {
 } from "./connectedComponents";
 
 const GithubLink = () => {
-  const [hovered, setHovered] = React.useState();
-  const hoverListener = useHover({
-    onHoverChange: setHovered
-  });
+  const ref = React.useRef(null);
+  const hovered = useHover(ref);
   return (
     <a
-      listeners={hoverListener}
+      ref={ref}
       style={{
         color: slightlyDarkerBlack,
         opacity: hovered ? 1.0 : 0.5,
