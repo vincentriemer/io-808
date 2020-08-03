@@ -1,0 +1,44 @@
+{
+  "icons": [
+    {
+      "src": "icon_512x512.18d9837f259816a7e2f1954a3c2cb628.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_384x384.2e9178c2ecd88833217214af23042b82.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_256x256.6006efa4d39743f8ada2e84759b3579b.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_192x192.1e55dc68289f188968696873617fd5c6.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_128x128.8cd8f09cc730d1b45e48095cabf95e47.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_96x96.1a4ee0669d341dccda1bc9d266a845a2.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    }
+  ],
+  "name": "iO-808",
+  "short_name": "io808",
+  "orientation": "landscape",
+  "display": "standalone",
+  "start_url": ".",
+  "lang": "en",
+  "dir": "ltr",
+  "description": "A fully recreated web-based TR-808 drum machine using React, Redux, and the Web Audio API.",
+  "background_color": "#363830",
+  "theme_color": "#363830"
+}
