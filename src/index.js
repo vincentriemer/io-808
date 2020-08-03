@@ -3,6 +3,15 @@ if (process.env.NODE_ENV === "production") {
   require("offline-plugin/runtime").install();
 }
 
+// URL cheat code to immediately transition to the drum machine's original color
+// Example: https://io808.com/?forceColor
+setTimeout(() => {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has("forceColor")) {
+    document.documentElement.style.animationDelay = "0s";
+  }
+}, 0);
+
 // import global styles
 require("globalStyles/reset.css");
 require("globalStyles/main.css");
@@ -28,7 +37,7 @@ const AsyncMode = React.unstable_AsyncMode;
 
 const Sequencer = Loadable({
   loader: () => import("./sequencer"),
-  loading: () => null,
+  loading: () => null
 });
 
 class App extends React.Component {
