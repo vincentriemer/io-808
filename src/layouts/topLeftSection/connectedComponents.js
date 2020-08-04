@@ -1,4 +1,5 @@
-import { connect } from "react-redux";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   onModeChange,
   onInstrumentTrackChange,
@@ -20,85 +21,103 @@ import AutoFillInKnob from "components/autoFillInKnob";
 import TempoKnob from "components/tempoKnob";
 import FineTempoKnob from "components/fineTempoKnob";
 
-export const ConnectedClearButton = (() => {
-  const mapDispatchToProps = dispatch => ({
-    onMouseDown: () => dispatch(onClearDown()),
-    onMouseUp: () => dispatch(onClearUp()),
-    onDragStart: () => dispatch(onClearDragStart()),
-    onDragEnd: () => dispatch(onClearDragEnd())
-  });
+export const ConnectedClearButton = props => {
+  const draggable = useSelector(state =>
+    [MODE_FIRST_PART, MODE_SECOND_PART].includes(state.selectedMode)
+  );
 
-  const mapStateToProps = state => ({
-    draggable: [MODE_FIRST_PART, MODE_SECOND_PART].includes(state.selectedMode)
-  });
+  const dispatch = useDispatch();
+  const onMouseDown = React.useCallback(() => dispatch(onClearDown()), [
+    dispatch
+  ]);
+  const onMouseUp = React.useCallback(() => dispatch(onClearUp()), [dispatch]);
+  const onDragStart = React.useCallback(() => dispatch(onClearDragStart()), [
+    dispatch
+  ]);
+  const onDragEnd = React.useCallback(() => dispatch(onClearDragEnd()), [
+    dispatch
+  ]);
 
-  return connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(ClearButton);
-})();
+  return (
+    <ClearButton
+      {...props}
+      draggable={draggable}
+      onMouseDown={onMouseDown}
+      onMouseUp={onMouseUp}
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
+    />
+  );
+};
 
-export const ConnectedModeKnob = (() => {
-  const mapStateToProps = state => ({
-    value: state.selectedMode
-  });
-  const mapDispatchToProps = dispatch => ({
-    onChange: value => dispatch(onModeChange(value))
-  });
-  return connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(ModeKnob);
-})();
+export const ConnectedModeKnob = props => {
+  const value = useSelector(state => state.selectedMode);
 
-export const ConnectedInstrumentSelectorKnob = (() => {
-  const mapStateToProps = state => ({
-    value: state.selectedInstrumentTrack
-  });
-  const mapDispatchToProps = dispatch => ({
-    onChange: value => dispatch(onInstrumentTrackChange(value))
-  });
-  return connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(InstrumentSelectorKnob);
-})();
+  const dispatch = useDispatch();
+  const onChange = React.useCallback(
+    value => {
+      dispatch(onModeChange(value));
+    },
+    [dispatch]
+  );
 
-export const ConnectedAutoFillInKnob = (() => {
-  const mapStateToProps = state => ({
-    value: state.autoFillInPosition
-  });
-  const mapDispatchToProps = dispatch => ({
-    onChange: value => dispatch(onAutoFillInChange(value))
-  });
-  return connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(AutoFillInKnob);
-})();
+  return <ModeKnob {...props} value={value} onChange={onChange} />;
+};
 
-export const ConnectedTempoKnob = (() => {
-  const mapStateToProps = state => ({
-    value: state.tempo
-  });
-  const mapDispatchToProps = dispatch => ({
-    onChange: value => dispatch(onTempoChange(value))
-  });
-  return connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(TempoKnob);
-})();
+export const ConnectedInstrumentSelectorKnob = props => {
+  const value = useSelector(state => state.selectedInstrumentTrack);
 
-export const ConnectedFineTempoKnob = (() => {
-  const mapStateToProps = state => ({
-    value: state.fineTempo
-  });
-  const mapDispatchToProps = dispatch => ({
-    onChange: value => dispatch(onFineTempoChange(value))
-  });
-  return connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(FineTempoKnob);
-})();
+  const dispatch = useDispatch();
+  const onChange = React.useCallback(
+    value => {
+      dispatch(onInstrumentTrackChange(value));
+    },
+    [dispatch]
+  );
+
+  return (
+    <InstrumentSelectorKnob {...props} value={value} onChange={onChange} />
+  );
+};
+
+export const ConnectedAutoFillInKnob = props => {
+  const value = useSelector(state => state.autoFillInPosition);
+
+  const dispatch = useDispatch();
+  const onChange = React.useCallback(
+    value => {
+      dispatch(onAutoFillInChange(value));
+    },
+    [dispatch]
+  );
+
+  return <AutoFillInKnob {...props} value={value} onChange={onChange} />;
+};
+
+export const ConnectedTempoKnob = props => {
+  const value = useSelector(state => state.tempo);
+
+  const dispatch = useDispatch();
+  const onChange = React.useCallback(
+    value => {
+      dispatch(onTempoChange(value));
+    },
+    [dispatch]
+  );
+
+  return <TempoKnob {...props} value={value} onChange={onChange} />;
+};
+
+export const ConnectedFineTempoKnob = props => {
+  const value = useSelector(state => state.fineTempo);
+
+  const dispatch = useDispatch();
+  const onChange = React.useCallback(
+    value => {
+      dispatch(onFineTempoChange(value));
+    },
+    [dispatch]
+  );
+
+  return <FineTempoKnob {...props} value={value} onChange={onChange} />;
+};
