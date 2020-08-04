@@ -82,6 +82,7 @@
     "paths-js": "^0.4.9",
     "prop-types": "^15.7.2",
     "react": "file:vendor/react",
+    "react-gui": "0.0.0-2e39cbb",
     "react-dom": "file:vendor/react-dom",
     "react-octicon": "^3.0.1",
     "react-redux": "^7.1.0",

@@ -1,6 +1,6 @@
 import React from "react";
-import useTap from "hooks/useTap";
-import useContinuousHover from "hooks/useContinuousHover";
+import usePress from "react-gui/use-press";
+import { useHoverEvents } from "react-gui/use-hover";
 
 const VERTICAL = "vertical";
 const HORIZONTAL = "horizontal";
@@ -57,9 +57,10 @@ const SoundSwitch = props => {
     onChange(state.hoverPosition);
   }, [onChange, state.hoverPosition]);
 
-  // console.log(state);
+  const { isPressed: pressed } = usePress(ref, {
+    onPress: handlePress
+  });
 
-  const pressed = useTap(ref, handlePress);
   React.useEffect(() => {
     const {
       hasMovedWhilePressed,
@@ -146,10 +147,10 @@ const SoundSwitch = props => {
     }));
   }, [position]);
 
-  useContinuousHover(ref, {
+  useHoverEvents(ref, {
     onHoverStart: handleHoverStart,
-    onHoverEnd: handleHoverEnd,
-    onHoverMove: handleHoverMove
+    onHoverUpdate: handleHoverMove,
+    onHoverEnd: handleHoverEnd
   });
 
   const positionIncrement =

@@ -1,9 +1,11 @@
 import React from "react";
-import useTap from "hooks/useTap";
-import useHover from "hooks/useHover";
+import usePress from "react-gui/use-press";
+import useHover from "react-gui/use-hover";
 
 import { red, grey } from "theme/variables";
 import { labelGreySmall } from "theme/mixins";
+
+import { usePressEvents } from "react-gui/use-press/events";
 
 const noOp = () => {};
 
@@ -42,11 +44,13 @@ const ClearButton = props => {
   } = props;
 
   const ref = React.useRef(null);
-  const isActive = useTap(ref, null, {
-    onPressDown: onMouseDown,
-    onPressUp: onMouseUp
+
+  const { isPressed: isActive } = usePress(ref, {});
+  usePressEvents(ref, {
+    onPressStart: onMouseDown,
+    onPressEnd: onMouseUp
   });
-  const isHovered = useHover(ref);
+  const { isHovered } = useHover(ref);
 
   if (draggable) {
     return (

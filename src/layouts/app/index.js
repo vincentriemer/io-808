@@ -1,6 +1,6 @@
 // External Deps
 import React from "react";
-import useHover from "hooks/useHover";
+import useHover from "react-gui/use-hover";
 
 // Theme
 import { grey, slightlyDarkerBlack } from "theme/variables";
@@ -21,7 +21,7 @@ import {
 
 const GithubLink = () => {
   const ref = React.useRef(null);
-  const hovered = useHover(ref);
+  const { isHovered: hovered } = useHover(ref);
   return (
     <a
       ref={ref}

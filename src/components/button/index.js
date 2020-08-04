@@ -1,6 +1,6 @@
 import React from "react";
-import useTap from "hooks/useTap";
-import useHover from "hooks/useHover";
+import useHover from "react-gui/use-hover";
+import usePress from "react-gui/use-press";
 
 import { grey } from "theme/variables";
 
@@ -38,8 +38,8 @@ const Button = props => {
 
   const ref = React.useRef(null);
 
-  const isPressed = useTap(ref, onClick);
-  const isHovered = useHover(ref);
+  const { isPressed } = usePress(ref, { disabled, onPress: onClick });
+  const { isHovered } = useHover(ref, { updates: false, disabled });
 
   const buttonStyle = React.useMemo(() => {
     let result = styles.button;
