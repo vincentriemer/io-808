@@ -1,10 +1,16 @@
+require("dotenv").config();
+
 var path = require("path");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
 var MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var { WebpackPluginServe: Serve } = require("webpack-plugin-serve");
 var ReplacePlugin = require("webpack-plugin-replace");
+var CopyPlugin = require("copy-webpack-plugin");
 
 var outputPath = path.join(__dirname, "dist");
+
+var fontBaseURL = process.env.WEBFONT_BASE_URL;
+var linotypeUserID = process.env.LINOTYPE_USER_ID;
 
 module.exports = {
   mode: "development",
@@ -65,6 +71,9 @@ module.exports = {
   },
   node: false,
   plugins: [
+    new CopyPlugin({
+      patterns: [{ from: "static/**/*" }]
+    }),
     new ReplacePlugin({
       "process.nextTick": "Promise.resolve().then"
     }),
@@ -73,6 +82,10 @@ module.exports = {
       inject: false,
       cache: false,
       template: "src/index.pug",
+      templateParameters: {
+        fontBaseURL,
+        linotypeUserID
+      },
       filename: "index.html",
       title: "iO-808"
     }),

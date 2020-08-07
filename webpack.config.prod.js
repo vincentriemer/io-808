@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 var path = require("path");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
 var FaviconsWebpackPlugin = require("favicons-webpack-plugin");
@@ -7,8 +9,12 @@ var OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 var OfflinePlugin = require("offline-plugin");
 var WebpackPwaManifest = require("webpack-pwa-manifest");
 var ReplacePlugin = require("webpack-plugin-replace");
+var CopyPlugin = require("copy-webpack-plugin");
 // var BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
 //   .BundleAnalyzerPlugin;
+
+const fontBaseURL = process.env.WEBFONT_BASE_URL;
+const linotypeUserID = process.env.LINOTYPE_USER_ID;
 
 module.exports = {
   mode: "production",
@@ -88,8 +94,30 @@ module.exports = {
     ]
   },
   plugins: [
+    new CopyPlugin({
+      patterns: [{ from: "static/**/*" }]
+    }),
     new ReplacePlugin({
       "process.nextTick": "Promise.resolve().then"
+    }),
+    new HtmlWebpackPlugin({
+      inject: false,
+      cache: false,
+      minify: {
+        collapseWhitespace: true,
+        html5: true,
+        minifyCSS: true,
+        minifyJS: true,
+        removeComments: true,
+        useShortDoctype: true
+      },
+      template: "src/index.pug",
+      templateParameters: {
+        fontBaseURL,
+        linotypeUserID
+      },
+      filename: "index.html",
+      title: "iO-808"
     }),
     new FaviconsWebpackPlugin({
       logo: "./base-favicon.png",
@@ -109,26 +137,12 @@ module.exports = {
         windows: true
       }
     }),
-    new HtmlWebpackPlugin({
-      inject: false,
-      cache: false,
-      minify: {
-        collapseWhitespace: true,
-        html5: true,
-        minifyCSS: true,
-        minifyJS: true,
-        removeComments: true,
-        useShortDoctype: true
-      },
-      template: "src/index.pug",
-      filename: "index.html",
-      title: "iO-808"
-    }),
     new WebpackPwaManifest({
       lang: "en",
       dir: "ltr",
       name: "iO-808",
       short_name: "io808",
+      inject: true,
       description:
         "A fully recreated web-based TR-808 drum machine using React, Redux, and the Web Audio API.",
       background_color: "#363830",
@@ -142,9 +156,7 @@ module.exports = {
         }
       ]
     }),
-    new MiniCssExtractPlugin({
-      filename: "styles.css"
-    }),
+    new MiniCssExtractPlugin({}),
     new OfflinePlugin()
     // new BundleAnalyzerPlugin()
   ],
