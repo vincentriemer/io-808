@@ -10,11 +10,11 @@ var OfflinePlugin = require("offline-plugin");
 var WebpackPwaManifest = require("webpack-pwa-manifest");
 var ReplacePlugin = require("webpack-plugin-replace");
 var CopyPlugin = require("copy-webpack-plugin");
-// var BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-//   .BundleAnalyzerPlugin;
 
-const fontBaseURL = process.env.WEBFONT_BASE_URL;
-const linotypeUserID = process.env.LINOTYPE_USER_ID;
+var fontBaseURL = process.env.WEBFONT_BASE_URL;
+var linotypeUserID = process.env.LINOTYPE_USER_ID;
+var trackerURL = process.env.FATHOM_TRACKER_URL;
+var trackerSiteID = process.env.FATHOM_SITE_ID;
 
 module.exports = {
   mode: "production",
@@ -114,7 +114,9 @@ module.exports = {
       template: "src/index.pug",
       templateParameters: {
         fontBaseURL,
-        linotypeUserID
+        linotypeUserID,
+        trackerURL,
+        trackerSiteID
       },
       filename: "index.html",
       title: "iO-808"
@@ -158,7 +160,6 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({}),
     new OfflinePlugin()
-    // new BundleAnalyzerPlugin()
   ],
   resolve: {
     modules: [path.resolve(__dirname, "src"), "node_modules"],

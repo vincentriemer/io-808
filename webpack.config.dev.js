@@ -10,7 +10,6 @@ var CopyPlugin = require("copy-webpack-plugin");
 var outputPath = path.join(__dirname, "dist");
 
 var fontBaseURL = process.env.WEBFONT_BASE_URL;
-var linotypeUserID = process.env.LINOTYPE_USER_ID;
 
 module.exports = {
   mode: "development",
@@ -83,8 +82,7 @@ module.exports = {
       cache: false,
       template: "src/index.pug",
       templateParameters: {
-        fontBaseURL,
-        linotypeUserID
+        fontBaseURL
       },
       filename: "index.html",
       title: "iO-808"

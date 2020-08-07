@@ -29,6 +29,7 @@ html(lang="en")
                         url("#{fontBaseURL}/Fonts/1489428/e0eda329-a6eb-46ac-8f15-e1c54de80856.woff")
                         format("woff");
                     font-weight: 300;
+                    font-display: swap;
                 }
                 @font-face {
                     font-family: "Helvetica LT W04";
@@ -37,6 +38,7 @@ html(lang="en")
                         url("#{fontBaseURL}/Fonts/1489440/4deeb3d8-6eff-48da-9238-9220bb4a35f0.woff")
                         format("woff");
                     font-weight: 400;
+                    font-display: swap;
                 }
                 @font-face {
                     font-family: "Helvetica LT W04";
@@ -45,6 +47,7 @@ html(lang="en")
                         url("#{fontBaseURL}/Fonts/1489456/0b6078b5-b3d8-46ee-a22e-5197ae487290.woff")
                         format("woff");
                     font-weight: 700;
+                    font-display: swap;
                 }
                 @font-face {
                     font-family: "ITC Serif Gothic W03";
@@ -53,6 +56,7 @@ html(lang="en")
                         url("#{fontBaseURL}/Fonts/1551836/fa83b016-2709-4c67-a3c7-26c3c92c61fb.woff")
                         format("woff");
                     font-weight: 700;
+                    font-display: swap;
                 }
 
 
@@ -72,19 +76,21 @@ html(lang="en")
         each jsFile in htmlWebpackPlugin.files.js
             script(type="text/javascript" src=jsFile async)
 
-        // fathom analytics
-        script(type="text/javascript").
-            (function(f, a, t, h, o, m){
-                a[h]=a[h]||function(){
-                    (a[h].q=a[h].q||[]).push(arguments)
-                };
-                o=f.createElement('script'),
-                m=f.getElementsByTagName('script')[0];
-                o.async=1; o.src=t; o.id='fathom-script';
-                m.parentNode.insertBefore(o,m)
-            })(document, window, '//analytics.vincentriemer.com/tracker.js', 'fathom');
-            fathom('set', 'siteId', 'XVJNW');
-            fathom('trackPageview');
+        
+        if trackerURL != null && trackerSiteID != null
+            // fathom analytics
+            script(type="text/javascript").
+                (function(f, a, t, h, o, m){
+                    a[h]=a[h]||function(){
+                        (a[h].q=a[h].q||[]).push(arguments)
+                    };
+                    o=f.createElement('script'),
+                    m=f.getElementsByTagName('script')[0];
+                    o.async=1; o.src=t; o.id='fathom-script';
+                    m.parentNode.insertBefore(o,m)
+                })(document, window, '#{trackerURL}', 'fathom');
+                fathom('set', 'siteId', '#{trackerSiteID}');
+                fathom('trackPageview');
 
         if fontBaseURL != null && linotypeUserID != null
             // font licensing script
