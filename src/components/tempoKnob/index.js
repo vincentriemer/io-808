@@ -8,7 +8,7 @@ import { labelGreyLarge, ring, unselectableText } from "theme/mixins";
 import {
   grey,
   darkGrey,
-  fontFamily,
+  panelFontFamily,
   normalSize,
   fontWeight,
   letterSpacing
@@ -51,7 +51,7 @@ const styles = {
     position: "relative"
   },
   labelGuides: {
-    fontFamily,
+    fontFamily: panelFontFamily,
     fontWeight,
     letterSpacing,
     fontSize: normalSize,

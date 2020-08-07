@@ -1,7 +1,7 @@
 import React from "react";
 import Switch from "components/switch";
 
-import { darkBlack, slightlyDarkerBlack } from "theme/variables";
+import { slightlyDarkerBlack, drumSwitchHandle } from "theme/variables";
 
 const borderRadius = 2;
 const styles = {
@@ -12,7 +12,7 @@ const styles = {
     alignItems: "center"
   },
   inner: {
-    backgroundColor: darkBlack,
+    backgroundColor: drumSwitchHandle,
     borderRadius: borderRadius
   },
   outer: {
@@ -28,7 +28,7 @@ const DrumSwitch = props => {
         {...props}
         direction="vertical"
         numPositions={2}
-        thickness={30}
+        thickness={22}
         length={50}
         padding={4}
         innerThickness={22}

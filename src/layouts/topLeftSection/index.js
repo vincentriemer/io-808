@@ -83,7 +83,7 @@ function TopLeftSection(props) {
     instrumentSelect: {
       ...labelBase,
       position: "static",
-      width: 120,
+      width: 125,
       marginTop: 2,
       color: drumLabel,
       ...labelBorder("rgba(0,0,0,0)")
@@ -160,7 +160,7 @@ function TopLeftSection(props) {
       border: `2px solid ${grey}`
     },
     autoFillInWrapper: {
-      marginTop: 20
+      marginTop: 5
     },
     knobTempoWrapper: {
       position: "absolute",

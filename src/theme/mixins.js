@@ -1,5 +1,5 @@
 import {
-  fontFamily,
+  panelFontFamily,
   fontWeight,
   textAlign,
   letterSpacing,
@@ -28,7 +28,7 @@ export const autoCursor = {
 };
 
 const basePreset = {
-  fontFamily,
+  fontFamily: panelFontFamily,
   fontWeight,
   textAlign,
   letterSpacing,

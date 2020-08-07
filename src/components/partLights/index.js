@@ -22,7 +22,8 @@ const styles = {
   },
   label: {
     ...labelGreyNormal,
-    marginTop: 4
+    marginTop: 4,
+    width: 60
   }
 };
 

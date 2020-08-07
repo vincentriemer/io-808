@@ -17,7 +17,10 @@ const styles = {
     alignItems: "center",
     justifyContent: "space-between"
   },
-  switchTitle: labelDarkGrey,
+  switchTitle: {
+    ...labelDarkGrey,
+    fontFeatureSettings: '"frac" 1, "liga" 1, "kern" 1'
+  },
   label: labelDarkGrey,
   switchWrapper: {
     width: length,

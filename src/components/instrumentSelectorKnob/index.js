@@ -5,7 +5,7 @@ import Guides from "components/guides";
 import SelectorKnobInner from "components/selectorKnobInner";
 
 import {
-  fontFamily,
+  panelFontFamily,
   normalSize,
   letterSpacing,
   smallSize,
@@ -45,7 +45,7 @@ const styles = {
     position: "relative"
   },
   numberGuides: {
-    fontFamily,
+    fontFamily: panelFontFamily,
     fontSize: smallSize,
     fontWeight,
     letterSpacing,
@@ -53,7 +53,7 @@ const styles = {
     ...unselectableText
   },
   labelGuides: {
-    fontFamily,
+    fontFamily: panelFontFamily,
     fontSize: normalSize,
     fontWeight: "normal",
     letterSpacing,

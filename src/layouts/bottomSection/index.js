@@ -282,7 +282,7 @@ const BottomSection = props => {
     preScaleSwitchWrapper: {
       // disable switch until prescale functionality is implemented (stretch-goal)
       pointerEvents: "none",
-      opacity: 0.6
+      opacity: 0.5
     },
     preScaleBottomSection: {
       width: "100%",

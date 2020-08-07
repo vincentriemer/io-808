@@ -2,7 +2,7 @@ import React from "react";
 
 import Switch from "components/switch";
 
-import { darkBlack, slightlyDarkerBlack } from "theme/variables";
+import { drumSwitchHandle, slightlyDarkerBlack } from "theme/variables";
 import { labelGreyNormal, labelGreySmall } from "theme/mixins";
 
 const noOp = () => {};
@@ -37,7 +37,7 @@ const styles = {
   },
   label: labelGreySmall,
   inner: {
-    backgroundColor: darkBlack,
+    backgroundColor: drumSwitchHandle,
     borderRadius: borderRadius
   },
   outer: {
@@ -66,7 +66,7 @@ const PreScaleSwitch = props => {
           position={position}
           direction="vertical"
           numPositions={4}
-          thickness={25}
+          thickness={22}
           length={80}
           padding={4}
           innerThickness={21}

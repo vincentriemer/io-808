@@ -1,13 +1,13 @@
 import React from "react";
 
-import { fontFamily, darkGrey, drumLabel } from "theme/variables";
+import { panelFontFamily, darkGrey, drumLabel } from "theme/variables";
 import { unselectableText } from "theme/mixins";
 
 const baseLabelStyle = {
-  fontFamily,
+  fontFamily: panelFontFamily,
   whiteSpace: "pre",
   color: darkGrey,
-  letterSpacing: -0.4,
+  letterSpacing: -0.5,
   ...unselectableText
 };
 
@@ -28,7 +28,8 @@ const styles = {
     alignItems: "baseline",
     cursor: "default",
     display: "flex",
-    flexDirection: "row"
+    flexDirection: "row",
+    wordSpacing: "-0.1em"
   },
 
   smallLabel: {
@@ -38,7 +39,8 @@ const styles = {
 
   largeLabel: {
     ...baseLabelStyle,
-    fontSize: 19
+    fontSize: 19,
+    fontWeight: 400
   }
 };
 

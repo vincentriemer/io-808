@@ -1,11 +1,11 @@
 import React from "react";
 
-import { stencilOrange, darkGrey } from "theme/variables";
+import { stencilOrange, darkGrey, brandingFontFamily } from "theme/variables";
 import { labelGreyLarge } from "theme/mixins";
 
-const lineHeight = 3;
+const lineHeight = 1.5;
 const titleRight = 60;
-const lineTop = 55.2;
+const lineTop = 55;
 
 const styles = {
   wrapper: {
@@ -30,6 +30,7 @@ const styles = {
   },
   titleBig: {
     ...labelGreyLarge,
+    fontFamily: brandingFontFamily,
     marginRight: 40,
     color: stencilOrange,
     fontSize: 50,
@@ -37,30 +38,64 @@ const styles = {
   },
   titleSmall: {
     ...labelGreyLarge,
+    fontFamily: brandingFontFamily,
     color: stencilOrange,
     fontSize: 40,
-    letterSpacing: -1.7
+    letterSpacing: -1.5
   },
   subtitle: {
     ...labelGreyLarge,
+    fontFamily: brandingFontFamily,
     position: "absolute",
-    top: `${lineTop + lineHeight * 1.5}%`,
+    top: `${lineTop + lineHeight * 3}%`,
     right: titleRight,
     fontSize: 28,
-    letterSpacing: -0.75
+    letterSpacing: -1
   }
 };
 
+const TitleText = React.memo(props => {
+  const { text } = props;
+  // Split the text by the e character and re-add them but with rotation applied
+  const eSplit = text.split("e");
+  const result = eSplit.reduce((acc, cur, idx) => {
+    if (acc === null) {
+      return [cur];
+    }
+    const rotatedE = (
+      <span
+        key={idx}
+        style={{
+          display: "inline-block",
+          transformOrigin: "50% 60%",
+          transform: "rotate(-40deg)"
+        }}
+      >
+        e
+      </span>
+    );
+    return [...acc, rotatedE, cur];
+  }, null);
+  return result;
+});
+
 const AppTitle = props => {
   const { width = 955, height = 151 } = props;
+
   return (
     <div style={{ ...styles.wrapper, width, height }}>
       <div style={{ ...styles.titleLine, width: width - 20 }} />
       <div style={styles.titleWrapper}>
-        <div style={styles.titleBig}>Rhythm Composer</div>
-        <div style={styles.titleSmall}>iO-808</div>
+        <div style={styles.titleBig}>
+          <TitleText text="Rhythm Composer" />
+        </div>
+        <div style={styles.titleSmall}>
+          <TitleText text="iO-808" />
+        </div>
       </div>
-      <div style={styles.subtitle}>Browser Controlled</div>
+      <div style={styles.subtitle}>
+        <TitleText text="Browser Controlled" />
+      </div>
     </div>
   );
 };

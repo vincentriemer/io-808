@@ -27,7 +27,7 @@ const GithubLink = () => {
       ref={ref}
       style={{
         color: slightlyDarkerBlack,
-        opacity: hovered ? 1.0 : 0.5,
+        opacity: hovered ? 1.0 : 0.75,
         transition: "opacity 0.2s"
       }}
       href="https://github.com/vincentriemer/io-808"

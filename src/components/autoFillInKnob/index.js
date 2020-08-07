@@ -7,7 +7,7 @@ import SelectorKnobInner from "components/selectorKnobInner";
 import { grey } from "theme/variables";
 import { labelGreySmall, labelGreyLarge, ring } from "theme/mixins";
 
-const labelHeight = 33;
+const labelHeight = 38;
 
 const styles = {
   wrapper: {
@@ -38,7 +38,7 @@ const styles = {
   measuresLabel: labelGreySmall,
   autoLabel: {
     position: "relative",
-    top: -2,
+    top: 0,
     ...labelGreyLarge
   }
 };
