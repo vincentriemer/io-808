@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 
 import { BASE_HEIGHT } from "./constants";
 
@@ -12,41 +11,14 @@ function cartesian2Polar([x1, y1], [x2, y2]) {
   return { distance, degrees };
 }
 
-const KnobOverlayPortal = props => {
-  const [targetElement] = React.useState(() => document.createElement("div"));
-
-  React.useEffect(() => {
-    document.body.appendChild(targetElement);
-    return () => {
-      document.body.removeChild(targetElement);
-    };
-  }, [targetElement]);
-
-  return ReactDOM.createPortal(props.children, targetElement);
-};
-
-function getWindowSize() {
-  return {
-    windowWidth: window.innerWidth,
-    windowHeight: window.innerHeight
-  };
-}
-
 const KnobOverlay = props => {
-  const { topPosition, scale, knobCenter, cursorPos, overlayColor } = props;
-
-  const [windowSize, setWindowSize] = React.useState(getWindowSize);
-  const { windowWidth, windowHeight } = windowSize;
-
-  const handleResize = React.useCallback(() => {
-    setWindowSize(getWindowSize);
-  }, []);
-  React.useEffect(() => {
-    window.addEventListener("resize", handleResize, false);
-    return () => {
-      window.removeEventListener("resize", handleResize, false);
-    };
-  }, [handleResize]);
+  const {
+    topPosition,
+    scale,
+    knobCenter,
+    cursorPos,
+    overlayColor = "#FFF"
+  } = props;
 
   const baseLineStyle = {
     position: "absolute",
@@ -62,12 +34,12 @@ const KnobOverlay = props => {
 
   const styles = {
     overlay: {
-      position: "fixed",
+      position: "absolute",
       zIndex: 100,
       top: 0,
       left: 0,
-      width: windowWidth,
-      height: windowHeight,
+      width: "100%",
+      height: "100%",
       cursor: "ns-resize"
     },
 
@@ -119,15 +91,85 @@ const KnobOverlay = props => {
   };
 
   return (
-    <KnobOverlayPortal>
-      <div style={styles.overlay}>
-        <div style={styles.knobPath} />
-        <div style={styles.bodyPath} />
-        <div style={styles.topPath} />
-        <div style={styles.centerPath} />
-        <div style={styles.bottomPath} />
-      </div>
-    </KnobOverlayPortal>
+    <div style={styles.overlay}>
+      <div style={styles.knobPath} />
+      <div style={styles.bodyPath} />
+      <div style={styles.topPath} />
+      <div style={styles.centerPath} />
+      <div style={styles.bottomPath} />
+    </div>
+  );
+};
+
+const KnobOverlayContext = React.createContext({
+  setOverlayState: () => {},
+  removeOverlay: () => {}
+});
+
+export const useKnobOverlayContext = () => {
+  return React.useContext(KnobOverlayContext);
+};
+
+/**
+ * KnobOverlayStateType = {
+ *    [id: string]: {
+ *      cursorPosition: [number, number],
+ *      knobCetner: [number, number],
+ *      scale: number,
+ *      topPosition: number,
+ *    }
+ * }
+ */
+export const KnobOverlayManager = props => {
+  const [overlayStateMap, updateOverlayStateMap] = React.useState({});
+
+  const setOverlayState = React.useCallback((id, incomingState) => {
+    updateOverlayStateMap(prev => ({
+      ...prev,
+      [id]: {
+        ...prev[id],
+        ...incomingState
+      }
+    }));
+  }, []);
+
+  const removeOverlay = React.useCallback(id => {
+    updateOverlayStateMap(prev => {
+      const updatedMap = { ...prev };
+      delete updatedMap[id];
+      return updatedMap;
+    });
+  }, []);
+
+  const contextValue = React.useMemo(
+    () => ({
+      setOverlayState,
+      removeOverlay
+    }),
+    [removeOverlay, setOverlayState]
+  );
+
+  const overlayElements = React.useMemo(() => {
+    const elements = [];
+    for (const [id, state] of Object.entries(overlayStateMap)) {
+      elements.push(
+        <KnobOverlay
+          key={id}
+          topPosition={state.topPosition}
+          scale={state.scale}
+          knobCenter={state.knobCenter}
+          cursorPos={state.cursorPosition}
+        />
+      );
+    }
+    return elements;
+  }, [overlayStateMap]);
+
+  return (
+    <KnobOverlayContext.Provider value={contextValue}>
+      {props.children}
+      {overlayElements}
+    </KnobOverlayContext.Provider>
   );
 };
 

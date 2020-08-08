@@ -1531,6 +1531,11 @@
     "@types/webpack-sources" "*"
     source-map "^0.6.0"
 
+"@vincentriemer/geometry-interfaces-polyfill@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@vincentriemer/geometry-interfaces-polyfill/-/geometry-interfaces-polyfill-0.0.1.tgz#5fdd8c1a80e06f6d7d835131a67e2e658131b4ef"
+  integrity sha512-PHoGi300OKWOcslGrAzpUtB9DTHKmuPbClQFCMI49RkJac1r6+Gk4LF6lIVMb2Y5vDr3RHozumWssjJv4LMhBQ==
+
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.9.0.tgz#bd850604b4042459a5a41cd7d338cbed695ed964"

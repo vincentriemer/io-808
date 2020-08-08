@@ -79,6 +79,7 @@
     "webpack-serve": "^3.1.1"
   },
   "dependencies": {
+    "@vincentriemer/geometry-interfaces-polyfill": "^0.0.1",
     "core-js": "^3.6.5",
     "file-saver": "^2.0.2",
     "immer": "^3.1.3",

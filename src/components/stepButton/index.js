@@ -12,7 +12,8 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    padding: 5
+    padding: 5,
+    willChange: "transform"
   }
 };
 

@@ -14,6 +14,7 @@ import { PersistGate } from "redux-persist/integration/react";
 
 import { store, persistor } from "store";
 import AppLayout from "layouts/app";
+import { KnobOverlayManager } from "components/knob/overlay";
 
 const Sequencer = React.lazy(() => import("./sequencer"));
 
@@ -25,6 +26,9 @@ const App = () => {
 
     // Hide loading spinner and reveal the app layout
     var loaderElement = document.getElementById("loader");
+    loaderElement.addEventListener("transitionend", () => {
+      loaderElement.parentNode.removeChild(loaderElement);
+    });
     loaderElement.className = "loader-wrapper done";
     document.getElementById("root").className = "";
   }, []);
@@ -32,12 +36,14 @@ const App = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <div style={{ width: "100%", height: "100%" }}>
-          <React.Suspense fallback={null}>
-            <Sequencer />
-          </React.Suspense>
-          <AppLayout />
-        </div>
+        <KnobOverlayManager>
+          <div style={{ width: "100%", height: "100%" }}>
+            <React.Suspense fallback={null}>
+              <Sequencer />
+            </React.Suspense>
+            <AppLayout />
+          </div>
+        </KnobOverlayManager>
       </PersistGate>
     </Provider>
   );
