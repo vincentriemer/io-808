@@ -7,6 +7,8 @@ var { WebpackPluginServe: Serve } = require("webpack-plugin-serve");
 var ReplacePlugin = require("webpack-plugin-replace");
 var CopyPlugin = require("copy-webpack-plugin");
 
+var babelConfig = require("./babelConfig");
+
 var outputPath = path.join(__dirname, "dist");
 
 var fontBaseURL = process.env.WEBFONT_BASE_URL;
@@ -16,7 +18,7 @@ module.exports = {
   entry: ["./src/index", "webpack-plugin-serve/client"],
   output: {
     path: outputPath,
-    filename: "bundle.js",
+    filename: "[name].mjs",
     publicPath: "/"
   },
   optimization: {
@@ -48,7 +50,8 @@ module.exports = {
           {
             loader: "babel-loader",
             options: {
-              include: path.join(__dirname, "src")
+              include: path.join(__dirname, "src"),
+              ...babelConfig(true)
             }
           }
         ]

@@ -73,9 +73,9 @@ html(lang="en")
         #root.rendering
 
         // main app bundle
+        script(type="module" src="/main.mjs")
         each jsFile in htmlWebpackPlugin.files.js
-            script(type="text/javascript" src=jsFile async)
-
+            script(nomodule src=jsFile)
         
         if trackerURL != null && trackerSiteID != null
             // fathom analytics
