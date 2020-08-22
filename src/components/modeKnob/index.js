@@ -6,6 +6,14 @@ import SelectorKnobInner from "components/selectorKnobInner";
 
 import { grey } from "theme/variables";
 import { ring } from "theme/mixins";
+import {
+  MODE_PATTERN_CLEAR,
+  MODE_FIRST_PART,
+  MODE_SECOND_PART,
+  MODE_MANUAL_PLAY,
+  MODE_RHYTHM_TRACK_PLAY,
+  MODE_RHYTHM_TRACK_COMPOSE
+} from "store-constants";
 
 const styles = {
   wrapper: {
@@ -27,6 +35,15 @@ const styles = {
   }
 };
 
+const modeOptions = [
+  { displayName: "Pattern Clear", value: MODE_PATTERN_CLEAR },
+  { displayName: "Pattern Write - First Part", value: MODE_FIRST_PART },
+  { displayName: "Pattern Write - Second Part", value: MODE_SECOND_PART },
+  { displayName: "Manual Play", value: MODE_MANUAL_PLAY },
+  { displayName: "Play", value: MODE_RHYTHM_TRACK_PLAY },
+  { displayName: "Compose", value: MODE_RHYTHM_TRACK_COMPOSE }
+];
+
 const ModeKnob = props => {
   const { value, onChange, size = 100 } = props;
   return (
@@ -40,13 +57,12 @@ const ModeKnob = props => {
         />
         <div style={styles.knobWrapper}>
           <Knob
+            type="select"
             value={value}
             onChange={onChange}
             size={size}
             bufferSize={150}
-            min={0}
-            max={5}
-            step={1}
+            options={modeOptions}
           >
             <SelectorKnobInner size={size} />
           </Knob>

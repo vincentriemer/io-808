@@ -9,6 +9,15 @@ import { labelGreySmall, labelGreyLarge, ring } from "theme/mixins";
 
 const labelHeight = 38;
 
+const measuresOptions = [
+  { displayName: "Manual", value: 0 },
+  { displayName: "16", value: 1 },
+  { displayName: "12", value: 2 },
+  { displayName: "8", value: 3 },
+  { displayName: "4", value: 4 },
+  { displayName: "2", value: 5 }
+];
+
 const styles = {
   wrapper: {
     display: "flex",
@@ -81,13 +90,12 @@ const AutoFillInKnob = props => {
         />
         <div style={ring(knobSize)}>
           <Knob
+            type="select"
             value={value}
             onChange={onChange}
             size={knobSize}
             bufferSize={150}
-            min={0}
-            max={5}
-            step={1}
+            options={measuresOptions}
           >
             <SelectorKnobInner size={knobSize} />
           </Knob>

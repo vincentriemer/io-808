@@ -5,6 +5,21 @@ import Guides from "components/guides";
 import SelectorKnobInner from "components/selectorKnobInner";
 
 import {
+  ACCENT,
+  BASS_DRUM,
+  SNARE_DRUM,
+  LOW_CONGA_LOW_TOM,
+  MID_CONGA_MID_TOM,
+  HI_CONGA_HI_TOM,
+  CLAVES_RIMSHOT,
+  MARACAS_HANDCLAP,
+  COWBELL,
+  CYMBAL,
+  OPEN_HIHAT,
+  CLSD_HIHAT
+} from "store-constants";
+
+import {
   panelFontFamily,
   normalSize,
   letterSpacing,
@@ -32,6 +47,21 @@ const guideLabels = [
   "CY",
   "OH",
   "CH"
+];
+
+const instrumentOptions = [
+  { displayName: "Accent", value: ACCENT },
+  { displayName: "Bass Drum", value: BASS_DRUM },
+  { displayName: "Snare Drum", value: SNARE_DRUM },
+  { displayName: "Low Conga/Low Tom", value: LOW_CONGA_LOW_TOM },
+  { displayName: "Mid Conga/Mid Tom", value: MID_CONGA_MID_TOM },
+  { displayName: "Hi Conga/Hi Tom", value: HI_CONGA_HI_TOM },
+  { displayName: "Claves/Rimshot", value: CLAVES_RIMSHOT },
+  { displayName: "Maracas/Handclap", value: MARACAS_HANDCLAP },
+  { displayName: "Cowbell", value: COWBELL },
+  { displayName: "Cymbal", value: CYMBAL },
+  { displayName: "Open Hi-hat", value: OPEN_HIHAT },
+  { displayName: "Closed Hi-hat", value: CLSD_HIHAT }
 ];
 
 const styles = {
@@ -90,13 +120,12 @@ const InstrumentSelectorKnob = props => {
         />
         <div style={ring(knobSize)}>
           <Knob
+            type="select"
             value={value}
             onChange={onChange}
             size={knobSize}
             bufferSize={330}
-            min={0}
-            max={11}
-            step={1}
+            options={instrumentOptions}
           >
             <SelectorKnobInner size={knobSize} />
           </Knob>
