@@ -5,8 +5,6 @@ import useHover from "react-gui/use-hover";
 import { red, grey } from "theme/variables";
 import { labelGreySmall } from "theme/mixins";
 
-import { usePressEvents } from "react-gui/use-press/events";
-
 const noOp = () => {};
 
 const styles = {
@@ -45,12 +43,15 @@ const ClearButton = props => {
 
   const ref = React.useRef(null);
 
-  const { isPressed: isActive } = usePress(ref, {});
-  usePressEvents(ref, {
+  const [isActive, onPressChange] = React.useState(false);
+  usePress(ref, {
+    onPressChange,
     onPressStart: onMouseDown,
     onPressEnd: onMouseUp
   });
-  const { isHovered } = useHover(ref);
+
+  const [isHovered, onHoverChange] = React.useState(false);
+  useHover(ref, { onHoverChange });
 
   if (draggable) {
     return (

@@ -46,6 +46,13 @@ const styles = {
   }
 };
 
+const switchValues = {
+  "1": "1",
+  "2": "2",
+  "3": "3",
+  "4": "4"
+};
+
 const PreScaleSwitch = props => {
   const { offset = 0, position } = props;
   const titlePadding = 5;
@@ -62,10 +69,12 @@ const PreScaleSwitch = props => {
           <div style={styles.label}>4</div>
         </div>
         <Switch
+          name="pre-scale"
           onChange={noOp}
           position={position}
+          disabled={true}
           direction="vertical"
-          numPositions={4}
+          values={switchValues}
           thickness={22}
           length={80}
           padding={4}

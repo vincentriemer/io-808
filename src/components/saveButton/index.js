@@ -42,7 +42,8 @@ const SaveButton = props => {
       type: "text/plain;charset=utf-8"
     });
 
-    fileSaverPromise.then(({ saveAs }) => {
+    fileSaverPromise.then(res => {
+      const { saveAs } = res.default;
       if (opId === saveOpCounter.current) {
         saveAs(saveData, "io808.json");
       }

@@ -27,7 +27,6 @@ const DrumSwitch = props => {
       <Switch
         {...props}
         direction="vertical"
-        numPositions={2}
         thickness={22}
         length={50}
         padding={4}

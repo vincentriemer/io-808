@@ -1,6 +1,13 @@
 import React from "react";
 import usePress from "react-gui/use-press";
-import { useHoverEvents } from "react-gui/use-hover";
+import useHover from "react-gui/use-hover";
+import { useId } from "@reach/auto-id";
+import useFocusVisibility from "react-gui/use-focus-visibility";
+import useFocusWithin from "react-gui/use-focus-within";
+import useEvent from "react-gui/use-event";
+
+import VisuallyHidden from "components/visuallyHidden";
+import { focusOutline } from "theme/mixins";
 
 const VERTICAL = "vertical";
 const HORIZONTAL = "horizontal";
@@ -23,21 +30,66 @@ const styles = {
   }
 };
 
-const SoundSwitch = props => {
+const AccessibilityRadioInput = React.memo(props => {
+  const { name, disabled, label, value, checked, onChange } = props;
+  const id = useId();
+  const inputRef = React.useRef(null);
+  const handleChange = React.useCallback(
+    e => {
+      if (typeof onChange === "function") {
+        onChange(e.currentTarget.value);
+      }
+    },
+    [onChange]
+  );
+  const addChangeListener = useEvent("change");
+  React.useLayoutEffect(() => {
+    const input = inputRef.current;
+    if (input != null && !disabled) {
+      return addChangeListener(input, handleChange);
+    }
+  }, [addChangeListener, disabled, handleChange]);
+
+  return (
+    <>
+      <label htmlFor={id}>{label}</label>
+      <input
+        ref={inputRef}
+        type="radio"
+        id={id}
+        name={name}
+        value={value}
+        disabled={disabled}
+        checked={checked}
+        aria-checked={checked}
+      />
+    </>
+  );
+});
+
+const Switch = props => {
   const {
+    name,
     position,
     thickness,
     length,
     direction,
-    numPositions,
+    values,
     innerThickness,
     onChange,
+    disabled = false,
     padding = 0,
     innerStyle = {},
     outerStyle = {}
   } = props;
 
+  const numPositions = Object.keys(values).length;
   const ref = React.useRef(null);
+
+  const focusVisibile = useFocusVisibility();
+  const [focusWithin, onFocusWithinChange] = React.useState(false);
+  useFocusWithin(ref, { disabled, onFocusWithinChange });
+  const isFocusWithin = focusVisibile && focusWithin;
 
   const [state, setState] = React.useState(() => ({
     hover: false,
@@ -57,8 +109,11 @@ const SoundSwitch = props => {
     onChange(state.hoverPosition);
   }, [onChange, state.hoverPosition]);
 
-  const { isPressed: pressed } = usePress(ref, {
-    onPress: handlePress
+  const [pressed, onPressChange] = React.useState(false);
+  usePress(ref, {
+    disabled,
+    onPress: handlePress,
+    onPressChange
   });
 
   React.useEffect(() => {
@@ -147,7 +202,8 @@ const SoundSwitch = props => {
     }));
   }, [position]);
 
-  useHoverEvents(ref, {
+  useHover(ref, {
+    disabled,
     onHoverStart: handleHoverStart,
     onHoverUpdate: handleHoverMove,
     onHoverEnd: handleHoverEnd
@@ -227,6 +283,37 @@ const SoundSwitch = props => {
     return undefined;
   })();
 
+  const handleAccessibilityChange = React.useCallback(
+    value => {
+      const newPosition = Object.values(values).indexOf(value);
+      setState(prev => ({
+        ...prev,
+        hasMovedWhilePressed: false,
+        initiallyPressedPosition: null,
+        hoverPosition: newPosition
+      }));
+      onChange(newPosition);
+    },
+    [onChange, values]
+  );
+
+  const accessibilityElements = React.useMemo(() => {
+    return Object.keys(values).map((label, idx) => {
+      const value = values[label];
+      return (
+        <AccessibilityRadioInput
+          key={label}
+          name={name}
+          label={label}
+          value={value}
+          disabled={disabled}
+          onChange={handleAccessibilityChange}
+          checked={idx === position}
+        />
+      );
+    });
+  }, [disabled, handleAccessibilityChange, name, position, values]);
+
   return (
     <div
       ref={ref}
@@ -237,9 +324,11 @@ const SoundSwitch = props => {
         height,
         padding,
         touchAction,
-        cursor
+        cursor,
+        ...(isFocusWithin && focusOutline)
       }}
     >
+      <VisuallyHidden role="radiogroup">{accessibilityElements}</VisuallyHidden>
       <div
         style={{
           ...styles.inner,
@@ -264,4 +353,4 @@ const SoundSwitch = props => {
   );
 };
 
-export default SoundSwitch;
+export default Switch;

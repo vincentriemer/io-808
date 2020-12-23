@@ -72,7 +72,7 @@ const MasterVolumeKnob = props => {
             bufferSize={300}
             min={0}
             max={100}
-            step={0.1}
+            step={1}
           >
             <SelectorKnobInner size={knobSize} />
           </Knob>

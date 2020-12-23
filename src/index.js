@@ -1,8 +1,3 @@
-// import offline runtime
-if (process.env.NODE_ENV === "production") {
-  require("offline-plugin/runtime").install();
-}
-
 // import global styles
 require("globalStyles/reset.css");
 require("globalStyles/main.css");

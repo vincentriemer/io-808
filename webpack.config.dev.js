@@ -4,8 +4,8 @@ var path = require("path");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
 var MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var { WebpackPluginServe: Serve } = require("webpack-plugin-serve");
-var ReplacePlugin = require("webpack-plugin-replace");
 var CopyPlugin = require("copy-webpack-plugin");
+var webpack = require("webpack");
 
 var babelConfig = require("./babelConfig");
 
@@ -58,16 +58,16 @@ module.exports = {
       },
       {
         test: /\.(otf|eot|svg|ttf|woff|woff2).*$/,
-        use: "url-loader?limit=8192"
+        type: "asset",
+        parser: {
+          dataUrlCondition: {
+            maxSize: 8192
+          }
+        }
       },
       {
         test: /\.(png|jpg|gif)$/,
-        use: [
-          {
-            loader: "file-loader",
-            options: {}
-          }
-        ]
+        type: "asset/resource"
       }
     ]
   },
@@ -76,7 +76,7 @@ module.exports = {
     new CopyPlugin({
       patterns: [{ from: "static/**/*" }]
     }),
-    new ReplacePlugin({
+    new webpack.DefinePlugin({
       "process.nextTick": "Promise.resolve().then"
     }),
     new MiniCssExtractPlugin({}),
@@ -94,7 +94,8 @@ module.exports = {
       static: outputPath,
       hmr: false,
       liveReload: true,
-      host: "0.0.0.0"
+      host: "0.0.0.0",
+      port: 3000
     })
   ],
   resolve: {

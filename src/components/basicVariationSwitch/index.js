@@ -8,6 +8,12 @@ import { labelDarkGrey } from "theme/mixins";
 
 import { A_VARIATION, B_VARIATION, BOTH_VARIATIONS } from "store-constants";
 
+const switchValues = {
+  A: A_VARIATION,
+  AB: BOTH_VARIATIONS,
+  B: B_VARIATION
+};
+
 const styles = {
   wrapper: {
     height: 110,
@@ -75,10 +81,11 @@ const BasicVariationSwitch = props => {
       <div style={styles.switchTitle}>BASIC VARIATION</div>
       <div style={{ ...styles.switchWrapper, width: length }}>
         <Switch
+          name="Basic Variation"
           position={position}
           onChange={onChange}
           direction="horizontal"
-          numPositions={3}
+          values={switchValues}
           thickness={thickness}
           length={length}
           padding={4}

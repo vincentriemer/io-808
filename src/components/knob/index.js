@@ -1,12 +1,14 @@
 import React from "react";
-import { usePanEvents } from "react-gui/use-pan";
-import useFocusVisible from "react-gui/use-focus-visible";
+import usePan from "react-gui/use-pan";
+import useFocusVisibility from "react-gui/use-focus-visibility";
+import useFocus from "react-gui/use-focus";
 
 import { snap } from "helpers";
 import { BASE_HEIGHT } from "./constants";
 import { useKnobOverlayContext } from "./overlay";
 import { convertPointFromNodeToPage } from "utils/pointConversion";
 import VisuallyHidden from "components/visuallyHidden";
+import { focusOutline } from "theme/mixins";
 
 function getNormalizedValue(value, min, max) {
   return (value - min) / (max - min);
@@ -213,16 +215,19 @@ const Knob = props => {
     return false;
   }, []);
 
-  usePanEvents(rootRef, {
+  usePan(rootRef, {
     onMoveShouldSetPan,
     onPanMove,
     onPanEnd,
-    onPanTerminationRequest,
-    touchAction: "none"
+    onPanTerminationRequest
   });
 
   const accessibilityElementRef = React.useRef(null);
-  const { isFocusVisible } = useFocusVisible(accessibilityElementRef);
+  const focusVisible = useFocusVisibility();
+  const [focused, onFocusChange] = React.useState(false);
+  useFocus(accessibilityElementRef, { onFocusChange });
+  const isFocusVisible = focused && focusVisible;
+
   const isValueNumber = typeof value === "number";
   const handleAccessibleValueUpdate = React.useCallback(
     evt => {
@@ -295,8 +300,17 @@ const Knob = props => {
       borderRadius: "50%",
       height: size,
       width: size,
-      cursor: "grab",
-      outline: isFocusVisible ? "solid red" : "none"
+      cursor: "grab"
+    },
+    overlay: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      pointerEvents: "none",
+      borderRadius: "50%",
+      ...(isFocusVisible ? focusOutline : {})
     },
     knob: {
       position: "relative",
@@ -312,6 +326,7 @@ const Knob = props => {
     <div ref={rootRef} style={styles.wrapper}>
       <VisuallyHidden>{accessibilityElement}</VisuallyHidden>
       <div style={styles.knob}>{props.children}</div>
+      <div style={styles.overlay} />
     </div>
   );
 };

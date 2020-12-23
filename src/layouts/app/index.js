@@ -21,7 +21,8 @@ import {
 
 const GithubLink = () => {
   const ref = React.useRef(null);
-  const { isHovered: hovered } = useHover(ref);
+  const [hovered, onHoverChange] = React.useState(false);
+  useHover(ref, { onHoverChange });
   return (
     <a
       ref={ref}

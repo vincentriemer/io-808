@@ -14,7 +14,11 @@ const style = {
 };
 
 function VisuallyHidden(props) {
-  return <span style={style}>{props.children}</span>;
+  return (
+    <span role={props.role} style={style}>
+      {props.children}
+    </span>
+  );
 }
 
 export default VisuallyHidden;

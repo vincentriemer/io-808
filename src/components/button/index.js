@@ -1,8 +1,11 @@
 import React from "react";
 import useHover from "react-gui/use-hover";
 import usePress from "react-gui/use-press";
+import useFocus from "react-gui/use-focus";
+import useFocusVisibility from "react-gui/use-focus-visibility";
 
 import { grey } from "theme/variables";
+import { focusOutline } from "theme/mixins";
 
 const styles = {
   button: {
@@ -18,6 +21,9 @@ const styles = {
     pointerEvents: "auto",
     opacity: 1,
     cursor: "pointer"
+  },
+  focused: {
+    ...focusOutline
   },
   hover: {
     boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
@@ -38,8 +44,23 @@ const Button = props => {
 
   const ref = React.useRef(null);
 
-  const { isPressed } = usePress(ref, { disabled, onPress: onClick });
-  const { isHovered } = useHover(ref, { updates: false, disabled });
+  const [isPressed, onPressChange] = React.useState(false);
+  usePress(ref, {
+    disabled,
+    onPress: onClick,
+    onPressChange
+  });
+
+  const [isHovered, onHoverChange] = React.useState(false);
+  useHover(ref, {
+    disabled,
+    onHoverChange
+  });
+
+  const focusVisible = useFocusVisibility();
+  const [focused, onFocusChange] = React.useState(false);
+  useFocus(ref, { disabled, onFocusChange });
+  const isFocusedAndVisible = focused && focusVisible;
 
   const buttonStyle = React.useMemo(() => {
     let result = styles.button;
@@ -52,14 +73,17 @@ const Button = props => {
     if (disabled) {
       result = { ...result, ...styles.disabled };
     }
+    if (isFocusedAndVisible) {
+      result = { ...result, ...styles.focused };
+    }
     return {
       ...result,
       ...style
     };
-  }, [disabled, isHovered, isPressed, style]);
+  }, [disabled, isFocusedAndVisible, isHovered, isPressed, style]);
 
   return (
-    <button ref={ref} style={buttonStyle}>
+    <button ref={ref} style={buttonStyle} disabled={disabled}>
       {children}
     </button>
   );

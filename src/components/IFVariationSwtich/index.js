@@ -47,6 +47,11 @@ const styles = {
   }
 };
 
+const switchValues = {
+  A: "A",
+  B: "B"
+};
+
 const IFVariationSwitch = props => {
   const { onChange, position } = props;
   return (
@@ -54,10 +59,11 @@ const IFVariationSwitch = props => {
       <div style={styles.switchTitle}>I / F - VARIATION</div>
       <div style={styles.switchWrapper}>
         <Switch
+          name="I/F Variation"
           position={position}
           onChange={onChange}
           direction="horizontal"
-          numPositions={2}
+          values={switchValues}
           thickness={thickness}
           length={length}
           padding={4}

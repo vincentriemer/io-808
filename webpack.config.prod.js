@@ -2,14 +2,11 @@ require("dotenv").config();
 
 var path = require("path");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
-var FaviconsWebpackPlugin = require("favicons-webpack-plugin");
 var MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-var OfflinePlugin = require("offline-plugin");
-var WebpackPwaManifest = require("webpack-pwa-manifest");
-var ReplacePlugin = require("webpack-plugin-replace");
 var CopyPlugin = require("copy-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
+var webpack = require("webpack");
 
 const babelConfig = require("./babelConfig");
 
@@ -59,16 +56,16 @@ const moduleSettings = isModern => {
       },
       {
         test: /\.(otf|eot|svg|ttf|woff|woff2).*$/,
-        loader: "url-loader?limit=8192"
+        type: "asset",
+        parser: {
+          dataUrlCondition: {
+            maxSize: 8192
+          }
+        }
       },
       {
         test: /\.(png|jpg|gif)$/,
-        use: [
-          {
-            loader: "file-loader",
-            options: {}
-          }
-        ]
+        type: "asset/resource"
       }
     ]
   };
@@ -77,7 +74,7 @@ const plugins = [
   new CopyPlugin({
     patterns: [{ from: "static/**/*" }]
   }),
-  new ReplacePlugin({
+  new webpack.DefinePlugin({
     "process.nextTick": "Promise.resolve().then"
   }),
   new HtmlWebpackPlugin({
@@ -101,45 +98,7 @@ const plugins = [
     filename: "index.html",
     title: "iO-808"
   }),
-  new FaviconsWebpackPlugin({
-    logo: "./base-favicon.png",
-    inject: true,
-    background: "#363830",
-    title: "iO-808",
-    icons: {
-      android: true,
-      appleIcon: true,
-      appleStartup: true,
-      coast: false,
-      favicons: true,
-      firefox: true,
-      opengraph: false,
-      twitter: true,
-      yandex: false,
-      windows: true
-    }
-  }),
-  new WebpackPwaManifest({
-    lang: "en",
-    dir: "ltr",
-    name: "iO-808",
-    short_name: "io808",
-    inject: true,
-    description:
-      "A fully recreated web-based TR-808 drum machine using React, Redux, and the Web Audio API.",
-    background_color: "#363830",
-    theme_color: "#363830",
-    orientation: "landscape",
-    display: "standalone",
-    icons: [
-      {
-        src: path.resolve("./base-favicon.png"),
-        sizes: [96, 128, 192, 256, 384, 512]
-      }
-    ]
-  }),
-  new MiniCssExtractPlugin({}),
-  new OfflinePlugin()
+  new MiniCssExtractPlugin({})
 ];
 const resolve = {
   modules: [path.resolve(__dirname, "src"), "node_modules"],

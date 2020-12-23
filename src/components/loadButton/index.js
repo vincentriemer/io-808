@@ -49,23 +49,30 @@ const LoadButton = props => {
   }, []);
 
   const handleFileChange = React.useCallback(() => {
-    const files = this.fileUpload.files;
-    if (files.length === 1) {
-      const file = files[0];
-      const reader = new FileReader();
+    const fileUpload = fileUploadRef.current;
+    if (fileUpload != null) {
+      const files = fileUpload.files;
+      if (files.length === 1) {
+        const file = files[0];
+        const reader = new FileReader();
 
-      reader.onload = () => {
-        let loadedState = JSON.parse(reader.result);
-        if (validateState(loadedState)) {
-          onLoadedState(loadedState);
-        } else {
-          window.alert("Sorry, the given io808 save is invalid.");
-        }
-      };
+        reader.onload = () => {
+          let loadedState = JSON.parse(reader.result);
+          if (validateState(loadedState)) {
+            onLoadedState(loadedState);
+          } else {
+            window.alert("Sorry, the given io808 save is invalid.");
+          }
+        };
 
-      reader.readAsText(file);
+        reader.readAsText(file);
+      } else {
+        window.alert("Sorry, please only upload one io808 save at a time.");
+      }
     } else {
-      window.alert("Sorry, please only upload one io808 save at a time.");
+      window.alert(
+        "Sorry, an unknown error occured while uploading your save."
+      );
     }
   }, [onLoadedState]);
 

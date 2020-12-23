@@ -47,26 +47,61 @@ const instrumentConfig = [
   {
     type: LOW_CONGA_LOW_TOM,
     labels: [["*L", "OW ", "*C", "ONGA"], ["*L", "OW ", "*T", "OM"]],
+    switchConfig: {
+      name: "Low Conga/Tom",
+      values: {
+        "Low Conga": "0",
+        "Low Tom": "1"
+      }
+    },
     controls: ["tuning"]
   },
   {
     type: MID_CONGA_MID_TOM,
     labels: [["*M", "ID ", "*C", "ONGA"], ["*M", "ID ", "*T", "OM"]],
+    switchConfig: {
+      name: "Mid Conga/Tom",
+      values: {
+        "Mid Conga": "0",
+        "Mid Tom": "1"
+      }
+    },
     controls: ["tuning"]
   },
   {
     type: HI_CONGA_HI_TOM,
     labels: [["*H", "I ", "*C", "ONGA"], ["*H", "I ", "*T", "OM"]],
+    switchConfig: {
+      name: "Hi Conga/Tom",
+      values: {
+        "Hi Conga": "0",
+        "Hi Tom": "1"
+      }
+    },
     controls: ["tuning"]
   },
   {
     type: CLAVES_RIMSHOT,
     labels: [["*C", "*L", "AVES"], ["*R", "IM ", "*S", "HOT"]],
+    switchConfig: {
+      name: "Claves/Rimshot",
+      values: {
+        Claves: "0",
+        Rimshot: "1"
+      }
+    },
     controls: []
   },
   {
     type: MARACAS_HANDCLAP,
     labels: [["*M", "*A", "RACAS"], ["HAND ", "*C", "LA", "*P"]],
+    switchConfig: {
+      name: "Maracas/Handclap",
+      values: {
+        Maracas: "0",
+        Handclap: "1"
+      }
+    },
     controls: []
   },
   {

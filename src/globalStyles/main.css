@@ -12,6 +12,10 @@
   font-kerning: normal;
 }
 
+::-moz-focus-inner {
+  border: 0;
+}
+
 html,
 body,
 #root {
