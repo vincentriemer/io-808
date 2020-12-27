@@ -157,6 +157,7 @@ const AppLayout = React.memo(
               <ConnectedSaveButton size={35} />
               <ConnectedResetButton size={35} />
             </div>
+            <a href="https://blacklivesmatters.carrd.co" rel="noopener" style={styles.blmLink} target="_blank">#BlackLivesMatter</a>
             <GithubLink />
           </div>
           <div style={styles.appWrapper}>
