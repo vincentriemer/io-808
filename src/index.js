@@ -2,6 +2,12 @@
 require("globalStyles/reset.css");
 require("globalStyles/main.css");
 
+// process.nextTick polyfill
+window.process = {
+  ...window.process,
+  nextTick: cb => Promise.resolve().then(cb)
+};
+
 import * as React from "react";
 import { createRoot } from "react-dom";
 import { Provider } from "react-redux";

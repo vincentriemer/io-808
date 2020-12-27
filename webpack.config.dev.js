@@ -5,7 +5,6 @@ var HtmlWebpackPlugin = require("html-webpack-plugin");
 var MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var { WebpackPluginServe: Serve } = require("webpack-plugin-serve");
 var CopyPlugin = require("copy-webpack-plugin");
-var webpack = require("webpack");
 
 var babelConfig = require("./babelConfig");
 
@@ -75,9 +74,6 @@ module.exports = {
   plugins: [
     new CopyPlugin({
       patterns: [{ from: "static/**/*" }]
-    }),
-    new webpack.DefinePlugin({
-      "process.nextTick": "Promise.resolve().then"
     }),
     new MiniCssExtractPlugin({}),
     new HtmlWebpackPlugin({

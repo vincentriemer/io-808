@@ -6,7 +6,6 @@ var MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 var CopyPlugin = require("copy-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
-var webpack = require("webpack");
 
 const babelConfig = require("./babelConfig");
 
@@ -73,9 +72,6 @@ const moduleSettings = isModern => {
 const plugins = [
   new CopyPlugin({
     patterns: [{ from: "static/**/*" }]
-  }),
-  new webpack.DefinePlugin({
-    "process.nextTick": "Promise.resolve().then"
   }),
   new HtmlWebpackPlugin({
     inject: false,
