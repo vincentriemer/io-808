@@ -6,3 +6,5 @@ dist
 .vscode
 deploy_key
 out
+.vercel
+.env

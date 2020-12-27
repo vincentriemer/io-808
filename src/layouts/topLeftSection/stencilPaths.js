@@ -2,8 +2,8 @@ import Path from "paths-js/path";
 
 export const separatorPath = Path()
   .moveto(317, 200)
-  .lineto(143, 200)
-  .lineto(143, 270)
+  .lineto(140, 200)
+  .lineto(140, 270)
   .lineto(0, 270)
   .print();
 
@@ -23,8 +23,8 @@ export const rhythmToPlay = Path()
   .print();
 
 export const patternToInstrument = Path()
-  .moveto(110, 10)
-  .hlineto(183)
+  .moveto(115, 10)
+  .hlineto(178)
   .print();
 
 export const manualPlayPath = Path()

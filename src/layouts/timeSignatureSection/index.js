@@ -1,6 +1,4 @@
-import React from "react";
-import PropTypes from 'prop-types';
-import Radium from "radium";
+import * as React from "react";
 
 import { grey, darkGrey } from "theme/variables";
 
@@ -12,184 +10,250 @@ import {
   noteLinePath
 } from "./stencilPaths";
 
-class TimeSignatureSection extends React.Component {
-  static propTypes = {
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    stepPadding: PropTypes.number.isRequired,
-    quarterStepWidth: PropTypes.number.isRequired
-  };
+const TimeSigSectionContext = React.createContext({});
 
-  render() {
-    const { width, height, stepPadding, quarterStepWidth } = this.props;
+function EighthNote({ visible = false }) {
+  const { eightWidth, noteHeight } = React.useContext(TimeSigSectionContext);
+  return (
+    <svg viewBox={eightViewBox} width={eightWidth} height={noteHeight}>
+      <path d={eighthNotePath} fill={visible ? darkGrey : "none"} />
+    </svg>
+  );
+}
 
-    const sigBorderRadius = 6;
+function QuarterNote() {
+  const { quarterWidth, noteHeight } = React.useContext(TimeSigSectionContext);
+  return (
+    <svg viewBox={quarterViewBox} width={quarterWidth} height={noteHeight}>
+      <path d={quarterNotePath} fill={darkGrey} />
+    </svg>
+  );
+}
 
-    const verticalPadding = 2,
-      rowHeight = height / 4 - verticalPadding * 0.75;
-
-    const halfStepWidth = (width - stepPadding) / 2;
-    const trippletStepWidth = quarterStepWidth * 1.5 + stepPadding * 0.5;
-    const sixthStepWidth = trippletStepWidth / 2 - stepPadding / 2;
-
-    const noteHeight = 16;
-    const notePadding = quarterStepWidth / 12;
-    const quarterWidth = 9;
-    const eightWidth = 11;
-
-    const baseStepStyle = {
-      position: "relative",
-      height: rowHeight,
-      borderRadius: sigBorderRadius,
-      backgroundColor: grey,
-      flexShrink: 0,
-      marginRight: stepPadding,
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-between",
-      paddingLeft: notePadding,
-      paddingRight: notePadding
-    };
-
-    const styles = {
-      wrapper: {
-        position: "relative",
-        width,
-        height,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between"
-      },
-      row: {
-        position: "relative",
-        width,
+function LinePadding() {
+  const { rowHeight } = React.useContext(TimeSigSectionContext);
+  return (
+    <div
+      style={{
+        position: "absolute",
+        width: 5,
         height: rowHeight,
-        display: "flex",
-        flexDirection: "row",
+        right: 0,
+        top: 0,
+        backgroundColor: grey
+      }}
+    />
+  );
+}
 
-        overflow: "hidden"
-      },
+function SixthLine() {
+  const {
+    eightWidth,
+    quarterStepWidth,
+    sixthStepWidth,
+    rowHeight,
+    notePadding
+  } = React.useContext(TimeSigSectionContext);
+  const path = noteLinePath(eightWidth + 7, quarterStepWidth / 2, 8);
+  return (
+    <div
+      style={{
+        position: "absolute",
+        width: sixthStepWidth,
+        height: rowHeight,
+        top: 0,
+        left: notePadding
+      }}
+    >
+      <svg width={sixthStepWidth} height={rowHeight}>
+        <path d={path} stroke={darkGrey} fill="none" />
+      </svg>
+    </div>
+  );
+}
 
-      halfStep: {
+function SixthStep() {
+  const { baseStepStyle, sixthStepWidth } = React.useContext(
+    TimeSigSectionContext
+  );
+  return (
+    <div
+      style={{
         ...baseStepStyle,
-        width: halfStepWidth
-      },
-      quarterStep: {
-        ...baseStepStyle,
-        width: quarterStepWidth
-      },
-      trippletStep: {
+        width: sixthStepWidth
+      }}
+    >
+      <SixthLine />
+      <EighthNote visible sixth />
+      <EighthNote visible sixth />
+      <EighthNote visible sixth />
+    </div>
+  );
+}
+
+function TripletLine() {
+  const {
+    eightWidth,
+    trippletStepWidth,
+    quarterStepWidth,
+    rowHeight,
+    notePadding
+  } = React.useContext(TimeSigSectionContext);
+  const path = noteLinePath(
+    eightWidth + 7,
+    trippletStepWidth - quarterStepWidth / 2,
+    17
+  );
+  return (
+    <div
+      style={{
+        position: "absolute",
+        width: trippletStepWidth,
+        height: rowHeight,
+        top: 0,
+        left: notePadding
+      }}
+    >
+      <svg width={trippletStepWidth} height={rowHeight}>
+        <path d={path} stroke={darkGrey} fill="none" />
+      </svg>
+    </div>
+  );
+}
+
+function TrippletStep() {
+  const {
+    baseStepStyle,
+    trippletStepWidth,
+    quarterStepWidth
+  } = React.useContext(TimeSigSectionContext);
+  return (
+    <div
+      style={{
         ...baseStepStyle,
         width: trippletStepWidth,
         paddingRight: baseStepStyle.paddingRight + quarterStepWidth / 3.8
-      },
-      sixthStep: {
+      }}
+    >
+      <TripletLine />
+      <EighthNote visible />
+      <EighthNote />
+      <EighthNote visible />
+      <EighthNote />
+      <EighthNote visible />
+    </div>
+  );
+}
+
+function QuarterStep() {
+  const { baseStepStyle, quarterStepWidth } = React.useContext(
+    TimeSigSectionContext
+  );
+  return (
+    <div
+      style={{
         ...baseStepStyle,
-        width: sixthStepWidth
-      }
-    };
+        width: quarterStepWidth
+      }}
+    >
+      <QuarterNote />
+    </div>
+  );
+}
 
-    const EighthNote = ({ visible = false, sixth = false }) => (
-      <svg viewBox={eightViewBox} width={eightWidth} height={noteHeight}>
-        <path d={eighthNotePath} fill={visible ? darkGrey : "none"} />
-      </svg>
-    );
+function HalfStep() {
+  const { baseStepStyle, halfStepWidth } = React.useContext(
+    TimeSigSectionContext
+  );
+  return (
+    <div
+      style={{
+        ...baseStepStyle,
+        width: halfStepWidth
+      }}
+    >
+      <QuarterNote />
+    </div>
+  );
+}
 
-    const QuarterNote = () => (
-      <svg viewBox={quarterViewBox} width={quarterWidth} height={noteHeight}>
-        <path d={quarterNotePath} fill={darkGrey} />
-      </svg>
-    );
+function TimeSignatureSection(props) {
+  const { width, height, stepPadding, quarterStepWidth } = props;
 
-    const LinePadding = () => (
-      <div
-        style={{
-          position: "absolute",
-          width: 5,
-          height: rowHeight,
-          right: 0,
-          top: 0,
-          backgroundColor: grey
-        }}
-      />
-    );
+  const sigBorderRadius = 6;
 
-    const SixthLine = () => {
-      const path = noteLinePath(eightWidth + 7, quarterStepWidth / 2, 8);
-      return (
-        <div
-          style={{
-            position: "absolute",
-            width: sixthStepWidth,
-            height: rowHeight,
-            top: 0,
-            left: notePadding
-          }}
-        >
-          <svg width={sixthStepWidth} height={rowHeight}>
-            <path d={path} stroke={darkGrey} fill="none" />
-          </svg>
-        </div>
-      );
-    };
+  const verticalPadding = 2,
+    rowHeight = height / 4 - verticalPadding * 0.75;
 
-    const SixthStep = () => (
-      <div style={styles.sixthStep}>
-        <SixthLine />
-        <EighthNote visible sixth />
-        <EighthNote visible sixth />
-        <EighthNote visible sixth />
-      </div>
-    );
+  const halfStepWidth = (width - stepPadding) / 2;
+  const trippletStepWidth = quarterStepWidth * 1.5 + stepPadding * 0.5;
+  const sixthStepWidth = trippletStepWidth / 2 - stepPadding / 2;
 
-    const TripletLine = () => {
-      const path = noteLinePath(
-        eightWidth + 7,
-        trippletStepWidth - quarterStepWidth / 2,
-        17
-      );
-      return (
-        <div
-          style={{
-            position: "absolute",
-            width: trippletStepWidth,
-            height: rowHeight,
-            top: 0,
-            left: notePadding
-          }}
-        >
-          <svg width={trippletStepWidth} height={rowHeight}>
-            <path d={path} stroke={darkGrey} fill="none" />
-          </svg>
-        </div>
-      );
-    };
+  const noteHeight = 16;
+  const notePadding = quarterStepWidth / 12;
+  const quarterWidth = 9;
+  const eightWidth = 11;
 
-    const TrippletStep = () => (
-      <div style={styles.trippletStep}>
-        <TripletLine />
-        <EighthNote visible />
-        <EighthNote />
-        <EighthNote visible />
-        <EighthNote />
-        <EighthNote visible />
-      </div>
-    );
+  const baseStepStyle = {
+    position: "relative",
+    height: rowHeight,
+    borderRadius: sigBorderRadius,
+    backgroundColor: grey,
+    flexShrink: 0,
+    marginRight: stepPadding,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingLeft: notePadding,
+    paddingRight: notePadding
+  };
 
-    const QuarterStep = () => (
-      <div style={styles.quarterStep}>
-        <QuarterNote />
-      </div>
-    );
+  const styles = {
+    wrapper: {
+      position: "relative",
+      width,
+      height,
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between"
+    },
+    row: {
+      position: "relative",
+      width,
+      height: rowHeight,
+      display: "flex",
+      flexDirection: "row",
+      overflow: "hidden"
+    }
+  };
 
-    const HalfStep = () => (
-      <div style={styles.halfStep}>
-        <QuarterNote />
-      </div>
-    );
+  const contextValue = React.useMemo(
+    () => ({
+      baseStepStyle,
+      eightWidth,
+      noteHeight,
+      quarterWidth,
+      rowHeight,
+      quarterStepWidth,
+      sixthStepWidth,
+      notePadding,
+      trippletStepWidth,
+      halfStepWidth
+    }),
+    [
+      baseStepStyle,
+      halfStepWidth,
+      notePadding,
+      quarterStepWidth,
+      rowHeight,
+      sixthStepWidth,
+      trippletStepWidth
+    ]
+  );
 
-    return (
+  return (
+    <TimeSigSectionContext.Provider value={contextValue}>
       <div style={styles.wrapper}>
         <div style={styles.row}>
           <SixthStep />
@@ -217,8 +281,8 @@ class TimeSignatureSection extends React.Component {
           <HalfStep />
         </div>
       </div>
-    );
-  }
+    </TimeSigSectionContext.Provider>
+  );
 }
 
-export default Radium(TimeSignatureSection);
+export default TimeSignatureSection;

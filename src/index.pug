@@ -7,6 +7,23 @@ html(lang="en")
         meta(name="description" content="A fully recreated web-based TR-808 drum machine using React, Redux, and the Web Audio API.")
         meta(name="viewport" content="width=device-width, initial-scale=1")
 
+        // metadata
+        meta(name="apple-mobile-web-app-title" content="iO-808")
+        meta(name="application-name" content="iO-808")
+        meta(name="msapplication-TileColor" content="#da532c")
+        meta(name="msapplication-config" content="/static/icons/browserconfig.xml?v=3ewjeKmMeJ")
+        meta(name="theme-color" content="#232425")
+
+        // manifest
+        link(rel="manifest" href="/static/icons/site.webmanifest?v=3ewjeKmMeJ")
+
+        // icons
+        link(rel="apple-touch-icon" sizes="180x180" href="/static/icons/apple-touch-icon.png?v=3ewjeKmMeJ")
+        link(rel="icon" type="image/png" sizes="32x32" href="/static/icons/favicon-32x32.png?v=3ewjeKmMeJ")
+        link(rel="icon" type="image/png" sizes="16x16" href="/static/icons/favicon-16x16.png?v=3ewjeKmMeJ")
+        link(rel="mask-icon" href="/static/icons/safari-pinned-tab.svg?v=3ewjeKmMeJ" color="#232425")
+        link(rel="shortcut icon" href="/static/icons/favicon.ico?v=3ewjeKmMeJ")
+
         // apple splash screens
         link(href=require('../splashscreens/iphone5_splash.png'), media='(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)', rel='apple-touch-startup-image')
         link(href=require('../splashscreens/iphone6_splash.png'), media='(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)', rel='apple-touch-startup-image')
@@ -15,37 +32,54 @@ html(lang="en")
         link(href=require('../splashscreens/ipad_splash.png'), media='(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)', rel='apple-touch-startup-image')
         link(href=require('../splashscreens/ipadpro1_splash.png'), media='(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)', rel='apple-touch-startup-image')
         link(href=require('../splashscreens/ipadpro2_splash.png'), media='(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)', rel='apple-touch-startup-image')
+        
+        each headItem in htmlWebpackPlugin.tags.headTags
+            if headItem.attributes.rel !== "stylesheet"
+                #{headItem.tagName}&attributes(headItem.attributes)/
+
+        if fontBaseURL != null
+            style.
+                @font-face {
+                    font-family: "Helvetica LT W04";
+                    src: url("#{fontBaseURL}/Fonts/1489428/5e04826f-5440-42ee-82bb-b212cb16bccc.woff2")
+                        format("woff2"),
+                        url("#{fontBaseURL}/Fonts/1489428/e0eda329-a6eb-46ac-8f15-e1c54de80856.woff")
+                        format("woff");
+                    font-weight: 300;
+                    font-display: swap;
+                }
+                @font-face {
+                    font-family: "Helvetica LT W04";
+                    src: url("#{fontBaseURL}/Fonts/1489440/44a857e5-bb9c-4164-a9f8-82e0390eaf0f.woff2")
+                        format("woff2"),
+                        url("#{fontBaseURL}/Fonts/1489440/4deeb3d8-6eff-48da-9238-9220bb4a35f0.woff")
+                        format("woff");
+                    font-weight: 400;
+                    font-display: swap;
+                }
+                @font-face {
+                    font-family: "Helvetica LT W04";
+                    src: url("#{fontBaseURL}/Fonts/1489456/5b00a1f2-3a6d-4922-a126-bde89e7f683c.woff2")
+                        format("woff2"),
+                        url("#{fontBaseURL}/Fonts/1489456/0b6078b5-b3d8-46ee-a22e-5197ae487290.woff")
+                        format("woff");
+                    font-weight: 700;
+                    font-display: swap;
+                }
+                @font-face {
+                    font-family: "ITC Serif Gothic W03";
+                    src: url("#{fontBaseURL}/Fonts/1551836/2715f30a-75b0-4b8d-b3d6-775e708c31bb.woff2")
+                        format("woff2"),
+                        url("#{fontBaseURL}/Fonts/1551836/fa83b016-2709-4c67-a3c7-26c3c92c61fb.woff")
+                        format("woff");
+                    font-weight: 700;
+                    font-display: swap;
+                }
+
 
         // inline global css
         each cssFile in htmlWebpackPlugin.files.css
             style !{compilation.assets[cssFile.substr(htmlWebpackPlugin.files.publicPath.length)].source()}
-
-        // typekit font loading
-        script(type="text/javascript").
-            (function (d) {
-                var config = {
-                            kitId: 'rpz1qnd',
-                            scriptTimeout: 3000,
-                            async: true
-                        },
-                        h = d.documentElement, t = setTimeout(function () {
-                            h.className = h.className.replace(/\bwf-loading\b/g, "") + " wf-inactive";
-                        }, config.scriptTimeout), tk = d.createElement("script"), f = false, s = d.getElementsByTagName("script")[0], a;
-                h.className += " wf-loading";
-                tk.src = 'https://use.typekit.net/' + config.kitId + '.js';
-                tk.async = true;
-                tk.onload = tk.onreadystatechange = function () {
-                    a = this.readyState;
-                    if (f || a && a != "complete" && a != "loaded")return;
-                    f = true;
-                    clearTimeout(t);
-                    try {
-                        Typekit.load(config)
-                    } catch (e) {
-                    }
-                };
-                s.parentNode.insertBefore(tk, s)
-            })(document);
 
     body
         // loading indicator
@@ -56,19 +90,38 @@ html(lang="en")
         #root.rendering
 
         // main app bundle
+        script(type="module" src="/main.mjs")
         each jsFile in htmlWebpackPlugin.files.js
-            script(type="text/javascript" src=jsFile async)
+            script(nomodule src=jsFile)
+        
+        if trackerURL != null && trackerSiteID != null
+            // fathom analytics
+            script(type="text/javascript").
+                (function(f, a, t, h, o, m){
+                    a[h]=a[h]||function(){
+                        (a[h].q=a[h].q||[]).push(arguments)
+                    };
+                    o=f.createElement('script'),
+                    m=f.getElementsByTagName('script')[0];
+                    o.async=1; o.src=t; o.id='fathom-script';
+                    m.parentNode.insertBefore(o,m)
+                })(document, window, '#{trackerURL}', 'fathom');
+                fathom('set', 'siteId', '#{trackerSiteID}');
+                fathom('trackPageview');
 
-        // fathom analytics
-        script(type="text/javascript").
-            (function(f, a, t, h, o, m){
-                a[h]=a[h]||function(){
-                    (a[h].q=a[h].q||[]).push(arguments)
-                };
-                o=f.createElement('script'),
-                m=f.getElementsByTagName('script')[0];
-                o.async=1; o.src=t; o.id='fathom-script';
-                m.parentNode.insertBefore(o,m)
-            })(document, window, '//analytics.vincentriemer.com/tracker.js', 'fathom');
-            fathom('set', 'siteId', 'XVJNW');
-            fathom('trackPageview');
+        if fontBaseURL != null && linotypeUserID != null
+            // font licensing script
+            script(type="text/javascript").
+                var MTUserId='#{linotypeUserID}';
+                var MTFontIds = new Array();
+                MTFontIds.push("1489428"); // Helvetica® W04 Light 
+                MTFontIds.push("1489440"); // Helvetica® W04 Roman 
+                MTFontIds.push("1489456"); // Helvetica® W04 Bold 
+                MTFontIds.push("1551836"); // ITC Serif Gothic® W03 Bold 
+                (function() {
+                    var mtTracking = document.createElement('script');
+                    mtTracking.type='text/javascript';
+                    mtTracking.async='true';
+                    mtTracking.src='/static/mtiFontTrackingCode.js';
+                    (document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(mtTracking);
+                })();

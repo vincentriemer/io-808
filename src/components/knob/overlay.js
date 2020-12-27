@@ -1,6 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import Radium from "radium";
 
 import { BASE_HEIGHT } from "./constants";
 
@@ -13,127 +11,166 @@ function cartesian2Polar([x1, y1], [x2, y2]) {
   return { distance, degrees };
 }
 
-class KnobOverlayPortal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.el = document.createElement("div");
-  }
+const KnobOverlay = props => {
+  const {
+    topPosition,
+    scale,
+    knobCenter,
+    cursorPos,
+    overlayColor = "#FFF"
+  } = props;
 
-  componentDidMount() {
-    document.body.appendChild(this.el);
-  }
+  const baseLineStyle = {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: 1,
+    height: 1,
+    backgroundColor: overlayColor
+  };
 
-  componentWillUnmount() {
-    document.body.removeChild(this.el);
-  }
+  const { distance, degrees } = cartesian2Polar(knobCenter, cursorPos);
+  const verticalLineScale = BASE_HEIGHT * scale;
 
-  render() {
-    return ReactDOM.createPortal(this.props.children, this.el);
-  }
-}
-
-class KnobOverlay extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight,
-    };
-  }
-
-  render() {
-    const {
-      topPosition,
-      scale,
-      knobCenter,
-      cursorPos,
-      overlayColor,
-    } = this.props;
-
-    const { windowWidth, windowHeight } = this.state;
-
-    const baseLineStyle = {
+  const styles = {
+    overlay: {
       position: "absolute",
+      zIndex: 100,
       top: 0,
       left: 0,
-      width: 1,
-      height: 1,
-      backgroundColor: overlayColor,
-    };
+      width: "100%",
+      height: "100%",
+      cursor: "ns-resize"
+    },
 
-    const { distance, degrees } = cartesian2Polar(knobCenter, cursorPos);
-    const verticalLineScale = BASE_HEIGHT * scale;
+    knobPath: {
+      ...baseLineStyle,
+      opacity: 0.5,
+      transformOrigin: "left center",
+      transform:
+        `translateX(${knobCenter[0]}px) translateY(${
+          knobCenter[1]
+        }px) translateZ(0) ` +
+        `rotate(${degrees}deg) ` +
+        `scaleX(${distance})`
+    },
 
-    const styles = {
-      overlay: {
-        position: "fixed",
-        zIndex: 100,
-        top: 0,
-        left: 0,
-        width: windowWidth,
-        height: windowHeight,
-        cursor: "ns-resize",
-      },
+    bodyPath: {
+      ...baseLineStyle,
+      transformOrigin: "center top",
+      transform:
+        `translateX(${
+          cursorPos[0]
+        }px) translateY(${topPosition}px) translateZ(0) ` +
+        `scaleY(${verticalLineScale})`
+    },
 
-      knobPath: {
-        ...baseLineStyle,
-        opacity: 0.5,
-        transformOrigin: "left center",
-        transform:
-          `translateX(${knobCenter[0]}px) translateY(${
-            knobCenter[1]
-          }px) translateZ(0) ` +
-          `rotate(${degrees}deg) ` +
-          `scaleX(${distance})`,
-      },
+    topPath: {
+      ...baseLineStyle,
+      transform:
+        `translateX(${
+          cursorPos[0]
+        }px) translateY(${topPosition}px) translateZ(0) ` + `scaleX(12)`
+    },
 
-      bodyPath: {
-        ...baseLineStyle,
-        transformOrigin: "center top",
-        transform:
-          `translateX(${
-            cursorPos[0]
-          }px) translateY(${topPosition}px) translateZ(0) ` +
-          `scaleY(${verticalLineScale})`,
-      },
+    centerPath: {
+      ...baseLineStyle,
+      transform:
+        `translateX(${cursorPos[0]}px) ` +
+        `translateY(${topPosition + verticalLineScale / 2}px) ` +
+        `translateZ(0) scaleX(12)`
+    },
 
-      topPath: {
-        ...baseLineStyle,
-        transform:
-          `translateX(${
-            cursorPos[0]
-          }px) translateY(${topPosition}px) translateZ(0) ` + `scaleX(12)`,
-      },
+    bottomPath: {
+      ...baseLineStyle,
+      transform:
+        `translateX(${cursorPos[0]}px) ` +
+        `translateY(${topPosition + verticalLineScale}px) ` +
+        `translateZ(0) scaleX(12)`
+    }
+  };
 
-      centerPath: {
-        ...baseLineStyle,
-        transform:
-          `translateX(${cursorPos[0]}px) ` +
-          `translateY(${topPosition + verticalLineScale / 2}px) ` +
-          `translateZ(0) scaleX(12)`,
-      },
+  return (
+    <div style={styles.overlay}>
+      <div style={styles.knobPath} />
+      <div style={styles.bodyPath} />
+      <div style={styles.topPath} />
+      <div style={styles.centerPath} />
+      <div style={styles.bottomPath} />
+    </div>
+  );
+};
 
-      bottomPath: {
-        ...baseLineStyle,
-        transform:
-          `translateX(${cursorPos[0]}px) ` +
-          `translateY(${topPosition + verticalLineScale}px) ` +
-          `translateZ(0) scaleX(12)`,
-      },
-    };
+const KnobOverlayContext = React.createContext({
+  setOverlayState: () => {},
+  removeOverlay: () => {}
+});
 
-    return (
-      <KnobOverlayPortal>
-        <div style={styles.overlay}>
-          <div style={styles.knobPath} />
-          <div style={styles.bodyPath} />
-          <div style={styles.topPath} />
-          <div style={styles.centerPath} />
-          <div style={styles.bottomPath} />
-        </div>
-      </KnobOverlayPortal>
-    );
-  }
-}
+export const useKnobOverlayContext = () => {
+  return React.useContext(KnobOverlayContext);
+};
 
-export default Radium(KnobOverlay);
+/**
+ * KnobOverlayStateType = {
+ *    [id: string]: {
+ *      cursorPosition: [number, number],
+ *      knobCetner: [number, number],
+ *      scale: number,
+ *      topPosition: number,
+ *    }
+ * }
+ */
+export const KnobOverlayManager = props => {
+  const [overlayStateMap, updateOverlayStateMap] = React.useState({});
+
+  const setOverlayState = React.useCallback((id, incomingState) => {
+    updateOverlayStateMap(prev => ({
+      ...prev,
+      [id]: {
+        ...prev[id],
+        ...incomingState
+      }
+    }));
+  }, []);
+
+  const removeOverlay = React.useCallback(id => {
+    updateOverlayStateMap(prev => {
+      const updatedMap = { ...prev };
+      delete updatedMap[id];
+      return updatedMap;
+    });
+  }, []);
+
+  const contextValue = React.useMemo(
+    () => ({
+      setOverlayState,
+      removeOverlay
+    }),
+    [removeOverlay, setOverlayState]
+  );
+
+  const overlayElements = React.useMemo(() => {
+    const elements = [];
+    for (const [id, state] of Object.entries(overlayStateMap)) {
+      elements.push(
+        <KnobOverlay
+          key={id}
+          topPosition={state.topPosition}
+          scale={state.scale}
+          knobCenter={state.knobCenter}
+          cursorPos={state.cursorPosition}
+        />
+      );
+    }
+    return elements;
+  }, [overlayStateMap]);
+
+  return (
+    <KnobOverlayContext.Provider value={contextValue}>
+      {props.children}
+      {overlayElements}
+    </KnobOverlayContext.Provider>
+  );
+};
+
+export default KnobOverlay;

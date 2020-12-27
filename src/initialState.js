@@ -1,5 +1,3 @@
-import Immutable from "seamless-immutable";
-
 import {
   ACCENT,
   BASS_DRUM,
@@ -104,7 +102,7 @@ const initialInstrumentState = {
   },
 };
 
-export default Immutable({
+export default {
   instrumentState: initialInstrumentState,
   patternLengths: initialRhythmLengthState,
 
@@ -143,4 +141,4 @@ export default Immutable({
   clearDragging: false,
 
   pendingPatternLength: 0,
-});
+};

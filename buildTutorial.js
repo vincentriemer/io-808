@@ -6,7 +6,7 @@ var path = require("path");
 var Markdown = require("markdown-it");
 var pug = require("pug");
 
-var sass = require("node-sass");
+var sass = require("dart-sass");
 var uncss = require("uncss");
 var CleanCSS = require("clean-css");
 
@@ -25,14 +25,14 @@ function renderHtml(content, css) {
   var html = fn({
     content: content,
     css: css,
-    livereload: process.env.NODE_ENV !== "production",
+    livereload: process.env.NODE_ENV !== "production"
   });
 
   // minify html
   var htmlMin = htmlMinify(html, {
     removeComments: true,
     collapseWhitespace: true,
-    processScripts: ["text/javascript"],
+    processScripts: ["text/javascript"]
   });
 
   var htmlPath = path.join(outputDir, "tutorial.html");
@@ -56,7 +56,7 @@ function renderHtml(content, css) {
 // CSS
 var rawCSS = sass
   .renderSync({
-    file: path.join(srcDir, "sass", "style.scss"),
+    file: path.join(srcDir, "sass", "style.scss")
   })
   .css.toString();
 
@@ -65,7 +65,7 @@ md.use(require("markdown-it-anchor"));
 md.use(require("markdown-it-table-of-contents"), { includeLevel: [2, 3] });
 md.use(require("markdown-it-decorate"));
 md.use(require("markdown-it-video"), {
-  youtube: { width: 853, height: 480 },
+  youtube: { width: 853, height: 480 }
 });
 
 // pages
@@ -82,7 +82,7 @@ if (process.env.NODE_ENV === "production") {
     testHtml,
     {
       ignore: ["canvas"],
-      raw: rawCSS,
+      raw: rawCSS
     },
     function(err, unCSS) {
       if (err) return console.error(err);

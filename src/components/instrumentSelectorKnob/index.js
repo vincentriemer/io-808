@@ -1,13 +1,26 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import Radium from "radium";
 
 import Knob from "components/knob";
 import Guides from "components/guides";
 import SelectorKnobInner from "components/selectorKnobInner";
 
 import {
-  fontFamily,
+  ACCENT,
+  BASS_DRUM,
+  SNARE_DRUM,
+  LOW_CONGA_LOW_TOM,
+  MID_CONGA_MID_TOM,
+  HI_CONGA_HI_TOM,
+  CLAVES_RIMSHOT,
+  MARACAS_HANDCLAP,
+  COWBELL,
+  CYMBAL,
+  OPEN_HIHAT,
+  CLSD_HIHAT
+} from "store-constants";
+
+import {
+  panelFontFamily,
   normalSize,
   letterSpacing,
   smallSize,
@@ -36,93 +49,90 @@ const guideLabels = [
   "CH"
 ];
 
-class InstrumentSelectorKnob extends React.Component {
-  render() {
-    const { value, onChange, size = 200 } = this.props;
-    const knobSize = size - 75;
+const instrumentOptions = [
+  { displayName: "Accent", value: ACCENT },
+  { displayName: "Bass Drum", value: BASS_DRUM },
+  { displayName: "Snare Drum", value: SNARE_DRUM },
+  { displayName: "Low Conga/Low Tom", value: LOW_CONGA_LOW_TOM },
+  { displayName: "Mid Conga/Mid Tom", value: MID_CONGA_MID_TOM },
+  { displayName: "Hi Conga/Hi Tom", value: HI_CONGA_HI_TOM },
+  { displayName: "Claves/Rimshot", value: CLAVES_RIMSHOT },
+  { displayName: "Maracas/Handclap", value: MARACAS_HANDCLAP },
+  { displayName: "Cowbell", value: COWBELL },
+  { displayName: "Cymbal", value: CYMBAL },
+  { displayName: "Open Hi-hat", value: OPEN_HIHAT },
+  { displayName: "Closed Hi-hat", value: CLSD_HIHAT }
+];
 
-    const styles = {
-      wrapper: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "stretch",
-        justifyContent: "space-between",
-        width: size,
-        height: size
-      },
-
-      controlWrapper: {
-        position: "relative",
-        width: size,
-        height: size
-      },
-
-      knobWrapper: ring(knobSize),
-
-      numberGuides: {
-        fontFamily,
-        fontSize: smallSize,
-        fontWeight,
-        letterSpacing,
-        color: stencilOrange,
-        ...unselectableText
-      },
-
-      labelGuides: {
-        fontFamily,
-        fontSize: normalSize,
-        fontWeight: "normal",
-        letterSpacing,
-        color: darkGrey,
-        backgroundColor: drumLabel,
-        borderRadius: 3,
-        textAlign: "center",
-        width: 27,
-        paddingTop: 2,
-        paddingBottom: 2,
-        ...unselectableText
-      }
-    };
-
-    return (
-      <div style={styles.wrapper}>
-        <div style={styles.controlWrapper}>
-          <Guides
-            distance={size * 0.3}
-            offset={15}
-            rotate={false}
-            values={guideNumbers}
-            guideStyle={styles.numberGuides}
-          />
-          <Guides
-            distance={size * 0.45}
-            offset={15}
-            rotate={false}
-            values={guideLabels}
-            guideStyle={styles.labelGuides}
-          />
-          <div style={styles.knobWrapper}>
-            <Knob
-              value={value}
-              onChange={onChange}
-              size={knobSize}
-              bufferSize={330}
-              min={0}
-              max={11}
-              step={1}
-            >
-              <SelectorKnobInner size={knobSize} />
-            </Knob>
-          </div>
-        </div>
-      </div>
-    );
+const styles = {
+  wrapper: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "stretch",
+    justifyContent: "space-between"
+  },
+  controlWrapper: {
+    position: "relative"
+  },
+  numberGuides: {
+    fontFamily: panelFontFamily,
+    fontSize: smallSize,
+    fontWeight,
+    letterSpacing,
+    color: stencilOrange,
+    ...unselectableText
+  },
+  labelGuides: {
+    fontFamily: panelFontFamily,
+    fontSize: normalSize,
+    fontWeight: "normal",
+    letterSpacing,
+    color: darkGrey,
+    backgroundColor: drumLabel,
+    borderRadius: 3,
+    textAlign: "center",
+    width: 27,
+    paddingTop: 2,
+    paddingBottom: 2,
+    ...unselectableText
   }
-}
-
-InstrumentSelectorKnob.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.number.isRequired
 };
 
-export default Radium(InstrumentSelectorKnob);
+const InstrumentSelectorKnob = props => {
+  const { value, onChange, size = 200 } = props;
+  const knobSize = size - 75;
+  return (
+    <div style={{ ...styles.wrapper, width: size, height: size }}>
+      <div style={{ ...styles.controlWrapper, width: size, height: size }}>
+        <Guides
+          distance={size * 0.3}
+          offset={15}
+          rotate={false}
+          values={guideNumbers}
+          guideStyle={styles.numberGuides}
+        />
+        <Guides
+          distance={size * 0.45}
+          offset={15}
+          rotate={false}
+          values={guideLabels}
+          guideStyle={styles.labelGuides}
+        />
+        <div style={ring(knobSize)}>
+          <Knob
+            type="select"
+            value={value}
+            onChange={onChange}
+            size={knobSize}
+            bufferSize={330}
+            options={instrumentOptions}
+          >
+            <SelectorKnobInner size={knobSize} />
+          </Knob>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default InstrumentSelectorKnob;

@@ -1,80 +1,73 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import Radium from "radium";
 
-import { fontFamily, darkGrey, drumLabel } from "theme/variables";
+import { panelFontFamily, darkGrey, drumLabel } from "theme/variables";
 import { unselectableText } from "theme/mixins";
 
-class InstrumentLabel extends React.Component {
-  static propTypes = {
-    label: PropTypes.arrayOf(PropTypes.string).isRequired
-  };
+const baseLabelStyle = {
+  fontFamily: panelFontFamily,
+  whiteSpace: "pre",
+  color: darkGrey,
+  letterSpacing: -0.5,
+  ...unselectableText
+};
 
-  render() {
-    const { label } = this.props;
+const styles = {
+  wrapper: {
+    width: "100%",
+    height: 36,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
 
-    const baseLabelStyle = {
-      fontFamily,
-      whiteSpace: "pre",
-      color: darkGrey,
-      letterSpacing: -0.4,
-      ...unselectableText
-    };
+    backgroundColor: drumLabel,
+    borderRadius: 4
+  },
 
-    const styles = {
-      wrapper: {
-        width: "100%",
-        height: 36,
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
+  innerWrapper: {
+    alignItems: "baseline",
+    cursor: "default",
+    display: "flex",
+    flexDirection: "row",
+    wordSpacing: "-0.1em"
+  },
 
-        backgroundColor: drumLabel,
-        borderRadius: 4
-      },
+  smallLabel: {
+    ...baseLabelStyle,
+    fontSize: 11
+  },
 
-      innerWrapper: {
-        alignItems: "baseline",
-        cursor: "default",
-        display: "flex",
-        flexDirection: "row"
-      },
+  largeLabel: {
+    ...baseLabelStyle,
+    fontSize: 19,
+    fontWeight: 400
+  }
+};
 
-      smallLabel: {
-        ...baseLabelStyle,
-        fontSize: 11
-      },
-
-      largeLabel: {
-        ...baseLabelStyle,
-        fontSize: 19
-      }
-    };
-
-    const formattedLabel = label.map((section, index) => {
-      let style, value;
-      if (section[0] === "*") {
-        style = "largeLabel";
-        value = section.slice(1);
-      } else {
-        style = "smallLabel";
-        value = section;
-      }
-
-      return (
-        <div key={index} style={styles[style]}>
-          {value}
-        </div>
-      );
-    });
+const InstrumentLabel = props => {
+  const { label } = props;
+  const formattedLabel = label.map((section, index) => {
+    let style, value;
+    if (section[0] === "*") {
+      style = "largeLabel";
+      value = section.slice(1);
+    } else {
+      style = "smallLabel";
+      value = section;
+    }
 
     return (
-      <div style={styles.wrapper}>
-        <div style={styles.innerWrapper}>{formattedLabel}</div>
+      <div key={index} style={styles[style]}>
+        {value}
       </div>
     );
-  }
-}
+  });
 
-export default Radium(InstrumentLabel);
+  return (
+    <div style={styles.wrapper}>
+      <div style={styles.innerWrapper}>{formattedLabel}</div>
+    </div>
+  );
+};
+
+export default InstrumentLabel;

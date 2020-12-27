@@ -1,86 +1,103 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import Radium from "radium";
 
-import { stencilOrange, darkGrey } from "theme/variables";
+import { stencilOrange, darkGrey, brandingFontFamily } from "theme/variables";
 import { labelGreyLarge } from "theme/mixins";
 
-const lineHeight = 3;
+const lineHeight = 1.5;
 const titleRight = 60;
-const lineTop = 55.2;
+const lineTop = 55;
 
-class AppTitle extends React.Component {
-  static propTypes = {
-    width: PropTypes.number,
-    height: PropTypes.number
-  };
-
-  render() {
-    const { width = 955, height = 151 } = this.props;
-
-    const styles = {
-      wrapper: {
-        width,
-        height,
-        position: "relative"
-      },
-
-      titleLine: {
-        position: "absolute",
-        width: width - 20,
-        height: `${lineHeight}%`,
-        left: "50%",
-        transform: "translateX(-50%)",
-        top: `${lineTop}%`,
-        backgroundColor: stencilOrange
-      },
-
-      titleWrapper: {
-        display: "flex",
-        flexDirection: "row",
-        flexWrap: "no-wrap",
-        alignItems: "baseline",
-        position: "absolute",
-        bottom: `calc(${lineTop}% - 17.5px)`,
-        right: titleRight
-      },
-
-      titleBig: {
-        ...labelGreyLarge,
-        marginRight: 40,
-        color: stencilOrange,
-        fontSize: 50,
-        textShadow: `0.3rem 0 ${darkGrey},0.3rem 0rem ${darkGrey},-0.3rem -0 ${darkGrey},-0.3rem 0 ${darkGrey}`
-      },
-
-      titleSmall: {
-        ...labelGreyLarge,
-        color: stencilOrange,
-        fontSize: 40,
-        letterSpacing: -1.7
-      },
-
-      subtitle: {
-        ...labelGreyLarge,
-        position: "absolute",
-        top: `${lineTop + lineHeight * 1.5}%`,
-        right: titleRight,
-        fontSize: 28,
-        letterSpacing: -0.75
-      }
-    };
-
-    return (
-      <div style={styles.wrapper}>
-        <div style={styles.titleLine} />
-        <div style={styles.titleWrapper}>
-          <div style={styles.titleBig}>Rhythm Composer</div>
-          <div style={styles.titleSmall}>iO-808</div>
-        </div>
-        <div style={styles.subtitle}>Browser Controlled</div>
-      </div>
-    );
+const styles = {
+  wrapper: {
+    position: "relative"
+  },
+  titleLine: {
+    position: "absolute",
+    height: `${lineHeight}%`,
+    left: "50%",
+    transform: "translateX(-50%)",
+    top: `${lineTop}%`,
+    backgroundColor: stencilOrange
+  },
+  titleWrapper: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "no-wrap",
+    alignItems: "baseline",
+    position: "absolute",
+    bottom: `calc(${lineTop}% - 17.5px)`,
+    right: titleRight
+  },
+  titleBig: {
+    ...labelGreyLarge,
+    fontFamily: brandingFontFamily,
+    marginRight: 40,
+    color: stencilOrange,
+    fontSize: 50,
+    textShadow: `0.3rem 0 ${darkGrey},0.3rem 0rem ${darkGrey},-0.3rem -0 ${darkGrey},-0.3rem 0 ${darkGrey}`
+  },
+  titleSmall: {
+    ...labelGreyLarge,
+    fontFamily: brandingFontFamily,
+    color: stencilOrange,
+    fontSize: 40,
+    letterSpacing: -1.5
+  },
+  subtitle: {
+    ...labelGreyLarge,
+    fontFamily: brandingFontFamily,
+    position: "absolute",
+    top: `${lineTop + lineHeight * 3}%`,
+    right: titleRight,
+    fontSize: 28,
+    letterSpacing: -1
   }
-}
+};
 
-export default Radium(AppTitle);
+const TitleText = React.memo(props => {
+  const { text } = props;
+  // Split the text by the e character and re-add them but with rotation applied
+  const eSplit = text.split("e");
+  const result = eSplit.reduce((acc, cur, idx) => {
+    if (acc === null) {
+      return [cur];
+    }
+    const rotatedE = (
+      <span
+        key={idx}
+        style={{
+          display: "inline-block",
+          transformOrigin: "50% 60%",
+          transform: "rotate(-40deg)"
+        }}
+      >
+        e
+      </span>
+    );
+    return [...acc, rotatedE, cur];
+  }, null);
+  return result;
+});
+
+const AppTitle = props => {
+  const { width = 955, height = 151 } = props;
+
+  return (
+    <div style={{ ...styles.wrapper, width, height }}>
+      <div style={{ ...styles.titleLine, width: width - 20 }} />
+      <div style={styles.titleWrapper}>
+        <div style={styles.titleBig}>
+          <TitleText text="Rhythm Composer" />
+        </div>
+        <div style={styles.titleSmall}>
+          <TitleText text="iO-808" />
+        </div>
+      </div>
+      <div style={styles.subtitle}>
+        <TitleText text="Browser Controlled" />
+      </div>
+    </div>
+  );
+};
+
+export default AppTitle;

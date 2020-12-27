@@ -1,4 +1,4 @@
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import React from "react";
 
 // Action Creators
@@ -12,42 +12,38 @@ import Button from "components/button";
 import { buttonColor, darkGrey } from "theme/variables";
 import { labelGreyLarge } from "theme/mixins";
 
-export const ConnectedSaveButton = (() => {
-  const mapStateToProps = state => ({
-    storeState: state
-  });
+export const ConnectedSaveButton = props => {
+  const storeState = useSelector(state => state);
+  return <SaveButton storeState={storeState} {...props} />;
+};
 
-  return connect(mapStateToProps)(SaveButton);
-})();
+export const ConnectedLoadButton = props => {
+  const playing = useSelector(state => state.playing);
 
-export const ConnectedLoadButton = (() => {
-  const mapStateToProps = state => ({
-    playing: state.playing
-  });
+  const dispatch = useDispatch();
+  const onLoadedState = React.useCallback(
+    loadedState => dispatch(onStateLoad(loadedState)),
+    [dispatch]
+  );
 
-  const mapDispatchToProps = dispatch => ({
-    onLoadedState: loadedState => dispatch(onStateLoad(loadedState))
-  });
+  return (
+    <LoadButton {...props} playing={playing} onLoadedState={onLoadedState} />
+  );
+};
 
-  return connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(LoadButton);
-})();
+export const ConnectedResetButton = props => {
+  const disabled = useSelector(state => state.playing);
 
-export const ConnectedResetButton = (() => {
-  const mapStateToProps = state => ({
-    disabled: state.playing
-  });
-
-  const mapDispatchToProps = dispatch => ({
-    onClick: () => {
-      if (confirm("Are you sure you want to reset your sequencer?"))
-        dispatch(onReset());
+  const dispatch = useDispatch();
+  const onClick = React.useCallback(() => {
+    if (confirm("Are you sure you want to reset your sequencer?")) {
+      dispatch(onReset());
     }
-  });
+  }, [dispatch]);
 
-  const component = ({ size, ...rest }) => (
+  const { size, ...rest } = props;
+
+  return (
     <Button
       {...rest}
       style={{
@@ -60,17 +56,14 @@ export const ConnectedResetButton = (() => {
         backgroundColor: buttonColor,
         marginLeft: 5,
         marginRight: 5,
-
         display: "flex",
-        alignItems: "center"
+        alignItems: "center",
+        cursor: "pointer"
       }}
+      onClick={onClick}
+      disabled={disabled}
     >
       Reset
     </Button>
   );
-
-  return connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(component);
-})();
+};

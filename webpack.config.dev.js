@@ -1,31 +1,34 @@
+require("dotenv").config();
+
 var path = require("path");
-var webpack = require("webpack");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
 var MiniCssExtractPlugin = require("mini-css-extract-plugin");
-var OfflinePlugin = require("offline-plugin");
-var BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-  .BundleAnalyzerPlugin;
+var { WebpackPluginServe: Serve } = require("webpack-plugin-serve");
+var CopyPlugin = require("copy-webpack-plugin");
+var webpack = require("webpack");
+
+var babelConfig = require("./babelConfig");
+
+var outputPath = path.join(__dirname, "dist");
+
+var fontBaseURL = process.env.WEBFONT_BASE_URL;
 
 module.exports = {
   mode: "development",
-  entry: [
-    "core-js/es6/symbol",
-    "core-js/es6/reflect",
-    "core-js/fn/array/includes",
-    "./src/index",
-  ],
+  entry: ["./src/index", "webpack-plugin-serve/client"],
   output: {
-    path: path.join(__dirname, "dist"),
-    filename: "bundle.js",
-    publicPath: "/",
-    hotUpdateChunkFilename: "[id].hot-update.js",
-    hotUpdateMainFilename: "hot-update.json",
+    path: outputPath,
+    filename: "[name].mjs",
+    publicPath: "/"
+  },
+  optimization: {
+    nodeEnv: "development"
   },
   module: {
     rules: [
       {
         test: /\.pug$/,
-        use: [{ loader: "pug-loader", options: {} }],
+        use: [{ loader: "pug-loader", options: {} }]
       },
       {
         test: /\.css$/,
@@ -36,10 +39,10 @@ module.exports = {
             loader: "postcss-loader",
             options: {
               ident: "postcss",
-              plugins: [require("autoprefixer")],
-            },
-          },
-        ],
+              plugins: [require("autoprefixer")]
+            }
+          }
+        ]
       },
       {
         test: /\.js$/,
@@ -48,38 +51,56 @@ module.exports = {
             loader: "babel-loader",
             options: {
               include: path.join(__dirname, "src"),
-            },
-          },
-        ],
+              ...babelConfig(true)
+            }
+          }
+        ]
       },
       {
         test: /\.(otf|eot|svg|ttf|woff|woff2).*$/,
-        use: "url-loader?limit=8192",
+        type: "asset",
+        parser: {
+          dataUrlCondition: {
+            maxSize: 8192
+          }
+        }
       },
       {
         test: /\.(png|jpg|gif)$/,
-        use: [
-          {
-            loader: "file-loader",
-            options: {},
-          },
-        ],
-      },
-    ],
+        type: "asset/resource"
+      }
+    ]
   },
+  node: false,
   plugins: [
+    new CopyPlugin({
+      patterns: [{ from: "static/**/*" }]
+    }),
+    new webpack.DefinePlugin({
+      "process.nextTick": "Promise.resolve().then"
+    }),
     new MiniCssExtractPlugin({}),
     new HtmlWebpackPlugin({
       inject: false,
       cache: false,
       template: "src/index.pug",
+      templateParameters: {
+        fontBaseURL
+      },
       filename: "index.html",
-      title: "iO-808",
+      title: "iO-808"
     }),
-    new BundleAnalyzerPlugin(),
+    new Serve({
+      static: outputPath,
+      hmr: false,
+      liveReload: true,
+      host: "0.0.0.0",
+      port: 3000
+    })
   ],
   resolve: {
     modules: [path.resolve(__dirname, "src"), "node_modules"],
-    extensions: [".js", ".json"],
+    extensions: [".js", ".json"]
   },
+  watch: true
 };

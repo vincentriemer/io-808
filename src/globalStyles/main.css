@@ -1,21 +1,19 @@
 * {
   box-sizing: border-box;
+  -moz-user-select: inherit;
+  -ms-user-select: inherit;
+  -webkit-user-select: inherit;
+  user-select: inherit;
+
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "liga" 1, "kern" 1;
+  font-kerning: normal;
 }
 
-@keyframes justice-for-george-floyd {
-  from {
-    filter: contrast(110%) brightness(110%) grayscale(100%);
-  }
-  to {
-    filter: none;
-  }
-}
-
-html {
-  animation-duration: 3s;
-  animation-name: justice-for-george-floyd;
-  animation-fill-mode: both;
-  animation-delay: 526s;
+::-moz-focus-inner {
+  border: 0;
 }
 
 html,
@@ -23,7 +21,11 @@ body,
 #root {
   width: 100%;
   height: 100%;
-  background-color: #363830;
+  background-color: #232425;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 #root {
@@ -64,7 +66,7 @@ body,
 .loader:before {
   width: 5.2em;
   height: 10.2em;
-  background: #363830;
+  background: #232425;
   border-radius: 10.2em 0 0 10.2em;
   top: -0.1em;
   left: -0.1em;
@@ -85,7 +87,7 @@ body,
 .loader:after {
   width: 5.2em;
   height: 10.2em;
-  background: #363830;
+  background: #232425;
   border-radius: 0 10.2em 10.2em 0;
   top: -0.1em;
   left: 5.1em;

@@ -1,5 +1,5 @@
 import {
-  fontFamily,
+  panelFontFamily,
   fontWeight,
   textAlign,
   letterSpacing,
@@ -28,7 +28,7 @@ export const autoCursor = {
 };
 
 const basePreset = {
-  fontFamily,
+  fontFamily: panelFontFamily,
   fontWeight,
   textAlign,
   letterSpacing,
@@ -93,3 +93,20 @@ export const ring = (size, color) => ({
   borderRadius: "50%",
   backgroundColor: color
 });
+
+const supportsSupports = window.CSS != null && window.CSS.supports != null;
+
+const supportsFocusRingColor =
+  supportsSupports &&
+  window.CSS.supports("outline-color", "-webkit-focus-ring-color");
+const supportsAutoOutlineStyle =
+  supportsSupports && window.CSS.supports("outline-style", "auto");
+
+export const focusOutline = {
+  outlineWidth: 3,
+  MozOutlineRadius: 5,
+  outlineStyle: supportsAutoOutlineStyle ? "auto" : "solid",
+  outlineColor: supportsFocusRingColor
+    ? "-webkit-focus-ring-color"
+    : "Highlight"
+};
