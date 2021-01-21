@@ -78,7 +78,7 @@
     "@vincentriemer/geometry-interfaces-polyfill": "^0.0.1",
     "core-js": "^3.6.5",
     "file-saver": "^2.0.2",
-    "immer": "^3.1.3",
+    "immer": "^8.0.1",
     "paths-js": "^0.4.9",
     "prop-types": "^15.7.2",
     "react": "file:vendor/react",
