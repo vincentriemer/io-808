@@ -57,7 +57,7 @@
     "optimize-css-assets-webpack-plugin": "^5.0.4",
     "postcss-loader": "^3.0.0",
     "prettier": "^1.18.2",
-    "pug": "^2.0.4",
+    "pug": "^3.0.1",
     "pug-html-loader": "^1.1.5",
     "pug-loader": "^2.4.0",
     "resolve-url-loader": "^3.1.0",
