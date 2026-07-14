@@ -36,7 +36,8 @@ import {
   SECOND_PART,
   A_VARIATION,
   B_VARIATION,
-  AUTO_FILL_IN_MAPPING
+  AUTO_FILL_IN_MAPPING,
+  PERSISTANCE_FILTER
 } from "store-constants";
 
 import initialState from "initialState";
@@ -356,8 +357,10 @@ export default function(state, { type, payload }) {
     }
 
     case STATE_LOAD: {
-      return produce(state, () => {
-        return payload;
+      return produce(state, draft => {
+        PERSISTANCE_FILTER.forEach(key => {
+          draft[key] = payload[key];
+        });
       });
     }
 
