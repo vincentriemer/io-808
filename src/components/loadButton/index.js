@@ -1,10 +1,11 @@
 import React from "react";
+import * as stylex from "@stylexjs/stylex";
 import Octicon from "react-octicon";
 
 import Button from "components/button";
 
 import { PERSISTANCE_FILTER } from "store-constants";
-import { buttonColor, darkGrey } from "theme/variables";
+import { tokens } from "theme/variables.stylex";
 
 function validateState(state) {
   let output = true;
@@ -17,10 +18,10 @@ function validateState(state) {
   return output;
 }
 
-const styles = {
+const styles = stylex.create({
   button: {
     borderRadius: 4,
-    backgroundColor: buttonColor,
+    backgroundColor: tokens.buttonColor,
     marginLeft: 5,
     marginRight: 5
   },
@@ -28,16 +29,16 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    color: darkGrey,
+    color: tokens.darkGrey,
     transform: "scale(0.8)"
   },
   input: {
     display: "none"
   }
-};
+});
 
 const LoadButton = props => {
-  const { playing, onLoadedState, size = 50 } = props;
+  const { playing, onLoadedState, xstyle, iconXstyle } = props;
 
   const fileUploadRef = React.useRef(null);
 
@@ -78,19 +79,19 @@ const LoadButton = props => {
 
   return (
     <Button
-      style={{ ...styles.button, width: size, height: size }}
+      xstyle={[styles.button, xstyle]}
       disabled={playing}
       onClick={handlePress}
     >
       <input
         ref={fileUploadRef}
         type="file"
-        style={styles.input}
+        {...stylex.props(styles.input)}
         onChange={handleFileChange}
       />
       <Octicon
         title="Load"
-        style={{ ...styles.icon, width: size, height: size }}
+        {...stylex.props(styles.icon, iconXstyle)}
         name="cloud-upload"
         mega={true}
       />

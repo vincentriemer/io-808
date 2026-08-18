@@ -1,15 +1,14 @@
 import React from "react";
+import * as stylex from "@stylexjs/stylex";
 
 import Knob from "components/knob";
 import Guides from "components/guides";
 import SelectorKnobInner from "components/selectorKnobInner";
 
-import { grey } from "theme/variables";
-import { ring, labelGreyNormal, labelGreySmall } from "theme/mixins";
+import { tokens } from "theme/variables.stylex";
+import { themeStyles } from "theme/styles";
 
-const labelHeight = 20;
-
-const styles = {
+const styles = stylex.create({
   wrapper: {
     position: "relative",
     display: "flex",
@@ -23,17 +22,29 @@ const styles = {
     alignItems: "center",
     justifyContent: "center"
   },
-  label: labelGreyNormal,
   controlWrapper: {
-    position: "relative"
+    position: "relative",
+    width: 70,
+    height: 70
   },
   guides: {
     width: 4,
     height: 4,
-    backgroundColor: grey,
+    backgroundColor: tokens.grey,
     borderRadius: "50%"
   },
-  knobWrapper: ring("75%"),
+  knobWrapper: {
+    width: "75%",
+    height: "75%"
+  },
+  knob: {
+    width: 53,
+    height: 53
+  },
+  selectorInnerRing: {
+    width: 45,
+    height: 45
+  },
   knobLabelWrapper: {
     position: "absolute",
     display: "flex",
@@ -46,27 +57,35 @@ const styles = {
     transform: "translateX(-50%)"
   },
   knobLabel: {
-    ...labelGreySmall,
     width: 35
+  },
+  alignRight: {
+    textAlign: "right"
+  },
+  alignLeft: {
+    textAlign: "left"
   }
-};
+});
 
 const FineTempoKnob = props => {
-  const { value, onChange, size = 72 } = props;
-  const knobSize = Math.ceil(size * 0.75);
+  const { value, onChange, xstyle } = props;
   return (
-    <div style={{ ...styles.wrapper, width: size, height: size + labelHeight }}>
-      <div style={styles.labelWrapper}>
-        <div style={styles.label}>FINE</div>
+    <div {...stylex.props(styles.wrapper, xstyle)}>
+      <div {...stylex.props(styles.labelWrapper)}>
+        <div
+          {...stylex.props(themeStyles.labelBase, themeStyles.labelGreyNormal)}
+        >
+          FINE
+        </div>
       </div>
-      <div style={{ ...styles.controlWrapper, width: size, height: size }}>
+      <div {...stylex.props(styles.controlWrapper)}>
         <Guides
           num={11}
-          distance={size * 0.48}
+          distance={33.6}
           hideCount={1}
           guideStyle={styles.guides}
         />
-        <div style={styles.knobWrapper}>
+        <div {...stylex.props(themeStyles.ring, styles.knobWrapper)}>
           <Knob
             value={value}
             onChange={onChange}
@@ -74,15 +93,36 @@ const FineTempoKnob = props => {
             min={-6.75}
             max={6.75}
             step={0.1}
-            size={knobSize}
+            xstyle={styles.knob}
           >
-            <SelectorKnobInner size={knobSize} />
+            <SelectorKnobInner
+              xstyle={styles.knob}
+              innerRingXstyle={styles.selectorInnerRing}
+            />
           </Knob>
         </div>
       </div>
-      <div style={styles.knobLabelWrapper}>
-        <div style={{ ...styles.knobLabel, textAlign: "right" }}>SLOW</div>
-        <div style={{ ...styles.knobLabel, textAlign: "left" }}>FAST</div>
+      <div {...stylex.props(styles.knobLabelWrapper)}>
+        <div
+          {...stylex.props(
+            themeStyles.labelBase,
+            themeStyles.labelGreySmall,
+            styles.knobLabel,
+            styles.alignRight
+          )}
+        >
+          SLOW
+        </div>
+        <div
+          {...stylex.props(
+            themeStyles.labelBase,
+            themeStyles.labelGreySmall,
+            styles.knobLabel,
+            styles.alignLeft
+          )}
+        >
+          FAST
+        </div>
       </div>
     </div>
   );

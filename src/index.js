@@ -12,12 +12,20 @@ import * as React from "react";
 import { createRoot } from "react-dom";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+import * as stylex from "@stylexjs/stylex";
 
 import { store, persistor } from "store";
 import AppLayout from "layouts/app";
 import { KnobOverlayManager } from "components/knob/overlay";
 
 const Sequencer = React.lazy(() => import("./sequencer"));
+
+const styles = stylex.create({
+  app: {
+    width: "100%",
+    height: "100%"
+  }
+});
 
 const App = () => {
   React.useLayoutEffect(() => {
@@ -38,7 +46,7 @@ const App = () => {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <KnobOverlayManager>
-          <div style={{ width: "100%", height: "100%" }}>
+          <div {...stylex.props(styles.app)}>
             <React.Suspense fallback={null}>
               <Sequencer />
             </React.Suspense>

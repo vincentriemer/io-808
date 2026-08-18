@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import React from "react";
+import * as stylex from "@stylexjs/stylex";
 
 // Action Creators
 import { onStateLoad, onReset } from "actionCreators";
@@ -9,8 +10,23 @@ import SaveButton from "components/saveButton";
 import LoadButton from "components/loadButton";
 import Button from "components/button";
 
-import { buttonColor, darkGrey } from "theme/variables";
-import { labelGreyLarge } from "theme/mixins";
+import { tokens } from "theme/variables.stylex";
+import { themeStyles } from "theme/styles";
+
+const styles = stylex.create({
+  resetButton: {
+    color: tokens.darkGrey,
+    width: "auto",
+    padding: 7,
+    borderRadius: 4,
+    backgroundColor: tokens.buttonColor,
+    marginLeft: 5,
+    marginRight: 5,
+    display: "flex",
+    alignItems: "center",
+    cursor: "pointer"
+  }
+});
 
 export const ConnectedSaveButton = props => {
   const storeState = useSelector(state => state);
@@ -41,25 +57,15 @@ export const ConnectedResetButton = props => {
     }
   }, [dispatch]);
 
-  const { size, ...rest } = props;
-
   return (
     <Button
-      {...rest}
-      style={{
-        ...labelGreyLarge,
-        color: darkGrey,
-        width: "auto",
-        height: size,
-        padding: 7,
-        borderRadius: 4,
-        backgroundColor: buttonColor,
-        marginLeft: 5,
-        marginRight: 5,
-        display: "flex",
-        alignItems: "center",
-        cursor: "pointer"
-      }}
+      {...props}
+      xstyle={[
+        themeStyles.labelBase,
+        themeStyles.labelGreyLarge,
+        styles.resetButton,
+        props.xstyle
+      ]}
       onClick={onClick}
       disabled={disabled}
     >

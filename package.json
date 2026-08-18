@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rimraf out",
     "build:docs": "NODE_ENV=production node buildTutorial.js",
-    "build:webpack": "NODE_ENV=production webpack --config webpack.config.prod.js",
+    "build:webpack": "NODE_ENV=production webpack --config webpack.config.prod.js --config-name modern && NODE_ENV=production webpack --config webpack.config.prod.js --config-name legacy",
     "build": "yarn run clean && yarn run build:webpack && yarn run build:docs",
     "test": "true",
     "fmt": "prettier --write 'src/**/*.js'",
@@ -29,6 +29,8 @@
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.10.4",
+    "@stylexjs/babel-plugin": "^0.19.0",
+    "@stylexjs/postcss-plugin": "^0.19.0",
     "autoprefixer": "^10.5.2",
     "babel-eslint": "^10.0.2",
     "babel-loader": "8.0.6",
@@ -75,6 +77,7 @@
   },
   "dependencies": {
     "@reach/auto-id": "^0.12.1",
+    "@stylexjs/stylex": "^0.19.0",
     "@vincentriemer/geometry-interfaces-polyfill": "^0.0.1",
     "core-js": "^3.6.5",
     "file-saver": "^2.0.2",
