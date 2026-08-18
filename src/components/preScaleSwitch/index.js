@@ -1,15 +1,16 @@
 import React from "react";
+import * as stylex from "@stylexjs/stylex";
 
 import Switch from "components/switch";
 
-import { drumSwitchHandle, slightlyDarkerBlack } from "theme/variables";
-import { labelGreyNormal, labelGreySmall } from "theme/mixins";
+import { themeStyles } from "theme/styles";
+import { tokens } from "theme/variables.stylex";
 
 const noOp = () => {};
 
 const borderRadius = 2;
 
-const styles = {
+const styles = stylex.create({
   wrapper: {
     position: "relative",
     display: "flex",
@@ -18,7 +19,7 @@ const styles = {
     justifyContent: "center"
   },
   title: {
-    ...labelGreyNormal
+    marginBottom: 5
   },
   switchWrapper: {
     position: "relative"
@@ -35,16 +36,39 @@ const styles = {
     alignItems: "center",
     justifyContent: "space-between"
   },
-  label: labelGreySmall,
   inner: {
-    backgroundColor: drumSwitchHandle,
+    width: 14,
+    height: 21,
+    backgroundColor: tokens.drumSwitchHandle,
     borderRadius: borderRadius
   },
   outer: {
-    backgroundColor: slightlyDarkerBlack,
+    width: 22,
+    height: 80,
+    padding: 4,
+    backgroundColor: tokens.slightlyDarkerBlack,
     borderRadius: borderRadius
+  },
+  position0: {
+    transform: "translateY(0px)"
+  },
+  position1: {
+    transform: "translateY(17px)"
+  },
+  position2: {
+    transform: "translateY(34px)"
+  },
+  position3: {
+    transform: "translateY(51px)"
   }
-};
+});
+
+const positionXstyles = [
+  styles.position0,
+  styles.position1,
+  styles.position2,
+  styles.position3
+];
 
 const switchValues = {
   "1": "1",
@@ -54,19 +78,18 @@ const switchValues = {
 };
 
 const PreScaleSwitch = props => {
-  const { offset = 0, position } = props;
-  const titlePadding = 5;
+  const { xstyle, position } = props;
   return (
-    <div style={{ ...styles.wrapper, right: offset }}>
-      <div style={{ ...styles.title, marginBottom: titlePadding }}>
+    <div {...stylex.props(styles.wrapper, xstyle)}>
+      <div {...stylex.props(themeStyles.labelGreyNormal, styles.title)}>
         PRE-SCALE
       </div>
-      <div style={styles.switchWrapper}>
-        <div style={styles.labelWrapper}>
-          <div style={styles.label}>1</div>
-          <div style={styles.label}>2</div>
-          <div style={styles.label}>3</div>
-          <div style={styles.label}>4</div>
+      <div {...stylex.props(styles.switchWrapper)}>
+        <div {...stylex.props(styles.labelWrapper)}>
+          <div {...stylex.props(themeStyles.labelGreySmall)}>1</div>
+          <div {...stylex.props(themeStyles.labelGreySmall)}>2</div>
+          <div {...stylex.props(themeStyles.labelGreySmall)}>3</div>
+          <div {...stylex.props(themeStyles.labelGreySmall)}>4</div>
         </div>
         <Switch
           name="pre-scale"
@@ -75,12 +98,9 @@ const PreScaleSwitch = props => {
           disabled={true}
           direction="vertical"
           values={switchValues}
-          thickness={22}
-          length={80}
-          padding={4}
-          innerThickness={21}
-          outerStyle={styles.outer}
-          innerStyle={styles.inner}
+          outerXstyle={styles.outer}
+          handleXstyle={styles.inner}
+          positionXstyles={positionXstyles}
         />
       </div>
     </div>

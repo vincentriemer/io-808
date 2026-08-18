@@ -1,10 +1,11 @@
 import React from "react";
+import * as stylex from "@stylexjs/stylex";
 import Switch from "components/switch";
 
-import { slightlyDarkerBlack, drumSwitchHandle } from "theme/variables";
+import { tokens } from "theme/variables.stylex";
 
 const borderRadius = 2;
-const styles = {
+const styles = stylex.create({
   wrapper: {
     width: "100%",
     display: "flex",
@@ -12,27 +13,37 @@ const styles = {
     alignItems: "center"
   },
   inner: {
-    backgroundColor: drumSwitchHandle,
+    width: 14,
+    height: 22,
+    backgroundColor: tokens.drumSwitchHandle,
     borderRadius: borderRadius
   },
   outer: {
-    backgroundColor: slightlyDarkerBlack,
+    width: 22,
+    height: 50,
+    padding: 4,
+    backgroundColor: tokens.slightlyDarkerBlack,
     borderRadius: borderRadius
+  },
+  position0: {
+    transform: "translateY(0px)"
+  },
+  position1: {
+    transform: "translateY(20px)"
   }
-};
+});
+
+const positionXstyles = [styles.position0, styles.position1];
 
 const DrumSwitch = props => {
   return (
-    <div style={styles.wrapper}>
+    <div {...stylex.props(styles.wrapper)}>
       <Switch
         {...props}
         direction="vertical"
-        thickness={22}
-        length={50}
-        padding={4}
-        innerThickness={22}
-        outerStyle={styles.outer}
-        innerStyle={styles.inner}
+        outerXstyle={styles.outer}
+        handleXstyle={styles.inner}
+        positionXstyles={positionXstyles}
       />
     </div>
   );

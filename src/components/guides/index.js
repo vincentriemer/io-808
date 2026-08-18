@@ -1,16 +1,42 @@
 import React from "react";
+import * as stylex from "@stylexjs/stylex";
 
-const baseGuideStyle = {
-  cursor: "default",
-  position: "absolute",
-  top: "50%",
-  left: "50%"
-};
+const styles = stylex.create({
+  guide: {
+    position: "absolute",
+    top: "50%",
+    left: "50%"
+  },
+  wrapper: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    pointerEvents: "none"
+  },
+  rotate75: {
+    transform: "rotate(-75deg)"
+  },
+  rotate7043478260869566: {
+    transform: "rotate(-70.43478260869566deg)"
+  },
+  rotate225: {
+    transform: "rotate(-22.5deg)"
+  },
+  rotate0: {
+    transform: "rotate(0deg)"
+  }
+});
 
-const baseWrapperStyle = {
-  position: "absolute",
-  width: "100%",
-  height: "100%"
+const dynamicStyles = stylex.create({
+  guideTransform: transform => ({ transform })
+});
+
+const wrapperRotationStyles = {
+  0: styles.rotate0,
+  1: styles.rotate0,
+  6: styles.rotate75,
+  5.5: styles.rotate7043478260869566,
+  7: styles.rotate225
 };
 
 const Guides = React.memo(
@@ -19,7 +45,7 @@ const Guides = React.memo(
       num,
       distance,
       hideCount = 0,
-      guideStyle = {},
+      guideStyle = null,
       rotate = true,
       values,
       offset
@@ -50,11 +76,11 @@ const Guides = React.memo(
 
       guides.push(
         <div
-          style={{
-            ...guideStyle,
-            ...baseGuideStyle,
-            transform
-          }}
+          {...stylex.props(
+            guideStyle,
+            styles.guide,
+            dynamicStyles.guideTransform(transform)
+          )}
           key={i}
         >
           {value}
@@ -64,12 +90,7 @@ const Guides = React.memo(
       currentAngle += angleCounter;
     }
     return (
-      <div
-        style={{
-          ...baseWrapperStyle,
-          transform: `rotate(-${hideCompensation}deg)`
-        }}
-      >
+      <div {...stylex.props(styles.wrapper, wrapperRotationStyles[hideCount])}>
         {guides}
       </div>
     );

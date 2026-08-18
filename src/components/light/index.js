@@ -1,45 +1,55 @@
 import React from "react";
+import * as stylex from "@stylexjs/stylex";
 
-import { lightActive, lightInactive } from "theme/variables";
+import { tokens } from "theme/variables.stylex";
 
 const size = 18;
 const innerPadding = 4;
 
-const baseInnerStyle = {
-  position: "absolute",
-  left: innerPadding,
-  right: innerPadding,
-  top: innerPadding,
-  bottom: innerPadding,
-  borderRadius: "50%"
-};
-
-const styles = {
+const styles = stylex.create({
   outer: {
     position: "relative",
-    backgroundColor: "rgba(0,0,0,0.4)",
+    backgroundColor: tokens.lightBezel,
     width: size,
     height: size,
     borderRadius: "50%",
     pointerEvents: "none"
   },
-  innerInactive: {
-    ...baseInnerStyle,
-    backgroundColor: lightInactive
+  inner: {
+    position: "absolute",
+    left: innerPadding,
+    right: innerPadding,
+    top: innerPadding,
+    bottom: innerPadding,
+    borderRadius: "50%"
   },
-  innerActive: {
-    ...baseInnerStyle,
-    backgroundColor: lightActive,
+  inactive: {
+    backgroundColor: tokens.lightInactive
+  },
+  active: {
+    backgroundColor: tokens.lightActive,
     transition: "opacity 0.1s"
+  },
+  visible: {
+    opacity: 1
+  },
+  hidden: {
+    opacity: 0
   }
-};
+});
 
 const Light = props => {
   const { active } = props;
   return (
-    <div style={styles.outer}>
-      <div style={styles.innerInactive} />
-      <div style={{ ...styles.innerActive, opacity: active ? 1 : 0 }} />
+    <div {...stylex.props(styles.outer)}>
+      <div {...stylex.props(styles.inner, styles.inactive)} />
+      <div
+        {...stylex.props(
+          styles.inner,
+          styles.active,
+          active ? styles.visible : styles.hidden
+        )}
+      />
     </div>
   );
 };

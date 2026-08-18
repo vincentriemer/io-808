@@ -1,23 +1,25 @@
 import React from "react";
+import * as stylex from "@stylexjs/stylex";
 
-import { stencilOrange, darkGrey, brandingFontFamily } from "theme/variables";
-import { labelGreyLarge } from "theme/mixins";
+import { themeStyles } from "theme/styles";
+import { tokens } from "theme/variables.stylex";
 
 const lineHeight = 1.5;
 const titleRight = 60;
 const lineTop = 55;
 
-const styles = {
+const styles = stylex.create({
   wrapper: {
     position: "relative"
   },
   titleLine: {
     position: "absolute",
+    width: 898,
     height: `${lineHeight}%`,
     left: "50%",
     transform: "translateX(-50%)",
     top: `${lineTop}%`,
-    backgroundColor: stencilOrange
+    backgroundColor: tokens.stencilOrange
   },
   titleWrapper: {
     display: "flex",
@@ -29,30 +31,32 @@ const styles = {
     right: titleRight
   },
   titleBig: {
-    ...labelGreyLarge,
-    fontFamily: brandingFontFamily,
+    fontFamily: tokens.brandingFontFamily,
     marginRight: 40,
-    color: stencilOrange,
+    color: tokens.stencilOrange,
     fontSize: 50,
-    textShadow: `0.3rem 0 ${darkGrey},0.3rem 0rem ${darkGrey},-0.3rem -0 ${darkGrey},-0.3rem 0 ${darkGrey}`
+    textShadow: `0.3rem 0 ${tokens.darkGrey},0.3rem 0rem ${tokens.darkGrey},-0.3rem -0 ${tokens.darkGrey},-0.3rem 0 ${tokens.darkGrey}`
   },
   titleSmall: {
-    ...labelGreyLarge,
-    fontFamily: brandingFontFamily,
-    color: stencilOrange,
+    fontFamily: tokens.brandingFontFamily,
+    color: tokens.stencilOrange,
     fontSize: 40,
     letterSpacing: -1.5
   },
   subtitle: {
-    ...labelGreyLarge,
-    fontFamily: brandingFontFamily,
+    fontFamily: tokens.brandingFontFamily,
     position: "absolute",
     top: `${lineTop + lineHeight * 3}%`,
     right: titleRight,
     fontSize: 28,
     letterSpacing: -1
+  },
+  rotatedE: {
+    display: "inline-block",
+    transformOrigin: "50% 60%",
+    transform: "rotate(-40deg)"
   }
-};
+});
 
 const TitleText = React.memo(props => {
   const { text } = props;
@@ -63,14 +67,7 @@ const TitleText = React.memo(props => {
       return [cur];
     }
     const rotatedE = (
-      <span
-        key={idx}
-        style={{
-          display: "inline-block",
-          transformOrigin: "50% 60%",
-          transform: "rotate(-40deg)"
-        }}
-      >
+      <span key={idx} {...stylex.props(styles.rotatedE)}>
         e
       </span>
     );
@@ -80,20 +77,20 @@ const TitleText = React.memo(props => {
 });
 
 const AppTitle = props => {
-  const { width = 955, height = 151 } = props;
+  const { xstyle } = props;
 
   return (
-    <div style={{ ...styles.wrapper, width, height }}>
-      <div style={{ ...styles.titleLine, width: width - 20 }} />
-      <div style={styles.titleWrapper}>
-        <div style={styles.titleBig}>
+    <div {...stylex.props(styles.wrapper, xstyle)}>
+      <div {...stylex.props(styles.titleLine)} />
+      <div {...stylex.props(styles.titleWrapper)}>
+        <div {...stylex.props(themeStyles.labelGreyLarge, styles.titleBig)}>
           <TitleText text="Rhythm Composer" />
         </div>
-        <div style={styles.titleSmall}>
+        <div {...stylex.props(themeStyles.labelGreyLarge, styles.titleSmall)}>
           <TitleText text="iO-808" />
         </div>
       </div>
-      <div style={styles.subtitle}>
+      <div {...stylex.props(themeStyles.labelGreyLarge, styles.subtitle)}>
         <TitleText text="Browser Controlled" />
       </div>
     </div>

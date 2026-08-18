@@ -1,27 +1,29 @@
 import React from "react";
+import * as stylex from "@stylexjs/stylex";
 
 import Guides from "components/guides";
 
-import { ring } from "theme/mixins";
-import {
-  darkBlack,
-  slightlyDarkerBlack,
-  drumHandle,
-  stencilOrange
-} from "theme/variables";
+import { tokens } from "theme/variables.stylex";
+import { themeStyles } from "theme/styles";
 
 const guideSize = 6;
-const styles = {
+const styles = stylex.create({
   guides: {
     width: guideSize,
     height: guideSize,
     borderRadius: "50%",
-    backgroundColor: darkBlack
+    backgroundColor: tokens.darkBlack
   },
   wrapper: {
     position: "absolute",
     borderRadius: "50%",
-    backgroundColor: darkBlack
+    backgroundColor: tokens.darkBlack
+  },
+  spokes: {
+    backgroundColor: tokens.slightlyDarkerBlack
+  },
+  innerRing: {
+    backgroundColor: tokens.drumHandle
   },
   lowerHandle: {
     position: "absolute",
@@ -30,7 +32,7 @@ const styles = {
     transform: "translateX(-50%)",
     width: 8,
     height: 15,
-    backgroundColor: drumHandle,
+    backgroundColor: tokens.drumHandle,
     opacity: 0.6
   },
   handle: {
@@ -40,32 +42,31 @@ const styles = {
     transform: "translateX(-50%)",
     width: 5,
     height: 15,
-    backgroundColor: stencilOrange,
+    backgroundColor: tokens.stencilOrange,
     borderRadius: 1
   }
-};
+});
 
 const SelectorKnobInner = React.memo(
   props => {
-    const { size } = props;
+    const { xstyle, spokesXstyle, innerRingXstyle, guideDistance } = props;
     const guides =
-      size > 90 ? (
-        <Guides num={60} distance={size / 2 - 9.5} guideStyle={styles.guides} />
+      guideDistance != null ? (
+        <Guides num={60} distance={guideDistance} guideStyle={styles.guides} />
       ) : null;
     const spokes =
-      size > 60 ? <div style={ring(size - 20, slightlyDarkerBlack)} /> : null;
+      spokesXstyle != null ? (
+        <div {...stylex.props(themeStyles.ring, styles.spokes, spokesXstyle)} />
+      ) : null;
     return (
-      <div style={{ ...styles.wrapper, width: size, height: size }}>
+      <div {...stylex.props(styles.wrapper, xstyle)}>
         {spokes}
         {guides}
-        <div style={styles.lowerHandle} />
+        <div {...stylex.props(styles.lowerHandle)} />
         <div
-          style={{
-            ...ring(size - 30, drumHandle),
-            ...(size < 60 ? { width: size - 8, height: size - 8 } : {})
-          }}
+          {...stylex.props(themeStyles.ring, styles.innerRing, innerRingXstyle)}
         />
-        <div style={styles.handle} />
+        <div {...stylex.props(styles.handle)} />
       </div>
     );
   },

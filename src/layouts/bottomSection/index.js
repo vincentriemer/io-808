@@ -1,17 +1,9 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import * as stylex from "@stylexjs/stylex";
 
-import {
-  grey,
-  darkGrey,
-  buttonColor,
-  red,
-  buttonOrange,
-  yellow,
-  offWhite,
-  drumLabel
-} from "theme/variables";
-import { labelDarkGrey, labelGreyNormal, labelGreyXLarge } from "theme/mixins";
+import { tokens } from "theme/variables.stylex";
+import { themeStyles } from "theme/styles";
 
 import TimeSignatureSection from "layouts/timeSignatureSection";
 import ArrowLabel from "components/arrowLabel";
@@ -29,81 +21,349 @@ import {
 } from "./connectedComponents";
 
 const RHYTHM_LABELS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4];
-const STEP_BUTTON_COLORS = [
-  red,
-  red,
-  red,
-  red,
-  buttonOrange,
-  buttonOrange,
-  buttonOrange,
-  buttonOrange,
-  yellow,
-  yellow,
-  yellow,
-  yellow,
-  offWhite,
-  offWhite,
-  offWhite,
-  offWhite
+const STEP_BUTTON_TONES = [
+  "red",
+  "red",
+  "red",
+  "red",
+  "orange",
+  "orange",
+  "orange",
+  "orange",
+  "yellow",
+  "yellow",
+  "yellow",
+  "yellow",
+  "offWhite",
+  "offWhite",
+  "offWhite",
+  "offWhite"
 ];
 
-function generateStepButtons(
-  width,
-  buttonHeight,
-  labelHeight,
-  bottomHeight,
-  padding
-) {
+const styles = stylex.create({
+  wrapper: {
+    position: "relative"
+  },
+  unsupportedWrapper: {
+    width: "100%",
+    height: "100%",
+    position: "relative",
+    transition: "opacity 0.5s"
+  },
+  supported: {
+    opacity: 1
+  },
+  unsupported: {
+    opacity: 0.1
+  },
+  unsupportedLabel: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    top: 0,
+    left: 0,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    pointerEvents: "none",
+    color: tokens.unsupportedText,
+    transition: "opacity 0.5s"
+  },
+  hidden: {
+    opacity: 0
+  },
+  visible: {
+    opacity: 1
+  },
+  controlWrapper: {
+    position: "absolute",
+    width: 1400,
+    height: 288,
+    left: 0,
+    top: 10
+  },
+  leftSection: {
+    position: "absolute",
+    width: 192,
+    height: 231,
+    top: 0,
+    left: 0,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "stretch",
+    justifyContent: "space-between",
+    padding: 10
+  },
+  rightSection: {
+    position: "absolute",
+    width: 168,
+    height: 231,
+    top: 0,
+    right: 0,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "stretch",
+    justifyContent: "space-between",
+    padding: 10
+  },
+  buttonWrapper: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+  },
+  button: {
+    backgroundColor: tokens.buttonColor,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "stretch",
+    borderRadius: 4
+  },
+  startStopButtonLayout: {
+    width: 134.4,
+    height: 57.75
+  },
+  tapButtonLayout: {
+    width: 57.75,
+    height: 57.75
+  },
+  startStopButton: {
+    padding: 8
+  },
+  tapButton: {
+    padding: 11
+  },
+  darkGreyButtonLabel: {
+    cursor: "inherit"
+  },
+  fillInButtonLabelWrapper: {
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 10,
+    paddingRight: 10
+  },
+  preScaleSection: {
+    position: "absolute",
+    width: 129,
+    height: 231,
+    top: 0,
+    left: 192,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+  preScaleSwitchWrapper: {
+    // Disable the switch until pre-scale functionality is implemented.
+    pointerEvents: "none",
+    opacity: 0.5
+  },
+  preScaleBottomSection: {
+    width: "100%",
+    height: 115,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+  },
+  stepButtonSection: {
+    position: "absolute",
+    width: 901,
+    height: 162,
+    top: 115,
+    left: 321,
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "stretch"
+  },
+  arrowWrapper: {
+    position: "absolute",
+    height: 47,
+    top: 231,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  basicRhythmArrowLayout: {
+    width: 321
+  },
+  iFArrowLayout: {
+    width: 168
+  },
+  basicRhythmArrowWrapper: {
+    left: 25
+  },
+  iFArrowWrapper: {
+    right: 12.5
+  },
+  horizontalSeparator: {
+    backgroundColor: tokens.darkGrey
+  },
+  separatorThick: {
+    height: 2
+  },
+  separatorThin: {
+    height: 1
+  },
+  separatorMargin: {
+    margin: 3
+  },
+  stepWrapper: {
+    width: 46.9375,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+  },
+  stepLabelWrapper: {
+    height: 18,
+    display: "flex",
+    alignItems: "center"
+  },
+  stepButton: {
+    width: 46.9375,
+    height: 87
+  },
+  stepLabel: {
+    color: tokens.drumLabel
+  },
+  rhythmLabelWrapper: {
+    marginTop: 10,
+    height: 47,
+    display: "flex",
+    alignItems: "center"
+  },
+  rhythmLabel: {
+    color: tokens.darkGrey
+  },
+  backgroundWrapper: {
+    width: 1400,
+    height: 278,
+    position: "absolute",
+    bottom: 0,
+    left: 0
+  },
+  backgroundSide: {
+    position: "absolute",
+    top: 0,
+    height: 278,
+    backgroundColor: tokens.grey,
+    borderRadius: 8
+  },
+  backgroundLeftSide: {
+    width: 192
+  },
+  backgroundRightSide: {
+    width: 168
+  },
+  left: {
+    left: 0
+  },
+  right: {
+    right: 0
+  },
+  backgroundCenter: {
+    position: "absolute",
+    top: 0,
+    left: 192,
+    right: 168,
+    height: 231,
+    backgroundColor: tokens.darkGrey,
+    borderRadius: 8
+  },
+  backgroundBottom: {
+    position: "absolute",
+    bottom: 0,
+    height: 47,
+    backgroundColor: tokens.grey,
+    borderRadius: 8
+  },
+  backgroundBottomLeft: {
+    width: 994.25
+  },
+  backgroundBottomRight: {
+    width: 395.75
+  },
+  backgroundFiller: {
+    position: "absolute",
+    bottom: 47,
+    left: 192,
+    width: 20,
+    height: 20,
+    backgroundColor: tokens.grey
+  },
+  rightFiller: {
+    position: "absolute",
+    bottom: 47,
+    right: 168,
+    width: 20,
+    height: 20,
+    backgroundColor: tokens.grey
+  },
+  translateLeft: {
+    transform: "translateX(-50%)"
+  },
+  translateRight: {
+    transform: "translateX(50%)"
+  },
+  timeSignatureSectionWrapper: {
+    position: "absolute",
+    width: 901,
+    height: 116,
+    top: 0,
+    left: 321
+  },
+  timeSignatureSection: {
+    width: 901,
+    height: 116
+  },
+  preScaleSwitch: {
+    right: 6
+  },
+  partLights: {
+    width: 129,
+    height: 97,
+    right: 6
+  },
+  compactArrowLabel: {
+    width: 109,
+    height: 18
+  },
+  standardArrowLabel: {
+    width: 140,
+    height: 25
+  }
+});
+
+function generateStepButtons() {
   const labeledButtons = [];
-  const buttonWidth = width / 16 - (padding * 15) / 16;
-  const stepButtonHeight = buttonHeight - padding;
-
-  const styles = {
-    wrapper: {
-      width: buttonWidth,
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center"
-    },
-
-    stepLabelWrapper: {
-      height: labelHeight,
-      display: "flex",
-      alignItems: "center"
-    },
-
-    stepLabel: {
-      ...labelGreyNormal,
-      color: drumLabel
-    },
-
-    rhythmLabelWrapper: {
-      marginTop: padding,
-      height: bottomHeight,
-      display: "flex",
-      alignItems: "center"
-    },
-
-    rhythmLabel: {
-      ...labelGreyXLarge,
-      color: darkGrey
-    }
-  };
 
   ConnectedStepButtons.forEach((ConnectedStepButton, index) => {
     labeledButtons.push(
-      <div key={`stepbutton-${index}`} style={styles.wrapper}>
-        <div style={styles.stepLabelWrapper}>
-          <div style={styles.stepLabel}>{index + 1}</div>
+      <div key={`stepbutton-${index}`} {...stylex.props(styles.stepWrapper)}>
+        <div {...stylex.props(styles.stepLabelWrapper)}>
+          <div
+            {...stylex.props(
+              themeStyles.labelBase,
+              themeStyles.labelGreyNormal,
+              styles.stepLabel
+            )}
+          >
+            {index + 1}
+          </div>
         </div>
         <ConnectedStepButton
-          width={buttonWidth}
-          height={stepButtonHeight}
-          color={STEP_BUTTON_COLORS[index]}
+          xstyle={styles.stepButton}
+          tone={STEP_BUTTON_TONES[index]}
         />
-        <div style={styles.rhythmLabelWrapper}>
-          <div style={styles.rhythmLabel}>{RHYTHM_LABELS[index]}</div>
+        <div {...stylex.props(styles.rhythmLabelWrapper)}>
+          <div
+            {...stylex.props(
+              themeStyles.labelBase,
+              themeStyles.labelGreyXLarge,
+              styles.rhythmLabel
+            )}
+          >
+            {RHYTHM_LABELS[index]}
+          </div>
         </div>
       </div>
     );
@@ -113,408 +373,221 @@ function generateStepButtons(
 }
 
 const BottomSection = props => {
-  const { width, height, topLeftWidth } = props;
+  const { xstyle } = props;
 
   const mode = useSelector(state => state.selectedMode);
 
-  const BACKGROUND_PADDING = 10,
-    BACKGROUND_BORDER_RADIUS = 8,
-    LEFT_WIDTH = Math.floor(width * 0.1375),
-    RIGHT_WIDTH = Math.floor(width * 0.12),
-    BACKGROUND_BOTTOM_HEIGHT = Math.floor((height - BACKGROUND_PADDING) * 0.17),
-    BACKGROUND_CENTER_HEIGHT =
-      height - BACKGROUND_PADDING - BACKGROUND_BOTTOM_HEIGHT;
-
-  const SEQUENCER_SECTION_WIDTH = width - (LEFT_WIDTH + RIGHT_WIDTH),
-    SEQUENCER_SECTION_HEIGHT =
-      height - BACKGROUND_BOTTOM_HEIGHT - BACKGROUND_PADDING,
-    PRE_SCALE_SECTION_WIDTH = topLeftWidth - LEFT_WIDTH,
-    STEPS_SECTION_WIDTH =
-      SEQUENCER_SECTION_WIDTH - PRE_SCALE_SECTION_WIDTH - BACKGROUND_PADDING;
-
-  const QUARTER_STEP_WIDTH =
-    STEPS_SECTION_WIDTH / 4 - (BACKGROUND_PADDING * 3) / 4;
-
-  const BACKGROUND_BOTTOM_LEFT_WIDTH =
-    LEFT_WIDTH +
-    PRE_SCALE_SECTION_WIDTH +
-    QUARTER_STEP_WIDTH * 3 +
-    BACKGROUND_PADDING * 2;
-  const BACKGROUND_BOTTOM_RIGHT_WIDTH =
-    RIGHT_WIDTH + QUARTER_STEP_WIDTH + BACKGROUND_PADDING;
-
-  const TIME_SIG_WRAPPER_HEIGHT = Math.ceil(SEQUENCER_SECTION_HEIGHT * 0.5),
-    STEP_CONTROL_WRAPPER_HEIGHT =
-      SEQUENCER_SECTION_HEIGHT - TIME_SIG_WRAPPER_HEIGHT;
-
-  const LEFT_SECTION_HEIGHT =
-    height - BACKGROUND_PADDING - BACKGROUND_BOTTOM_HEIGHT;
-
-  const STEP_BUTTON_LABEL_HEIGHT = 18;
-  const STEP_BUTTON_HEIGHT =
-    STEP_CONTROL_WRAPPER_HEIGHT - STEP_BUTTON_LABEL_HEIGHT;
-  const STEP_BUTTON_SECTION_HEIGHT =
-    STEP_BUTTON_LABEL_HEIGHT + STEP_BUTTON_HEIGHT + BACKGROUND_BOTTOM_HEIGHT;
-
-  const ARROW_LABEL_HEIGHT = STEP_BUTTON_LABEL_HEIGHT;
-
-  const horizontalSeparatorStyle = thickness => ({
-    height: thickness,
-    backgroundColor: darkGrey
-  });
-
   const modeSupported = !UNIMPLEMENTED_MODES.includes(mode);
 
-  const styles = {
-    wrapper: {
-      width,
-      height,
-      position: "relative"
-    },
-    unsupportedWrapper: {
-      width,
-      height,
-      position: "relative",
-      transition: "opacity 0.5s",
-      opacity: modeSupported ? 1.0 : 0.1
-    },
-    unsupportedLabel: {
-      ...labelGreyXLarge,
-      position: "absolute",
-      width,
-      height,
-      top: 0,
-      left: 0,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      pointerEvents: "none",
-      color: "#F6F6F6",
-      transition: "opacity 0.5s",
-      opacity: modeSupported ? 0.0 : 1.0
-    },
-    controlWrapper: {
-      position: "absolute",
-      width,
-      height,
-      left: 0,
-      top: BACKGROUND_PADDING
-    },
-    sequencerSection: {
-      position: "absolute",
-      width: SEQUENCER_SECTION_WIDTH,
-      height: SEQUENCER_SECTION_HEIGHT,
-      top: 0,
-      left: LEFT_WIDTH
-    },
-    leftSection: {
-      position: "absolute",
-      width: LEFT_WIDTH,
-      height: LEFT_SECTION_HEIGHT,
-      top: 0,
-      left: 0,
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "stretch",
-      justifyContent: "space-between",
-      padding: BACKGROUND_PADDING
-    },
-    buttonWrapper: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center"
-    },
-    startStopButton: {
-      width: LEFT_WIDTH * 0.7,
-      height: LEFT_SECTION_HEIGHT * 0.25,
-      backgroundColor: buttonColor,
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "stretch",
-      padding: 8,
-      borderRadius: 4
-    },
-    darkGreyButtonLabel: {
-      ...labelDarkGrey,
-      cursor: "inherit"
-    },
-    rightSection: {
-      position: "absolute",
-      width: RIGHT_WIDTH,
-      height: LEFT_SECTION_HEIGHT,
-      top: 0,
-      right: 0,
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "stretch",
-      justifyContent: "space-between",
-      padding: BACKGROUND_PADDING
-    },
-    fillInButtonLabelWrapper: {
-      paddingTop: 5,
-      paddingBottom: 5,
-      paddingLeft: 10,
-      paddingRight: 10
-    },
-    tapButton: {
-      width: LEFT_SECTION_HEIGHT * 0.25,
-      height: LEFT_SECTION_HEIGHT * 0.25,
-      backgroundColor: buttonColor,
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "stretch",
-      padding: 11,
-      borderRadius: 4
-    },
-    preScaleSection: {
-      position: "absolute",
-      width: PRE_SCALE_SECTION_WIDTH,
-      height: SEQUENCER_SECTION_HEIGHT,
-      top: 0,
-      left: LEFT_WIDTH,
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "space-between"
-    },
-    preScaleSwitchWrapper: {
-      // disable switch until prescale functionality is implemented (stretch-goal)
-      pointerEvents: "none",
-      opacity: 0.5
-    },
-    preScaleBottomSection: {
-      width: "100%",
-      height: STEP_CONTROL_WRAPPER_HEIGHT,
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center"
-    },
-    stepButtonSection: {
-      position: "absolute",
-      width: STEPS_SECTION_WIDTH,
-      height: STEP_BUTTON_SECTION_HEIGHT,
-      top: STEP_CONTROL_WRAPPER_HEIGHT,
-      left: LEFT_WIDTH + PRE_SCALE_SECTION_WIDTH,
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "stretch"
-    },
-    basicRhythmArrowWrapper: {
-      position: "absolute",
-      width: LEFT_WIDTH + PRE_SCALE_SECTION_WIDTH,
-      height: BACKGROUND_BOTTOM_HEIGHT,
-      left: 25,
-      top: BACKGROUND_CENTER_HEIGHT,
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center"
-    },
-    iFArrowWrapper: {
-      position: "absolute",
-      width: RIGHT_WIDTH,
-      height: BACKGROUND_BOTTOM_HEIGHT,
-      right: 12.5,
-      top: BACKGROUND_CENTER_HEIGHT,
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center"
-    }
-  };
-
-  const backgroundStyles = {
-    wrapper: {
-      width,
-      height: height - BACKGROUND_PADDING,
-      position: "absolute",
-      bottom: 0,
-      left: 0
-    },
-
-    left: {
-      position: "absolute",
-      top: 0,
-      left: 0,
-      width: LEFT_WIDTH,
-      height: height - BACKGROUND_PADDING,
-      backgroundColor: grey,
-      borderRadius: BACKGROUND_BORDER_RADIUS
-    },
-
-    right: {
-      position: "absolute",
-      top: 0,
-      right: 0,
-      width: RIGHT_WIDTH,
-      height: height - BACKGROUND_PADDING,
-      backgroundColor: grey,
-      borderRadius: BACKGROUND_BORDER_RADIUS
-    },
-
-    center: {
-      position: "absolute",
-      top: 0,
-      left: LEFT_WIDTH,
-      right: RIGHT_WIDTH,
-      height: BACKGROUND_CENTER_HEIGHT,
-      backgroundColor: darkGrey,
-      borderRadius: BACKGROUND_BORDER_RADIUS
-    },
-
-    bottomLeft: {
-      position: "absolute",
-      bottom: 0,
-      left: 0,
-      width: BACKGROUND_BOTTOM_LEFT_WIDTH,
-      height: BACKGROUND_BOTTOM_HEIGHT,
-      backgroundColor: grey,
-      borderRadius: BACKGROUND_BORDER_RADIUS
-    },
-
-    bottomRight: {
-      position: "absolute",
-      bottom: 0,
-      right: 0,
-      width: BACKGROUND_BOTTOM_RIGHT_WIDTH,
-      height: BACKGROUND_BOTTOM_HEIGHT,
-      backgroundColor: grey,
-      borderRadius: BACKGROUND_BORDER_RADIUS
-    },
-
-    leftFiller: {
-      position: "absolute",
-      bottom: BACKGROUND_BOTTOM_HEIGHT,
-      left: LEFT_WIDTH,
-      transform: "translateX(-50%)",
-      width: 20,
-      height: 20,
-      backgroundColor: grey
-    },
-
-    rightFiller: {
-      position: "absolute",
-      bottom: BACKGROUND_BOTTOM_HEIGHT,
-      right: RIGHT_WIDTH,
-      transform: "translateX(50%)",
-      width: 20,
-      height: 20,
-      backgroundColor: grey
-    },
-
-    timeSignatureSectionWrapper: {
-      position: "absolute",
-      width: STEPS_SECTION_WIDTH,
-      height: TIME_SIG_WRAPPER_HEIGHT,
-      top: 0,
-      left: LEFT_WIDTH + PRE_SCALE_SECTION_WIDTH
-    }
-  };
+  const unsupportedWrapperProps = stylex.props(
+    styles.unsupportedWrapper,
+    modeSupported ? styles.supported : styles.unsupported
+  );
 
   return (
-    <div style={styles.wrapper}>
+    <div {...stylex.props(styles.wrapper, xstyle)}>
       <div
-        className={modeSupported ? "" : "unsupported"}
-        style={styles.unsupportedWrapper}
+        {...unsupportedWrapperProps}
+        className={`${unsupportedWrapperProps.className || ""}${
+          modeSupported ? "" : " unsupported"
+        }`}
       >
-        <div style={backgroundStyles.wrapper}>
-          <div style={backgroundStyles.left} />
-          <div style={backgroundStyles.right} />
-          <div style={backgroundStyles.bottomLeft} />
-          <div style={backgroundStyles.bottomRight} />
-          <div style={backgroundStyles.leftFiller} />
-          <div style={backgroundStyles.rightFiller} />
-          <div style={backgroundStyles.center} />
-          <div style={backgroundStyles.timeSignatureSectionWrapper}>
-            <TimeSignatureSection
-              width={STEPS_SECTION_WIDTH}
-              height={TIME_SIG_WRAPPER_HEIGHT}
-              stepPadding={BACKGROUND_PADDING}
-              quarterStepWidth={QUARTER_STEP_WIDTH}
-            />
+        <div {...stylex.props(styles.backgroundWrapper)}>
+          <div
+            {...stylex.props(
+              styles.backgroundSide,
+              styles.backgroundLeftSide,
+              styles.left
+            )}
+          />
+          <div
+            {...stylex.props(
+              styles.backgroundSide,
+              styles.backgroundRightSide,
+              styles.right
+            )}
+          />
+          <div
+            {...stylex.props(
+              styles.backgroundBottom,
+              styles.backgroundBottomLeft,
+              styles.left
+            )}
+          />
+          <div
+            {...stylex.props(
+              styles.backgroundBottom,
+              styles.backgroundBottomRight,
+              styles.right
+            )}
+          />
+          <div
+            {...stylex.props(styles.backgroundFiller, styles.translateLeft)}
+          />
+          <div {...stylex.props(styles.rightFiller, styles.translateRight)} />
+          <div {...stylex.props(styles.backgroundCenter)} />
+          <div {...stylex.props(styles.timeSignatureSectionWrapper)}>
+            <TimeSignatureSection xstyle={styles.timeSignatureSection} />
           </div>
         </div>
-        <div style={styles.controlWrapper}>
-          <div style={styles.leftSection}>
+        <div {...stylex.props(styles.controlWrapper)}>
+          <div {...stylex.props(styles.leftSection)}>
             <ConnectedBasicVariationSwitch />
-            <div style={horizontalSeparatorStyle(2)} />
-            <div style={styles.buttonWrapper}>
-              <ConnectedStartStopButton style={styles.startStopButton}>
-                <div style={styles.darkGreyButtonLabel}>START</div>
-                <div style={{ ...horizontalSeparatorStyle(1), margin: 3 }} />
-                <div style={styles.darkGreyButtonLabel}>STOP</div>
+            <div
+              {...stylex.props(
+                styles.horizontalSeparator,
+                styles.separatorThick
+              )}
+            />
+            <div {...stylex.props(styles.buttonWrapper)}>
+              <ConnectedStartStopButton
+                xstyle={[
+                  styles.button,
+                  styles.startStopButtonLayout,
+                  styles.startStopButton
+                ]}
+              >
+                <div
+                  {...stylex.props(
+                    themeStyles.labelBase,
+                    themeStyles.labelDarkGrey,
+                    styles.darkGreyButtonLabel
+                  )}
+                >
+                  START
+                </div>
+                <div
+                  {...stylex.props(
+                    styles.horizontalSeparator,
+                    styles.separatorThin,
+                    styles.separatorMargin
+                  )}
+                />
+                <div
+                  {...stylex.props(
+                    themeStyles.labelBase,
+                    themeStyles.labelDarkGrey,
+                    styles.darkGreyButtonLabel
+                  )}
+                >
+                  STOP
+                </div>
               </ConnectedStartStopButton>
             </div>
           </div>
-          <div style={styles.rightSection}>
+          <div {...stylex.props(styles.rightSection)}>
             <ConnectedIFVariationSwitch />
-            <div style={horizontalSeparatorStyle(2)} />
-            <div style={styles.fillInButtonLabelWrapper}>
-              <div style={labelDarkGrey}>INTRO SET</div>
-              <div style={{ ...horizontalSeparatorStyle(1), margin: 3 }} />
-              <div style={labelDarkGrey}>FILL IN TRIGGER</div>
+            <div
+              {...stylex.props(
+                styles.horizontalSeparator,
+                styles.separatorThick
+              )}
+            />
+            <div {...stylex.props(styles.fillInButtonLabelWrapper)}>
+              <div
+                {...stylex.props(
+                  themeStyles.labelBase,
+                  themeStyles.labelDarkGrey
+                )}
+              >
+                INTRO SET
+              </div>
+              <div
+                {...stylex.props(
+                  styles.horizontalSeparator,
+                  styles.separatorThin,
+                  styles.separatorMargin
+                )}
+              />
+              <div
+                {...stylex.props(
+                  themeStyles.labelBase,
+                  themeStyles.labelDarkGrey
+                )}
+              >
+                FILL IN TRIGGER
+              </div>
             </div>
-            <div style={styles.buttonWrapper}>
-              <ConnectedTapButton style={styles.tapButton}>
-                <div style={styles.darkGreyButtonLabel}>TAP</div>
+            <div {...stylex.props(styles.buttonWrapper)}>
+              <ConnectedTapButton
+                xstyle={[
+                  styles.button,
+                  styles.tapButtonLayout,
+                  styles.tapButton
+                ]}
+              >
+                <div
+                  {...stylex.props(
+                    themeStyles.labelBase,
+                    themeStyles.labelDarkGrey,
+                    styles.darkGreyButtonLabel
+                  )}
+                >
+                  TAP
+                </div>
               </ConnectedTapButton>
             </div>
           </div>
-          <div style={styles.preScaleSection}>
-            <div style={styles.preScaleSwitchWrapper}>
+          <div {...stylex.props(styles.preScaleSection)}>
+            <div {...stylex.props(styles.preScaleSwitchWrapper)}>
               <ConnectedPreScaleSwitch
                 position={2}
-                offset={STEP_BUTTON_LABEL_HEIGHT / 3}
+                xstyle={styles.preScaleSwitch}
               />
             </div>
-            <div style={styles.preScaleBottomSection}>
+            <div {...stylex.props(styles.preScaleBottomSection)}>
               <ArrowLabel
                 label="STEP NO"
-                width={PRE_SCALE_SECTION_WIDTH - 20}
-                height={ARROW_LABEL_HEIGHT}
-                textColor={darkGrey}
-                backgroundColor={grey}
+                xstyle={styles.compactArrowLabel}
+                variant="compact"
                 direction="right"
               />
-              <ConnectedPartLights
-                offset={STEP_BUTTON_LABEL_HEIGHT / 3}
-                width={PRE_SCALE_SECTION_WIDTH}
-                height={STEP_BUTTON_HEIGHT}
-              />
+              <ConnectedPartLights xstyle={styles.partLights} />
             </div>
           </div>
-          <div style={styles.stepButtonSection}>
-            {generateStepButtons(
-              STEPS_SECTION_WIDTH,
-              STEP_BUTTON_HEIGHT,
-              STEP_BUTTON_LABEL_HEIGHT,
-              BACKGROUND_BOTTOM_HEIGHT,
-              BACKGROUND_PADDING
-            )}
+          <div {...stylex.props(styles.stepButtonSection)}>
+            {generateStepButtons()}
           </div>
-          <div style={styles.basicRhythmArrowWrapper}>
+          <div
+            {...stylex.props(
+              styles.arrowWrapper,
+              styles.basicRhythmArrowLayout,
+              styles.basicRhythmArrowWrapper
+            )}
+          >
             <ArrowLabel
               label="BASIC RHYTHM"
-              width={140}
-              height={25}
+              xstyle={styles.standardArrowLabel}
+              variant="standard"
               direction="right"
-              textColor={grey}
-              backgroundColor={darkGrey}
             />
           </div>
-          <div style={styles.iFArrowWrapper}>
+          <div
+            {...stylex.props(
+              styles.arrowWrapper,
+              styles.iFArrowLayout,
+              styles.iFArrowWrapper
+            )}
+          >
             <ArrowLabel
               label="INTRO/FILL IN"
-              width={140}
-              height={25}
+              xstyle={styles.standardArrowLabel}
+              variant="standard"
               direction="left"
-              textColor={grey}
-              backgroundColor={darkGrey}
             />
           </div>
         </div>
       </div>
-      <div style={styles.unsupportedLabel}>Mode Currently Unsupported</div>
+      <div
+        {...stylex.props(
+          themeStyles.labelBase,
+          themeStyles.labelGreyXLarge,
+          styles.unsupportedLabel,
+          modeSupported ? styles.hidden : styles.visible
+        )}
+      >
+        Mode Currently Unsupported
+      </div>
     </div>
   );
 };

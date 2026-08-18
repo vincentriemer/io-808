@@ -35,7 +35,15 @@ const moduleSettings = isModern => {
             loader: "postcss-loader",
             options: {
               postcssOptions: {
-                plugins: [require("autoprefixer")]
+                plugins: [
+                  require("@stylexjs/postcss-plugin")({
+                    babelConfig: babelConfig(isModern),
+                    cwd: __dirname,
+                    include: ["src/**/*.js"],
+                    useCSSLayers: false
+                  }),
+                  require("autoprefixer")
+                ]
               }
             }
           }
@@ -102,6 +110,7 @@ const resolve = {
 };
 
 const legacyConfig = {
+  name: "legacy",
   mode,
   entry,
   output: {
@@ -116,6 +125,7 @@ const legacyConfig = {
 };
 
 const moduleConfig = {
+  name: "modern",
   mode,
   entry,
   output: {

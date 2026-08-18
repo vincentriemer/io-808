@@ -1,0 +1,43 @@
+import * as stylex from "@stylexjs/stylex";
+
+export const tokens = stylex.defineConsts({
+  lightActive: "#FE0000",
+  lightInactive: "#570000",
+  grey: "#9b9fa0",
+  darkGrey: "#232425",
+  drumLabel: "#f6edc6",
+  red: "#d03933",
+  buttonOrange: "#e98e2f",
+  stencilOrange: "#ff5a00",
+  yellow: "#dfd442",
+  offWhite: "#e9e8e7",
+  buttonColor: "#eab210",
+  miscKnobInner: "#C8D4C8",
+  levelKnobInner: "#ff5a00",
+  drumHandle: "#111111",
+  darkBlack: "#181b1a",
+  slightlyDarkerBlack: "#111111",
+  drumSwitchHandle: "#313335",
+  white: "#FFFFFF",
+  black: "black",
+  silver: "#D6D6D6",
+  transparent: "transparent",
+  transparentBlack: "rgba(0,0,0,0)",
+  unsupportedText: "#F6F6F6",
+  buttonShadow:
+    "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
+  buttonHoverShadow:
+    "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
+  lightBezel: "rgba(0,0,0,0.4)",
+  baseFontFamily: "Helvetica, Arial, sans-serif",
+  brandingFontFamily: '"ITC Serif Gothic W03", Helvetica, Arial, sans-serif',
+  panelFontFamily: '"Helvetica LT W04", Helvetica, Arial, sans-serif',
+  fontWeight: "bold",
+  xSmallSize: "9px",
+  smallSize: "11px",
+  normalSize: "13px",
+  largeSize: "15px",
+  xLargeSize: "27px",
+  letterSpacing: "-0.2px",
+  textAlign: "center"
+});

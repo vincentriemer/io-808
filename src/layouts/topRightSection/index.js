@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import * as stylex from "@stylexjs/stylex";
 
 // Actions
 import { onInstrumentChange, onMasterVolumeChange } from "actionCreators";
@@ -10,7 +11,7 @@ import MasterVolumeKnob from "components/masterVolumeKnob";
 import InstrumentColumn, { EMPTY_CONTROL } from "components/instrumentColumn";
 
 // Theme
-import { grey } from "theme/variables";
+import { tokens } from "theme/variables.stylex";
 
 // Constants
 import {
@@ -27,6 +28,52 @@ import {
   OPEN_HIHAT,
   CLSD_HIHAT
 } from "store-constants";
+
+const styles = stylex.create({
+  wrapper: {
+    display: "flex",
+    flexDirection: "column"
+  },
+  instrumentsWrapper: {
+    width: 1079,
+    height: 355,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  titleWrapper: {
+    width: 1079,
+    height: 151,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+  appTitle: {
+    width: 918,
+    height: 151
+  },
+  masterVolumeWrapper: {
+    height: 151,
+    display: "flex",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  masterVolumeKnob: {
+    width: 129,
+    height: 138
+  },
+  instrumentColumn: {
+    width: 89,
+    height: 355
+  },
+  instrumentSeparator: {
+    width: 1,
+    height: 345,
+    backgroundColor: tokens.grey
+  }
+});
 
 const instrumentConfig = [
   {
@@ -162,31 +209,23 @@ function ConnectedMasterVolumeKnob(props) {
   return <MasterVolumeKnob {...props} value={value} onChange={onChange} />;
 }
 
-function generateInstrumentColumns(
-  seperatorWidth,
-  instrumentColumnWidth,
-  instrumentColumnHeight
-) {
-  const instrumentSeperatorHeight = instrumentColumnHeight - 10;
-
-  const seperatorStyle = {
-    width: seperatorWidth,
-    height: instrumentSeperatorHeight,
-    backgroundColor: grey
-  };
-
+function generateInstrumentColumns() {
   return instrumentConfig.reduce((components, config, index) => {
     const result = [...components];
 
     if (index !== 0) {
-      result.push(<div key={`separator-${index}`} style={seperatorStyle} />);
+      result.push(
+        <div
+          key={`separator-${index}`}
+          {...stylex.props(styles.instrumentSeparator)}
+        />
+      );
     }
     result.push(
       <ConnectedInstrumentColumn
         key={`column-${index}`}
         config={config}
-        width={instrumentColumnWidth}
-        height={instrumentColumnHeight}
+        xstyle={styles.instrumentColumn}
       />
     );
 
@@ -195,72 +234,17 @@ function generateInstrumentColumns(
 }
 
 function TopRightSection(props) {
-  const { width, height, seperatorWidth } = props;
-
-  // Component Dimensions
-  const numInstruments = 12;
-  const titleWidth = Math.ceil(width * 0.85);
-  const instrumentsHeight = Math.ceil(height * 0.7);
-  const titleSectionHeight = height - instrumentsHeight;
-  const masterVolumeKnobSize = Math.floor(titleSectionHeight * 0.86);
-  const instrumentSeperatorHeight = instrumentsHeight - 10;
-  const instrumentColumnWidth = Math.floor(
-    width / numInstruments - seperatorWidth / numInstruments
-  );
-
-  const styles = {
-    wrapper: {
-      width,
-      height,
-      display: "flex",
-      flexDirection: "column"
-    },
-
-    instrumentsWrapper: {
-      width: width,
-      height: instrumentsHeight,
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "center"
-    },
-
-    titleWrapper: {
-      width: width,
-      height: titleSectionHeight,
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-between"
-    },
-
-    masterVolumeWrapper: {
-      height: titleSectionHeight,
-      display: "flex",
-      flex: 1,
-      alignItems: "center",
-      justifyContent: "center"
-    },
-
-    instrumentSeperator: {
-      width: seperatorWidth,
-      height: instrumentSeperatorHeight,
-      backgroundColor: grey
-    }
-  };
+  const { xstyle } = props;
 
   return (
-    <div style={styles.wrapper}>
-      <div style={styles.instrumentsWrapper}>
-        {generateInstrumentColumns(
-          seperatorWidth,
-          instrumentColumnWidth,
-          instrumentsHeight
-        )}
+    <div {...stylex.props(styles.wrapper, xstyle)}>
+      <div {...stylex.props(styles.instrumentsWrapper)}>
+        {generateInstrumentColumns()}
       </div>
-      <div style={styles.titleWrapper}>
-        <AppTitle width={titleWidth} height={titleSectionHeight} />
-        <div style={styles.masterVolumeWrapper}>
-          <ConnectedMasterVolumeKnob size={masterVolumeKnobSize} />
+      <div {...stylex.props(styles.titleWrapper)}>
+        <AppTitle xstyle={styles.appTitle} />
+        <div {...stylex.props(styles.masterVolumeWrapper)}>
+          <ConnectedMasterVolumeKnob xstyle={styles.masterVolumeKnob} />
         </div>
       </div>
     </div>
