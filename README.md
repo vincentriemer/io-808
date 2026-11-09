@@ -34,13 +34,8 @@ Used for efficiently computing values from the Redux store. A lot of the UI stat
 
 Used for styling of all React components. All of the styles in the webapp are done through inline styles and in the few places I needed something like a `:hover` selector, Radium provided it. Also doesn't hurt that it autoprefixes all of the inline styles.
 
-## Features Not Yet Implemented
+## Playing the 808
 
-In order to meet my personal deadline of 8/08 for my initial release I had to skip a few of the features of the original 808.
+`PLAY` and `COMPOSE` store 12 rhythm tracks, 64 bars each. `PRE-SCALE` sets how many steps are in a beat: 3, 6, 4, or 8. While a pattern is running in `1st PART` or `2nd PART`, `TAP` adds a trigger for the selected instrument on the nearest step. In `MANUAL PLAY` and `COMPOSE`, `TAP` schedules the intro/fill.
 
-- `PLAY` mode
-- `COMPOSE` mode
-- `PRE-SCALE` (every pattern is currently hardcoded to `3`)
-- Adding triggers via the `TAP` button
-
-I'll be continuously working on these features as well as improving the synthesis of each sound to greater match the sounds of the original hardware.
+The accent level raises the steps where accent is programmed. Fully down leaves those steps at the instrument level. Fully up is about two and a half times as loud.

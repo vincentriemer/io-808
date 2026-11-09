@@ -54,7 +54,7 @@ const switchValues = {
 };
 
 const PreScaleSwitch = props => {
-  const { offset = 0, position } = props;
+  const { offset = 0, position, onChange = noOp } = props;
   const titlePadding = 5;
   return (
     <div style={{ ...styles.wrapper, right: offset }}>
@@ -70,9 +70,8 @@ const PreScaleSwitch = props => {
         </div>
         <Switch
           name="pre-scale"
-          onChange={noOp}
+          onChange={onChange}
           position={position}
-          disabled={true}
           direction="vertical"
           values={switchValues}
           thickness={22}

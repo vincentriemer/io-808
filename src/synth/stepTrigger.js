@@ -34,7 +34,7 @@ import stepSelector from "selectors/step";
 import { getCurrentPart } from "selectors/common";
 
 // helpers
-import { stepKey, equalPower } from "helpers";
+import { stepKey } from "helpers";
 
 const drumModuleMapping = [
   [BASS_DRUM, bassDrum],
@@ -84,12 +84,13 @@ function getAccentGain(
     currentVariation,
     currentStep
   );
-  const accentActive = storeState.steps[stepId];
+  if (!storeState.steps[stepId]) return 1;
 
-  const accentLevel = storeState.instrumentState[ACCENT].level;
-  const inactiveGainAmt = equalPower(100 - accentLevel / 1.5);
-
-  return accentActive ? 1.0 : inactiveGainAmt;
+  // The original circuit raises the trigger pulse on an accented step.
+  // Level 0 leaves that step at the instrument level.
+  const accentLevel = storeState.instrumentState[ACCENT].level || 0;
+  const amount = Math.max(0, Math.min(100, accentLevel)) / 100;
+  return 1 + amount * 1.5;
 }
 
 export default function(storeState, deadline, destination, clock, audioCtx) {

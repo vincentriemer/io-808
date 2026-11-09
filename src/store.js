@@ -29,3 +29,9 @@ const enhancer = compose(...middleware);
 
 export const store = createStore(persistedReducer, initialState, enhancer);
 export const persistor = persistStore(store);
+
+if (typeof window !== "undefined") {
+  window.addEventListener("pagehide", function() {
+    persistor.flush();
+  });
+}

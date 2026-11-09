@@ -279,11 +279,7 @@ const BottomSection = props => {
       alignItems: "center",
       justifyContent: "space-between"
     },
-    preScaleSwitchWrapper: {
-      // disable switch until prescale functionality is implemented (stretch-goal)
-      pointerEvents: "none",
-      opacity: 0.5
-    },
+    preScaleSwitchWrapper: {},
     preScaleBottomSection: {
       width: "100%",
       height: STEP_CONTROL_WRAPPER_HEIGHT,

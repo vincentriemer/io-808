@@ -31,10 +31,10 @@ export const MODE_TO_PART_MAPPING = {
   [MODE_SECOND_PART]: SECOND_PART
 };
 
-export const UNIMPLEMENTED_MODES = [
-  MODE_RHYTHM_TRACK_PLAY,
-  MODE_RHYTHM_TRACK_COMPOSE
-];
+export const UNIMPLEMENTED_MODES = [];
+
+export const RHYTHM_TRACK_COUNT = 12;
+export const RHYTHM_TRACK_MEASURES = 64;
 
 export const PERSISTANCE_FILTER = [
   "instrumentState",
@@ -42,5 +42,9 @@ export const PERSISTANCE_FILTER = [
   "steps",
   "masterVolume",
   "tempo",
-  "fineTempo"
+  "fineTempo",
+  "preScalePosition",
+  "rhythmTracks",
+  "selectedMode",
+  "selectedInstrumentTrack"
 ];

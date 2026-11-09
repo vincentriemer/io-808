@@ -1,4 +1,7 @@
 import * as React from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+import { onPreScaleChange } from "actionCreators";
 
 import { grey, darkGrey } from "theme/variables";
 
@@ -179,6 +182,16 @@ function HalfStep() {
 
 function TimeSignatureSection(props) {
   const { width, height, stepPadding, quarterStepWidth } = props;
+  const position = useSelector(state =>
+    state.preScalePosition == null ? 2 : state.preScalePosition
+  );
+  const dispatch = useDispatch();
+  const choose = React.useCallback(
+    event => {
+      dispatch(onPreScaleChange(Number(event.currentTarget.dataset.scale)));
+    },
+    [dispatch]
+  );
 
   const sigBorderRadius = 6;
 
@@ -224,7 +237,8 @@ function TimeSignatureSection(props) {
       height: rowHeight,
       display: "flex",
       flexDirection: "row",
-      overflow: "hidden"
+      overflow: "hidden",
+      cursor: "pointer"
     }
   };
 
@@ -255,7 +269,11 @@ function TimeSignatureSection(props) {
   return (
     <TimeSigSectionContext.Provider value={contextValue}>
       <div style={styles.wrapper}>
-        <div style={styles.row}>
+        <div
+          style={{ ...styles.row, opacity: position === 0 ? 1 : 0.35 }}
+          data-scale={0}
+          onClick={choose}
+        >
           <SixthStep />
           <SixthStep />
           <SixthStep />
@@ -264,19 +282,31 @@ function TimeSignatureSection(props) {
           <SixthStep />
           <LinePadding />
         </div>
-        <div style={styles.row}>
+        <div
+          style={{ ...styles.row, opacity: position === 1 ? 1 : 0.35 }}
+          data-scale={1}
+          onClick={choose}
+        >
           <TrippletStep />
           <TrippletStep />
           <TrippletStep />
           <LinePadding />
         </div>
-        <div style={styles.row}>
+        <div
+          style={{ ...styles.row, opacity: position === 2 ? 1 : 0.35 }}
+          data-scale={2}
+          onClick={choose}
+        >
           <QuarterStep />
           <QuarterStep />
           <QuarterStep />
           <QuarterStep />
         </div>
-        <div style={styles.row}>
+        <div
+          style={{ ...styles.row, opacity: position === 3 ? 1 : 0.35 }}
+          data-scale={3}
+          onClick={choose}
+        >
           <HalfStep />
           <HalfStep />
         </div>

@@ -11,6 +11,7 @@ import {
   MODE_CHANGE,
   TEMPO_CHANGE,
   TAP_BUTTON_CLICK,
+  PRE_SCALE_CHANGE,
   STEP_BUTTON_CLICK,
   START_STOP_BUTTON_CLICK,
   TICK,
@@ -31,16 +32,22 @@ import {
   MODE_FIRST_PART,
   MODE_SECOND_PART,
   MODE_MANUAL_PLAY,
+  MODE_RHYTHM_TRACK_PLAY,
+  MODE_RHYTHM_TRACK_COMPOSE,
   MODE_TO_PART_MAPPING,
   FIRST_PART,
   SECOND_PART,
   A_VARIATION,
   B_VARIATION,
   AUTO_FILL_IN_MAPPING,
+  RHYTHM_TRACK_MEASURES,
   PERSISTANCE_FILTER
 } from "store-constants";
 
-import initialState from "initialState";
+import { cloneInitialState } from "initialState";
+import { quantizedStep } from "stepClock";
+import { stepKey, patternLengthKey } from "helpers";
+import basicVariationSelector from "selectors/variation";
 
 // sub-reducers
 import stepClickReducer from "reducers/stepClick";
@@ -49,8 +56,6 @@ import clearReducer from "reducers/clear";
 // selectors
 import patternLengthSelector from "selectors/patternLength";
 import pendingPatternLengthSelector from "selectors/pendingPatternLength";
-
-import { patternLengthKey } from "helpers";
 
 function getNextVariation(currentVariation, basicVariationPosition) {
   switch (basicVariationPosition) {
@@ -66,6 +71,57 @@ function getNextVariation(currentVariation, basicVariationPosition) {
 function isMeasureAutoFill(state, measure) {
   const autoFillInValue = AUTO_FILL_IN_MAPPING[state.autoFillInPosition];
   return measure !== 0 && autoFillInValue && measure % autoFillInValue === 0;
+}
+
+function variationForPattern(state, pattern) {
+  if (pattern >= 12) {
+    return state.introFillVariationPosition === 0 ? A_VARIATION : B_VARIATION;
+  }
+  return state.basicVariationPosition > 1 ? B_VARIATION : A_VARIATION;
+}
+
+function trackList(state) {
+  const tracks = state.rhythmTracks || [];
+  return tracks[state.selectedInstrumentTrack] || [];
+}
+
+function nextPlayMeasure(state) {
+  const list = trackList(state);
+  if (!list.length) {
+    return produce(state, draft => {
+      draft.playing = false;
+    });
+  }
+  const nextIndex = (state.currentMeasure + 1) % list.length;
+  const nextPattern = list[nextIndex];
+  return produce(state, draft => {
+    draft.currentStep = 0;
+    draft.currentPart = FIRST_PART;
+    draft.currentMeasure = nextIndex;
+    draft.currentPattern = nextPattern;
+    draft.currentVariation =
+      nextPattern >= 12
+        ? variationForPattern(state, nextPattern)
+        : getNextVariation(state.currentVariation, state.basicVariationPosition);
+  });
+}
+
+function nextComposeMeasure(state) {
+  const list = trackList(state);
+  if (list.length >= RHYTHM_TRACK_MEASURES) {
+    return produce(state, draft => {
+      draft.playing = false;
+    });
+  }
+  const advanced = nextMeasure(state);
+  return produce(advanced, draft => {
+    const tracks = (state.rhythmTracks || []).map(item => item.slice());
+    const track = state.selectedInstrumentTrack;
+    const recorded = (tracks[track] || []).slice();
+    recorded.push(advanced.currentPattern);
+    tracks[track] = recorded;
+    draft.rhythmTracks = tracks;
+  });
 }
 
 function nextMeasure(state) {
@@ -149,14 +205,39 @@ export default function(state, { type, payload }) {
             break;
           }
 
-          case MODE_MANUAL_PLAY: {
+          case MODE_MANUAL_PLAY:
+          case MODE_RHYTHM_TRACK_COMPOSE: {
             if (!state.playing) {
-              draft.currentStep = -1;
-              draft.currentVariation =
-                state.basicVariationPosition > 1 ? B_VARIATION : A_VARIATION;
-              draft.currentPattern = state.fillScheduled
+              const pattern = state.fillScheduled
                 ? state.selectedPlayFillPattern + 12
                 : state.selectedPlayPattern;
+              draft.currentStep = -1;
+              draft.currentVariation = variationForPattern(state, pattern);
+              draft.currentPattern = pattern;
+              draft.currentMeasure = 0;
+              draft.fillScheduled = false;
+              if (state.selectedMode === MODE_RHYTHM_TRACK_COMPOSE) {
+                const tracks = (state.rhythmTracks || []).map(item =>
+                  item.slice()
+                );
+                tracks[state.selectedInstrumentTrack] = [pattern];
+                draft.rhythmTracks = tracks;
+              }
+            }
+
+            draft.playing = !state.playing;
+            draft.currentPart = FIRST_PART;
+            break;
+          }
+
+          case MODE_RHYTHM_TRACK_PLAY: {
+            const list = trackList(state);
+            if (!state.playing) {
+              if (!list.length) break;
+              const pattern = list[0];
+              draft.currentStep = -1;
+              draft.currentVariation = variationForPattern(state, pattern);
+              draft.currentPattern = pattern;
               draft.currentMeasure = 0;
               draft.fillScheduled = false;
             }
@@ -200,6 +281,12 @@ export default function(state, { type, payload }) {
     case FINE_TEMPO_CHANGE: {
       return produce(state, draft => {
         draft.fineTempo = payload;
+      });
+    }
+
+    case PRE_SCALE_CHANGE: {
+      return produce(state, draft => {
+        draft.preScalePosition = payload;
       });
     }
 
@@ -272,9 +359,10 @@ export default function(state, { type, payload }) {
             });
           }
 
-          case MODE_MANUAL_PLAY: {
+          case MODE_MANUAL_PLAY:
+          case MODE_RHYTHM_TRACK_COMPOSE:
+          case MODE_RHYTHM_TRACK_PLAY: {
             if (state.currentPart === FIRST_PART) {
-              // go to second part if it has a patternLength > 0
               const secondPartLength =
                 state.patternLengths[
                   patternLengthKey(state.currentPattern, SECOND_PART)
@@ -285,9 +373,17 @@ export default function(state, { type, payload }) {
                   draft.currentStep = 0;
                   draft.currentPart = SECOND_PART;
                 });
+              } else if (state.selectedMode === MODE_RHYTHM_TRACK_COMPOSE) {
+                return nextComposeMeasure(state);
+              } else if (state.selectedMode === MODE_RHYTHM_TRACK_PLAY) {
+                return nextPlayMeasure(state);
               } else {
                 return nextMeasure(state);
               }
+            } else if (state.selectedMode === MODE_RHYTHM_TRACK_COMPOSE) {
+              return nextComposeMeasure(state);
+            } else if (state.selectedMode === MODE_RHYTHM_TRACK_PLAY) {
+              return nextPlayMeasure(state);
             } else {
               return nextMeasure(state);
             }
@@ -315,9 +411,32 @@ export default function(state, { type, payload }) {
 
     case TAP_BUTTON_CLICK: {
       switch (state.selectedMode) {
-        case MODE_MANUAL_PLAY: {
+        case MODE_MANUAL_PLAY:
+        case MODE_RHYTHM_TRACK_COMPOSE: {
           return produce(state, draft => {
             draft.fillScheduled = !state.fillScheduled;
+          });
+        }
+        case MODE_FIRST_PART:
+        case MODE_SECOND_PART: {
+          if (!state.playing) return state;
+          const length = patternLengthSelector(state);
+          if (!(length > 0)) return state;
+          const step = quantizedStep(state.currentStep, length);
+          const part = MODE_TO_PART_MAPPING[state.selectedMode];
+          const variation = basicVariationSelector(state);
+          if (part == null || variation == null) return state;
+          if (!isFinite(step) || step < 0 || step > 15) return state;
+          const key = stepKey(
+            state.currentPattern,
+            state.selectedInstrumentTrack,
+            part,
+            variation,
+            step
+          );
+          if (state.steps[key]) return state;
+          return produce(state, draft => {
+            draft.steps[key] = true;
           });
         }
         default: {
@@ -359,15 +478,14 @@ export default function(state, { type, payload }) {
     case STATE_LOAD: {
       return produce(state, draft => {
         PERSISTANCE_FILTER.forEach(key => {
+          if (payload[key] == null) return;
           draft[key] = payload[key];
         });
       });
     }
 
     case RESET: {
-      return produce(state, () => {
-        return initialState;
-      });
+      return cloneInitialState();
     }
 
     default: {
