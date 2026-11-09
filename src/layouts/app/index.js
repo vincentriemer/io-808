@@ -1,10 +1,10 @@
 // External Deps
 import React from "react";
-import useHover from "react-gui/use-hover";
+import * as stylex from "@stylexjs/stylex";
 
 // Theme
-import { grey, slightlyDarkerBlack } from "theme/variables";
-import { labelGreyLarge, autoCursor } from "theme/mixins";
+import { tokens } from "theme/variables.stylex";
+import { themeStyles } from "theme/styles";
 
 // Sub-layouts
 import TopLeftSection from "layouts/topLeftSection";
@@ -20,17 +20,9 @@ import {
 } from "./connectedComponents";
 
 const GithubLink = () => {
-  const ref = React.useRef(null);
-  const [hovered, onHoverChange] = React.useState(false);
-  useHover(ref, { onHoverChange });
   return (
     <a
-      ref={ref}
-      style={{
-        color: slightlyDarkerBlack,
-        opacity: hovered ? 1.0 : 0.75,
-        transition: "opacity 0.2s"
-      }}
+      {...stylex.props(styles.githubLink)}
       href="https://github.com/vincentriemer/io-808"
       target="_blank"
       rel="noopener noreferrer"
@@ -60,7 +52,7 @@ const TOP_RIGHT_WIDTH = APP_WIDTH - TOP_LEFT_WIDTH;
 
 const TOP_HORIZONTAL_SEPERATOR_HEIGHT = TOP_HEIGHT - 10;
 
-const styles = {
+const styles = stylex.create({
   pageWrapper: {
     position: "relative",
     width: "100%",
@@ -96,6 +88,17 @@ const styles = {
     display: "flex",
     flexDirection: "row"
   },
+  headerButton: {
+    width: 35,
+    height: 35
+  },
+  headerButtonIcon: {
+    width: 35,
+    height: 35
+  },
+  resetButton: {
+    height: 35
+  },
 
   footerWrapper: {
     width: APP_WIDTH,
@@ -118,13 +121,13 @@ const styles = {
   topBottomDivider: {
     width: APP_WIDTH,
     height: TOP_BOTTOM_DIVIDER_HEIGHT,
-    backgroundColor: grey
+    backgroundColor: tokens.grey
   },
 
   topHorizontalDivider: {
     width: INSTRUMENT_SEPERATOR_WIDTH,
     height: TOP_HORIZONTAL_SEPERATOR_HEIGHT,
-    backgroundColor: grey
+    backgroundColor: tokens.grey
   },
 
   topWrapper: {
@@ -135,81 +138,108 @@ const styles = {
     alignItems: "center"
   },
 
+  topLeftSection: {
+    width: TOP_LEFT_WIDTH,
+    height: TOP_HEIGHT
+  },
+
+  topRightSection: {
+    width: TOP_RIGHT_WIDTH,
+    height: TOP_HEIGHT
+  },
+
   bottomWrapper: {
     width: APP_WIDTH,
     height: BOTTOM_HEIGHT
   },
 
-  footerText: {
-    ...labelGreyLarge,
-    ...autoCursor
+  bottomSection: {
+    width: APP_WIDTH,
+    height: BOTTOM_HEIGHT
   },
 
   blmLink: {
-    ...labelGreyLarge,
     position: "relative",
-    color: "white",
+    color: tokens.white,
     fontSize: 24,
     fontWeight: "bold",
     textDecoration: "underline",
-    backgroundColor: "black",
+    backgroundColor: tokens.black,
     padding: "10px 15px",
     top: -10
+  },
+
+  githubLink: {
+    color: tokens.slightlyDarkerBlack,
+    cursor: "pointer",
+    opacity: 0.75,
+    transition: "opacity 0.2s",
+    ":hover": {
+      opacity: 1
+    }
+  },
+
+  authorLink: {
+    color: tokens.grey
   }
-};
+});
 
 const AppLayout = React.memo(
   () => {
     return (
-      <div style={styles.pageWrapper}>
-        <div style={styles.wrapper}>
-          <div style={styles.headerWrapper}>
-            <div style={styles.saveLoadClearWrapper}>
-              <ConnectedLoadButton size={35} />
-              <ConnectedSaveButton size={35} />
-              <ConnectedResetButton size={35} />
+      <div {...stylex.props(styles.pageWrapper)}>
+        <div {...stylex.props(styles.wrapper)}>
+          <div {...stylex.props(styles.headerWrapper)}>
+            <div {...stylex.props(styles.saveLoadClearWrapper)}>
+              <ConnectedLoadButton
+                xstyle={styles.headerButton}
+                iconXstyle={styles.headerButtonIcon}
+              />
+              <ConnectedSaveButton
+                xstyle={styles.headerButton}
+                iconXstyle={styles.headerButtonIcon}
+              />
+              <ConnectedResetButton xstyle={styles.resetButton} />
             </div>
-            <a
-              href="https://blacklivesmatters.carrd.co"
-              rel="noopener"
-              style={styles.blmLink}
-              target="_blank"
-            >
-              #BlackLivesMatter
-            </a>
             <GithubLink />
           </div>
-          <div style={styles.appWrapper}>
-            <div style={styles.topBottomDivider} />
-            <div style={styles.topWrapper}>
-              <TopLeftSection width={TOP_LEFT_WIDTH} height={TOP_HEIGHT} />
-              <div style={styles.topHorizontalDivider} />
-              <TopRightSection
-                width={TOP_RIGHT_WIDTH}
-                height={TOP_HEIGHT}
-                seperatorWidth={INSTRUMENT_SEPERATOR_WIDTH}
-              />
-              <div style={styles.topHorizontalDivider} />
+          <div {...stylex.props(styles.appWrapper)}>
+            <div {...stylex.props(styles.topBottomDivider)} />
+            <div {...stylex.props(styles.topWrapper)}>
+              <TopLeftSection xstyle={styles.topLeftSection} />
+              <div {...stylex.props(styles.topHorizontalDivider)} />
+              <TopRightSection xstyle={styles.topRightSection} />
+              <div {...stylex.props(styles.topHorizontalDivider)} />
             </div>
-            <div style={styles.topBottomDivider} />
-            <div style={styles.bottomWrapper}>
-              <BottomSection
-                width={APP_WIDTH}
-                height={BOTTOM_HEIGHT}
-                topLeftWidth={TOP_LEFT_WIDTH}
-              />
+            <div {...stylex.props(styles.topBottomDivider)} />
+            <div {...stylex.props(styles.bottomWrapper)}>
+              <BottomSection xstyle={styles.bottomSection} />
             </div>
           </div>
-          <div style={styles.footerWrapper}>
+          <div {...stylex.props(styles.footerWrapper)}>
             <div>
-              <a style={styles.footerText} href="/tutorial" target="_blank">
+              <a
+                {...stylex.props(
+                  themeStyles.labelBase,
+                  themeStyles.labelGreyLarge,
+                  themeStyles.autoCursor
+                )}
+                href="/tutorial"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Tutorial
               </a>
             </div>
-            <div style={labelGreyLarge}>
+            <div
+              {...stylex.props(
+                themeStyles.labelBase,
+                themeStyles.labelGreyLarge
+              )}
+            >
               Made with <Octicon name="heart" /> by{" "}
               <a
-                style={{ color: grey }}
+                {...stylex.props(styles.authorLink)}
                 href="http://vincentriemer.com"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -219,7 +249,11 @@ const AppLayout = React.memo(
             </div>
             <div>
               <a
-                style={styles.footerText}
+                {...stylex.props(
+                  themeStyles.labelBase,
+                  themeStyles.labelGreyLarge,
+                  themeStyles.autoCursor
+                )}
                 href="https://github.com/vincentriemer/io-808/issues"
                 target="_blank"
                 rel="noopener noreferrer"

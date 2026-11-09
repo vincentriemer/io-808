@@ -1,11 +1,19 @@
 import React from "react";
+import * as stylex from "@stylexjs/stylex";
 
 import Button from "components/button";
 import Light from "components/light";
+import { tokens } from "theme/variables.stylex";
 
-const styles = {
+const styles = stylex.create({
   dragWrapper: {
     transition: "transform 0.2s"
+  },
+  dropable: {
+    transform: "scale(1.05)"
+  },
+  dropTarget: {
+    transform: "scale(1)"
   },
   button: {
     borderRadius: 4,
@@ -14,19 +22,37 @@ const styles = {
     alignItems: "center",
     padding: 5,
     willChange: "transform"
+  },
+  red: {
+    backgroundColor: tokens.red
+  },
+  orange: {
+    backgroundColor: tokens.buttonOrange
+  },
+  yellow: {
+    backgroundColor: tokens.yellow
+  },
+  offWhite: {
+    backgroundColor: tokens.offWhite
   }
+});
+
+const toneStyles = {
+  red: styles.red,
+  orange: styles.orange,
+  yellow: styles.yellow,
+  offWhite: styles.offWhite
 };
 
 const StepButton = props => {
   const {
-    color,
+    tone,
+    xstyle,
     onClick,
     active,
     onDrop,
     onDragExit,
     onDragEnter,
-    width = 50,
-    height = 80,
     dropable = false
   } = props;
 
@@ -67,12 +93,13 @@ const StepButton = props => {
     [onDragEnter]
   );
 
-  const dropableTransform = dropable && !over ? "scale(1.05)" : "scale(1)";
-
   if (dropable) {
     return (
       <div
-        style={{ ...styles.dragWrapper, transform: dropableTransform }}
+        {...stylex.props(
+          styles.dragWrapper,
+          over ? styles.dropTarget : styles.dropable
+        )}
         onDragEnter={handleDragEnter}
         onDragOver={handleDragOver}
         onDragLeave={handleDragExit}
@@ -80,7 +107,7 @@ const StepButton = props => {
         onDrop={handleDrop}
       >
         <Button
-          style={{ ...styles.button, width, height, backgroundColor: color }}
+          xstyle={[styles.button, toneStyles[tone], xstyle]}
           onClick={onClick}
         >
           <Light active={active} />
@@ -90,9 +117,9 @@ const StepButton = props => {
   }
 
   return (
-    <div style={styles.dragWrapper}>
+    <div {...stylex.props(styles.dragWrapper)}>
       <Button
-        style={{ ...styles.button, width, height, backgroundColor: color }}
+        xstyle={[styles.button, toneStyles[tone], xstyle]}
         onClick={onClick}
       >
         <Light active={active} />

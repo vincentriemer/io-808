@@ -1,4 +1,5 @@
 import React from "react";
+import * as stylex from "@stylexjs/stylex";
 import usePress from "react-gui/use-press";
 import useHover from "react-gui/use-hover";
 import { useId } from "@reach/auto-id";
@@ -7,14 +8,30 @@ import useFocusWithin from "react-gui/use-focus-within";
 import useEvent from "react-gui/use-event";
 
 import VisuallyHidden from "components/visuallyHidden";
-import { focusOutline } from "theme/mixins";
+import { themeStyles } from "theme/styles";
 
 const VERTICAL = "vertical";
 const HORIZONTAL = "horizontal";
 
-const styles = {
+const styles = stylex.create({
   outer: {
-    position: "relative"
+    position: "relative",
+    cursor: "pointer"
+  },
+  vertical: {
+    touchAction: "pan-x"
+  },
+  horizontal: {
+    touchAction: "pan-y"
+  },
+  pointer: {
+    cursor: "pointer"
+  },
+  grab: {
+    cursor: "grab"
+  },
+  grabbing: {
+    cursor: "grabbing"
   },
   inner: {
     position: "absolute",
@@ -28,7 +45,7 @@ const styles = {
   transition: {
     transition: "transform cubic-bezier(0.4, 0.0, 0.2, 1) .1s"
   }
-};
+});
 
 const AccessibilityRadioInput = React.memo(props => {
   const { name, disabled, label, value, checked, onChange } = props;
@@ -71,16 +88,13 @@ const Switch = props => {
   const {
     name,
     position,
-    thickness,
-    length,
     direction,
     values,
-    innerThickness,
     onChange,
     disabled = false,
-    padding = 0,
-    innerStyle = {},
-    outerStyle = {}
+    outerXstyle,
+    handleXstyle,
+    positionXstyles
   } = props;
 
   const numPositions = Object.keys(values).length;
@@ -95,9 +109,7 @@ const Switch = props => {
     hover: false,
     hoverPosition: position,
     hasMovedWhilePressed: false,
-    initiallyPressedPosition: null,
-    xPosition: null,
-    yPosition: null
+    initiallyPressedPosition: null
   }));
 
   const handlePress = React.useCallback(() => {
@@ -143,17 +155,11 @@ const Switch = props => {
     }
   }, [handlePress, onChange, position, pressed, state]);
 
-  const handleHoverStart = React.useCallback(evt => {
-    const {
-      left: xPosition,
-      top: yPosition
-    } = evt.target.getBoundingClientRect();
+  const handleHoverStart = React.useCallback(() => {
     setState(prev => ({
       ...prev,
       hasMovedWhilePressed: false,
-      hover: true,
-      xPosition,
-      yPosition
+      hover: true
     }));
   }, []);
 
@@ -163,18 +169,22 @@ const Switch = props => {
         if (!prevState.hover) {
           return prevState;
         }
-        const { xPosition, yPosition } = prevState;
-        const totalLength = length - padding * 2;
+        const outer = ref.current;
+        if (outer == null) return prevState;
 
-        let currentRelativeCoord = null;
-        switch (direction) {
-          case HORIZONTAL:
-            currentRelativeCoord = clientX - (xPosition + padding);
-            break;
-          case VERTICAL:
-            currentRelativeCoord = clientY - (yPosition + padding);
-            break;
-        }
+        const rect = outer.getBoundingClientRect();
+        const computedStyle = window.getComputedStyle(outer);
+        const padding = parseFloat(
+          direction === HORIZONTAL
+            ? computedStyle.paddingLeft
+            : computedStyle.paddingTop
+        );
+        const start = direction === HORIZONTAL ? rect.left : rect.top;
+        const totalLength =
+          (direction === HORIZONTAL ? rect.width : rect.height) - padding * 2;
+
+        let currentRelativeCoord =
+          (direction === HORIZONTAL ? clientX : clientY) - (start + padding);
 
         if (currentRelativeCoord < 0) currentRelativeCoord = 0;
         if (currentRelativeCoord > totalLength - padding)
@@ -188,14 +198,12 @@ const Switch = props => {
         return { ...prevState, hoverPosition };
       });
     },
-    [direction, length, numPositions, padding]
+    [direction, numPositions]
   );
 
   const handleHoverEnd = React.useCallback(() => {
     setState(() => ({
       hover: false,
-      xPosition: null,
-      yPosition: null,
       hasMovedWhilePressed: false,
       initiallyPressedPosition: null,
       hoverPosition: position
@@ -209,42 +217,13 @@ const Switch = props => {
     onHoverEnd: handleHoverEnd
   });
 
-  const positionIncrement =
-    (length - padding * 2 - innerThickness) / (numPositions - 1);
-  const positionChange = positionIncrement * position;
-  const hoverPositionChange = positionIncrement * state.hoverPosition;
-
-  let width,
-    height,
-    innerWidth,
-    innerHeight,
-    transform,
-    hoverTransform,
-    touchAction = null;
+  let orientationStyle;
   switch (direction) {
     case VERTICAL:
-      width = thickness;
-      height = length;
-
-      innerWidth = width - padding * 2;
-      innerHeight = innerThickness;
-
-      transform = `translateY(${positionChange}px)`;
-      hoverTransform = `translateY(${hoverPositionChange}px)`;
-
-      touchAction = "pan-x";
+      orientationStyle = styles.vertical;
       break;
     case HORIZONTAL:
-      width = length;
-      height = thickness;
-
-      innerWidth = innerThickness;
-      innerHeight = height - padding * 2;
-
-      transform = `translateX(${positionChange}px)`;
-      hoverTransform = `translateX(${hoverPositionChange}px)`;
-
-      touchAction = "pan-y";
+      orientationStyle = styles.horizontal;
       break;
     default:
       throw new Error(`Invalid Direction: ${direction}`);
@@ -283,6 +262,19 @@ const Switch = props => {
     return undefined;
   })();
 
+  const cursorStyle = (() => {
+    switch (cursor) {
+      case "pointer":
+        return styles.pointer;
+      case "grab":
+        return styles.grab;
+      case "grabbing":
+        return styles.grabbing;
+      default:
+        return null;
+    }
+  })();
+
   const handleAccessibilityChange = React.useCallback(
     value => {
       const newPosition = Object.values(values).indexOf(value);
@@ -317,37 +309,30 @@ const Switch = props => {
   return (
     <div
       ref={ref}
-      style={{
-        ...styles.outer,
-        ...outerStyle,
-        width,
-        height,
-        padding,
-        touchAction,
-        cursor,
-        ...(isFocusWithin && focusOutline)
-      }}
+      {...stylex.props(
+        styles.outer,
+        outerXstyle,
+        orientationStyle,
+        cursorStyle,
+        isFocusWithin && themeStyles.focusOutline
+      )}
     >
       <VisuallyHidden role="radiogroup">{accessibilityElements}</VisuallyHidden>
       <div
-        style={{
-          ...styles.inner,
-          ...innerStyle,
-          width: innerWidth,
-          height: innerHeight,
-          transform,
-          ...styles.transition
-        }}
+        {...stylex.props(
+          styles.inner,
+          handleXstyle,
+          positionXstyles[position],
+          styles.transition
+        )}
       />
       <div
-        style={{
-          ...styles.innerHover,
-          ...innerStyle,
-          width: innerWidth,
-          height: innerHeight,
-          transform: hoverTransform,
-          ...(pressed && styles.transition)
-        }}
+        {...stylex.props(
+          styles.innerHover,
+          handleXstyle,
+          positionXstyles[state.hoverPosition],
+          pressed && styles.transition
+        )}
       />
     </div>
   );

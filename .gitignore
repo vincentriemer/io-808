@@ -8,3 +8,4 @@ deploy_key
 out
 .vercel
 .env
+.claude/

@@ -1,19 +1,18 @@
 import React from "react";
+import * as stylex from "@stylexjs/stylex";
 import usePress from "react-gui/use-press";
-import useHover from "react-gui/use-hover";
 
-import { red, grey } from "theme/variables";
-import { labelGreySmall } from "theme/mixins";
+import { themeStyles } from "theme/styles";
+import { tokens } from "theme/variables.stylex";
 
 const noOp = () => {};
 
-const styles = {
+const styles = stylex.create({
   wrapper: {
     position: "relative"
   },
   instructionLabel: {
-    ...labelGreySmall,
-    color: "#FFF",
+    color: tokens.white,
     position: "absolute",
     width: 100,
     bottom: -36,
@@ -24,13 +23,30 @@ const styles = {
     width: 27,
     height: 27,
     borderRadius: "50%",
-    backgroundColor: red,
-    border: `2px solid ${grey}`
+    backgroundColor: tokens.red,
+    borderWidth: 2,
+    borderStyle: "solid",
+    borderColor: tokens.grey,
+    cursor: "pointer"
   },
-  clearButtonHover: {
+  draggable: {
     cursor: "move"
+  },
+  interactive: {
+    ":hover": {
+      transform: "scale(1.08) translateZ(0)"
+    }
+  },
+  active: {
+    transform: "scale(1.0) translateZ(0)",
+    ":hover": {
+      transform: "scale(1.0) translateZ(0)"
+    }
+  },
+  visible: {
+    opacity: 1
   }
-};
+});
 
 const ClearButton = props => {
   const {
@@ -50,24 +66,22 @@ const ClearButton = props => {
     onPressEnd: onMouseUp
   });
 
-  const [isHovered, onHoverChange] = React.useState(false);
-  useHover(ref, { onHoverChange });
-
   if (draggable) {
     return (
-      <div style={styles.wrapper}>
+      <div {...stylex.props(styles.wrapper)}>
         <div
           ref={ref}
-          style={{
-            ...styles.clearButton,
-            ...(isHovered && styles.clearButtonHover)
-          }}
+          {...stylex.props(styles.clearButton, styles.draggable)}
           draggable={true}
           onDragEnd={onDragEnd}
           onDragStart={onDragStart}
         />
         <div
-          style={{ ...styles.instructionLabel, opacity: draggable ? 1.0 : 0.0 }}
+          {...stylex.props(
+            themeStyles.labelGreySmall,
+            styles.instructionLabel,
+            styles.visible
+          )}
         >
           Drag to a Step Button to set Pattern Length
         </div>
@@ -75,18 +89,19 @@ const ClearButton = props => {
     );
   }
 
-  const buttonStyle = { ...styles.clearButton };
-  if (isHovered) {
-    buttonStyle.cursor = "pointer";
-    buttonStyle.transform = "scale(1.08) translateZ(0)";
-  }
-  if (isActive) {
-    buttonStyle.transform = "scale(1.0) translateZ(0)";
-  }
   return (
-    <div style={styles.wrapper}>
-      <div ref={ref} style={buttonStyle} />
-      <div style={styles.instructionLabel}>
+    <div {...stylex.props(styles.wrapper)}>
+      <div
+        ref={ref}
+        {...stylex.props(
+          styles.clearButton,
+          styles.interactive,
+          isActive && styles.active
+        )}
+      />
+      <div
+        {...stylex.props(themeStyles.labelGreySmall, styles.instructionLabel)}
+      >
         Drag to a Step Button to set Pattern Length
       </div>
     </div>

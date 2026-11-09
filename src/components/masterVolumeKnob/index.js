@@ -1,11 +1,12 @@
 import React from "react";
+import * as stylex from "@stylexjs/stylex";
 
 import Knob from "components/knob";
 import Guides from "components/guides";
 import SelectorKnobInner from "components/selectorKnobInner";
 
-import { grey } from "theme/variables";
-import { labelGreySmall, labelGreyNormal, ring } from "theme/mixins";
+import { tokens } from "theme/variables.stylex";
+import { themeStyles } from "theme/styles";
 
 const labelValues = [];
 for (let i = 0; i < 11; i++) {
@@ -18,9 +19,7 @@ for (let i = 0; i < 11; i++) {
   }
 }
 
-const labelHeight = 9;
-
-const styles = {
+const styles = stylex.create({
   wrapper: {
     display: "flex",
     flexDirection: "column",
@@ -28,57 +27,81 @@ const styles = {
     justifyContent: "space-between"
   },
   controlWrapper: {
-    position: "relative"
+    position: "relative",
+    width: 129,
+    height: 129
   },
   dotGuides: {
     width: 5,
     height: 5,
-    backgroundColor: grey,
+    backgroundColor: tokens.grey,
     borderRadius: "50%"
   },
-  labelGuides: labelGreySmall,
   label: {
     position: "relative",
-    ...labelGreyNormal,
     overflow: "visible",
-    top: -4
+    top: -4,
+    width: 129
+  },
+  knob: {
+    width: 70,
+    height: 70
+  },
+  selectorSpokes: {
+    width: 50,
+    height: 50
+  },
+  selectorInnerRing: {
+    width: 40,
+    height: 40
   }
-};
+});
 
 const MasterVolumeKnob = props => {
-  const { value, onChange, size = 130 } = props;
-  const knobSize = Math.ceil(size * 0.54);
+  const { value, onChange, xstyle } = props;
   return (
-    <div style={{ ...styles.wrapper, width: size, height: size + labelHeight }}>
-      <div style={{ ...styles.controlWrapper, width: size, height: size }}>
+    <div {...stylex.props(styles.wrapper, xstyle)}>
+      <div {...stylex.props(styles.controlWrapper)}>
         <Guides
           num={11}
-          distance={size * 0.33}
+          distance={42.57}
           hideCount={1}
           guideStyle={styles.dotGuides}
         />
         <Guides
-          distance={size * 0.45}
+          distance={58.05}
           hideCount={1}
           rotate={false}
           values={labelValues}
-          guideStyle={styles.labelGuides}
+          guideStyle={[themeStyles.labelBase, themeStyles.labelGreySmall]}
         />
-        <div style={ring(knobSize)}>
+        <div {...stylex.props(themeStyles.ring, styles.knob)}>
           <Knob
             value={value}
             onChange={onChange}
-            size={knobSize}
+            xstyle={styles.knob}
             bufferSize={300}
             min={0}
             max={100}
             step={1}
           >
-            <SelectorKnobInner size={knobSize} />
+            <SelectorKnobInner
+              xstyle={styles.knob}
+              spokesXstyle={styles.selectorSpokes}
+              innerRingXstyle={styles.selectorInnerRing}
+            />
           </Knob>
         </div>
       </div>
-      <div style={{ ...styles.label, width: size }}>MASTER VOLUME</div>
+      <div
+        {...stylex.props(
+          themeStyles.labelBase,
+          themeStyles.labelGreyNormal,
+          styles.label
+        )}
+      >
+        MASTER VOLUME
+      </div>
     </div>
   );
 };

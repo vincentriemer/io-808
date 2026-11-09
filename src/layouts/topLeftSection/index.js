@@ -1,7 +1,8 @@
 import * as React from "react";
+import * as stylex from "@stylexjs/stylex";
 
-import { grey, drumLabel, stencilOrange, red } from "theme/variables";
-import { labelGreySmall } from "theme/mixins";
+import { tokens } from "theme/variables.stylex";
+import { themeStyles } from "theme/styles";
 
 import * as stencilPaths from "./stencilPaths";
 
@@ -14,285 +15,345 @@ import {
   ConnectedModeKnob
 } from "./connectedComponents";
 
-function TopLeftSection(props) {
-  const { width, height } = props;
-
-  const labelBase = {
-    ...labelGreySmall,
+const styles = stylex.create({
+  wrapper: {
+    position: "relative"
+  },
+  stencilWrapper: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: 321,
+    height: 506
+  },
+  labelBase: {
     position: "absolute",
     lineHeight: 0.9
-  };
-
-  const labelBorder = color => ({
+  },
+  firstPart: {
+    color: tokens.drumLabel,
+    textAlign: "left",
+    width: 20,
+    top: -10,
+    left: -25
+  },
+  secondPart: {
+    color: tokens.drumLabel,
+    textAlign: "left",
+    width: 20,
+    top: -28,
+    left: 0
+  },
+  manualPlay: {
+    color: tokens.grey,
+    width: 51,
+    height: 22,
+    top: -34,
+    left: 57,
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: tokens.grey,
+    borderRadius: 1,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  play: {
+    color: tokens.stencilOrange,
+    width: 30,
+    top: -1,
+    right: -29
+  },
+  compose: {
+    color: tokens.stencilOrange,
+    width: 20,
+    top: 18,
+    right: -29
+  },
+  patternWrite: {
+    color: tokens.drumLabel,
+    top: 2,
+    left: 20
+  },
+  instrumentSelect: {
+    position: "static",
+    width: 125,
+    marginTop: 2,
+    color: tokens.drumLabel
+  },
+  rhythmTrack: {
+    position: "static",
+    width: 115,
+    marginTop: 1,
+    color: tokens.stencilOrange
+  },
+  patternClear: {
+    color: tokens.drumLabel,
+    top: 168,
+    left: 30
+  },
+  trackClear: {
+    color: tokens.stencilOrange,
+    left: "107%",
+    bottom: "55%"
+  },
+  stepNumber: {
+    width: 45,
+    color: tokens.drumLabel,
+    right: "110%",
+    bottom: "55%"
+  },
+  preScale: {
+    width: 45,
+    color: tokens.drumLabel,
+    right: "110%",
+    top: "55%"
+  },
+  labelBorder: {
     padding: 2,
-    border: `1px solid ${color}`,
+    borderWidth: 1,
+    borderStyle: "solid",
     borderRadius: 1
-  });
+  },
+  drumLabelBorder: {
+    borderColor: tokens.drumLabel
+  },
+  stencilOrangeBorder: {
+    borderColor: tokens.stencilOrange
+  },
+  transparentBorder: {
+    borderColor: tokens.transparentBlack
+  },
+  instrumentSelectorWrapper: {
+    marginTop: 5
+  },
+  instrumentSelector: {
+    width: 151,
+    height: 151
+  },
+  modeWrapper: {
+    position: "absolute",
+    top: 114,
+    left: 75,
+    transform: "translateX(-50%) translateY(-50%)"
+  },
+  clearWrapper: {
+    position: "absolute",
+    top: 202,
+    left: 61
+  },
+  clearButton: {
+    width: 27,
+    height: 27,
+    borderRadius: "50%",
+    backgroundColor: tokens.red,
+    borderWidth: 2,
+    borderStyle: "solid",
+    borderColor: tokens.grey
+  },
+  autoFillInWrapper: {
+    marginTop: 5
+  },
+  autoFillIn: {
+    width: 151,
+    height: 151
+  },
+  modeKnob: {
+    width: 76,
+    height: 76
+  },
+  knobTempoWrapper: {
+    position: "absolute",
+    bottom: 7,
+    left: 0
+  },
+  tempoKnob: {
+    width: 180,
+    height: 205
+  },
+  fineTempoWrapper: {
+    position: "absolute",
+    right: 70,
+    bottom: 40,
+    transform: "translateX(50%)"
+  },
+  fineTempoKnob: {
+    width: 70,
+    height: 90
+  },
+  tempoAndAutoFill: {
+    position: "absolute",
+    top: 0,
+    right: 7,
+    width: 149,
+    height: 506,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+  }
+});
 
-  const labelStyles = {
-    firstPart: {
-      ...labelBase,
-      color: drumLabel,
-      textAlign: "left",
-      width: 20,
-      top: -10,
-      left: -25
-    },
-    secondPart: {
-      ...labelBase,
-      color: drumLabel,
-      textAlign: "left",
-      width: 20,
-      top: -28,
-      left: 0
-    },
-    manualPlay: {
-      ...labelBase,
-      color: grey,
-      width: 51,
-      height: 22,
-      top: -34,
-      left: 57,
-      border: `1px solid ${grey}`,
-      borderRadius: 1,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    },
-    play: {
-      ...labelBase,
-      color: stencilOrange,
-      width: 30,
-      top: -1,
-      right: -29
-    },
-    compose: {
-      ...labelBase,
-      color: stencilOrange,
-      width: 20,
-      top: 18,
-      right: -29
-    },
-    patternWrite: {
-      ...labelBase,
-      color: drumLabel,
-      top: 2,
-      left: 20,
-      ...labelBorder(drumLabel)
-    },
-    instrumentSelect: {
-      ...labelBase,
-      position: "static",
-      width: 125,
-      marginTop: 2,
-      color: drumLabel,
-      ...labelBorder("rgba(0,0,0,0)")
-    },
-    rhythmTrack: {
-      ...labelBase,
-      position: "static",
-      width: 115,
-      marginTop: 1,
-      color: stencilOrange,
-      ...labelBorder(stencilOrange)
-    },
-    patternClear: {
-      ...labelBase,
-      color: drumLabel,
-      top: 168,
-      left: 30,
-      ...labelBorder(drumLabel)
-    },
-    trackClear: {
-      ...labelBase,
-      color: stencilOrange,
-      left: "107%",
-      bottom: "55%"
-    },
-    stepNumber: {
-      ...labelBase,
-      width: 45,
-      color: drumLabel,
-      right: "110%",
-      bottom: "55%"
-    },
-    preScale: {
-      ...labelBase,
-      width: 45,
-      color: drumLabel,
-      right: "110%",
-      top: "55%"
-    }
-  };
-
-  const styles = {
-    wrapper: {
-      width,
-      height,
-      position: "relative"
-    },
-    stencilWrapper: {
-      position: "absolute",
-      width,
-      height,
-      top: 0,
-      left: 0
-    },
-    instrumentSelectorWrapper: {
-      marginTop: 5
-    },
-    modeWrapper: {
-      position: "absolute",
-      top: 114,
-      left: 75,
-      transform: "translateX(-50%) translateY(-50%)"
-    },
-    clearWrapper: {
-      position: "absolute",
-      top: 202,
-      left: 61
-    },
-    clearButton: {
-      width: 27,
-      height: 27,
-      borderRadius: "50%",
-      backgroundColor: red,
-      border: `2px solid ${grey}`
-    },
-    autoFillInWrapper: {
-      marginTop: 5
-    },
-    knobTempoWrapper: {
-      position: "absolute",
-      bottom: 7,
-      left: 0
-    },
-    fineTempoWrapper: {
-      position: "absolute",
-      right: 70,
-      bottom: 40,
-      transform: "translateX(50%)"
-    }
-  };
-
-  const alignStyles = {
-    tempoAndAutoFill: {
-      position: "absolute",
-      top: 0,
-      right: 7,
-      width: 149,
-      height,
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center"
-    }
-  };
+function TopLeftSection(props) {
+  const { xstyle } = props;
 
   return (
-    <div style={styles.wrapper}>
-      <div style={styles.stencilWrapper}>
-        <div style={labelStyles.patternWrite}>PATTERN WRITE</div>
-        <div style={labelStyles.patternClear}>PATTERN CLEAR</div>
-        <svg width={width} height={height}>
+    <div {...stylex.props(styles.wrapper, xstyle)}>
+      <div {...stylex.props(styles.stencilWrapper)}>
+        <div
+          {...stylex.props(
+            themeStyles.labelBase,
+            themeStyles.labelGreySmall,
+            styles.labelBase,
+            styles.patternWrite,
+            styles.labelBorder,
+            styles.drumLabelBorder
+          )}
+        >
+          PATTERN WRITE
+        </div>
+        <div
+          {...stylex.props(
+            themeStyles.labelBase,
+            themeStyles.labelGreySmall,
+            styles.labelBase,
+            styles.patternClear,
+            styles.labelBorder,
+            styles.drumLabelBorder
+          )}
+        >
+          PATTERN CLEAR
+        </div>
+        <svg width="100%" height="100%">
           <path
             d={stencilPaths.separatorPath}
-            stroke={grey}
+            stroke={tokens.grey}
             fill="none"
             strokeWidth={2}
           />
           <path
             d={stencilPaths.rhythmToCompose}
-            stroke={stencilOrange}
+            stroke={tokens.stencilOrange}
             fill="none"
             strokeWidth={1}
           />
           <path
             d={stencilPaths.rhythmToPlay}
-            stroke={stencilOrange}
+            stroke={tokens.stencilOrange}
             fill="none"
             strokeWidth={1}
           />
           <path
             d={stencilPaths.patternToInstrument}
-            stroke={drumLabel}
+            stroke={tokens.drumLabel}
             fill="none"
             strokeWidth={1}
           />
           <path
             d={stencilPaths.manualPlayPath}
-            stroke={grey}
+            stroke={tokens.grey}
             fill="none"
             strokeWidth={1}
           />
           <path
             d={stencilPaths.firstToSecondPart}
-            stroke={drumLabel}
+            stroke={tokens.drumLabel}
             fill="none"
             strokeWidth={1}
           />
           <path
             d={stencilPaths.patternToParts}
-            stroke={drumLabel}
+            stroke={tokens.drumLabel}
             fill="none"
             strokeWidth={1}
           />
           <path
             d={stencilPaths.patternWriteToClear}
-            stroke={drumLabel}
+            stroke={tokens.drumLabel}
             fill="none"
             strokeWidth={1}
           />
           <path
             d={stencilPaths.modeToPatternClear}
-            stroke={drumLabel}
+            stroke={tokens.drumLabel}
             fill="none"
             strokeWidth={1}
           />
           <path
             d={stencilPaths.patternLabelToButton}
-            stroke={drumLabel}
+            stroke={tokens.drumLabel}
             fill="none"
             strokeWidth={1}
           />
           <path
             d={stencilPaths.composeToTrackClear}
-            stroke={stencilOrange}
+            stroke={tokens.stencilOrange}
             fill="none"
             strokeWidth={1}
           />
         </svg>
       </div>
-      <div style={alignStyles.tempoAndAutoFill}>
-        <div style={labelStyles.instrumentSelect}>INSTRUMENT-SELECT</div>
-        <div style={labelStyles.rhythmTrack}>RHYTHM TRACK</div>
-        <div style={styles.instrumentSelectorWrapper}>
-          <ConnectedInstrumentSelectorKnob size={151} />
+      <div {...stylex.props(styles.tempoAndAutoFill)}>
+        <div
+          {...stylex.props(
+            themeStyles.labelBase,
+            themeStyles.labelGreySmall,
+            styles.labelBase,
+            styles.instrumentSelect,
+            styles.labelBorder,
+            styles.transparentBorder
+          )}
+        >
+          INSTRUMENT-SELECT
         </div>
-        <div style={styles.autoFillInWrapper}>
-          <ConnectedAutoFillInKnob size={151} />
+        <div
+          {...stylex.props(
+            themeStyles.labelBase,
+            themeStyles.labelGreySmall,
+            styles.labelBase,
+            styles.rhythmTrack,
+            styles.labelBorder,
+            styles.stencilOrangeBorder
+          )}
+        >
+          RHYTHM TRACK
+        </div>
+        <div {...stylex.props(styles.instrumentSelectorWrapper)}>
+          <ConnectedInstrumentSelectorKnob xstyle={styles.instrumentSelector} />
+        </div>
+        <div {...stylex.props(styles.autoFillInWrapper)}>
+          <ConnectedAutoFillInKnob xstyle={styles.autoFillIn} />
         </div>
       </div>
-      <div style={styles.modeWrapper}>
-        <div style={labelStyles.firstPart}>1st PART</div>
-        <div style={labelStyles.secondPart}>2nd PART</div>
-        <div style={labelStyles.manualPlay}>MANUAL PLAY</div>
-        <div style={labelStyles.play}>PLAY</div>
-        <div style={labelStyles.compose}>COM- POSE</div>
-        <ConnectedModeKnob size={76} />
+      <div {...stylex.props(styles.modeWrapper)}>
+        <div {...labelProps(styles.firstPart)}>1st PART</div>
+        <div {...labelProps(styles.secondPart)}>2nd PART</div>
+        <div {...labelProps(styles.manualPlay)}>MANUAL PLAY</div>
+        <div {...labelProps(styles.play)}>PLAY</div>
+        <div {...labelProps(styles.compose)}>COM- POSE</div>
+        <ConnectedModeKnob xstyle={styles.modeKnob} />
       </div>
-      <div style={styles.clearWrapper}>
-        <div style={labelStyles.trackClear}>TRACK CLEAR</div>
-        <div style={labelStyles.stepNumber}>STEP NUMBER</div>
-        <div style={labelStyles.preScale}>PRE- SCALE</div>
-        <ConnectedClearButton style={styles.clearButton} />
+      <div {...stylex.props(styles.clearWrapper)}>
+        <div {...labelProps(styles.trackClear)}>TRACK CLEAR</div>
+        <div {...labelProps(styles.stepNumber)}>STEP NUMBER</div>
+        <div {...labelProps(styles.preScale)}>PRE- SCALE</div>
+        <ConnectedClearButton xstyle={styles.clearButton} />
       </div>
-      <div style={styles.knobTempoWrapper}>
-        <ConnectedTempoKnob size={180} />
+      <div {...stylex.props(styles.knobTempoWrapper)}>
+        <ConnectedTempoKnob xstyle={styles.tempoKnob} />
       </div>
-      <div style={styles.fineTempoWrapper}>
-        <ConnectedFineTempoKnob size={70} />
+      <div {...stylex.props(styles.fineTempoWrapper)}>
+        <ConnectedFineTempoKnob xstyle={styles.fineTempoKnob} />
       </div>
     </div>
+  );
+}
+
+function labelProps(labelStyle) {
+  return stylex.props(
+    themeStyles.labelBase,
+    themeStyles.labelGreySmall,
+    styles.labelBase,
+    labelStyle
   );
 }
 

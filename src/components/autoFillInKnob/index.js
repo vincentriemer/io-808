@@ -1,11 +1,12 @@
 import React from "react";
+import * as stylex from "@stylexjs/stylex";
 
 import Knob from "components/knob";
 import Guides from "components/guides";
 import SelectorKnobInner from "components/selectorKnobInner";
 
-import { grey } from "theme/variables";
-import { labelGreySmall, labelGreyLarge, ring } from "theme/mixins";
+import { tokens } from "theme/variables.stylex";
+import { themeStyles } from "theme/styles";
 
 const labelHeight = 38;
 
@@ -18,7 +19,7 @@ const measuresOptions = [
   { displayName: "2", value: 5 }
 ];
 
-const styles = {
+const styles = stylex.create({
   wrapper: {
     display: "flex",
     flexDirection: "column",
@@ -26,13 +27,16 @@ const styles = {
     justifyContent: "space-between"
   },
   controlWrapper: {
-    position: "relative"
+    position: "relative",
+    width: 151,
+    height: 151,
+    minWidth: 151,
+    minHeight: 151
   },
-  labelGuide: labelGreySmall,
   dotGuide: {
     width: 5,
     height: 5,
-    backgroundColor: grey,
+    backgroundColor: tokens.grey,
     borderRadius: "50%"
   },
   labelWrapper: {
@@ -44,16 +48,32 @@ const styles = {
     alignItems: "center",
     justifyContent: "space-between"
   },
-  measuresLabel: labelGreySmall,
   autoLabel: {
     position: "relative",
-    top: 0,
-    ...labelGreyLarge
+    top: 0
+  },
+  manualGuide: {
+    transform: "translateX(-15px)"
+  },
+  knob: {
+    width: 76,
+    height: 76
+  },
+  selectorSpokes: {
+    width: 56,
+    height: 56
+  },
+  selectorInnerRing: {
+    width: 46,
+    height: 46
+  },
+  labelWidth: {
+    width: 151
   }
-};
+});
 
 const guideValues = [
-  <div style={{ transform: "translateX(-15px)" }}>MANUAL</div>,
+  <div {...stylex.props(styles.manualGuide)}>MANUAL</div>,
   16,
   12,
   8,
@@ -62,48 +82,55 @@ const guideValues = [
 ];
 
 const AutoFillInKnob = props => {
-  const { value, onChange, size = 200 } = props;
-  const knobSize = size - 75;
+  const { value, onChange, xstyle } = props;
   return (
-    <div style={{ ...styles.wrapper, width: size, height: size }}>
-      <div
-        style={{
-          ...styles.controlWrapper,
-          width: size,
-          height: size,
-          minWidth: size,
-          minHeight: size
-        }}
-      >
+    <div {...stylex.props(styles.wrapper, xstyle)}>
+      <div {...stylex.props(styles.controlWrapper)}>
         <Guides
           num={6}
-          distance={size * 0.29}
+          distance={43.79}
           hideCount={6}
           guideStyle={styles.dotGuide}
         />
         <Guides
-          distance={size * 0.37}
+          distance={55.87}
           hideCount={5.5}
           values={guideValues}
           rotate={false}
-          guideStyle={styles.labelGuide}
+          guideStyle={[themeStyles.labelBase, themeStyles.labelGreySmall]}
         />
-        <div style={ring(knobSize)}>
+        <div {...stylex.props(themeStyles.ring, styles.knob)}>
           <Knob
             type="select"
             value={value}
             onChange={onChange}
-            size={knobSize}
+            xstyle={styles.knob}
             bufferSize={150}
             options={measuresOptions}
           >
-            <SelectorKnobInner size={knobSize} />
+            <SelectorKnobInner
+              xstyle={styles.knob}
+              spokesXstyle={styles.selectorSpokes}
+              innerRingXstyle={styles.selectorInnerRing}
+            />
           </Knob>
         </div>
       </div>
-      <div style={{ ...styles.labelWrapper, width: size }}>
-        <div style={styles.measuresLabel}>MEASURES</div>
-        <div style={styles.autoLabel}>AUTO FILL IN</div>
+      <div {...stylex.props(styles.labelWrapper, styles.labelWidth)}>
+        <div
+          {...stylex.props(themeStyles.labelBase, themeStyles.labelGreySmall)}
+        >
+          MEASURES
+        </div>
+        <div
+          {...stylex.props(
+            themeStyles.labelBase,
+            themeStyles.labelGreyLarge,
+            styles.autoLabel
+          )}
+        >
+          AUTO FILL IN
+        </div>
       </div>
     </div>
   );

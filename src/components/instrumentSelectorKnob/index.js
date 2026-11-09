@@ -1,4 +1,5 @@
 import React from "react";
+import * as stylex from "@stylexjs/stylex";
 
 import Knob from "components/knob";
 import Guides from "components/guides";
@@ -19,19 +20,8 @@ import {
   CLSD_HIHAT
 } from "store-constants";
 
-import {
-  panelFontFamily,
-  normalSize,
-  letterSpacing,
-  smallSize,
-  fontWeight,
-  darkGrey,
-  drumLabel,
-  stencilOrange
-} from "theme/variables";
-import { unselectableText } from "theme/mixins";
-
-import { ring } from "theme/mixins";
+import { tokens } from "theme/variables.stylex";
+import { themeStyles } from "theme/styles";
 
 const guideNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 const guideLabels = [
@@ -64,7 +54,7 @@ const instrumentOptions = [
   { displayName: "Closed Hi-hat", value: CLSD_HIHAT }
 ];
 
-const styles = {
+const styles = stylex.create({
   wrapper: {
     display: "flex",
     flexDirection: "column",
@@ -72,62 +62,77 @@ const styles = {
     justifyContent: "space-between"
   },
   controlWrapper: {
-    position: "relative"
+    position: "relative",
+    width: 151,
+    height: 151
   },
   numberGuides: {
-    fontFamily: panelFontFamily,
-    fontSize: smallSize,
-    fontWeight,
-    letterSpacing,
-    color: stencilOrange,
-    ...unselectableText
+    fontFamily: tokens.panelFontFamily,
+    fontSize: tokens.smallSize,
+    fontWeight: tokens.fontWeight,
+    letterSpacing: tokens.letterSpacing,
+    color: tokens.stencilOrange
   },
   labelGuides: {
-    fontFamily: panelFontFamily,
-    fontSize: normalSize,
+    fontFamily: tokens.panelFontFamily,
+    fontSize: tokens.normalSize,
     fontWeight: "normal",
-    letterSpacing,
-    color: darkGrey,
-    backgroundColor: drumLabel,
+    letterSpacing: tokens.letterSpacing,
+    color: tokens.darkGrey,
+    backgroundColor: tokens.drumLabel,
     borderRadius: 3,
     textAlign: "center",
     width: 27,
     paddingTop: 2,
-    paddingBottom: 2,
-    ...unselectableText
+    paddingBottom: 2
+  },
+  knob: {
+    width: 76,
+    height: 76
+  },
+  selectorSpokes: {
+    width: 56,
+    height: 56
+  },
+  selectorInnerRing: {
+    width: 46,
+    height: 46
   }
-};
+});
 
 const InstrumentSelectorKnob = props => {
-  const { value, onChange, size = 200 } = props;
-  const knobSize = size - 75;
+  const { value, onChange, xstyle } = props;
   return (
-    <div style={{ ...styles.wrapper, width: size, height: size }}>
-      <div style={{ ...styles.controlWrapper, width: size, height: size }}>
+    <div {...stylex.props(styles.wrapper, xstyle)}>
+      <div {...stylex.props(styles.controlWrapper)}>
         <Guides
-          distance={size * 0.3}
+          distance={45.3}
           offset={15}
           rotate={false}
           values={guideNumbers}
-          guideStyle={styles.numberGuides}
+          guideStyle={[themeStyles.unselectableText, styles.numberGuides]}
         />
         <Guides
-          distance={size * 0.45}
+          distance={67.95}
           offset={15}
           rotate={false}
           values={guideLabels}
-          guideStyle={styles.labelGuides}
+          guideStyle={[themeStyles.unselectableText, styles.labelGuides]}
         />
-        <div style={ring(knobSize)}>
+        <div {...stylex.props(themeStyles.ring, styles.knob)}>
           <Knob
             type="select"
             value={value}
             onChange={onChange}
-            size={knobSize}
+            xstyle={styles.knob}
             bufferSize={330}
             options={instrumentOptions}
           >
-            <SelectorKnobInner size={knobSize} />
+            <SelectorKnobInner
+              xstyle={styles.knob}
+              spokesXstyle={styles.selectorSpokes}
+              innerRingXstyle={styles.selectorInnerRing}
+            />
           </Knob>
         </div>
       </div>

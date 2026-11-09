@@ -1,4 +1,5 @@
 import React from "react";
+import * as stylex from "@stylexjs/stylex";
 import usePan from "react-gui/use-pan";
 import useFocusVisibility from "react-gui/use-focus-visibility";
 import useFocus from "react-gui/use-focus";
@@ -8,7 +9,42 @@ import { BASE_HEIGHT } from "./constants";
 import { useKnobOverlayContext } from "./overlay";
 import { convertPointFromNodeToPage } from "utils/pointConversion";
 import VisuallyHidden from "components/visuallyHidden";
-import { focusOutline } from "theme/mixins";
+import { themeStyles } from "theme/styles";
+
+const styles = stylex.create({
+  wrapper: {
+    position: "relative",
+    borderRadius: "50%",
+    cursor: "grab"
+  },
+  overlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    pointerEvents: "none",
+    borderRadius: "50%"
+  },
+  knob: {
+    position: "relative",
+    borderRadius: "50%",
+    height: "100%",
+    width: "100%"
+  },
+  active: {
+    willChange: "transform"
+  },
+  inactive: {
+    willChange: "auto"
+  }
+});
+
+const dynamicStyles = stylex.create({
+  rotation: rotationAmount => ({
+    transform: `rotate(${rotationAmount}deg)`
+  })
+});
 
 function getNormalizedValue(value, min, max) {
   return (value - min) / (max - min);
@@ -30,7 +66,7 @@ function useKnobId() {
 
 /**
 type BaseProps = {
-  size: number,
+  xstyle: StyleXStyles,
   onChange: Function,
   bufferSize?: number
 };
@@ -55,7 +91,7 @@ type SelectProps = {
  */
 
 function getKnobNormalizedProps(props) {
-  const { type, size, onChange, bufferSize = 360 } = props;
+  const { type, onChange, bufferSize = 360 } = props;
   if (type === "select") {
     const { value, options } = props;
     // get the index of the value
@@ -67,7 +103,6 @@ function getKnobNormalizedProps(props) {
       }
     }
     return {
-      size,
       onChange,
       bufferSize,
       value: valueIndex,
@@ -82,7 +117,6 @@ function getKnobNormalizedProps(props) {
     min,
     max,
     step,
-    size,
     onChange,
     bufferSize
   };
@@ -94,7 +128,6 @@ const Knob = props => {
     min,
     max,
     step,
-    size,
     onChange,
     bufferSize
   } = getKnobNormalizedProps(props);
@@ -294,39 +327,24 @@ const Knob = props => {
 
   const isActive = topPosition != null;
 
-  const styles = {
-    wrapper: {
-      position: "relative",
-      borderRadius: "50%",
-      height: size,
-      width: size,
-      cursor: "grab"
-    },
-    overlay: {
-      position: "absolute",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%",
-      pointerEvents: "none",
-      borderRadius: "50%",
-      ...(isFocusVisible ? focusOutline : {})
-    },
-    knob: {
-      position: "relative",
-      borderRadius: "50%",
-      height: "100%",
-      width: "100%",
-      transform: "rotate(" + rotationAmount + "deg)",
-      willChange: isActive ? "transform" : "auto"
-    }
-  };
-
   return (
-    <div ref={rootRef} style={styles.wrapper}>
+    <div ref={rootRef} {...stylex.props(styles.wrapper, props.xstyle)}>
       <VisuallyHidden>{accessibilityElement}</VisuallyHidden>
-      <div style={styles.knob}>{props.children}</div>
-      <div style={styles.overlay} />
+      <div
+        {...stylex.props(
+          styles.knob,
+          dynamicStyles.rotation(rotationAmount),
+          isActive ? styles.active : styles.inactive
+        )}
+      >
+        {props.children}
+      </div>
+      <div
+        {...stylex.props(
+          styles.overlay,
+          isFocusVisible && themeStyles.focusOutline
+        )}
+      />
     </div>
   );
 };

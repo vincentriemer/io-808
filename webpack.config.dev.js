@@ -37,8 +37,17 @@ module.exports = {
           {
             loader: "postcss-loader",
             options: {
-              ident: "postcss",
-              plugins: [require("autoprefixer")]
+              postcssOptions: {
+                plugins: [
+                  require("@stylexjs/postcss-plugin")({
+                    babelConfig: babelConfig(true),
+                    cwd: __dirname,
+                    include: ["src/**/*.js"],
+                    useCSSLayers: false
+                  }),
+                  require("autoprefixer")
+                ]
+              }
             }
           }
         ]

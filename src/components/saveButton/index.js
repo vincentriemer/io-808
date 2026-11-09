@@ -1,16 +1,17 @@
 import React from "react";
+import * as stylex from "@stylexjs/stylex";
 
 import Octicon from "react-octicon";
 
 import Button from "components/button";
 
 import { PERSISTANCE_FILTER } from "store-constants";
-import { buttonColor, darkGrey } from "theme/variables";
+import { tokens } from "theme/variables.stylex";
 
-const styles = {
+const styles = stylex.create({
   button: {
     borderRadius: 4,
-    backgroundColor: buttonColor,
+    backgroundColor: tokens.buttonColor,
     marginLeft: 5,
     marginRight: 5
   },
@@ -18,13 +19,13 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    color: darkGrey,
+    color: tokens.darkGrey,
     transform: "scale(0.7)"
   }
-};
+});
 
 const SaveButton = props => {
-  const { storeState, size = 50 } = props;
+  const { storeState, xstyle, iconXstyle } = props;
 
   const saveOpCounter = React.useRef(0);
   const handlePress = React.useCallback(() => {
@@ -52,13 +53,13 @@ const SaveButton = props => {
 
   return (
     <Button
-      style={{ ...styles.button, width: size, height: size }}
+      xstyle={[styles.button, xstyle]}
       disabled={storeState.playing}
       onClick={handlePress}
     >
       <Octicon
         title="Save"
-        style={{ ...styles.icon, width: size, height: size }}
+        {...stylex.props(styles.icon, iconXstyle)}
         name="desktop-download"
         mega
       />

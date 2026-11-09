@@ -1,17 +1,29 @@
 import React from "react";
+import * as stylex from "@stylexjs/stylex";
 
-import { labelGreyNormal } from "theme/mixins";
+import { themeStyles } from "theme/styles";
+import { tokens } from "theme/variables.stylex";
 
-const styles = {
+const styles = stylex.create({
   wrapper: {
     position: "relative",
     display: "flex",
     alignItems: "center"
   },
+  left: {
+    flexDirection: "row-reverse"
+  },
+  right: {
+    flexDirection: "row"
+  },
 
   arrowPoint: {
     width: 0,
-    height: 0
+    height: 0,
+    borderTopStyle: "solid",
+    borderTopColor: tokens.transparent,
+    borderBottomStyle: "solid",
+    borderBottomColor: tokens.transparent
   },
 
   arrowShaft: {
@@ -25,60 +37,101 @@ const styles = {
     justifyContent: "center",
     borderRadius: 1
   },
+  compactLabelWrapper: {
+    width: 95.5,
+    height: 18,
+    backgroundColor: tokens.grey
+  },
+  compactText: {
+    color: tokens.darkGrey
+  },
+  compactShaft: {
+    width: 4.5,
+    height: 6,
+    backgroundColor: tokens.grey
+  },
+  compactPointSides: {
+    borderTopWidth: 6.75,
+    borderBottomWidth: 6.75
+  },
+  compactPointRight: {
+    borderLeftWidth: 9,
+    borderLeftStyle: "solid",
+    borderLeftColor: tokens.grey
+  },
+  standardLabelWrapper: {
+    width: 121.25,
+    height: 25,
+    backgroundColor: tokens.darkGrey
+  },
+  standardText: {
+    color: tokens.grey
+  },
+  standardShaft: {
+    width: 6.25,
+    height: 25 / 3,
+    backgroundColor: tokens.darkGrey
+  },
+  standardPointSides: {
+    borderTopWidth: 9.375,
+    borderBottomWidth: 9.375
+  },
+  standardPointLeft: {
+    borderRightWidth: 12.5,
+    borderRightStyle: "solid",
+    borderRightColor: tokens.darkGrey
+  },
+  standardPointRight: {
+    borderLeftWidth: 12.5,
+    borderLeftStyle: "solid",
+    borderLeftColor: tokens.darkGrey
+  }
+});
 
-  label: {
-    ...labelGreyNormal
+const variantStyles = {
+  compact: {
+    labelWrapper: styles.compactLabelWrapper,
+    text: styles.compactText,
+    shaft: styles.compactShaft,
+    pointSides: styles.compactPointSides
+  },
+  standard: {
+    labelWrapper: styles.standardLabelWrapper,
+    text: styles.standardText,
+    shaft: styles.standardShaft,
+    pointSides: styles.standardPointSides
   }
 };
 
 const ArrowLabel = props => {
-  const { label, width, height, textColor, backgroundColor, direction } = props;
-
-  const arrowEndWidth = height;
-  const arrowShaftWidth = height / 4;
-  const arrowShaftHeight = height / 3;
-  const labelWrapperWidth = width - arrowEndWidth - arrowShaftWidth;
-
-  const transparentTriangeSides = `${(arrowEndWidth * 3) /
-    8}px solid transparent`;
-  const coloredTriangleSide = `${arrowEndWidth / 2}px solid ${backgroundColor}`;
+  const { label, xstyle, variant, direction } = props;
+  const variantStyle = variantStyles[variant];
+  const pointsLeft = direction === "left";
 
   return (
     <div
-      style={{
-        ...styles.wrapper,
-        width,
-        height,
-        flexDirection: direction === "left" ? "row-reverse" : "row"
-      }}
+      {...stylex.props(
+        styles.wrapper,
+        xstyle,
+        pointsLeft ? styles.left : styles.right
+      )}
     >
-      <div
-        style={{
-          ...styles.labelWrapper,
-          width: labelWrapperWidth + arrowEndWidth / 2,
-          height,
-          backgroundColor
-        }}
-      >
-        <div style={{ ...styles.label, color: textColor }}>{label}</div>
+      <div {...stylex.props(styles.labelWrapper, variantStyle.labelWrapper)}>
+        <div {...stylex.props(themeStyles.labelGreyNormal, variantStyle.text)}>
+          {label}
+        </div>
       </div>
+      <div {...stylex.props(styles.arrowShaft, variantStyle.shaft)} />
       <div
-        style={{
-          ...styles.arrowShaft,
-          width: arrowShaftWidth,
-          height: arrowShaftHeight,
-          backgroundColor
-        }}
-      />
-      <div
-        style={{
-          ...styles.arrowPoint,
-          borderTop: transparentTriangeSides,
-          borderBottom: transparentTriangeSides,
-          [direction === "left"
-            ? "borderRight"
-            : "borderLeft"]: coloredTriangleSide
-        }}
+        {...stylex.props(
+          styles.arrowPoint,
+          variantStyle.pointSides,
+          pointsLeft
+            ? styles.standardPointLeft
+            : variant === "compact"
+            ? styles.compactPointRight
+            : styles.standardPointRight
+        )}
       />
     </div>
   );

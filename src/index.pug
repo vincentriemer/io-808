@@ -34,7 +34,8 @@ html(lang="en")
         link(href=require('../splashscreens/ipadpro2_splash.png'), media='(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)', rel='apple-touch-startup-image')
         
         each headItem in htmlWebpackPlugin.tags.headTags
-            if headItem.attributes.rel !== "stylesheet"
+            // scripts are emitted explicitly at the end of the body
+            if headItem.tagName !== "script" && headItem.attributes.rel !== "stylesheet"
                 #{headItem.tagName}&attributes(headItem.attributes)/
 
         if fontBaseURL != null

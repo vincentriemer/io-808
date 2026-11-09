@@ -5,7 +5,6 @@ var HtmlWebpackPlugin = require("html-webpack-plugin");
 var MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 var CopyPlugin = require("copy-webpack-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
 
 const babelConfig = require("./babelConfig");
 
@@ -17,7 +16,7 @@ var trackerSiteID = process.env.FATHOM_SITE_ID;
 const mode = "production";
 const entry = { main: "./src/index" };
 const optimization = {
-  minimizer: [new TerserPlugin(), new OptimizeCSSAssetsPlugin({})],
+  minimizer: ["...", new OptimizeCSSAssetsPlugin({})],
   nodeEnv: "production"
 };
 const moduleSettings = isModern => {
@@ -35,8 +34,17 @@ const moduleSettings = isModern => {
           {
             loader: "postcss-loader",
             options: {
-              ident: "postcss",
-              plugins: [require("autoprefixer")]
+              postcssOptions: {
+                plugins: [
+                  require("@stylexjs/postcss-plugin")({
+                    babelConfig: babelConfig(isModern),
+                    cwd: __dirname,
+                    include: ["src/**/*.js"],
+                    useCSSLayers: false
+                  }),
+                  require("autoprefixer")
+                ]
+              }
             }
           }
         ]
@@ -102,6 +110,7 @@ const resolve = {
 };
 
 const legacyConfig = {
+  name: "legacy",
   mode,
   entry,
   output: {
@@ -116,6 +125,7 @@ const legacyConfig = {
 };
 
 const moduleConfig = {
+  name: "modern",
   mode,
   entry,
   output: {

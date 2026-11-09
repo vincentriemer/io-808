@@ -1,39 +1,16 @@
 import React from "react";
+import * as stylex from "@stylexjs/stylex";
 
 import Knob from "components/knob";
 import Guides from "components/guides";
 import SelectorKnobInner from "components/selectorKnobInner";
 
-import { labelGreyLarge, ring, unselectableText } from "theme/mixins";
-import {
-  grey,
-  darkGrey,
-  panelFontFamily,
-  normalSize,
-  fontWeight,
-  letterSpacing
-} from "theme/variables";
+import { tokens } from "theme/variables.stylex";
+import { themeStyles } from "theme/styles";
 
 const guideNumbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-let guideValues = [];
-for (let i = 0; i < 41; i++) {
-  let size = i % 4 === 0 ? 5 : 4;
-  guideValues.push(
-    <div
-      style={{
-        width: size,
-        height: size,
-        backgroundColor: grey,
-        borderRadius: "50%"
-      }}
-    />
-  );
-}
-
-const labelHeight = 25;
-
-const styles = {
+const styles = stylex.create({
   wrapper: {
     display: "flex",
     flexDirection: "column",
@@ -46,56 +23,105 @@ const styles = {
     alignItems: "center",
     justifyContent: "center"
   },
-  label: labelGreyLarge,
   controlWrapper: {
-    position: "relative"
+    position: "relative",
+    width: 180,
+    height: 180
   },
   labelGuides: {
-    fontFamily: panelFontFamily,
-    fontWeight,
-    letterSpacing,
-    fontSize: normalSize,
-    color: darkGrey,
-    ...unselectableText
+    fontFamily: tokens.panelFontFamily,
+    fontWeight: tokens.fontWeight,
+    letterSpacing: tokens.letterSpacing,
+    fontSize: tokens.normalSize,
+    color: tokens.darkGrey
+  },
+  guide: {
+    backgroundColor: tokens.grey,
+    borderRadius: "50%"
+  },
+  majorGuide: {
+    width: 5,
+    height: 5
+  },
+  minorGuide: {
+    width: 4,
+    height: 4
+  },
+  outerRing: {
+    width: 180,
+    height: 180,
+    backgroundColor: tokens.grey
+  },
+  innerRing: {
+    width: 150,
+    height: 150,
+    backgroundColor: tokens.darkGrey
+  },
+  knob: {
+    width: 135,
+    height: 135
+  },
+  selectorSpokes: {
+    width: 115,
+    height: 115
+  },
+  selectorInnerRing: {
+    width: 105,
+    height: 105
   }
-};
+});
+
+let guideValues = [];
+for (let i = 0; i < 41; i++) {
+  const major = i % 4 === 0;
+  guideValues.push(
+    <div
+      {...stylex.props(
+        styles.guide,
+        major ? styles.majorGuide : styles.minorGuide
+      )}
+    />
+  );
+}
 
 const TempoKnob = props => {
-  const { value, onChange, size = 216 } = props;
-  const innerSize = size - 30;
-  const knobSize = Math.floor(size * 0.75);
+  const { value, onChange, xstyle } = props;
   return (
-    <div style={{ ...styles.wrapper, width: size, height: size + labelHeight }}>
-      <div style={styles.labelWrapper}>
-        <div style={styles.label}>TEMPO</div>
+    <div {...stylex.props(styles.wrapper, xstyle)}>
+      <div {...stylex.props(styles.labelWrapper)}>
+        <div
+          {...stylex.props(themeStyles.labelBase, themeStyles.labelGreyLarge)}
+        >
+          TEMPO
+        </div>
       </div>
-      <div style={{ ...styles.controlWrapper, width: size, height: size }}>
-        <div style={ring(size, grey)}>
+      <div {...stylex.props(styles.controlWrapper)}>
+        <div {...stylex.props(themeStyles.ring, styles.outerRing)}>
           <Guides
-            distance={size - 97.5}
+            distance={82.5}
             hideCount={1}
             values={guideNumbers}
             rotate={false}
-            guideStyle={styles.labelGuides}
+            guideStyle={[themeStyles.unselectableText, styles.labelGuides]}
           />
-          <div style={ring(innerSize, darkGrey)}>
-            <Guides
-              num={41}
-              distance={size - 109}
-              hideCount={7}
-              values={guideValues}
-            />
-            <div style={ring(knobSize)}>
+          <div {...stylex.props(themeStyles.ring, styles.innerRing)}>
+            <Guides num={41} distance={71} hideCount={7} values={guideValues} />
+            <div {...stylex.props(themeStyles.ring, styles.knob)}>
               <Knob
                 value={value}
                 onChange={onChange}
-                size={knobSize}
+                xstyle={styles.knob}
                 bufferSize={300}
                 min={30}
                 max={300}
                 step={6.75}
               >
-                <SelectorKnobInner size={knobSize} />
+                <SelectorKnobInner
+                  xstyle={styles.knob}
+                  spokesXstyle={styles.selectorSpokes}
+                  innerRingXstyle={styles.selectorInnerRing}
+                  guideDistance={58}
+                />
               </Knob>
             </div>
           </div>

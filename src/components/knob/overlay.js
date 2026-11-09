@@ -1,6 +1,48 @@
 import React from "react";
+import * as stylex from "@stylexjs/stylex";
+
+import { tokens } from "theme/variables.stylex";
 
 import { BASE_HEIGHT } from "./constants";
+
+const styles = stylex.create({
+  overlay: {
+    position: "absolute",
+    zIndex: 100,
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    cursor: "ns-resize"
+  },
+  line: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: 1,
+    height: 1,
+    backgroundColor: tokens.white
+  },
+  knobPath: {
+    opacity: 0.5,
+    transformOrigin: "left center"
+  },
+  bodyPath: {
+    transformOrigin: "center top"
+  }
+});
+
+const dynamicStyles = stylex.create({
+  knobPath: (x, y, degrees, distance) => ({
+    transform: `translateX(${x}px) translateY(${y}px) translateZ(0) rotate(${degrees}deg) scaleX(${distance})`
+  }),
+  bodyPath: (x, y, scale) => ({
+    transform: `translateX(${x}px) translateY(${y}px) translateZ(0) scaleY(${scale})`
+  }),
+  horizontalPath: (x, y) => ({
+    transform: `translateX(${x}px) translateY(${y}px) translateZ(0) scaleX(12)`
+  })
+});
 
 function cartesian2Polar([x1, y1], [x2, y2]) {
   const x = x2 - x1;
@@ -12,91 +54,56 @@ function cartesian2Polar([x1, y1], [x2, y2]) {
 }
 
 const KnobOverlay = props => {
-  const {
-    topPosition,
-    scale,
-    knobCenter,
-    cursorPos,
-    overlayColor = "#FFF"
-  } = props;
-
-  const baseLineStyle = {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    width: 1,
-    height: 1,
-    backgroundColor: overlayColor
-  };
+  const { topPosition, scale, knobCenter, cursorPos } = props;
 
   const { distance, degrees } = cartesian2Polar(knobCenter, cursorPos);
   const verticalLineScale = BASE_HEIGHT * scale;
 
-  const styles = {
-    overlay: {
-      position: "absolute",
-      zIndex: 100,
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%",
-      cursor: "ns-resize"
-    },
-
-    knobPath: {
-      ...baseLineStyle,
-      opacity: 0.5,
-      transformOrigin: "left center",
-      transform:
-        `translateX(${knobCenter[0]}px) translateY(${
-          knobCenter[1]
-        }px) translateZ(0) ` +
-        `rotate(${degrees}deg) ` +
-        `scaleX(${distance})`
-    },
-
-    bodyPath: {
-      ...baseLineStyle,
-      transformOrigin: "center top",
-      transform:
-        `translateX(${
-          cursorPos[0]
-        }px) translateY(${topPosition}px) translateZ(0) ` +
-        `scaleY(${verticalLineScale})`
-    },
-
-    topPath: {
-      ...baseLineStyle,
-      transform:
-        `translateX(${
-          cursorPos[0]
-        }px) translateY(${topPosition}px) translateZ(0) ` + `scaleX(12)`
-    },
-
-    centerPath: {
-      ...baseLineStyle,
-      transform:
-        `translateX(${cursorPos[0]}px) ` +
-        `translateY(${topPosition + verticalLineScale / 2}px) ` +
-        `translateZ(0) scaleX(12)`
-    },
-
-    bottomPath: {
-      ...baseLineStyle,
-      transform:
-        `translateX(${cursorPos[0]}px) ` +
-        `translateY(${topPosition + verticalLineScale}px) ` +
-        `translateZ(0) scaleX(12)`
-    }
-  };
-
   return (
-    <div style={styles.overlay}>
-      <div style={styles.knobPath} />
-      <div style={styles.bodyPath} />
-      <div style={styles.topPath} />
-      <div style={styles.centerPath} />
-      <div style={styles.bottomPath} />
+    <div {...stylex.props(styles.overlay)}>
+      <div
+        {...stylex.props(
+          styles.line,
+          styles.knobPath,
+          dynamicStyles.knobPath(
+            knobCenter[0],
+            knobCenter[1],
+            degrees,
+            distance
+          )
+        )}
+      />
+      <div
+        {...stylex.props(
+          styles.line,
+          styles.bodyPath,
+          dynamicStyles.bodyPath(cursorPos[0], topPosition, verticalLineScale)
+        )}
+      />
+      <div
+        {...stylex.props(
+          styles.line,
+          dynamicStyles.horizontalPath(cursorPos[0], topPosition)
+        )}
+      />
+      <div
+        {...stylex.props(
+          styles.line,
+          dynamicStyles.horizontalPath(
+            cursorPos[0],
+            topPosition + verticalLineScale / 2
+          )
+        )}
+      />
+      <div
+        {...stylex.props(
+          styles.line,
+          dynamicStyles.horizontalPath(
+            cursorPos[0],
+            topPosition + verticalLineScale
+          )
+        )}
+      />
     </div>
   );
 };
