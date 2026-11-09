@@ -46,11 +46,13 @@ Each drum sound also has timbral properties that can be adjusted in real time wi
 
 Now try adding triggers for all the other available drum sounds until you have a fully-composed 16 step pattern!
 
+While the pattern is playing, `TAP` adds a trigger for the selected instrument on the nearest step. That step lights with the others. Press the step button to turn it off. This works in `1st PART` and `2nd PART`.
+
 #### Note: The Accent Instrument
 
-You'll notice that if you add triggers to the `Accent` instrument it doesn't add any drum sound. What this instrument does is allow you to sequence changes to overall volume of all other instruments. The triggers in this sequence correspond to an increase in volume which can add some swing/feel to your patterns. 
+You'll notice that if you add triggers to the `Accent` instrument it doesn't add any drum sound. What this instrument does is allow you to sequence changes to overall volume of all other instruments. The triggers in this sequence correspond to an increase in volume which can add some swing/feel to your patterns.
 
-The `LEVEL` knob for the `Accent` instrument determines the difference in volume between inactive and active accent steps. The loudest volume will always stay the same but as you increase the Accent's `LEVEL` the inactive steps will increasingly get quieter.
+The `LEVEL` knob sets how much louder an accented step is. Other steps stay at their own level. Turn it up for a stronger accent. Fully down adds no boost.
 
 ### Second Part
 
@@ -79,6 +81,21 @@ This operation can be done whether the sequencer is playing or not.
 There is an important difference between setting the pattern length of `1st PART` vs. `2nd PART` though. When you set the pattern length of the `1st PART` of a pattern, it will also set the `2nd PART` pattern length to 0. Setting the `2nd PART` pattern length does not affect the `1st PART`.
 
 So... in order for us to program our second part we need to set a pattern length greater than 0. Try setting it to 16 and then you should be able to edit the second part in the exact same way as you did the first.
+
+## Pre-Scale
+
+The `PRE-SCALE` switch sits above `TAP`. It chooses how many steps are in one beat, and the setting applies while any pattern is playing.
+
+The four positions run top to bottom:
+
+1. 3 steps in a beat
+2. 6 steps in a beat
+3. 4 steps in a beat. This is the normal setting, and it is where the switch starts.
+4. 8 steps in a beat
+
+The rows of notes above the step buttons draw those same four groupings. The bright row is the one in use. Click a row to select it, or move the switch itself.
+
+Pre-scale is not the pattern length. Pattern length is how many steps are in the part. Pre-scale is how those steps are grouped into a beat.
 
 <!--### Variations-->
 
@@ -113,6 +130,32 @@ To trigger an `INTRO/FILL IN` you need to press the `TAP` button which schedules
 
 @[youtube](QKh7mlte3Ls)
 
+## Rhythm Tracks
+
+`PLAY` and `COMPOSE` on the mode knob arrange the patterns you already programmed into a song.
+
+There are 12 rhythm tracks. In `PLAY` and `COMPOSE`, the `INSTRUMENT-SELECT` knob selects the track instead of a drum. The numbers 1 through 12 printed around that knob are the track numbers.
+
+### Composing a Track
+
+Turn the mode knob to `COMPOSE` and choose a track.
+
+Press the red `CLEAR` button to empty that track.
+
+Choose the pattern that should play first, the same way you do in `MANUAL PLAY`. Press `TAP` if that first bar should be the selected intro/fill instead of the basic rhythm.
+
+Press `START/STOP`. Recording replaces whatever was already stored in that track. Every bar is written as it plays, up to 64 bars. Change patterns while it runs, again the same way as `MANUAL PLAY`: press a basic-rhythm button for the next bar, or press `TAP` to put the intro/fill into the next bar. That bar is stored too.
+
+Press `START/STOP` again during the last bar you want to keep. That bar is the end of the track.
+
+The `BASIC VARIATION` and `I/F VARIATION` switches are not stored in the track. They stay wherever you set them while the track plays.
+
+### Playing a Track
+
+Turn the mode knob to `PLAY` and choose the track with the instrument knob. Press `START/STOP`. The track plays from the beginning and repeats until you stop it. The step lights show which pattern is playing.
+
+If that track is empty, Start does nothing.
+
 <!--### Using Auto Fill-In-->
 
 <!--Coming Soon...-->
@@ -139,7 +182,7 @@ If you would like to share your collection of patterns click the save button (th
 
 ![Save Button](images/save-button.png)
 
-Note that you do not need to save your patterns in order to continue programming later. This is done automatically so when you open the app after closing it all your progress should still be there.
+Note that you do not need to save in order to continue later. Patterns and rhythm tracks stay in the browser, along with the mode and the selected track, so when you open the app again the song should still be there. The save file includes the rhythm tracks too.
 
 ### Loading
 

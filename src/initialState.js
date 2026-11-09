@@ -15,9 +15,16 @@ import {
   SECOND_PART,
   A_VARIATION,
   B_VARIATION,
+  RHYTHM_TRACK_COUNT
 } from "store-constants";
 
 import { stepKey, patternLengthKey } from "helpers";
+
+function emptyRhythmTracks() {
+  const tracks = [];
+  for (let i = 0; i < RHYTHM_TRACK_COUNT; i++) tracks.push([]);
+  return tracks;
+}
 
 const PARTS = [FIRST_PART, SECOND_PART];
 const VARIATIONS = [A_VARIATION, B_VARIATION];
@@ -102,7 +109,7 @@ const initialInstrumentState = {
   },
 };
 
-export default {
+const initialState = {
   instrumentState: initialInstrumentState,
   patternLengths: initialRhythmLengthState,
 
@@ -119,6 +126,7 @@ export default {
 
   selectedMode: 1,
   selectedInstrumentTrack: 1,
+  rhythmTracks: emptyRhythmTracks(),
 
   masterVolume: 70,
 
@@ -132,6 +140,7 @@ export default {
 
   tempo: 135,
   fineTempo: 0,
+  preScalePosition: 2,
 
   currentStep: 0,
 
@@ -142,3 +151,11 @@ export default {
 
   pendingPatternLength: 0,
 };
+
+const initialSnapshot = JSON.parse(JSON.stringify(initialState));
+
+export function cloneInitialState() {
+  return JSON.parse(JSON.stringify(initialSnapshot));
+}
+
+export default initialState;

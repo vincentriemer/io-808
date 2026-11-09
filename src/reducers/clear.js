@@ -1,6 +1,7 @@
 import produce from "immer";
 import {
   MODE_PATTERN_CLEAR,
+  MODE_RHYTHM_TRACK_COMPOSE,
   A_VARIATION,
   B_VARIATION,
   FIRST_PART,
@@ -30,6 +31,15 @@ export default (state, type) => {
 
     case CLEAR_UP: {
       switch (state.selectedMode) {
+        case MODE_RHYTHM_TRACK_COMPOSE: {
+          return produce(state, draft => {
+            draft.clearPressed = false;
+            draft.playing = false;
+            const tracks = (state.rhythmTracks || []).map(item => item.slice());
+            tracks[state.selectedInstrumentTrack] = [];
+            draft.rhythmTracks = tracks;
+          });
+        }
         case MODE_PATTERN_CLEAR: {
           return produce(state, draft => {
             draft.clearPressed = false;

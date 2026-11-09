@@ -36,4 +36,8 @@ const AudioCtxContext = React.createContext({
   }
 });
 
+export function currentAudioContext() {
+  return audioCtx;
+}
+
 export default AudioCtxContext;

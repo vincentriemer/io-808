@@ -4,7 +4,9 @@ import {
   MODE_PATTERN_CLEAR,
   MODE_FIRST_PART,
   MODE_SECOND_PART,
-  MODE_MANUAL_PLAY
+  MODE_MANUAL_PLAY,
+  MODE_RHYTHM_TRACK_PLAY,
+  MODE_RHYTHM_TRACK_COMPOSE
 } from "store-constants";
 
 import { stepKey } from "helpers";
@@ -49,7 +51,8 @@ export default stepNumber => {
       getSelectedPlayFillPattern,
       getSelectedPattern,
       getClearDragging,
-      getPendingPatternLength
+      getPendingPatternLength,
+      state => state.rhythmTracks
     ],
     (
       playing,
@@ -67,7 +70,8 @@ export default stepNumber => {
       selectedPlayFillPattern,
       selectedPattern,
       clearDragging,
-      pendingPatternLength
+      pendingPatternLength,
+      rhythmTracks
     ) => {
       let currentVariation =
         currentPattern < 12 ? basicVariation : introFillVariation;
@@ -90,12 +94,15 @@ export default stepNumber => {
               ? !sequencerValue
               : sequencerValue;
           case MODE_MANUAL_PLAY:
+          case MODE_RHYTHM_TRACK_PLAY:
+          case MODE_RHYTHM_TRACK_COMPOSE: {
             const isCurrentPattern = currentPattern === stepNumber;
             const isCurrentStep = currentStep === stepNumber;
 
             return isCurrentPattern
               ? isCurrentPattern && !isCurrentStep
               : isCurrentStep;
+          }
           default:
             return false;
         }
@@ -108,7 +115,14 @@ export default stepNumber => {
           case MODE_SECOND_PART:
             if (clearDragging) return pendingPatternLength > stepNumber;
             return selectedPattern === stepNumber && blinkState;
+          case MODE_RHYTHM_TRACK_PLAY: {
+            const stored =
+              (rhythmTracks && rhythmTracks[selectedInstrument]) || [];
+            const shown = stored.length ? stored[0] : -1;
+            return shown === stepNumber && blinkState;
+          }
           case MODE_MANUAL_PLAY:
+          case MODE_RHYTHM_TRACK_COMPOSE:
             if (stepNumber < 12) {
               if (fillScheduled) {
                 return selectedPlayPattern === stepNumber;

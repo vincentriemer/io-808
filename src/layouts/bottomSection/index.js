@@ -153,11 +153,6 @@ const styles = stylex.create({
     alignItems: "center",
     justifyContent: "space-between"
   },
-  preScaleSwitchWrapper: {
-    // Disable the switch until pre-scale functionality is implemented.
-    pointerEvents: "none",
-    opacity: 0.5
-  },
   preScaleBottomSection: {
     width: "100%",
     height: 115,
@@ -529,12 +524,7 @@ const BottomSection = props => {
             </div>
           </div>
           <div {...stylex.props(styles.preScaleSection)}>
-            <div {...stylex.props(styles.preScaleSwitchWrapper)}>
-              <ConnectedPreScaleSwitch
-                position={2}
-                xstyle={styles.preScaleSwitch}
-              />
-            </div>
+            <ConnectedPreScaleSwitch xstyle={styles.preScaleSwitch} />
             <div {...stylex.props(styles.preScaleBottomSection)}>
               <ArrowLabel
                 label="STEP NO"

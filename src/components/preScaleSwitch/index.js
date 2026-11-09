@@ -6,8 +6,6 @@ import Switch from "components/switch";
 import { themeStyles } from "theme/styles";
 import { tokens } from "theme/variables.stylex";
 
-const noOp = () => {};
-
 const borderRadius = 2;
 
 const styles = stylex.create({
@@ -78,7 +76,7 @@ const switchValues = {
 };
 
 const PreScaleSwitch = props => {
-  const { xstyle, position } = props;
+  const { xstyle, position, onChange } = props;
   return (
     <div {...stylex.props(styles.wrapper, xstyle)}>
       <div {...stylex.props(themeStyles.labelGreyNormal, styles.title)}>
@@ -93,9 +91,8 @@ const PreScaleSwitch = props => {
         </div>
         <Switch
           name="pre-scale"
-          onChange={noOp}
+          onChange={onChange}
           position={position}
-          disabled={true}
           direction="vertical"
           values={switchValues}
           outerXstyle={styles.outer}
